@@ -7,11 +7,18 @@
 
 import SwiftUI
 
+import ComposableArchitecture
+
 @main
 struct GatheringApp: App {
+    
+    static let store = Store(initialState: CounterFeature.State()) {
+        CounterFeature()
+    }
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CounterView(store: GatheringApp.store)
         }
     }
 }
