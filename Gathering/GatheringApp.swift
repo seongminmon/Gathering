@@ -12,13 +12,13 @@ import ComposableArchitecture
 @main
 struct GatheringApp: App {
     
-    static let store = Store(initialState: CounterFeature.State()) {
-        CounterFeature()
-    }
-    
     var body: some Scene {
         WindowGroup {
-            CounterView(store: GatheringApp.store)
+            CounterView(
+                store: Store(initialState: CounterFeature.State()) {
+                    CounterFeature()
+                }
+            )
         }
     }
 }

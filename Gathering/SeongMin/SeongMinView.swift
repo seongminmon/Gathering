@@ -29,13 +29,14 @@ struct CounterView: View {
                     Text(fact)
                 }
             }
-            
         }
     }
 }
 
 @Reducer
 struct CounterFeature {
+    
+    @Dependency(\.numberFact) var numberFact
     
     @ObservableState
     struct State {
@@ -60,15 +61,40 @@ struct CounterFeature {
             case .incrementButtonTapped:
                 state.count += 1
                 return .none
+                
             case .numberFactButtonTapped:
                 return .run { [count = state.count] send in
-                    let (data, _) = try await URLSession.shared.data(from: URL(string: "http://numbersapi.com/\(count)/trivia")!)
-                    await send(.numberFactResponse(String(data: data, encoding: .utf8) ?? "인코딩 실패"))
+                    
+                    let fact = try await numberFact.fetch(count)
+                    await send(.numberFactResponse(fact))
                 }
+                
             case let .numberFactResponse(fact):
                 state.numberFact = fact
                 return .none
             }
         }
+    }
+}
+
+struct NumberFactClient {
+    var fetch: (Int) async throws -> String
+}
+
+extension NumberFactClient: DependencyKey {
+    static let liveValue = Self(
+        fetch: { number in
+            let (data, _) = try await URLSession.shared
+                .data(from: URL(string: "http://numbersapi.com/\(number)")!
+                )
+            return String(data: data, encoding: .utf8) ?? "nil"
+        }
+    )
+}
+
+extension DependencyValues {
+    var numberFact: NumberFactClient {
+        get { self[NumberFactClient.self] }
+        set { self[NumberFactClient.self] = newValue }
     }
 }
