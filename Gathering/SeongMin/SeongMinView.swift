@@ -15,6 +15,10 @@ struct CounterView: View {
     var body: some View {
         WithPerceptionTracking {
             Form {
+                Button(store.isTimerRunning ? "Stop timer" : "Start timer") {
+                    store.send(.toggleTimerButtonTapped)
+                }
+                
                 Section {
                     Text("\(store.count)")
                     Button("Decrement") { store.send(.decrementButtonTapped) }
@@ -22,15 +26,18 @@ struct CounterView: View {
                 }
                 
                 Section {
-                    Button("Number fact") { store.send(.numberFactButtonTapped) }
+                    Button("Number fact") { store.send(.factButtonTapped) }
                 }
                 
-                if let fact = store.numberFact {
+                if store.isLoading {
+                    ProgressView()
+                } else if let fact = store.fact {
                     Text(fact)
                 }
             }
         }
     }
+    
 }
 
 @Reducer
@@ -41,14 +48,23 @@ struct CounterFeature {
     @ObservableState
     struct State {
         var count = 0
-        var numberFact: String?
+        var fact: String?
+        var isLoading = false
+        var isTimerRunning = false
+        var showAlert = false
     }
     
     enum Action {
         case decrementButtonTapped
         case incrementButtonTapped
-        case numberFactButtonTapped
-        case numberFactResponse(String)
+        case factButtonTapped
+        case factResponse(String)
+        case toggleTimerButtonTapped
+        case timerTick
+    }
+    
+    enum CancelID {
+        case timer
     }
     
     var body: some ReducerOf<Self> {
@@ -62,15 +78,37 @@ struct CounterFeature {
                 state.count += 1
                 return .none
                 
-            case .numberFactButtonTapped:
+            case .factButtonTapped:
+                state.fact = nil
+                state.isLoading = true
                 return .run { [count = state.count] send in
-                    
-                    let fact = try await numberFact.fetch(count)
-                    await send(.numberFactResponse(fact))
+                    let fact = try await self.numberFact.fetch(count)
+                    await send(.factResponse(fact))
                 }
                 
-            case let .numberFactResponse(fact):
-                state.numberFact = fact
+            case let .factResponse(fact):
+                state.fact = fact
+                state.isLoading = false
+                return .none
+                
+            case .toggleTimerButtonTapped:
+                state.isTimerRunning.toggle()
+                
+                if state.isTimerRunning {
+                    return .run { send in
+                        while true {
+                            try await Task.sleep(for: .seconds(1))
+                            await send(.timerTick)
+                        }
+                    }
+                    .cancellable(id: CancelID.timer)
+                } else {
+                    return .cancel(id: CancelID.timer)
+                }
+                
+            case .timerTick:
+                state.count += 1
+                state.fact = nil
                 return .none
             }
         }
@@ -84,9 +122,9 @@ struct NumberFactClient {
 extension NumberFactClient: DependencyKey {
     static let liveValue = Self(
         fetch: { number in
-            let (data, _) = try await URLSession.shared
-                .data(from: URL(string: "http://numbersapi.com/\(number)")!
-                )
+            let (data, _) = try await URLSession.shared.data(
+                from: URL(string: "http://numbersapi.com/\(number)")!
+            )
             return String(data: data, encoding: .utf8) ?? "nil"
         }
     )

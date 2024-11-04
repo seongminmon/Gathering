@@ -14,11 +14,7 @@ struct GatheringApp: App {
     
     var body: some Scene {
         WindowGroup {
-            CounterView(
-                store: Store(initialState: CounterFeature.State()) {
-                    CounterFeature()
-                }
-            )
+            RootView()
         }
     }
 }

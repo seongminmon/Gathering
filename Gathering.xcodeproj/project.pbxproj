@@ -23,6 +23,7 @@
 		24ABE9492CD4B801000E7EC5 /* SungEunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9482CD4B801000E7EC5 /* SungEunView.swift */; };
 		24ABE94B2CD4B8A9000E7EC5 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 24ABE94A2CD4B8A9000E7EC5 /* .swiftlint.yml */; };
 		24ABE94C2CD4BACD000E7EC5 /* APIKey.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 24ABE93D2CD4B557000E7EC5 /* APIKey.xcconfig */; };
+		24ABE94E2CD8A71D000E7EC5 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE94D2CD8A71D000E7EC5 /* RootView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -53,6 +54,7 @@
 		24ABE9452CD4B7EA000E7EC5 /* SeongMinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeongMinView.swift; sourceTree = "<group>"; };
 		24ABE9482CD4B801000E7EC5 /* SungEunView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SungEunView.swift; sourceTree = "<group>"; };
 		24ABE94A2CD4B8A9000E7EC5 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		24ABE94D2CD8A71D000E7EC5 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 				24ABE93E2CD4B5B9000E7EC5 /* Info.plist */,
 				24ABE93D2CD4B557000E7EC5 /* APIKey.xcconfig */,
 				24ABE91C2CD4AEDB000E7EC5 /* GatheringApp.swift */,
+				24ABE94D2CD8A71D000E7EC5 /* RootView.swift */,
 				24ABE91E2CD4AEDB000E7EC5 /* ContentView.swift */,
 				24ABE93F2CD4B6D1000E7EC5 /* APIAuth.swift */,
 				24ABE9472CD4B7F2000E7EC5 /* SungEun */,
@@ -229,6 +232,7 @@
 				24ABE91F2CD4AEDB000E7EC5 /* ContentView.swift in Sources */,
 				24ABE9492CD4B801000E7EC5 /* SungEunView.swift in Sources */,
 				24ABE91D2CD4AEDB000E7EC5 /* GatheringApp.swift in Sources */,
+				24ABE94E2CD8A71D000E7EC5 /* RootView.swift in Sources */,
 				24ABE9432CD4B7CC000E7EC5 /* SeungHyunView.swift in Sources */,
 				24ABE9462CD4B7EA000E7EC5 /* SeongMinView.swift in Sources */,
 			);
