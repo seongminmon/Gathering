@@ -24,6 +24,8 @@
 		24ABE94B2CD4B8A9000E7EC5 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 24ABE94A2CD4B8A9000E7EC5 /* .swiftlint.yml */; };
 		24ABE94C2CD4BACD000E7EC5 /* APIKey.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 24ABE93D2CD4B557000E7EC5 /* APIKey.xcconfig */; };
 		24ABE94E2CD8A71D000E7EC5 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE94D2CD8A71D000E7EC5 /* RootView.swift */; };
+		24ABE9522CD8B65E000E7EC5 /* DMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9512CD8B65E000E7EC5 /* DMView.swift */; };
+		24ABE9542CD8B711000E7EC5 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9532CD8B711000E7EC5 /* Font+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -55,6 +57,8 @@
 		24ABE9482CD4B801000E7EC5 /* SungEunView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SungEunView.swift; sourceTree = "<group>"; };
 		24ABE94A2CD4B8A9000E7EC5 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		24ABE94D2CD8A71D000E7EC5 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		24ABE9512CD8B65E000E7EC5 /* DMView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMView.swift; sourceTree = "<group>"; };
+		24ABE9532CD8B711000E7EC5 /* Font+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +103,7 @@
 				24ABE94D2CD8A71D000E7EC5 /* RootView.swift */,
 				24ABE91E2CD4AEDB000E7EC5 /* ContentView.swift */,
 				24ABE93F2CD4B6D1000E7EC5 /* APIAuth.swift */,
+				24ABE9552CD8BC3A000E7EC5 /* Design */,
 				24ABE9472CD4B7F2000E7EC5 /* SungEun */,
 				24ABE9442CD4B7DC000E7EC5 /* SeongMin */,
 				24ABE9412CD4B7AF000E7EC5 /* SeungHyun */,
@@ -128,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				24ABE9452CD4B7EA000E7EC5 /* SeongMinView.swift */,
+				24ABE9512CD8B65E000E7EC5 /* DMView.swift */,
 			);
 			path = SeongMin;
 			sourceTree = "<group>";
@@ -138,6 +144,14 @@
 				24ABE9482CD4B801000E7EC5 /* SungEunView.swift */,
 			);
 			path = SungEun;
+			sourceTree = "<group>";
+		};
+		24ABE9552CD8BC3A000E7EC5 /* Design */ = {
+			isa = PBXGroup;
+			children = (
+				24ABE9532CD8B711000E7EC5 /* Font+.swift */,
+			);
+			path = Design;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,6 +245,8 @@
 				24ABE9402CD4B6D1000E7EC5 /* APIAuth.swift in Sources */,
 				24ABE91F2CD4AEDB000E7EC5 /* ContentView.swift in Sources */,
 				24ABE9492CD4B801000E7EC5 /* SungEunView.swift in Sources */,
+				24ABE9542CD8B711000E7EC5 /* Font+.swift in Sources */,
+				24ABE9522CD8B65E000E7EC5 /* DMView.swift in Sources */,
 				24ABE91D2CD4AEDB000E7EC5 /* GatheringApp.swift in Sources */,
 				24ABE94E2CD8A71D000E7EC5 /* RootView.swift in Sources */,
 				24ABE9432CD4B7CC000E7EC5 /* SeungHyunView.swift in Sources */,
