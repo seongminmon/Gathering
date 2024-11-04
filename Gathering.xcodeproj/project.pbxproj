@@ -242,6 +242,10 @@
 				24ABE9402CD4B6D1000E7EC5 /* APIAuth.swift in Sources */,
 				24ABE91F2CD4AEDB000E7EC5 /* ContentView.swift in Sources */,
 				24ABE9492CD4B801000E7EC5 /* SungEunView.swift in Sources */,
+				8431DCC32CD8CB8F00456802 /* ChannelView.swift in Sources */,
+				8462F3B72CD8BD1200CC7A30 /* CounterFeatrue.swift in Sources */,
+				24ABE9542CD8B711000E7EC5 /* Font+.swift in Sources */,
+				24ABE9522CD8B65E000E7EC5 /* DMView.swift in Sources */,
 				24ABE9542CD8B711000E7EC5 /* Font+.swift in Sources */,
 				24ABE9522CD8B65E000E7EC5 /* DMView.swift in Sources */,
 				24ABE91D2CD4AEDB000E7EC5 /* GatheringApp.swift in Sources */,
@@ -483,7 +487,6 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.4.0;
 			};
 		};
 		24ABE92D2CD4AF24000E7EC5 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
