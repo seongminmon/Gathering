@@ -7,11 +7,14 @@
 
 import SwiftUI
 
+import ComposableArchitecture
+
 @main
 struct GatheringApp: App {
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
         }
     }
 }
