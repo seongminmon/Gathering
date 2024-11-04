@@ -29,15 +29,17 @@ struct RootView: View {
                 EmptyView()
             }
             .tabItem {
+                Image(tabInfo == .home ? .homeActive : .homeInactive)
                 Text(TabInfo.home.rawValue)
             }
             .tag(TabInfo.home)
             
             // MARK: - DM
             NavigationStack {
-                EmptyView()
+                DMView()
             }
             .tabItem {
+                Image(tabInfo == .dm ? .messageActive : .messageInactive)
                 Text(TabInfo.dm.rawValue)
             }
             .tag(TabInfo.dm)
@@ -47,6 +49,7 @@ struct RootView: View {
                 EmptyView()
             }
             .tabItem {
+                Image(tabInfo == .search ? .profileActive : .profileInactive)
                 Text(TabInfo.search.rawValue)
             }
             .tag(TabInfo.search)
@@ -56,9 +59,11 @@ struct RootView: View {
                 EmptyView()
             }
             .tabItem {
+                Image(tabInfo == .setting ? .settingActive : .settingInactive)
                 Text(TabInfo.setting.rawValue)
             }
             .tag(TabInfo.setting)
         }
+        .tint(.black)
     }
 }
