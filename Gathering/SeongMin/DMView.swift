@@ -14,22 +14,53 @@ struct DMView: View {
     @State private var list: [String] = []
     
     var body: some View {
-        HStack {
-            ProfileImageVIew()
-            Text("Direct Message")
-            ProfileImageVIew()
-        }
-        
-        if list.isEmpty {
-            emptyMemberView()
-        } else {
-            ScrollView {
-                LazyVStack(spacing: 20, content: {
-                    ForEach(list, id: \.self) { item in
-                        Text("\(item)")
+        VStack {
+            if list.isEmpty {
+                emptyMemberView()
+            } else {
+                ScrollView(.horizontal) {
+                    LazyHStack(spacing: 10) {
+                        userCell()
                     }
-                })
+                }
+                ScrollView {
+                    LazyVStack(spacing: 20, content: {
+                        ForEach(list, id: \.self) { item in
+                            Text("\(item)")
+                        }
+                    })
+                }
             }
+        }
+        // 네비게이션 바
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                HStack(spacing: 8) {
+                    Image(systemName: "star")
+                        .profileImageStyle()
+                    Text("Direct Message")
+                        .font(.title1)
+                }
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                profileButton()
+            }
+        }
+    }
+    
+    private func profileButton() -> some View {
+        Button {
+            print("프로필 버튼 탭")
+        } label: {
+            Image(systemName: "star.fill")
+                .resizable()
+                .frame(width: 32, height: 32)
+                .background(.gray)
+                .clipShape(Circle())
+                .overlay(
+                    Circle()
+                        .stroke(Color.black, lineWidth: 2)
+                )
         }
     }
     
@@ -50,15 +81,20 @@ struct DMView: View {
             .clipShape(RoundedRectangle(cornerRadius: 8))
         }
     }
+    
+    private func userCell() -> some View {
+        VStack(spacing: 4) {
+            Image(systemName: "star")
+                .profileImageStyle()
+                .frame(width: 44, height: 44)
+            Text("asdf")
+        }
+    }
 }
 
-#Preview {
-    DMView()
-}
-
-struct ProfileImageVIew: View {
-    var body: some View {
-        Image(systemName: "star.fill")
+extension Image {
+    func profileImageStyle() -> some View {
+        self
             .resizable()
             .frame(width: 32, height: 32)
             .background(.gray)
