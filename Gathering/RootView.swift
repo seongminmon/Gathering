@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+import ComposableArchitecture
+
 enum TabInfo : String, CaseIterable {
     case home = "홈"
     case dm = "DM"
@@ -36,7 +38,9 @@ struct RootView: View {
             
             // MARK: - DM
             NavigationStack {
-                DMView()
+                DMView(store: Store(initialState: DMFeature.State()) {
+                    DMFeature()
+                })
             }
             .tabItem {
                 Image(tabInfo == .dm ? .messageActive : .messageInactive)

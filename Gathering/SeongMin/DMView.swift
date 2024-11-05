@@ -11,25 +11,58 @@ import ComposableArchitecture
 
 struct DMView: View {
     
-    @State private var list: [String] = []
+    let store: StoreOf<DMFeature>
     
     var body: some View {
-        HStack {
-            ProfileImageVIew()
-            Text("Direct Message")
-            ProfileImageVIew()
-        }
-        
-        if list.isEmpty {
-            emptyMemberView()
-        } else {
-            ScrollView {
-                LazyVStack(spacing: 20, content: {
-                    ForEach(list, id: \.self) { item in
-                        Text("\(item)")
+        WithPerceptionTracking {
+            VStack {
+                if store.list.isEmpty {
+                    emptyMemberView()
+                } else {
+                    ScrollView(.horizontal) {
+                        LazyHStack(spacing: 10) {
+                            userCell()
+                        }
                     }
-                })
+                    ScrollView {
+                        LazyVStack(spacing: 20, content: {
+                            ForEach(store.list, id: \.self) { item in
+                                Text("\(item)")
+                            }
+                        })
+                    }
+                }
             }
+            // 네비게이션 바
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "star")
+                            .profileImageStyle()
+                        Text("Direct Message")
+                            .font(.title1)
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    profileButton()
+                }
+            }
+        }
+    }
+    
+    private func profileButton() -> some View {
+        Button {
+            print("프로필 버튼 탭")
+        } label: {
+            Image(systemName: "star.fill")
+                .resizable()
+                .frame(width: 32, height: 32)
+                .background(.gray)
+                .clipShape(Circle())
+                .overlay(
+                    Circle()
+                        .stroke(Color.black, lineWidth: 2)
+                )
         }
     }
     
@@ -41,7 +74,7 @@ struct DMView: View {
                 .font(.body)
             Button("팀원 초대하기") {
                 print("팀원 초대 버튼 탭")
-                list.append("asdfasdf")
+                store.send(.profileButtonTap)
             }
             .font(.title2)
             .foregroundStyle(.white)
@@ -50,18 +83,47 @@ struct DMView: View {
             .clipShape(RoundedRectangle(cornerRadius: 8))
         }
     }
+    
+    private func userCell() -> some View {
+        VStack(spacing: 4) {
+            Image(systemName: "star")
+                .profileImageStyle()
+                .frame(width: 44, height: 44)
+            Text("asdf")
+        }
+    }
 }
 
-#Preview {
-    DMView()
-}
-
-struct ProfileImageVIew: View {
-    var body: some View {
-        Image(systemName: "star.fill")
+extension Image {
+    func profileImageStyle() -> some View {
+        self
             .resizable()
             .frame(width: 32, height: 32)
             .background(.gray)
             .clipShape(RoundedRectangle(cornerRadius: 10))
+    }
+}
+
+@Reducer
+struct DMFeature {
+    
+    @ObservableState
+    struct State {
+        var list: [String] = []
+    }
+    
+    enum Action {
+        case profileButtonTap
+    }
+    
+    var body: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
+            case .profileButtonTap:
+                print("프로필 버튼 탭")
+                state.list.append("asdfasdf")
+                return .none
+            }
+        }
     }
 }

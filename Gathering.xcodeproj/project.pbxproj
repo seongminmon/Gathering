@@ -113,6 +113,7 @@
 				24ABE94D2CD8A71D000E7EC5 /* RootView.swift */,
 				24ABE91E2CD4AEDB000E7EC5 /* ContentView.swift */,
 				24ABE93F2CD4B6D1000E7EC5 /* APIAuth.swift */,
+				24ABE9582CDA167C000E7EC5 /* Component */,
 				24ABE9552CD8BC3A000E7EC5 /* Design */,
 				24ABE9472CD4B7F2000E7EC5 /* SungEun */,
 				24ABE9442CD4B7DC000E7EC5 /* SeongMin */,
@@ -134,7 +135,6 @@
 		24ABE9412CD4B7AF000E7EC5 /* SeungHyun */ = {
 			isa = PBXGroup;
 			children = (
-				847A3F872CD9C032004A9361 /* ProfileImageView.swift */,
 				847A3F822CD8FFFD004A9361 /* Channel */,
 				847A3F7F2CD8FFD4004A9361 /* CounterView */,
 			);
@@ -166,6 +166,14 @@
 				847A3F852CD90026004A9361 /* Color+.swift */,
 			);
 			path = Design;
+			sourceTree = "<group>";
+		};
+		24ABE9582CDA167C000E7EC5 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				847A3F872CD9C032004A9361 /* ProfileImageView.swift */,
+			);
+			path = Component;
 			sourceTree = "<group>";
 		};
 		847A3F7F2CD8FFD4004A9361 /* CounterView */ = {
