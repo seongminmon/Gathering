@@ -26,7 +26,7 @@ struct RootView: View {
         TabView(selection: $tabInfo) {
             // MARK: - 홈
             NavigationStack {
-                EmptyView()
+                ChannelListView()
             }
             .tabItem {
                 Image(tabInfo == .home ? .homeActive : .homeInactive)
@@ -64,6 +64,6 @@ struct RootView: View {
             }
             .tag(TabInfo.setting)
         }
-        .tint(.black)
+        .tint(.green)
     }
 }
