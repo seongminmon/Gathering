@@ -19,22 +19,29 @@ struct DMView: View {
                 VStack {
                     TextField("닉네임 입력", text: $store.nickname)
                     
-                    if store.list.isEmpty {
+                    if store.chattingList.isEmpty {
                         emptyMemberView()
                     } else {
                         ScrollView(.horizontal) {
                             LazyHStack(spacing: 10) {
-                                userCell()
+                                ForEach(store.userList, id: \.self) { item in
+                                    userCell(user: item)
+                                }
                             }
+                            .frame(height: 100)
+                            .padding(.horizontal, 20)
                         }
+                        
                         ScrollView {
                             LazyVStack(spacing: 20, content: {
-                                ForEach(store.list, id: \.self) { item in
+                                ForEach(store.chattingList, id: \.self) { item in
                                     Text("\(item)")
                                 }
                             })
                         }
                     }
+                    
+                    Spacer()
                 }
             }
         }
@@ -58,23 +65,18 @@ struct DMView: View {
         }
     }
     
-    private func userCell() -> some View {
+    private func userCell(user: DMUser) -> some View {
         VStack(spacing: 4) {
-            Image(systemName: "star")
-                .profileImageStyle()
-                .frame(width: 44, height: 44)
-            Text("asdf")
+            ProfileImageView(imageName: user.profileImage, size: 44)
+            Text(user.name)
+                .font(Design.body)
+                .frame(width: 44)
+                .lineLimit(1)
         }
     }
-}
-
-extension Image {
-    func profileImageStyle() -> some View {
-        self
-            .resizable()
-            .frame(width: 32, height: 32)
-            .background(.gray)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
+    
+    private func chattingCell(data: DMUser) {
+        
     }
 }
 
@@ -83,7 +85,8 @@ struct DMFeature {
     
     @ObservableState
     struct State {
-        var list: [String] = ["a", "b", "c"]
+        var userList = Dummy.users
+        var chattingList = Dummy.users
         var nickname: String = ""
     }
     
@@ -98,7 +101,6 @@ struct DMFeature {
             switch action {
             case .profileButtonTap:
                 print("프로필 버튼 탭")
-                state.list.append("asdfasdf")
                 return .none
                 
             case .binding(\.nickname):
