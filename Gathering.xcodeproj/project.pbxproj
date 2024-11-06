@@ -39,6 +39,9 @@
 		847A3F992CDAFC6B004A9361 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F982CDAFC6B004A9361 /* Router.swift */; };
 		847A3F9B2CDAFF04004A9361 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F9A2CDAFF04004A9361 /* Header.swift */; };
 		847A3F9D2CDB0E6B004A9361 /* AddChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F9C2CDB0E6B004A9361 /* AddChannelView.swift */; };
+		A0EEC1982CDA46B700D81239 /* ChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EEC1972CDA46B700D81239 /* ChattingView.swift */; };
+		A0EEC19A2CDB3AFA00D81239 /* MessageFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EEC1992CDB3AFA00D81239 /* MessageFieldView.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -85,6 +88,9 @@
 		847A3F982CDAFC6B004A9361 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		847A3F9A2CDAFF04004A9361 /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		847A3F9C2CDB0E6B004A9361 /* AddChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChannelView.swift; sourceTree = "<group>"; };
+		A0EEC1972CDA46B700D81239 /* ChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingView.swift; sourceTree = "<group>"; };
+		A0EEC1992CDB3AFA00D81239 /* MessageFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFieldView.swift; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +178,7 @@
 		24ABE9472CD4B7F2000E7EC5 /* SungEun */ = {
 			isa = PBXGroup;
 			children = (
+				A0EEC1962CDA469E00D81239 /* Chatting */,
 				24ABE9482CD4B801000E7EC5 /* SungEunView.swift */,
 			);
 			path = SungEun;
@@ -224,6 +231,7 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+
 		847A3F8C2CDA28CF004A9361 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -239,6 +247,16 @@
 				847A3F9A2CDAFF04004A9361 /* Header.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+
+		A0EEC1962CDA469E00D81239 /* Chatting */ = {
+			isa = PBXGroup;
+			children = (
+				A0EEC1972CDA46B700D81239 /* ChattingView.swift */,
+				A0EEC1992CDB3AFA00D81239 /* MessageFieldView.swift */,
+			);
+			path = Chatting;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -338,6 +356,7 @@
 				24ABE9492CD4B801000E7EC5 /* SungEunView.swift in Sources */,
 				847A3F992CDAFC6B004A9361 /* Router.swift in Sources */,
 				24ABE95A2CDB86F3000E7EC5 /* Color+.swift in Sources */,
+				A0EEC19A2CDB3AFA00D81239 /* MessageFieldView.swift in Sources */,
 				847A3F882CD9C032004A9361 /* ProfileImageView.swift in Sources */,
 				847A3F842CD9000F004A9361 /* HomeView.swift in Sources */,
 				847A3F922CDA9FC0004A9361 /* GatheringNavigationStack.swift in Sources */,
@@ -347,6 +366,7 @@
 				847A3F972CDAFB19004A9361 /* TargetType.swift in Sources */,
 				24ABE9522CD8B65E000E7EC5 /* DMView.swift in Sources */,
 				24ABE91D2CD4AEDB000E7EC5 /* GatheringApp.swift in Sources */,
+				A0EEC1982CDA46B700D81239 /* ChattingView.swift in Sources */,
 				24ABE94E2CD8A71D000E7EC5 /* RootView.swift in Sources */,
 				24ABE9432CD4B7CC000E7EC5 /* SeungHyunView.swift in Sources */,
 				24ABE9462CD4B7EA000E7EC5 /* SeongMinView.swift in Sources */,
