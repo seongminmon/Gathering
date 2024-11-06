@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct RoundedIconImageView: View {
+struct ProfileImageView: View {
     let imageName: String
-    var size: CGFloat = 40
+    var size: CGFloat
     
     var body: some View {
         Image(imageName)
