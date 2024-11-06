@@ -22,7 +22,7 @@ struct GatheringNavigationStack<Content: View>: View {
                         HStack {
                             ProfileImageView(imageName: "bird", size: 35)
                             Text("iOS Developers Study")
-                                .font(.title1)
+                                .font(Design.title1)
                         }
                     }
                     
@@ -31,7 +31,7 @@ struct GatheringNavigationStack<Content: View>: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 30, height: 30)
-                            .foregroundColor(.gray)
+                            .foregroundColor(Design.gray)
                             .overlay(
                                 Circle()
                                     .stroke(.black, lineWidth: 2)
@@ -41,5 +41,3 @@ struct GatheringNavigationStack<Content: View>: View {
         }
     }
 }
-
-

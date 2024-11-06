@@ -7,9 +7,8 @@
 
 import SwiftUI
 
-
 struct AddChannelView: View {
     var body: some View {
-        
+        Text("AddChannelView")
     }
 }

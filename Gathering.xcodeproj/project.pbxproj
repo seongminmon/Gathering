@@ -26,9 +26,10 @@
 		24ABE94E2CD8A71D000E7EC5 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE94D2CD8A71D000E7EC5 /* RootView.swift */; };
 		24ABE9522CD8B65E000E7EC5 /* DMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9512CD8B65E000E7EC5 /* DMView.swift */; };
 		24ABE9542CD8B711000E7EC5 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9532CD8B711000E7EC5 /* Font+.swift */; };
+		24ABE95A2CDB86F3000E7EC5 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9592CDB86F3000E7EC5 /* Color+.swift */; };
+		24ABE95C2CDB8701000E7EC5 /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE95B2CDB8701000E7EC5 /* Design.swift */; };
 		847A3F812CD8FFEF004A9361 /* CounterFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F802CD8FFEF004A9361 /* CounterFeature.swift */; };
 		847A3F842CD9000F004A9361 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F832CD9000F004A9361 /* HomeView.swift */; };
-		847A3F862CD90026004A9361 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F852CD90026004A9361 /* Color+.swift */; };
 		847A3F882CD9C032004A9361 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F872CD9C032004A9361 /* ProfileImageView.swift */; };
 		847A3F8B2CD9EA54004A9361 /* TempModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F8A2CD9EA54004A9361 /* TempModel.swift */; };
 		847A3F902CDA440F004A9361 /* CustomDisclosure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F8F2CDA440F004A9361 /* CustomDisclosure.swift */; };
@@ -71,9 +72,10 @@
 		24ABE94D2CD8A71D000E7EC5 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		24ABE9512CD8B65E000E7EC5 /* DMView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMView.swift; sourceTree = "<group>"; };
 		24ABE9532CD8B711000E7EC5 /* Font+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+.swift"; sourceTree = "<group>"; };
+		24ABE9592CDB86F3000E7EC5 /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
+		24ABE95B2CDB8701000E7EC5 /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
 		847A3F802CD8FFEF004A9361 /* CounterFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterFeature.swift; sourceTree = "<group>"; };
 		847A3F832CD9000F004A9361 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		847A3F852CD90026004A9361 /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
 		847A3F872CD9C032004A9361 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		847A3F8A2CD9EA54004A9361 /* TempModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempModel.swift; sourceTree = "<group>"; };
 		847A3F8F2CDA440F004A9361 /* CustomDisclosure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDisclosure.swift; sourceTree = "<group>"; };
@@ -178,8 +180,9 @@
 		24ABE9552CD8BC3A000E7EC5 /* Design */ = {
 			isa = PBXGroup;
 			children = (
+				24ABE95B2CDB8701000E7EC5 /* Design.swift */,
 				24ABE9532CD8B711000E7EC5 /* Font+.swift */,
-				847A3F852CD90026004A9361 /* Color+.swift */,
+				24ABE9592CDB86F3000E7EC5 /* Color+.swift */,
 			);
 			path = Design;
 			sourceTree = "<group>";
@@ -329,11 +332,12 @@
 				847A3F9B2CDAFF04004A9361 /* Header.swift in Sources */,
 				24ABE9402CD4B6D1000E7EC5 /* APIAuth.swift in Sources */,
 				847A3F942CDAB7A2004A9361 /* OptionSheet.swift in Sources */,
+				24ABE95C2CDB8701000E7EC5 /* Design.swift in Sources */,
 				847A3F8B2CD9EA54004A9361 /* TempModel.swift in Sources */,
-				847A3F862CD90026004A9361 /* Color+.swift in Sources */,
 				24ABE91F2CD4AEDB000E7EC5 /* ContentView.swift in Sources */,
 				24ABE9492CD4B801000E7EC5 /* SungEunView.swift in Sources */,
 				847A3F992CDAFC6B004A9361 /* Router.swift in Sources */,
+				24ABE95A2CDB86F3000E7EC5 /* Color+.swift in Sources */,
 				847A3F882CD9C032004A9361 /* ProfileImageView.swift in Sources */,
 				847A3F842CD9000F004A9361 /* HomeView.swift in Sources */,
 				847A3F922CDA9FC0004A9361 /* GatheringNavigationStack.swift in Sources */,

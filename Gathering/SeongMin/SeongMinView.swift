@@ -5,10 +5,10 @@
 //  Created by 김성민 on 11/1/24.
 //
 
-//import SwiftUI
-//
-//import ComposableArchitecture
-//
+import SwiftUI
+
+import ComposableArchitecture
+
 //struct CounterView: View {
 //    let store: StoreOf<CounterFeature>
 //    
@@ -43,7 +43,9 @@
 //@Reducer
 //struct CounterFeature {
 //    
-//    @Dependency(\.numberFact) var numberFact
+//    @Dependency(\.continuousClock) var timer
+//    @Dependency(\.dismiss) var dismiss
+//    @Dependency(\.userClient) var userClient
 //    
 //    @ObservableState
 //    struct State {
@@ -82,7 +84,7 @@
 //                state.fact = nil
 //                state.isLoading = true
 //                return .run { [count = state.count] send in
-//                    let fact = try await self.numberFact.fetch(count)
+//                    let fact = try await self.userClient.login(count)
 //                    await send(.factResponse(fact))
 //                }
 //                
@@ -115,13 +117,35 @@
 //    }
 //}
 //
-//struct NumberFactClient {
-//    var fetch: (Int) async throws -> String
+//// MARK: - Dependency
+//struct UserClient {
+//    var login: (Int) async throws -> String
+//    var signUp: (Int) async throws -> String
+//    var fetch1: (Int) async throws -> String
+//    var fetch2: (Int) async throws -> String
 //}
 //
-//extension NumberFactClient: DependencyKey {
-//    static let liveValue = Self(
-//        fetch: { number in
+//extension UserClient: DependencyKey {
+//    static let liveValue: UserClient = UserClient(
+//        login: { number in
+//            let (data, _) = try await URLSession.shared.data(
+//                from: URL(string: "http://numbersapi.com/\(number)")!
+//            )
+//            return String(data: data, encoding: .utf8) ?? "nil"
+//        },
+//        signUp: { number in
+//            let (data, _) = try await URLSession.shared.data(
+//                from: URL(string: "http://numbersapi.com/\(number)")!
+//            )
+//            return String(data: data, encoding: .utf8) ?? "nil"
+//        },
+//        fetch1: { number in
+//            let (data, _) = try await URLSession.shared.data(
+//                from: URL(string: "http://numbersapi.com/\(number)")!
+//            )
+//            return String(data: data, encoding: .utf8) ?? "nil"
+//        },
+//        fetch2: { number in
 //            let (data, _) = try await URLSession.shared.data(
 //                from: URL(string: "http://numbersapi.com/\(number)")!
 //            )
@@ -131,8 +155,8 @@
 //}
 //
 //extension DependencyValues {
-//    var numberFact: NumberFactClient {
-//        get { self[NumberFactClient.self] }
-//        set { self[NumberFactClient.self] = newValue }
+//    var userClient: UserClient {
+//        get { self[UserClient.self] }
+//        set { self[UserClient.self] = newValue }
 //    }
 //}

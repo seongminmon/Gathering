@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension Font {
+extension Design {
     static let title1 = Font.system(size: 22, weight: .bold)
     static let title2 = Font.system(size: 14, weight: .bold)
     static let bodyBold = Font.system(size: 13, weight: .bold)
