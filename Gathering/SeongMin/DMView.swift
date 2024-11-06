@@ -15,38 +15,26 @@ struct DMView: View {
     
     var body: some View {
         WithPerceptionTracking {
-            VStack {
-                TextField("닉네임 입력", text: $store.nickname)
-                
-                if store.list.isEmpty {
-                    emptyMemberView()
-                } else {
-                    ScrollView(.horizontal) {
-                        LazyHStack(spacing: 10) {
-                            userCell()
+            GatheringNavigationStack { // "Direct Message" (네비게이션 타이틀)
+                VStack {
+                    TextField("닉네임 입력", text: $store.nickname)
+                    
+                    if store.list.isEmpty {
+                        emptyMemberView()
+                    } else {
+                        ScrollView(.horizontal) {
+                            LazyHStack(spacing: 10) {
+                                userCell()
+                            }
+                        }
+                        ScrollView {
+                            LazyVStack(spacing: 20, content: {
+                                ForEach(store.list, id: \.self) { item in
+                                    Text("\(item)")
+                                }
+                            })
                         }
                     }
-                    ScrollView {
-                        LazyVStack(spacing: 20, content: {
-                            ForEach(store.list, id: \.self) { item in
-                                Text("\(item)")
-                            }
-                        })
-                    }
-                }
-            }
-            // 네비게이션 바
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    HStack(spacing: 8) {
-                        Image(systemName: "star")
-                            .profileImageStyle()
-                        Text("Direct Message")
-                            .font(.title1)
-                    }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    profileButton()
                 }
             }
         }
