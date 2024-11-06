@@ -17,15 +17,6 @@ struct DMView: View {
         WithPerceptionTracking {
             GatheringNavigationStack { // "Direct Message" (네비게이션 타이틀)
                 VStack {
-                    
-                    Text("시작하기")
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 44)
-                        .foregroundStyle(.white)
-                        .background(.green)
-                        .padding()
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                    
                     TextField("닉네임 입력", text: $store.nickname)
                     
                     if store.list.isEmpty {

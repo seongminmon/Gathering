@@ -28,6 +28,11 @@
 		24ABE9542CD8B711000E7EC5 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9532CD8B711000E7EC5 /* Font+.swift */; };
 		24ABE95A2CDB86F3000E7EC5 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9592CDB86F3000E7EC5 /* Color+.swift */; };
 		24ABE95C2CDB8701000E7EC5 /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE95B2CDB8701000E7EC5 /* Design.swift */; };
+		24ABE95F2CDB93B5000E7EC5 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE95E2CDB93B5000E7EC5 /* View+.swift */; };
+		24ABE9622CDB99B1000E7EC5 /* ChannelOutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9612CDB99B1000E7EC5 /* ChannelOutButton.swift */; };
+		24ABE9642CDB99C8000E7EC5 /* ContinueEmailButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9632CDB99C8000E7EC5 /* ContinueEmailButton.swift */; };
+		24ABE9662CDB99D0000E7EC5 /* StartInactiveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9652CDB99D0000E7EC5 /* StartInactiveButton.swift */; };
+		24ABE9682CDB99D6000E7EC5 /* StartActiveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9672CDB99D6000E7EC5 /* StartActiveButton.swift */; };
 		847A3F812CD8FFEF004A9361 /* CounterFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F802CD8FFEF004A9361 /* CounterFeature.swift */; };
 		847A3F842CD9000F004A9361 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F832CD9000F004A9361 /* HomeView.swift */; };
 		847A3F882CD9C032004A9361 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F872CD9C032004A9361 /* ProfileImageView.swift */; };
@@ -74,6 +79,11 @@
 		24ABE9532CD8B711000E7EC5 /* Font+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+.swift"; sourceTree = "<group>"; };
 		24ABE9592CDB86F3000E7EC5 /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
 		24ABE95B2CDB8701000E7EC5 /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
+		24ABE95E2CDB93B5000E7EC5 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
+		24ABE9612CDB99B1000E7EC5 /* ChannelOutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelOutButton.swift; sourceTree = "<group>"; };
+		24ABE9632CDB99C8000E7EC5 /* ContinueEmailButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinueEmailButton.swift; sourceTree = "<group>"; };
+		24ABE9652CDB99D0000E7EC5 /* StartInactiveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartInactiveButton.swift; sourceTree = "<group>"; };
+		24ABE9672CDB99D6000E7EC5 /* StartActiveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartActiveButton.swift; sourceTree = "<group>"; };
 		847A3F802CD8FFEF004A9361 /* CounterFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterFeature.swift; sourceTree = "<group>"; };
 		847A3F832CD9000F004A9361 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		847A3F872CD9C032004A9361 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
@@ -131,6 +141,7 @@
 				24ABE91E2CD4AEDB000E7EC5 /* ContentView.swift */,
 				24ABE93F2CD4B6D1000E7EC5 /* APIAuth.swift */,
 				847A3F952CDAFAFF004A9361 /* Network */,
+				24ABE95D2CDB931B000E7EC5 /* Modifier */,
 				24ABE9582CDA167C000E7EC5 /* Component */,
 				24ABE9552CD8BC3A000E7EC5 /* Design */,
 				24ABE9472CD4B7F2000E7EC5 /* SungEun */,
@@ -190,12 +201,32 @@
 		24ABE9582CDA167C000E7EC5 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				24ABE9602CDB99A8000E7EC5 /* Buttons */,
 				847A3F872CD9C032004A9361 /* ProfileImageView.swift */,
 				847A3F8F2CDA440F004A9361 /* CustomDisclosure.swift */,
 				847A3F912CDA9FC0004A9361 /* GatheringNavigationStack.swift */,
 				847A3F932CDAB7A2004A9361 /* OptionSheet.swift */,
 			);
 			path = Component;
+			sourceTree = "<group>";
+		};
+		24ABE95D2CDB931B000E7EC5 /* Modifier */ = {
+			isa = PBXGroup;
+			children = (
+				24ABE95E2CDB93B5000E7EC5 /* View+.swift */,
+			);
+			path = Modifier;
+			sourceTree = "<group>";
+		};
+		24ABE9602CDB99A8000E7EC5 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				24ABE9672CDB99D6000E7EC5 /* StartActiveButton.swift */,
+				24ABE9652CDB99D0000E7EC5 /* StartInactiveButton.swift */,
+				24ABE9632CDB99C8000E7EC5 /* ContinueEmailButton.swift */,
+				24ABE9612CDB99B1000E7EC5 /* ChannelOutButton.swift */,
+			);
+			path = Buttons;
 			sourceTree = "<group>";
 		};
 		847A3F7F2CD8FFD4004A9361 /* CounterView */ = {
@@ -333,18 +364,23 @@
 				24ABE9402CD4B6D1000E7EC5 /* APIAuth.swift in Sources */,
 				847A3F942CDAB7A2004A9361 /* OptionSheet.swift in Sources */,
 				24ABE95C2CDB8701000E7EC5 /* Design.swift in Sources */,
+				24ABE95F2CDB93B5000E7EC5 /* View+.swift in Sources */,
 				847A3F8B2CD9EA54004A9361 /* TempModel.swift in Sources */,
+				24ABE9622CDB99B1000E7EC5 /* ChannelOutButton.swift in Sources */,
 				24ABE91F2CD4AEDB000E7EC5 /* ContentView.swift in Sources */,
 				24ABE9492CD4B801000E7EC5 /* SungEunView.swift in Sources */,
 				847A3F992CDAFC6B004A9361 /* Router.swift in Sources */,
+				24ABE9682CDB99D6000E7EC5 /* StartActiveButton.swift in Sources */,
 				24ABE95A2CDB86F3000E7EC5 /* Color+.swift in Sources */,
 				847A3F882CD9C032004A9361 /* ProfileImageView.swift in Sources */,
 				847A3F842CD9000F004A9361 /* HomeView.swift in Sources */,
+				24ABE9662CDB99D0000E7EC5 /* StartInactiveButton.swift in Sources */,
 				847A3F922CDA9FC0004A9361 /* GatheringNavigationStack.swift in Sources */,
 				847A3F812CD8FFEF004A9361 /* CounterFeature.swift in Sources */,
 				847A3F902CDA440F004A9361 /* CustomDisclosure.swift in Sources */,
 				24ABE9542CD8B711000E7EC5 /* Font+.swift in Sources */,
 				847A3F972CDAFB19004A9361 /* TargetType.swift in Sources */,
+				24ABE9642CDB99C8000E7EC5 /* ContinueEmailButton.swift in Sources */,
 				24ABE9522CD8B65E000E7EC5 /* DMView.swift in Sources */,
 				24ABE91D2CD4AEDB000E7EC5 /* GatheringApp.swift in Sources */,
 				24ABE94E2CD8A71D000E7EC5 /* RootView.swift in Sources */,
