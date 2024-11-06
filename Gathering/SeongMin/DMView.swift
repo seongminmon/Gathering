@@ -11,11 +11,13 @@ import ComposableArchitecture
 
 struct DMView: View {
     
-    let store: StoreOf<DMFeature>
+    @Perception.Bindable var store: StoreOf<DMFeature>
     
     var body: some View {
         WithPerceptionTracking {
             VStack {
+                TextField("닉네임 입력", text: $store.nickname)
+                
                 if store.list.isEmpty {
                     emptyMemberView()
                 } else {
@@ -110,18 +112,27 @@ struct DMFeature {
     @ObservableState
     struct State {
         var list: [String] = []
+        var nickname: String = ""
     }
     
-    enum Action {
+    enum Action: BindableAction {
         case profileButtonTap
+        case binding(BindingAction<State>)
     }
     
     var body: some ReducerOf<Self> {
+        BindingReducer()
         Reduce { state, action in
             switch action {
             case .profileButtonTap:
                 print("프로필 버튼 탭")
                 state.list.append("asdfasdf")
+                return .none
+                
+            case .binding(\.nickname):
+                return .none
+                
+            case .binding:
                 return .none
             }
         }
