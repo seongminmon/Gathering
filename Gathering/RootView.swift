@@ -27,8 +27,8 @@ struct RootView: View {
     private func tabView() -> some View {
         TabView(selection: $tabInfo) {
             // MARK: - 홈
-            NavigationStack {
-                ChannelListView()
+            GatheringNavigationStack {
+                HomeView()
             }
             .tabItem {
                 Image(tabInfo == .home ? .homeActive : .homeInactive)
@@ -67,6 +67,7 @@ struct RootView: View {
                 Text(TabInfo.setting.rawValue)
             }
             .tag(TabInfo.setting)
+            
         }
         .tint(.green)
     }
