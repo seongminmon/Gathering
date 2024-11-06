@@ -17,6 +17,7 @@ struct DMView: View {
         WithPerceptionTracking {
             GatheringNavigationStack { // "Direct Message" (네비게이션 타이틀)
                 VStack {
+                    // MARK: - tca bind test
                     TextField("닉네임 입력", text: $store.nickname)
                     
                     if store.chattingList.isEmpty {
@@ -35,7 +36,7 @@ struct DMView: View {
                         ScrollView {
                             LazyVStack(spacing: 20, content: {
                                 ForEach(store.chattingList, id: \.self) { item in
-                                    Text("\(item)")
+                                    chattingCell(data: item)
                                 }
                             })
                         }
@@ -75,8 +76,25 @@ struct DMView: View {
         }
     }
     
-    private func chattingCell(data: DMUser) {
-        
+    private func chattingCell(data: DMUser) -> some View {
+        HStack(spacing: 4) {
+            ProfileImageView(imageName: data.profileImage, size: 34)
+            VStack(spacing: 4) {
+                Text(data.name)
+                    .font(Design.body)
+                Text(data.name)
+                    .font(Design.body)
+                    .foregroundStyle(Design.gray)
+            }
+            Spacer()
+            VStack(spacing: 4) {
+                Text("PM 11:23")
+                    .font(Design.body)
+                    .foregroundStyle(Design.gray)
+                EmptyView().badge(10)
+            }
+        }
+        .padding(.horizontal, 16)
     }
 }
 
