@@ -16,7 +16,7 @@ struct CounterView: View {
       Text("\(store.count)")
         .font(.largeTitle)
         .padding()
-        .background(Color.black.opacity(0.1))
+        .background(Design.black.opacity(0.1))
         .cornerRadius(10)
       HStack {
         Button("-") {
@@ -24,7 +24,7 @@ struct CounterView: View {
         }
         .font(.largeTitle)
         .padding()
-        .background(Color.black.opacity(0.1))
+        .background(Design.black.opacity(0.1))
         .cornerRadius(10)
         
         Button("+") {
@@ -32,7 +32,7 @@ struct CounterView: View {
         }
         .font(.largeTitle)
         .padding()
-        .background(Color.black.opacity(0.1))
+        .background(Design.black.opacity(0.1))
         .cornerRadius(10)
       }
         Button("Fact") {
@@ -40,7 +40,7 @@ struct CounterView: View {
               }
               .font(.largeTitle)
               .padding()
-              .background(Color.black.opacity(0.1))
+              .background(Design.black.opacity(0.1))
               .cornerRadius(10)
               
               if store.isLoading {
@@ -63,4 +63,3 @@ struct CounterView: View {
     }
   )
 }
-

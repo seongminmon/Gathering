@@ -73,14 +73,18 @@ struct HomeView: View {
         VStack(alignment: .leading, spacing: 12) {
             ForEach(channels, id: \.self) { channel in
                 HStack {
-                    ProfileImageView(imageName: channel.unreadCount == nil ? "thin" : "hashTagthick",
-                                     size: 15)
+                    ProfileImageView(
+                        imageName: channel.unreadCount == nil ? "thin" : "hashTagthick",
+                        size: 15
+                    )
                     Button(action: {
                         // TODO: -
                     }) {
                         Text(channel.name)
-                            .foregroundColor(channel.unreadCount == nil ? .darkGray : .black)
-                            .font(channel.unreadCount == nil ? .body : .bodyBold)
+                            .foregroundColor(
+                                channel.unreadCount == nil ? Design.darkGray : Design.black
+                            )
+                            .font(channel.unreadCount == nil ? Design.body : Design.bodyBold)
                         Spacer()
                         if let count = channel.unreadCount {
                             Text("\(count)")
@@ -102,8 +106,10 @@ struct HomeView: View {
                         // TODO: -
                     }) {
                         Text(user.name)
-                            .foregroundColor(user.unreadCount == nil ? .darkGray : .black)
-                            .font(user.unreadCount == nil ? .body : .bodyBold)
+                            .foregroundColor(
+                                user.unreadCount == nil ? Design.darkGray : Design.black
+                            )
+                            .font(user.unreadCount == nil ? Design.body : Design.bodyBold)
                         Spacer()
                         if let count = user.unreadCount {
                             Text("\(count)")
@@ -129,7 +135,7 @@ struct HomeView: View {
                 Spacer()
             }
             .padding(.top)
-            .foregroundColor(.darkGray)
+            .foregroundColor(Design.darkGray)
         }
     }
 }
@@ -142,8 +148,8 @@ struct ChannelListView_Previews: PreviewProvider {
 // TODO: extension 모을지 말지
 extension View {
     func badge(
-        backgroundColor: Color = .green,
-        textColor: Color = .white
+        backgroundColor: Color = Design.green,
+        textColor: Color = Design.white
     ) -> some View {
         self
             .font(.caption)
@@ -161,10 +167,10 @@ struct FloatingActionButton: View {
     var body: some View {
         Button(action: action) {
             Image(systemName: "square.and.pencil")
-                .foregroundColor(.white)
+                .foregroundColor(Design.white)
                 .font(.system(size: 25))
                 .frame(width: 60, height: 60)
-                .background(Color.green)
+                .background(Design.green)
                 .clipShape(Circle())
                 .shadow(radius: 4)
         }

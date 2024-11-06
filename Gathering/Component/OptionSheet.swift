@@ -25,7 +25,7 @@ struct OptionSheet: View {
                             Spacer()
                             if option.showChevron {
                                 Image(systemName: "chevron.right")
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(Design.gray)
                             }
                         }
                     }

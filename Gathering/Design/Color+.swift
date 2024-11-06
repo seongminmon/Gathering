@@ -2,18 +2,16 @@
 //  Color+.swift
 //  Gathering
 //
-//  Created by dopamint on 11/4/24.
+//  Created by 김성민 on 11/6/24.
 //
 
 import SwiftUI
 
-// TODO: 디자인 합의 필요
-extension Color {
+extension Design {
     static let darkGray = Color(.textSecondary)
-    static let green = Color(.green)
+    static let green = Color(.appGreen)
     static let red = Color(.error)
-//    static let darkGray = Color(.inactive)
-    static let black = Color(.black)
-    static let gray = Color(.gray)
-    static let white = Color(.white)
+    static let black = Color(.appBlack)
+    static let gray = Color(.appGray)
+    static let white = Color(.appWhite)
 }
