@@ -12,5 +12,6 @@ extension Design {
     static let title2 = Font.system(size: 14, weight: .bold)
     static let bodyBold = Font.system(size: 13, weight: .bold)
     static let body = Font.system(size: 13, weight: .regular)
-    static let caption = Font.system(size: 12, weight: .bold)
+    static let caption = Font.system(size: 12, weight: .regular)
+    static let caption2 = Font.system(size: 11, weight: .regular)
 }
