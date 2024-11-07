@@ -46,7 +46,6 @@
 		847A3F9B2CDAFF04004A9361 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F9A2CDAFF04004A9361 /* Header.swift */; };
 		847A3F9D2CDB0E6B004A9361 /* AddChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F9C2CDB0E6B004A9361 /* AddChannelView.swift */; };
 		A0E444C52CDD0A5C0024AE71 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444C42CDD0A5C0024AE71 /* ChatMessage.swift */; };
-		A0E444C72CDD0A960024AE71 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444C62CDD0A960024AE71 /* View+.swift */; };
 		A0EEC1982CDA46B700D81239 /* ChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EEC1972CDA46B700D81239 /* ChattingView.swift */; };
 /* End PBXBuildFile section */
 
@@ -101,7 +100,6 @@
 		847A3F9A2CDAFF04004A9361 /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		847A3F9C2CDB0E6B004A9361 /* AddChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChannelView.swift; sourceTree = "<group>"; };
 		A0E444C42CDD0A5C0024AE71 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
-		A0E444C62CDD0A960024AE71 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "View+.swift"; path = "Gathering/SungEun/Model/View+.swift"; sourceTree = SOURCE_ROOT; };
 		A0EEC1972CDA46B700D81239 /* ChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -141,7 +139,6 @@
 		24ABE91B2CD4AEDB000E7EC5 /* Gathering */ = {
 			isa = PBXGroup;
 			children = (
-				847A3F8C2CDA28CF004A9361 /* Extension */,
 				24ABE93E2CD4B5B9000E7EC5 /* Info.plist */,
 				24ABE93D2CD4B557000E7EC5 /* APIKey.xcconfig */,
 				24ABE91C2CD4AEDB000E7EC5 /* GatheringApp.swift */,
@@ -266,14 +263,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		847A3F8C2CDA28CF004A9361 /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-				A0E444C62CDD0A960024AE71 /* View+.swift */,
-			);
-			path = Extension;
-			sourceTree = "<group>";
-		};
 		847A3F952CDAFAFF004A9361 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -392,9 +381,6 @@
 				24ABE9402CD4B6D1000E7EC5 /* APIAuth.swift in Sources */,
 				847A3F942CDAB7A2004A9361 /* OptionSheet.swift in Sources */,
 				24ABE95C2CDB8701000E7EC5 /* Design.swift in Sources */,
-
-				A0E444C72CDD0A960024AE71 /* View+.swift in Sources */,
-
 				24ABE96C2CDB9AF9000E7EC5 /* AppleLoginButton.swift in Sources */,
 				24ABE95F2CDB93B5000E7EC5 /* View+.swift in Sources */,
 				24ABE96A2CDB9AB8000E7EC5 /* KakaoLoginButton.swift in Sources */,
