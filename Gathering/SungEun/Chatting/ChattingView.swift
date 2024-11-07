@@ -14,9 +14,10 @@ struct ChattingView: View {
     @State private var messageText: String = ""
     @State private var selectedImages: [UIImage] = []
     @State private var messages: [ChatMessage] = [
-        ChatMessage(name: "지수", text: "djfshfeuiodjfshfeuiodjfshfeuiodjfshfeuiodjfshfeuiodjfshfeuiodjfshfeuiodjfshfeuiodjfshfeuiodjfshfeuiodjfshfeuiodjfshfeuiodjfshfeuiodjfshfeuiodjfshfeuiodjfshfeuiodjfshfeuiodjfshfeuiodjfshfeuiodjfshfeuiodjfshfeuio", images: [], isMine: false),
-        ChatMessage(name: "아라", text: "djfshfeuio", images: [], isMine: false),
-        ChatMessage(name: "성은", text: "djfshfeuio", images: [], isMine: false)
+        ChatMessage(name: "지수", text: "아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘", images: [], isMine: false, profile: "bird"),
+        ChatMessage(name: "아라", text: "그래그래 사진 보내줘~", images: [], isMine: false, profile: "bird2"),
+        ChatMessage(name: "나야나", text: "아직 못보내~....", images: [], isMine: true, profile: "bird3"),
+        ChatMessage(name: "성은", text: "^^>....", images: [], isMine: false, profile: "bird3")
         
     ]
     @State private var scrollViewID = UUID()
@@ -24,127 +25,68 @@ struct ChattingView: View {
     
     private var keyboardSubscriber: AnyCancellable?
     
-    //    init() {
-    //        // 키보드 노티피케이션 구독
-    //        keyboardSubscriber = NotificationCenter.default
-    //        .publisher(for: UIResponder.keyboardWillChangeFrameNotification)
-    //            .compactMap { notification -> CGFloat? in
-    //                guard let frame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey]
-    //    as? CGRect else { return nil }
-    //                return frame.height
-    //            }
-    //            .sink { [weak self] height in
-    //                withAnimation {
-    //                    self.keyboardHeight = self.height == UIScreen.main.bounds.height ? 0 : height
-    //                }
-    //            }
-    //    }
-    
     var body: some View {
-        VStack {
-            // 채팅 메시지 리스트
-            ScrollViewReader { proxy in
-                ScrollView {
-                    LazyVStack(alignment: .leading, spacing: 10) {
-                        ForEach(messages) { message in
-                            ChatMessageView(message: message)
+        NavigationStack {
+            VStack {
+                // 채팅 메시지 리스트
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        LazyVStack {
+                            ForEach(messages) { message in
+                                ChatMessageView(message: message)
+                            }
+                        }
+                        .padding(.horizontal, 20)
+                        .id(scrollViewID)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .onChange(of: messages.count) { _ in
+                        // 메시지 추가 시 자동 스크롤
+                        withAnimation {
+                            proxy.scrollTo(scrollViewID, anchor: .bottom)
                         }
                     }
-                    .padding(.horizontal, 20)
-                    .id(scrollViewID)
                 }
-                .background{
-                    Color.yellow
-                }
-                .onChange(of: messages.count) { _ in
-                    // 메시지 추가 시 자동 스크롤
-                    withAnimation {
-                        proxy.scrollTo(scrollViewID, anchor: .bottom)
-                    }
-                }
+                messageInputView()
             }
-            
-            Divider()
-            
-            // 입력 뷰
-            HStack(alignment: .bottom) {
-                // 이미지 선택 버튼
-                Button {
-                    showImagePicker()
-                } label: {
-                    Image(systemName: "plus.circle")
-                        .font(.system(size: 24))
-                        .foregroundColor(.gray)
-                }
-                
-                // 선택한 이미지 프리뷰
-                //                ScrollView(.horizontal, showsIndicators: false) {
-                //                    HStack {
-                //                        ForEach(selectedImages, id: \.self) { image in
-                //                            Image(uiImage: image)
-                //                                .resizable()
-                //                                .scaledToFill()
-                //                                .frame(width: 40, height: 40)
-                //                                .cornerRadius(8)
-                //                                .overlay(
-                //                                    Button(action: {
-                //                                        // 선택한 이미지 제거 로직
-                //                                        if let index = selectedImages.firstIndex(of: image) {
-                //                                            selectedImages.remove(at: index)
-                //                                        }
-                //                                    }) {
-                //                                        Image(systemName: "xmark.circle.fill")
-                //                                            .foregroundColor(.white)
-                //                                            .background(Color.black.opacity(0.5))
-                //                                            .clipShape(Circle())
-                //                                    }
-                //                                    .offset(x: 10, y: -10)
-                //                                )
-                //                        }
-                //                    }
-                //                }
-                
-                // 메시지 입력 필드
-                TextEditor(text: $messageText)
-                    .frame(maxHeight: 100)
-                    .padding(4)
-                    .background(
-                        RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1)
-                    )
-                
-                // 전송버튼
-                Button {
-                    // 메세지 전송 로직
-                } label: {
-                    Image(systemName: "paperplane.fill")
-                        .font(.system(size: 24))
-                        .foregroundColor(messageText.isEmpty && selectedImages.isEmpty ? .gray : .blue)
-                }
-                .disabled(messageText.isEmpty && selectedImages.isEmpty)
+            .onTapGesture {
+                // 화면을 탭할 때 키보드 내리기
+                hideKeyboard()
             }
-            .padding()
-            .background(Color.white) // 입력 창 배경색
-            .offset(y: -keyboardHeight) // 키보드가 올라올 때 입력창도 같이 올라가게 함
-            .animation(.easeOut(duration: 0.3), value: keyboardHeight)
-        }
-        .onTapGesture {
-            // 화면을 탭할 때 키보드 내리기
-            hideKeyboard()
-        }
-        .onDisappear {
-            // 뷰가 사라질 때 키보드 노티피케이션 구독 해제
-            keyboardSubscriber?.cancel()
+            .onDisappear {
+                // 뷰가 사라질 때 키보드 노티피케이션 구독 해제
+                keyboardSubscriber?.cancel()
+            }
+            .navigationTitle("#모야모여모여랏")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: {
+                        // 뒤로가기
+                    }, label: {
+                        Image("chevronLeft")
+                    })
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
+                        // 뒤로가기
+                    }, label: {
+                        Image("List")
+                    })
+                }
+                
+            }
         }
     }
-    
     // 메시지 전송 로직
     func sendMessage() {
         if !messageText.isEmpty || !selectedImages.isEmpty {
             messages.append(
-                ChatMessage(name: "ㅇㄹㄴ", 
+                ChatMessage(name: "ㅇㄹㄴ",
                             text: messageText,
                             images: selectedImages,
-                            isMine: true)
+                            isMine: true,
+                            profile: nil)
             )
             messageText = ""
             selectedImages = []
@@ -153,130 +95,211 @@ struct ChattingView: View {
     }
     
     // PHPicker를 표시하는 함수
-    func showImagePicker() {
-        let picker = PHPickerViewController(configuration: PHPickerConfiguration(photoLibrary: .shared()))
-        picker.delegate = PHPickerHandler(selectedImages: $selectedImages)
-        UIApplication.shared.windows.first?.rootViewController?.present(picker, animated: true)
-    }
+    //    func showImagePicker() {
+    //        let picker = PHPickerViewController(
+    //            configuration: PHPickerConfiguration(photoLibrary: .shared())
+    //        )
+    //        picker.delegate = PHPickerHandler(selectedImages: $selectedImages)
+    //        UIApplication.shared.windows.first?.rootViewController?.present(picker, animated: true)
+    //    }
 }
-
-// 키보드 숨기기 메서드
-extension View {
-    func hideKeyboard() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
-}
-
-// 메시지 모델 정의
-struct ChatMessage: Identifiable {
-    var id = UUID()
-    let name: String
-    let text: String
-    let images: [UIImage]
-    let date = Date()
-    let isMine: Bool
-}
-
-// PHPicker 핸들러
-class PHPickerHandler: NSObject, PHPickerViewControllerDelegate {
-    @Binding var selectedImages: [UIImage]
-    
-    init(selectedImages: Binding<[UIImage]>) {
-        _selectedImages = selectedImages
-    }
-    
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        picker.dismiss(animated: true)
-        
-        for result in results {
-            if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
-                result.itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-                    if let uiImage = image as? UIImage {
-                        DispatchQueue.main.async {
-                            self.selectedImages.append(uiImage)
-                        }
+extension ChattingView {
+    private func messageInputView() -> some View {
+        HStack {
+            // 입력 뷰
+            HStack(alignment: .bottom) {
+                // 이미지 선택 버튼
+                Button {
+                    //                            showImagePicker()
+                } label: {
+                    Image(systemName: "plus")
+                        .resizable()
+                        .frame(width: 22, height: 20)
+                        .foregroundColor(Design.darkGray)
+                }
+                
+                VStack(alignment: .leading) {
+                    // 메시지 입력 필드
+                    DynamicHeightTextField(text: $messageText)
+                    if !selectedImages.isEmpty {
+                        selectePhotoView()
                     }
                 }
+                // 전송버튼
+                Button {
+                    // 메세지 전송 로직
+                    sendMessage()
+                } label: {
+                    Image(systemName: "paperplane.fill")
+                        .font(.system(size: 20))
+                        .foregroundColor(messageText.isEmpty && selectedImages.isEmpty
+                                         ? Design.darkGray : Design.green)
+                }
+                .disabled(messageText.isEmpty && selectedImages.isEmpty)
             }
+            .padding(.vertical, 14)
+            .padding(.horizontal, 12)
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .foregroundColor(Design.background)
+            )
         }
+        .padding(.vertical, 14)
+        .padding(.horizontal, 16)
+    }
+    private func selectePhotoView() -> some View {
+        LazyHGrid(rows: [GridItem(.fixed(50))], spacing: 12, content: {
+            // 이미지넣기
+            Image(systemName: "star")
+                .resizable()
+                .frame(width: 44, height: 44)
+                .aspectRatio(contentMode: .fill)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .padding(.horizontal, 12)
+                .overlay {
+                    Button(action: {
+                        print("클릭클릭")
+                    }, label: {
+                        Image(systemName: "xmark.circle")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(Design.black)
+                            .background(
+                                Circle().size(width: 20, height: 20)
+                                    .foregroundColor(Design.white)
+                            )
+                            .offset(x: 22, y: -22)
+                    })
+                }
+            Image(systemName: "star")
+                .resizable()
+                .frame(width: 44, height: 44)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .padding(.horizontal, 12)
+                .overlay {
+                    Button(action: {
+                        print("클릭클릭")
+                    }, label: {
+                        Image(systemName: "xmark.circle")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(Design.black)
+                            .background(
+                                Circle().size(width: 20, height: 20)
+                                    .foregroundColor(Design.white)
+                            )
+                            .offset(x: 20, y: -20)
+                    })
+                }
+        })
+        .frame(height: 55)
+        .background(.red)
     }
 }
+
+
+// PHPicker 핸들러
+//class PHPickerHandler: NSObject, PHPickerViewControllerDelegate {
+//    @Binding var selectedImages: [UIImage]
+//
+//    init(selectedImages: Binding<[UIImage]>) {
+//        _selectedImages = selectedImages
+//    }
+//
+//    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+//        picker.dismiss(animated: true)
+//
+//        for result in results {
+//            if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
+//                result.itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+//                    if let uiImage = image as? UIImage {
+//                        DispatchQueue.main.async {
+//                            self.selectedImages.append(uiImage)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
 
 // 채팅 메시지 뷰
 struct ChatMessageView: View {
     var message: ChatMessage
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 5) {
-            VStack(alignment: .leading) {
-                Text(message.name)
-                    .font(Font.caption)
-                Text(message.text)
-                    .font(Font.body)
-                    .padding(8)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12) // 둥근 모서리
-                            .fill(Color.white) // 배경색 설정
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(Color.gray, lineWidth: 1) // 테두리 색과 두께 설정
-                    )
+        
+        if message.isMine {
+            VStack(alignment: .trailing) {
+                HStack(alignment: .bottom) {
+                    Spacer()
+                    Text("오후 8:10")
+                        .font(Design.caption2)
+                        .foregroundStyle(Design.darkGray)
+                    Text(message.text)
+                        .font(Font.body)
+                        .padding(8)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12) // 둥근 모서리
+                                .fill(Color.white) // 배경색 설정
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(Color.gray, lineWidth: 1) // 테두리 색과 두께 설정
+                        )
+                }
+                
             }
+            .frame(maxWidth: .infinity)
+        } else {
+            HStack(alignment: .top) {
+                ProfileImageView(imageName: message.profile ?? "bird",
+                                 size: 34)
+                VStack(alignment: .leading) {
+                    Text(message.name)
+                        .font(Design.caption)
+                    HStack(alignment: .bottom) {
+                        Text(message.text)
+                            .font(Font.body)
+                            .padding(8)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12) // 둥근 모서리
+                                    .fill(Design.white) // 배경색 설정
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(Design.gray, lineWidth: 1) // 테두리 색과 두께 설정
+                            )
+                        Text("오후 8:10")
+                            .font(Design.caption2)
+                            .foregroundStyle(Design.darkGray)
+                        Spacer()
+                        
+                    }
+                    
+                }
+                .frame(maxWidth: .infinity)
+            }
+            .padding(.bottom, 5)
             
         }
+        
     }
 }
 
-
-
-//struct ChattingView: View {
-//    var body: some View {
-//        VStack {
-//            VStack {
-//
-//
-//                ScrollViewReader { proxy in
-//                    ScrollView {
-////                        ForEach(messagesManager.messages, id: \.id) { message in
-////                            MessageBubble(message: message)
-////                        }
-//                    }
-//                    .padding(.top, 10)
-//                    .background(.white)
-//                    .cornerRadius(30, corners: [.topLeft, .topRight])
-////                    .onChange(of: messagesManager.lastMessageId) { id in
-////                        // When the lastMessageId changes, scroll to the bottom of the conversation
-////                        withAnimation {
-////                            proxy.scrollTo(id, anchor: .bottom)
-////                        }
-////                    }
-//                }
-//            }
-//            .background(Color("Peach"))
-//
-//            MessageFieldView()
-//        }
-//    }
-//
-//}
-//
-//extension View {
-//    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
-//        clipShape(RoundedCorner(radius: radius, corners: corners) )
-//    }
-//}
-//struct RoundedCorner: Shape {
-//    var radius: CGFloat = .infinity
-//    var corners: UIRectCorner = .allCorners
-//
-//    func path(in rect: CGRect) -> Path {
-//        let path = UIBezierPath(roundedRect: rect,
-//                                byRoundingCorners: corners,
-//                                cornerRadii: CGSize(width: radius, height: radius))
-//        return Path(path.cgPath)
-//    }
-//}
+struct DynamicHeightTextField: View {
+    @Binding var text: String
+    private let placeholder = "메세지를 입력하세요"
+    
+    var body: some View {
+        VStack {
+            TextField("메세지를 입력하세요", text: $text, axis: .vertical)
+                .lineLimit(1...5)
+                .background(Color.clear)
+                .font(Design.body)
+        }
+    }
+}
 
 #Preview {
     ChattingView()

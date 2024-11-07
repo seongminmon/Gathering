@@ -20,7 +20,6 @@
 		24ABE9402CD4B6D1000E7EC5 /* APIAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE93F2CD4B6D1000E7EC5 /* APIAuth.swift */; };
 		24ABE9432CD4B7CC000E7EC5 /* SeungHyunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9422CD4B7CC000E7EC5 /* SeungHyunView.swift */; };
 		24ABE9462CD4B7EA000E7EC5 /* SeongMinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9452CD4B7EA000E7EC5 /* SeongMinView.swift */; };
-		24ABE9492CD4B801000E7EC5 /* SungEunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9482CD4B801000E7EC5 /* SungEunView.swift */; };
 		24ABE94B2CD4B8A9000E7EC5 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 24ABE94A2CD4B8A9000E7EC5 /* .swiftlint.yml */; };
 		24ABE94C2CD4BACD000E7EC5 /* APIKey.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 24ABE93D2CD4B557000E7EC5 /* APIKey.xcconfig */; };
 		24ABE94E2CD8A71D000E7EC5 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE94D2CD8A71D000E7EC5 /* RootView.swift */; };
@@ -39,9 +38,9 @@
 		847A3F992CDAFC6B004A9361 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F982CDAFC6B004A9361 /* Router.swift */; };
 		847A3F9B2CDAFF04004A9361 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F9A2CDAFF04004A9361 /* Header.swift */; };
 		847A3F9D2CDB0E6B004A9361 /* AddChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F9C2CDB0E6B004A9361 /* AddChannelView.swift */; };
+		A0E444C52CDD0A5C0024AE71 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444C42CDD0A5C0024AE71 /* ChatMessage.swift */; };
+		A0E444C72CDD0A960024AE71 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444C62CDD0A960024AE71 /* View+.swift */; };
 		A0EEC1982CDA46B700D81239 /* ChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EEC1972CDA46B700D81239 /* ChattingView.swift */; };
-		A0EEC19A2CDB3AFA00D81239 /* MessageFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EEC1992CDB3AFA00D81239 /* MessageFieldView.swift */; };
-
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -70,7 +69,6 @@
 		24ABE93F2CD4B6D1000E7EC5 /* APIAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAuth.swift; sourceTree = "<group>"; };
 		24ABE9422CD4B7CC000E7EC5 /* SeungHyunView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeungHyunView.swift; sourceTree = "<group>"; };
 		24ABE9452CD4B7EA000E7EC5 /* SeongMinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeongMinView.swift; sourceTree = "<group>"; };
-		24ABE9482CD4B801000E7EC5 /* SungEunView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SungEunView.swift; sourceTree = "<group>"; };
 		24ABE94A2CD4B8A9000E7EC5 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		24ABE94D2CD8A71D000E7EC5 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		24ABE9512CD8B65E000E7EC5 /* DMView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMView.swift; sourceTree = "<group>"; };
@@ -88,9 +86,9 @@
 		847A3F982CDAFC6B004A9361 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		847A3F9A2CDAFF04004A9361 /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		847A3F9C2CDB0E6B004A9361 /* AddChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChannelView.swift; sourceTree = "<group>"; };
+		A0E444C42CDD0A5C0024AE71 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		A0E444C62CDD0A960024AE71 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "View+.swift"; path = "Gathering/SungEun/Model/View+.swift"; sourceTree = SOURCE_ROOT; };
 		A0EEC1972CDA46B700D81239 /* ChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingView.swift; sourceTree = "<group>"; };
-		A0EEC1992CDB3AFA00D81239 /* MessageFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFieldView.swift; sourceTree = "<group>"; };
-
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,8 +176,8 @@
 		24ABE9472CD4B7F2000E7EC5 /* SungEun */ = {
 			isa = PBXGroup;
 			children = (
+				A0E444C32CDD0A460024AE71 /* Model */,
 				A0EEC1962CDA469E00D81239 /* Chatting */,
-				24ABE9482CD4B801000E7EC5 /* SungEunView.swift */,
 			);
 			path = SungEun;
 			sourceTree = "<group>";
@@ -231,10 +229,10 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-
 		847A3F8C2CDA28CF004A9361 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				A0E444C62CDD0A960024AE71 /* View+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -249,12 +247,18 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
-
+		A0E444C32CDD0A460024AE71 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A0E444C42CDD0A5C0024AE71 /* ChatMessage.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		A0EEC1962CDA469E00D81239 /* Chatting */ = {
 			isa = PBXGroup;
 			children = (
 				A0EEC1972CDA46B700D81239 /* ChattingView.swift */,
-				A0EEC1992CDB3AFA00D81239 /* MessageFieldView.swift */,
 			);
 			path = Chatting;
 			sourceTree = "<group>";
@@ -351,12 +355,12 @@
 				24ABE9402CD4B6D1000E7EC5 /* APIAuth.swift in Sources */,
 				847A3F942CDAB7A2004A9361 /* OptionSheet.swift in Sources */,
 				24ABE95C2CDB8701000E7EC5 /* Design.swift in Sources */,
+				A0E444C72CDD0A960024AE71 /* View+.swift in Sources */,
 				847A3F8B2CD9EA54004A9361 /* TempModel.swift in Sources */,
 				24ABE91F2CD4AEDB000E7EC5 /* ContentView.swift in Sources */,
-				24ABE9492CD4B801000E7EC5 /* SungEunView.swift in Sources */,
 				847A3F992CDAFC6B004A9361 /* Router.swift in Sources */,
+				A0E444C52CDD0A5C0024AE71 /* ChatMessage.swift in Sources */,
 				24ABE95A2CDB86F3000E7EC5 /* Color+.swift in Sources */,
-				A0EEC19A2CDB3AFA00D81239 /* MessageFieldView.swift in Sources */,
 				847A3F882CD9C032004A9361 /* ProfileImageView.swift in Sources */,
 				847A3F842CD9000F004A9361 /* HomeView.swift in Sources */,
 				847A3F922CDA9FC0004A9361 /* GatheringNavigationStack.swift in Sources */,
@@ -512,7 +516,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Gathering/Preview Content\"";
-				DEVELOPMENT_TEAM = Z6H2JVV9PA;
+				DEVELOPMENT_TEAM = HP4XA8YZN3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gathering/Info.plist;
@@ -550,7 +554,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Gathering/Preview Content\"";
-				DEVELOPMENT_TEAM = Z6H2JVV9PA;
+				DEVELOPMENT_TEAM = HP4XA8YZN3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gathering/Info.plist;
