@@ -145,21 +145,6 @@ struct ChannelListView_Previews: PreviewProvider {
         HomeView()
     }
 }
-// TODO: extension 모을지 말지
-extension View {
-    func badge(
-        backgroundColor: Color = Design.green,
-        textColor: Color = Design.white
-    ) -> some View {
-        self
-            .font(.caption)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 2)
-            .background(backgroundColor)
-            .foregroundColor(textColor)
-            .clipShape(Capsule())
-    }
-}
 
 struct FloatingActionButton: View {
     let action: () -> Void
