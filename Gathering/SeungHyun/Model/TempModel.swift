@@ -12,7 +12,7 @@ struct Channel: Identifiable, Hashable {
     let name: String
     let unreadCount: Int?
 }
-struct DMUser: Identifiable {
+struct DMUser: Identifiable, Hashable {
     let id = UUID()
     let profileImage: String
     let name: String
