@@ -13,65 +13,83 @@ struct HomeView: View {
     
     @State private var isChannelExpanded = true
     @State private var isDMExpanded = true
-    @State private var showingSheet = false
+    @State private var showOptionSheet = false
+    @State private var showChannelAdd = false
+    @State private var showChannelExplore = false
+    @State private var showInviteMember = false
+    @State private var navigationPath = NavigationPath()
     
     var body: some View {
-        ZStack(alignment: .bottomTrailing) {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 0) {
-                    
-                    // 채널
-                    CustomDisclosureGroup(
-                        label: "채널",
-                        isExpanded: $isChannelExpanded
-                    ) {
-                        channelListView()
-                        makeAddButton(text: "채널 추가") {
-                            showingSheet = true
-                        }
-                        .confirmationDialog("",
-                                            isPresented: $showingSheet,
-                                            titleVisibility: .hidden
-                        ) {
-                            Button("채널 생성") {
-                                print("1")
-                            }
-                            Button("채널 추가") {
-                                print("2")
-                            }
-                            Button("취소", role: .cancel) {}
-                        }
-                    }
-                    .padding()
-                    Divider()
-                    
-                    // DM
-                    CustomDisclosureGroup(
-                        label: "다이렉트 메시지",
-                        isExpanded: $isDMExpanded
-                    ) {
-                        dmListView()
-                    }
-                    .padding()
+        NavigationStack(path: $navigationPath) {
+            ZStack(alignment: .bottomTrailing) {
+                scrollView()
+                FloatingActionButton {
+                    print("탭탭")
                 }
-                .foregroundStyle(.black)
+            }
+        }
+        .sheet(isPresented: $showChannelAdd) {
+            ChannelAddView()
+                .presentationDragIndicator(.visible)
+        }
+        .fullScreenCover(isPresented: $showChannelExplore) {
+            ChannelExploreView()
+        }
+        .sheet(isPresented: $showInviteMember) {
+            InviteMemberView()
+                .presentationDragIndicator(.visible)
+        }
+    }
+    
+    private func scrollView() -> some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 0) {
+                CustomDisclosureGroup(
+                    label: "채널",
+                    isExpanded: $isChannelExpanded
+                ) {
+                    channelListView()
+                    makeAddButton(text: "채널 추가") {
+                        showOptionSheet = true
+                    }
+                    .confirmationDialog("",
+                                        isPresented: $showOptionSheet,
+                                        titleVisibility: .hidden
+                    ) {
+                        Button("채널 생성") {
+                            showChannelAdd = true
+                        }
+                        Button("채널 탐색") {
+                            showChannelExplore = true
+                        }
+                        Button("취소", role: .cancel) {}
+                    }
+                }
+                .padding()
                 Divider()
-                makeAddButton(text: "팀원 추가") {
-                    
+                
+                // DM
+                CustomDisclosureGroup(
+                    label: "다이렉트 메시지",
+                    isExpanded: $isDMExpanded
+                ) {
+                    dmListView()
                 }
-                .padding(EdgeInsets(top: 5, leading: 15, bottom: 0, trailing: 0))
+                .padding()
             }
-            FloatingActionButton {
-                // TODO: -
-                print("탭탭")
+            .foregroundStyle(.black)
+            Divider()
+            makeAddButton(text: "팀원 추가") {
+                showInviteMember = true
             }
+            .padding(EdgeInsets(top: 5, leading: 15, bottom: 0, trailing: 0))
         }
     }
     
     private func channelListView() -> some View {
         
         VStack(alignment: .leading, spacing: 12) {
-            ForEach(channels, id: \.self) { channel in
+            ForEach(channels, id: \.id) { channel in
                 HStack {
                     ProfileImageView(
                         imageName: channel.unreadCount == nil ? "thin" : "hashTagthick",

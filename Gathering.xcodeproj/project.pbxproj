@@ -46,7 +46,6 @@
 		847A3F8B2CD9EA54004A9361 /* TempModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F8A2CD9EA54004A9361 /* TempModel.swift */; };
 		847A3F902CDA440F004A9361 /* CustomDisclosure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F8F2CDA440F004A9361 /* CustomDisclosure.swift */; };
 		847A3F922CDA9FC0004A9361 /* GatheringNavigationStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F912CDA9FC0004A9361 /* GatheringNavigationStack.swift */; };
-		847A3F942CDAB7A2004A9361 /* OptionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F932CDAB7A2004A9361 /* OptionSheet.swift */; };
 		847A3F972CDAFB19004A9361 /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F962CDAFB19004A9361 /* TargetType.swift */; };
 		847A3F992CDAFC6B004A9361 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F982CDAFC6B004A9361 /* Router.swift */; };
 		847A3F9B2CDAFF04004A9361 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F9A2CDAFF04004A9361 /* Header.swift */; };
@@ -54,6 +53,10 @@
 		A0E444C52CDD0A5C0024AE71 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444C42CDD0A5C0024AE71 /* ChatMessage.swift */; };
 		A0E444CA2CDDF4520024AE71 /* ChattingPhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444C92CDDF4520024AE71 /* ChattingPhotoPicker.swift */; };
 		A0EEC1982CDA46B700D81239 /* ChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EEC1972CDA46B700D81239 /* ChattingView.swift */; };
+		847A3F9F2CDB6AC4004A9361 /* ToolbarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F9E2CDB6AC4004A9361 /* ToolbarModifier.swift */; };
+		847A3FA12CDCB96E004A9361 /* SheetHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3FA02CDCB96E004A9361 /* SheetHeaderView.swift */; };
+		847A3FA32CDE111A004A9361 /* InviteMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3FA22CDE111A004A9361 /* InviteMemberView.swift */; };
+		847A3FA52CDE1183004A9361 /* ChannelExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3FA42CDE1183004A9361 /* ChannelExploreView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -115,6 +118,10 @@
 		A0E444C42CDD0A5C0024AE71 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		A0E444C92CDDF4520024AE71 /* ChattingPhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingPhotoPicker.swift; sourceTree = "<group>"; };
 		A0EEC1972CDA46B700D81239 /* ChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingView.swift; sourceTree = "<group>"; };
+		847A3F9E2CDB6AC4004A9361 /* ToolbarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarModifier.swift; sourceTree = "<group>"; };
+		847A3FA02CDCB96E004A9361 /* SheetHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetHeaderView.swift; sourceTree = "<group>"; };
+		847A3FA22CDE111A004A9361 /* InviteMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteMemberView.swift; sourceTree = "<group>"; };
+		847A3FA42CDE1183004A9361 /* ChannelExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelExploreView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,7 +234,8 @@
 				847A3F872CD9C032004A9361 /* ProfileImageView.swift */,
 				847A3F8F2CDA440F004A9361 /* CustomDisclosure.swift */,
 				847A3F912CDA9FC0004A9361 /* GatheringNavigationStack.swift */,
-				847A3F932CDAB7A2004A9361 /* OptionSheet.swift */,
+				847A3F9E2CDB6AC4004A9361 /* ToolbarModifier.swift */,
+				847A3FA02CDCB96E004A9361 /* SheetHeaderView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -302,6 +310,8 @@
 			children = (
 				847A3F832CD9000F004A9361 /* HomeView.swift */,
 				847A3F9C2CDB0E6B004A9361 /* AddChannelView.swift */,
+				847A3FA42CDE1183004A9361 /* ChannelExploreView.swift */,
+				847A3FA22CDE111A004A9361 /* InviteMemberView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -448,6 +458,8 @@
 				24ABE97D2CDCF15D000E7EC5 /* PayValidationRequest.swift in Sources */,
 				24ABE95F2CDB93B5000E7EC5 /* View+.swift in Sources */,
 				24ABE96A2CDB9AB8000E7EC5 /* KakaoLoginButton.swift in Sources */,
+				847A3FA12CDCB96E004A9361 /* SheetHeaderView.swift in Sources */,
+				
 				847A3F8B2CD9EA54004A9361 /* TempModel.swift in Sources */,
 				24ABE9622CDB99B1000E7EC5 /* ChannelOutButton.swift in Sources */,
 				24ABE91F2CD4AEDB000E7EC5 /* ContentView.swift in Sources */,
@@ -456,6 +468,7 @@
 				A0E444C52CDD0A5C0024AE71 /* ChatMessage.swift in Sources */,
 				24ABE9682CDB99D6000E7EC5 /* StartActiveButton.swift in Sources */,
 				24ABE95A2CDB86F3000E7EC5 /* Color+.swift in Sources */,
+				847A3F9F2CDB6AC4004A9361 /* ToolbarModifier.swift in Sources */,
 				847A3F882CD9C032004A9361 /* ProfileImageView.swift in Sources */,
 				847A3F842CD9000F004A9361 /* HomeView.swift in Sources */,
 				24ABE9662CDB99D0000E7EC5 /* StartInactiveButton.swift in Sources */,
@@ -475,6 +488,8 @@
 				24ABE9432CD4B7CC000E7EC5 /* SeungHyunView.swift in Sources */,
 				24ABE9462CD4B7EA000E7EC5 /* SeongMinView.swift in Sources */,
 				847A3F9D2CDB0E6B004A9361 /* AddChannelView.swift in Sources */,
+				847A3FA52CDE1183004A9361 /* ChannelExploreView.swift in Sources */,
+				847A3FA32CDE111A004A9361 /* InviteMemberView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
