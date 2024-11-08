@@ -46,6 +46,7 @@
 		847A3F9B2CDAFF04004A9361 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F9A2CDAFF04004A9361 /* Header.swift */; };
 		847A3F9D2CDB0E6B004A9361 /* AddChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F9C2CDB0E6B004A9361 /* AddChannelView.swift */; };
 		A0E444C52CDD0A5C0024AE71 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444C42CDD0A5C0024AE71 /* ChatMessage.swift */; };
+		A0E444CA2CDDF4520024AE71 /* ChattingPhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444C92CDDF4520024AE71 /* ChattingPhotoPicker.swift */; };
 		A0EEC1982CDA46B700D81239 /* ChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EEC1972CDA46B700D81239 /* ChattingView.swift */; };
 /* End PBXBuildFile section */
 
@@ -100,6 +101,7 @@
 		847A3F9A2CDAFF04004A9361 /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		847A3F9C2CDB0E6B004A9361 /* AddChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChannelView.swift; sourceTree = "<group>"; };
 		A0E444C42CDD0A5C0024AE71 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		A0E444C92CDDF4520024AE71 /* ChattingPhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingPhotoPicker.swift; sourceTree = "<group>"; };
 		A0EEC1972CDA46B700D81239 /* ChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -188,6 +190,7 @@
 		24ABE9472CD4B7F2000E7EC5 /* SungEun */ = {
 			isa = PBXGroup;
 			children = (
+				A0E444C82CDDF3D70024AE71 /* PhotoPicker */,
 				A0E444C32CDD0A460024AE71 /* Model */,
 				A0EEC1962CDA469E00D81239 /* Chatting */,
 			);
@@ -279,6 +282,14 @@
 				A0E444C42CDD0A5C0024AE71 /* ChatMessage.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		A0E444C82CDDF3D70024AE71 /* PhotoPicker */ = {
+			isa = PBXGroup;
+			children = (
+				A0E444C92CDDF4520024AE71 /* ChattingPhotoPicker.swift */,
+			);
+			path = PhotoPicker;
 			sourceTree = "<group>";
 		};
 		A0EEC1962CDA469E00D81239 /* Chatting */ = {
@@ -378,6 +389,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				847A3F9B2CDAFF04004A9361 /* Header.swift in Sources */,
+				A0E444CA2CDDF4520024AE71 /* ChattingPhotoPicker.swift in Sources */,
 				24ABE9402CD4B6D1000E7EC5 /* APIAuth.swift in Sources */,
 				847A3F942CDAB7A2004A9361 /* OptionSheet.swift in Sources */,
 				24ABE95C2CDB8701000E7EC5 /* Design.swift in Sources */,
