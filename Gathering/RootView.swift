@@ -27,9 +27,9 @@ struct RootView: View {
     private func tabView() -> some View {
         TabView(selection: $tabInfo) {
             // MARK: - 홈
-            GatheringNavigationStack(content: {
+            GatheringNavigationStack(gatheringImage: "bird2", profileImage: "bird3") {
                 HomeView()
-            }, gatheringImage: "bird2", profileImage: "bird3")
+            }
             .tabItem {
                 Image(tabInfo == .home ? .homeActive : .homeInactive)
                 Text(TabInfo.home.rawValue)

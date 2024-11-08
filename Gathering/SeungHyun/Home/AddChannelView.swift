@@ -39,12 +39,12 @@ struct ChannelAddView: View {
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.green)
+                        .background(Design.green)
                         .cornerRadius(8)
                 }
             }
             .padding()
         }
-        .background(Color.background)
+        .background(Design.background)
     }
 }
