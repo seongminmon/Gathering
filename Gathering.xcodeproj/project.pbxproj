@@ -36,6 +36,11 @@
 		24ABE96A2CDB9AB8000E7EC5 /* KakaoLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9692CDB9AB8000E7EC5 /* KakaoLoginButton.swift */; };
 		24ABE96C2CDB9AF9000E7EC5 /* AppleLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE96B2CDB9AF9000E7EC5 /* AppleLoginButton.swift */; };
 		24ABE96E2CDCE2A3000E7EC5 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE96D2CDCE2A3000E7EC5 /* NetworkManager.swift */; };
+		24ABE9702CDCEDB2000E7EC5 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE96F2CDCEDB2000E7EC5 /* UserDefaultsManager.swift */; };
+		24ABE9732CDCEF9D000E7EC5 /* StoreRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9722CDCEF9D000E7EC5 /* StoreRouter.swift */; };
+		24ABE9792CDCF02A000E7EC5 /* PayValidationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9782CDCF02A000E7EC5 /* PayValidationResponse.swift */; };
+		24ABE97B2CDCF03D000E7EC5 /* StoreItemResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE97A2CDCF03D000E7EC5 /* StoreItemResponse.swift */; };
+		24ABE97D2CDCF15D000E7EC5 /* PayValidationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE97C2CDCF15D000E7EC5 /* PayValidationRequest.swift */; };
 		847A3F812CD8FFEF004A9361 /* CounterFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F802CD8FFEF004A9361 /* CounterFeature.swift */; };
 		847A3F842CD9000F004A9361 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F832CD9000F004A9361 /* HomeView.swift */; };
 		847A3F882CD9C032004A9361 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F872CD9C032004A9361 /* ProfileImageView.swift */; };
@@ -90,6 +95,11 @@
 		24ABE9692CDB9AB8000E7EC5 /* KakaoLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginButton.swift; sourceTree = "<group>"; };
 		24ABE96B2CDB9AF9000E7EC5 /* AppleLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginButton.swift; sourceTree = "<group>"; };
 		24ABE96D2CDCE2A3000E7EC5 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		24ABE96F2CDCEDB2000E7EC5 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		24ABE9722CDCEF9D000E7EC5 /* StoreRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRouter.swift; sourceTree = "<group>"; };
+		24ABE9782CDCF02A000E7EC5 /* PayValidationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayValidationResponse.swift; sourceTree = "<group>"; };
+		24ABE97A2CDCF03D000E7EC5 /* StoreItemResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreItemResponse.swift; sourceTree = "<group>"; };
+		24ABE97C2CDCF15D000E7EC5 /* PayValidationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayValidationRequest.swift; sourceTree = "<group>"; };
 		847A3F802CD8FFEF004A9361 /* CounterFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterFeature.swift; sourceTree = "<group>"; };
 		847A3F832CD9000F004A9361 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		847A3F872CD9C032004A9361 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
@@ -146,6 +156,7 @@
 				24ABE94D2CD8A71D000E7EC5 /* RootView.swift */,
 				24ABE91E2CD4AEDB000E7EC5 /* ContentView.swift */,
 				24ABE93F2CD4B6D1000E7EC5 /* APIAuth.swift */,
+				24ABE96F2CDCEDB2000E7EC5 /* UserDefaultsManager.swift */,
 				847A3F952CDAFAFF004A9361 /* Network */,
 				24ABE95D2CDB931B000E7EC5 /* Modifier */,
 				24ABE9582CDA167C000E7EC5 /* Component */,
@@ -237,6 +248,41 @@
 			path = Buttons;
 			sourceTree = "<group>";
 		};
+		24ABE9712CDCEF8D000E7EC5 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				24ABE9722CDCEF9D000E7EC5 /* StoreRouter.swift */,
+				24ABE9772CDCF01D000E7EC5 /* RequestModel */,
+				24ABE9762CDCF015000E7EC5 /* ResponseModel */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		24ABE9742CDCEFB4000E7EC5 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				24ABE9712CDCEF8D000E7EC5 /* Store */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		24ABE9762CDCF015000E7EC5 /* ResponseModel */ = {
+			isa = PBXGroup;
+			children = (
+				24ABE9782CDCF02A000E7EC5 /* PayValidationResponse.swift */,
+				24ABE97A2CDCF03D000E7EC5 /* StoreItemResponse.swift */,
+			);
+			path = ResponseModel;
+			sourceTree = "<group>";
+		};
+		24ABE9772CDCF01D000E7EC5 /* RequestModel */ = {
+			isa = PBXGroup;
+			children = (
+				24ABE97C2CDCF15D000E7EC5 /* PayValidationRequest.swift */,
+			);
+			path = RequestModel;
+			sourceTree = "<group>";
+		};
 		847A3F7F2CD8FFD4004A9361 /* CounterView */ = {
 			isa = PBXGroup;
 			children = (
@@ -277,6 +323,7 @@
 				847A3F982CDAFC6B004A9361 /* Router.swift */,
 				847A3F9A2CDAFF04004A9361 /* Header.swift */,
 				24ABE96D2CDCE2A3000E7EC5 /* NetworkManager.swift */,
+				24ABE9742CDCEFB4000E7EC5 /* Router */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -373,7 +420,9 @@
 				24ABE9402CD4B6D1000E7EC5 /* APIAuth.swift in Sources */,
 				847A3F942CDAB7A2004A9361 /* OptionSheet.swift in Sources */,
 				24ABE95C2CDB8701000E7EC5 /* Design.swift in Sources */,
+				24ABE9702CDCEDB2000E7EC5 /* UserDefaultsManager.swift in Sources */,
 				24ABE96C2CDB9AF9000E7EC5 /* AppleLoginButton.swift in Sources */,
+				24ABE97D2CDCF15D000E7EC5 /* PayValidationRequest.swift in Sources */,
 				24ABE95F2CDB93B5000E7EC5 /* View+.swift in Sources */,
 				24ABE96A2CDB9AB8000E7EC5 /* KakaoLoginButton.swift in Sources */,
 				847A3F8B2CD9EA54004A9361 /* TempModel.swift in Sources */,
@@ -391,9 +440,12 @@
 				847A3F812CD8FFEF004A9361 /* CounterFeature.swift in Sources */,
 				847A3F902CDA440F004A9361 /* CustomDisclosure.swift in Sources */,
 				24ABE9542CD8B711000E7EC5 /* Font+.swift in Sources */,
+				24ABE97B2CDCF03D000E7EC5 /* StoreItemResponse.swift in Sources */,
 				847A3F972CDAFB19004A9361 /* TargetType.swift in Sources */,
+				24ABE9792CDCF02A000E7EC5 /* PayValidationResponse.swift in Sources */,
 				24ABE9642CDB99C8000E7EC5 /* ContinueEmailButton.swift in Sources */,
 				24ABE9522CD8B65E000E7EC5 /* DMView.swift in Sources */,
+				24ABE9732CDCEF9D000E7EC5 /* StoreRouter.swift in Sources */,
 				24ABE91D2CD4AEDB000E7EC5 /* GatheringApp.swift in Sources */,
 				24ABE94E2CD8A71D000E7EC5 /* RootView.swift in Sources */,
 				24ABE9432CD4B7CC000E7EC5 /* SeungHyunView.swift in Sources */,
