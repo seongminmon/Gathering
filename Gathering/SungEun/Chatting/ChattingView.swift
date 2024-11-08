@@ -109,20 +109,27 @@ extension ChattingView {
             // 입력 뷰
             HStack(alignment: .bottom) {
                 // 이미지 선택 버튼
-                Button {
-                    //                            showImagePicker()
-                } label: {
+                ChattingPhotoPicker(selectedImages: $selectedImages) {
                     Image(systemName: "plus")
                         .resizable()
                         .frame(width: 22, height: 20)
                         .foregroundColor(Design.darkGray)
                 }
                 
+//                Button {
+//                    showImagePicker()
+//                } label: {
+//                    Image(systemName: "plus")
+//                        .resizable()
+//                        .frame(width: 22, height: 20)
+//                        .foregroundColor(Design.darkGray)
+//                }
+                
                 VStack(alignment: .leading) {
                     // 메시지 입력 필드
                     DynamicHeightTextField(text: $messageText)
                     if !selectedImages.isEmpty {
-                        selectePhotoView()
+                        selectePhotoView(images: selectedImages)
                     }
                 }
                 // 전송버튼
@@ -147,16 +154,17 @@ extension ChattingView {
         .padding(.vertical, 14)
         .padding(.horizontal, 16)
     }
-    private func selectePhotoView() -> some View {
+    private func selectePhotoView(images: [UIImage]) -> some View {
+        
         LazyHGrid(rows: [GridItem(.fixed(50))], spacing: 12, content: {
             // 이미지넣기
-            Image(systemName: "star")
-                .resizable()
-                .frame(width: 44, height: 44)
-                .aspectRatio(contentMode: .fill)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-                .padding(.horizontal, 12)
-                .overlay {
+            ForEach(selectedImages, id: \.self) { image in
+                ZStack {
+                    Image(uiImage: image)
+                        .resizable()
+                        .frame(width: 44, height: 44)
+                        .aspectRatio(contentMode: .fill)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
                     Button(action: {
                         print("클릭클릭")
                     }, label: {
@@ -170,58 +178,14 @@ extension ChattingView {
                             )
                             .offset(x: 22, y: -22)
                     })
+                   
                 }
-            Image(systemName: "star")
-                .resizable()
-                .frame(width: 44, height: 44)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-                .padding(.horizontal, 12)
-                .overlay {
-                    Button(action: {
-                        print("클릭클릭")
-                    }, label: {
-                        Image(systemName: "xmark.circle")
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                            .foregroundColor(Design.black)
-                            .background(
-                                Circle().size(width: 20, height: 20)
-                                    .foregroundColor(Design.white)
-                            )
-                            .offset(x: 20, y: -20)
-                    })
-                }
+                    
+            }
         })
         .frame(height: 55)
-        .background(.red)
     }
 }
-
-
-// PHPicker 핸들러
-//class PHPickerHandler: NSObject, PHPickerViewControllerDelegate {
-//    @Binding var selectedImages: [UIImage]
-//
-//    init(selectedImages: Binding<[UIImage]>) {
-//        _selectedImages = selectedImages
-//    }
-//
-//    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-//        picker.dismiss(animated: true)
-//
-//        for result in results {
-//            if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
-//                result.itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-//                    if let uiImage = image as? UIImage {
-//                        DispatchQueue.main.async {
-//                            self.selectedImages.append(uiImage)
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
 
 // 채팅 메시지 뷰
 struct ChatMessageView: View {
