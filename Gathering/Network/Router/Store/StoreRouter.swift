@@ -10,7 +10,7 @@ import Alamofire
 
 enum StoreRouter {
     // 새싹 코인 결제 검증
-    case payValidation(query: PayValidationRequest)
+    case payValidation(body: PayValidationRequest)
     // 새싹 코인 스토어 아이템 리스트
     case itemList
 }
@@ -37,13 +37,7 @@ extension StoreRouter: TargetType {
     
     var headers: HTTPHeaders {
         switch self {
-        case .payValidation:
-            return [
-                Header.sesacKey.rawValue: APIAuth.key,
-                Header.contentType.rawValue: Header.json.rawValue,
-                Header.authorization.rawValue: UserDefaultsManager.accessToken
-            ]
-        case .itemList:
+        case .payValidation, .itemList:
             return [
                 Header.sesacKey.rawValue: APIAuth.key,
                 Header.contentType.rawValue: Header.json.rawValue,
@@ -54,17 +48,15 @@ extension StoreRouter: TargetType {
     
     var parameters: Parameters? {
         switch self {
-        case .payValidation:
-            return nil
-        case .itemList:
+        case .payValidation, .itemList:
             return nil
         }
     }
     
     var body: Data? {
         switch self {
-        case .payValidation(let query):
-            return try? JSONEncoder().encode(query)
+        case .payValidation(let body):
+            return try? JSONEncoder().encode(body)
         case .itemList:
             return nil
         }

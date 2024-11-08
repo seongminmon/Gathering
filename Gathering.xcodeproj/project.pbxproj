@@ -41,6 +41,9 @@
 		24ABE9792CDCF02A000E7EC5 /* PayValidationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9782CDCF02A000E7EC5 /* PayValidationResponse.swift */; };
 		24ABE97B2CDCF03D000E7EC5 /* StoreItemResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE97A2CDCF03D000E7EC5 /* StoreItemResponse.swift */; };
 		24ABE97D2CDCF15D000E7EC5 /* PayValidationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE97C2CDCF15D000E7EC5 /* PayValidationRequest.swift */; };
+		24ABE9822CDE0FE9000E7EC5 /* ChannelRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9812CDE0FE9000E7EC5 /* ChannelRouter.swift */; };
+		24ABE9862CDE12BE000E7EC5 /* ChannelResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9852CDE12BE000E7EC5 /* ChannelResponse.swift */; };
+		24ABE9882CDE172F000E7EC5 /* ChannelRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9872CDE172F000E7EC5 /* ChannelRequest.swift */; };
 		847A3F812CD8FFEF004A9361 /* CounterFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F802CD8FFEF004A9361 /* CounterFeature.swift */; };
 		847A3F842CD9000F004A9361 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F832CD9000F004A9361 /* HomeView.swift */; };
 		847A3F882CD9C032004A9361 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F872CD9C032004A9361 /* ProfileImageView.swift */; };
@@ -100,6 +103,9 @@
 		24ABE9782CDCF02A000E7EC5 /* PayValidationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayValidationResponse.swift; sourceTree = "<group>"; };
 		24ABE97A2CDCF03D000E7EC5 /* StoreItemResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreItemResponse.swift; sourceTree = "<group>"; };
 		24ABE97C2CDCF15D000E7EC5 /* PayValidationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayValidationRequest.swift; sourceTree = "<group>"; };
+		24ABE9812CDE0FE9000E7EC5 /* ChannelRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelRouter.swift; sourceTree = "<group>"; };
+		24ABE9852CDE12BE000E7EC5 /* ChannelResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelResponse.swift; sourceTree = "<group>"; };
+		24ABE9872CDE172F000E7EC5 /* ChannelRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelRequest.swift; sourceTree = "<group>"; };
 		847A3F802CD8FFEF004A9361 /* CounterFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterFeature.swift; sourceTree = "<group>"; };
 		847A3F832CD9000F004A9361 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		847A3F872CD9C032004A9361 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
@@ -261,6 +267,7 @@
 		24ABE9742CDCEFB4000E7EC5 /* Router */ = {
 			isa = PBXGroup;
 			children = (
+				24ABE9802CDE0FDB000E7EC5 /* Channel */,
 				24ABE9712CDCEF8D000E7EC5 /* Store */,
 			);
 			path = Router;
@@ -281,6 +288,32 @@
 				24ABE97C2CDCF15D000E7EC5 /* PayValidationRequest.swift */,
 			);
 			path = RequestModel;
+			sourceTree = "<group>";
+		};
+		24ABE9802CDE0FDB000E7EC5 /* Channel */ = {
+			isa = PBXGroup;
+			children = (
+				24ABE9812CDE0FE9000E7EC5 /* ChannelRouter.swift */,
+				24ABE9832CDE12A2000E7EC5 /* RequestModel */,
+				24ABE9842CDE12AA000E7EC5 /* ResponseModel */,
+			);
+			path = Channel;
+			sourceTree = "<group>";
+		};
+		24ABE9832CDE12A2000E7EC5 /* RequestModel */ = {
+			isa = PBXGroup;
+			children = (
+				24ABE9872CDE172F000E7EC5 /* ChannelRequest.swift */,
+			);
+			path = RequestModel;
+			sourceTree = "<group>";
+		};
+		24ABE9842CDE12AA000E7EC5 /* ResponseModel */ = {
+			isa = PBXGroup;
+			children = (
+				24ABE9852CDE12BE000E7EC5 /* ChannelResponse.swift */,
+			);
+			path = ResponseModel;
 			sourceTree = "<group>";
 		};
 		847A3F7F2CD8FFD4004A9361 /* CounterView */ = {
@@ -424,6 +457,7 @@
 				24ABE96C2CDB9AF9000E7EC5 /* AppleLoginButton.swift in Sources */,
 				24ABE97D2CDCF15D000E7EC5 /* PayValidationRequest.swift in Sources */,
 				24ABE95F2CDB93B5000E7EC5 /* View+.swift in Sources */,
+				24ABE9822CDE0FE9000E7EC5 /* ChannelRouter.swift in Sources */,
 				24ABE96A2CDB9AB8000E7EC5 /* KakaoLoginButton.swift in Sources */,
 				847A3F8B2CD9EA54004A9361 /* TempModel.swift in Sources */,
 				24ABE9622CDB99B1000E7EC5 /* ChannelOutButton.swift in Sources */,
@@ -434,7 +468,9 @@
 				24ABE9682CDB99D6000E7EC5 /* StartActiveButton.swift in Sources */,
 				24ABE95A2CDB86F3000E7EC5 /* Color+.swift in Sources */,
 				847A3F882CD9C032004A9361 /* ProfileImageView.swift in Sources */,
+				24ABE9882CDE172F000E7EC5 /* ChannelRequest.swift in Sources */,
 				847A3F842CD9000F004A9361 /* HomeView.swift in Sources */,
+				24ABE9862CDE12BE000E7EC5 /* ChannelResponse.swift in Sources */,
 				24ABE9662CDB99D0000E7EC5 /* StartInactiveButton.swift in Sources */,
 				847A3F922CDA9FC0004A9361 /* GatheringNavigationStack.swift in Sources */,
 				847A3F812CD8FFEF004A9361 /* CounterFeature.swift in Sources */,
