@@ -40,7 +40,7 @@ file_length:
 
 # 타입 네이밍 규칙 (최소, 최대 길이 설정 및 예외 이름)
 type_name:
-    min_length: 4           # 경고: 최소 4자
+    min_length: 3           # 경고: 최소 4자
     max_length:
         warning: 40         # 경고: 최대 40자
         error: 50           # 에러: 최대 50자
