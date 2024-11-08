@@ -9,9 +9,13 @@ import SwiftUI
 
 struct GatheringNavigationStack<Content: View>: View {
     let content: Content
+    let gatheringImage: String
+    let profileImage: String
     
-    init(@ViewBuilder content: () -> Content) {
+    init(@ViewBuilder content: () -> Content, gatheringImage: String?, profileImage: String?) {
         self.content = content()
+        self.gatheringImage = gatheringImage ?? "bird"
+        self.profileImage = profileImage ?? "bird"
     }
     
     var body: some View {
@@ -20,14 +24,14 @@ struct GatheringNavigationStack<Content: View>: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         HStack {
-                            ProfileImageView(imageName: "bird", size: 35)
+                            ProfileImageView(imageName: gatheringImage, size: 32)
                             Text("iOS Developers Study")
                                 .font(Design.title1)
                         }
                     }
                     
                     ToolbarItem(placement: .topBarTrailing) {
-                        Image(systemName: "person.circle.fill")
+                        Image(systemName: profileImage)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 30, height: 30)
