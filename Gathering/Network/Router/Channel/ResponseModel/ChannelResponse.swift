@@ -16,10 +16,3 @@ struct ChannelResponse: Decodable {
     let createdAt: String
     let channelMembers: [MemberResponse]?
 }
-
-struct MemberResponse: Decodable {
-    let user_id: String
-    let email: String
-    let nickname: String
-    let profileImage: String
-}

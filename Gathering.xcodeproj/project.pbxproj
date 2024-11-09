@@ -44,6 +44,9 @@
 		24ABE9822CDE0FE9000E7EC5 /* ChannelRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9812CDE0FE9000E7EC5 /* ChannelRouter.swift */; };
 		24ABE9862CDE12BE000E7EC5 /* ChannelResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9852CDE12BE000E7EC5 /* ChannelResponse.swift */; };
 		24ABE9882CDE172F000E7EC5 /* ChannelRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9872CDE172F000E7EC5 /* ChannelRequest.swift */; };
+		24ABE98A2CDF004D000E7EC5 /* ChattingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9892CDF004D000E7EC5 /* ChattingResponse.swift */; };
+		24ABE98C2CDF005F000E7EC5 /* MemberResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE98B2CDF005F000E7EC5 /* MemberResponse.swift */; };
+		24ABE98E2CDF02E1000E7EC5 /* ChattingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE98D2CDF02E1000E7EC5 /* ChattingRequest.swift */; };
 		847A3F812CD8FFEF004A9361 /* CounterFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F802CD8FFEF004A9361 /* CounterFeature.swift */; };
 		847A3F842CD9000F004A9361 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F832CD9000F004A9361 /* HomeView.swift */; };
 		847A3F882CD9C032004A9361 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F872CD9C032004A9361 /* ProfileImageView.swift */; };
@@ -106,6 +109,9 @@
 		24ABE9812CDE0FE9000E7EC5 /* ChannelRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelRouter.swift; sourceTree = "<group>"; };
 		24ABE9852CDE12BE000E7EC5 /* ChannelResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelResponse.swift; sourceTree = "<group>"; };
 		24ABE9872CDE172F000E7EC5 /* ChannelRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelRequest.swift; sourceTree = "<group>"; };
+		24ABE9892CDF004D000E7EC5 /* ChattingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingResponse.swift; sourceTree = "<group>"; };
+		24ABE98B2CDF005F000E7EC5 /* MemberResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberResponse.swift; sourceTree = "<group>"; };
+		24ABE98D2CDF02E1000E7EC5 /* ChattingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingRequest.swift; sourceTree = "<group>"; };
 		847A3F802CD8FFEF004A9361 /* CounterFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterFeature.swift; sourceTree = "<group>"; };
 		847A3F832CD9000F004A9361 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		847A3F872CD9C032004A9361 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
@@ -304,6 +310,7 @@
 			isa = PBXGroup;
 			children = (
 				24ABE9872CDE172F000E7EC5 /* ChannelRequest.swift */,
+				24ABE98D2CDF02E1000E7EC5 /* ChattingRequest.swift */,
 			);
 			path = RequestModel;
 			sourceTree = "<group>";
@@ -312,6 +319,8 @@
 			isa = PBXGroup;
 			children = (
 				24ABE9852CDE12BE000E7EC5 /* ChannelResponse.swift */,
+				24ABE98B2CDF005F000E7EC5 /* MemberResponse.swift */,
+				24ABE9892CDF004D000E7EC5 /* ChattingResponse.swift */,
 			);
 			path = ResponseModel;
 			sourceTree = "<group>";
@@ -480,12 +489,15 @@
 				847A3F972CDAFB19004A9361 /* TargetType.swift in Sources */,
 				24ABE9792CDCF02A000E7EC5 /* PayValidationResponse.swift in Sources */,
 				24ABE9642CDB99C8000E7EC5 /* ContinueEmailButton.swift in Sources */,
+				24ABE98A2CDF004D000E7EC5 /* ChattingResponse.swift in Sources */,
 				24ABE9522CD8B65E000E7EC5 /* DMView.swift in Sources */,
 				24ABE9732CDCEF9D000E7EC5 /* StoreRouter.swift in Sources */,
 				24ABE91D2CD4AEDB000E7EC5 /* GatheringApp.swift in Sources */,
 				24ABE94E2CD8A71D000E7EC5 /* RootView.swift in Sources */,
 				24ABE9432CD4B7CC000E7EC5 /* SeungHyunView.swift in Sources */,
+				24ABE98E2CDF02E1000E7EC5 /* ChattingRequest.swift in Sources */,
 				24ABE9462CD4B7EA000E7EC5 /* SeongMinView.swift in Sources */,
+				24ABE98C2CDF005F000E7EC5 /* MemberResponse.swift in Sources */,
 				847A3F9D2CDB0E6B004A9361 /* AddChannelView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

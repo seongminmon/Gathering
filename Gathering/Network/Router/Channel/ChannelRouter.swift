@@ -21,15 +21,26 @@ enum ChannelRouter {
     case editChannel(channelID: String, workspaceID: String, body: ChannelRequest)
     // 채널 삭제
     case deleteChannel(channelID: String, workspaceID: String)
+    // 채널 채팅 내역 리스트 조회
+    case fetchChattingList(channelID: String, workspaceID: String, cursorDate: String = "")
+    // 채널 채팅 보내기
+    case sendChatting(channelID: String, workspaceID: String, body: ChattingRequest)
+    // 읽지 않은 채널 채팅 개수
+    case fetchUnreadCount(channelID: String, workspaceID: String, after: String = "")
 }
 
 extension ChannelRouter: TargetType {
    
     var method: HTTPMethod {
         switch self {
-        case .fetchMyChannelList, .fetchChannelList, .fetchChannel:
+        case .fetchMyChannelList, 
+                .fetchChannelList,
+                .fetchChannel,
+                .fetchChattingList,
+                .fetchUnreadCount:
             return .get
-        case .createChannel:
+        case .createChannel, 
+                .sendChatting:
             return .post
         case .editChannel:
             return .put
@@ -52,15 +63,34 @@ extension ChannelRouter: TargetType {
             return "/workspaces/\(workspaceID)/channels/\(channelID)"
         case .deleteChannel(let channelID, let workspaceID):
             return "/workspaces/\(workspaceID)/channels/\(channelID)"
+        case .fetchChattingList(let channelID, let workspaceID, _):
+            return "/workspaces/\(workspaceID)/channels/\(channelID)/chats"
+        case .sendChatting(let channelID, let workspaceID, _):
+            return "/workspaces/\(workspaceID)/channels/\(channelID)/chats"
+        case .fetchUnreadCount(let channelID, let workspaceID, _):
+            return "/workspaces/\(workspaceID)/channels/\(channelID)/unreads"
         }
     }
     
     var headers: HTTPHeaders {
         switch self {
-        case .fetchMyChannelList, .fetchChannelList, .createChannel, .fetchChannel, .editChannel, .deleteChannel:
+        case .fetchMyChannelList, 
+                .fetchChannelList,
+                .createChannel,
+                .fetchChannel,
+                .editChannel,
+                .deleteChannel,
+                .fetchChattingList,
+                .fetchUnreadCount:
             return [
                 Header.sesacKey.rawValue: APIAuth.key,
                 Header.contentType.rawValue: Header.json.rawValue,
+                Header.authorization.rawValue: UserDefaultsManager.accessToken
+            ]
+        case .sendChatting:
+            return [
+                Header.sesacKey.rawValue: APIAuth.key,
+                Header.contentType.rawValue: Header.multiPart.rawValue,
                 Header.authorization.rawValue: UserDefaultsManager.accessToken
             ]
         }
@@ -68,16 +98,33 @@ extension ChannelRouter: TargetType {
     
     var parameters: Parameters? {
         switch self {
-        case .fetchMyChannelList, .fetchChannelList, .createChannel, .fetchChannel, .editChannel, .deleteChannel:
+        case .fetchMyChannelList, 
+                .fetchChannelList,
+                .createChannel,
+                .fetchChannel,
+                .editChannel,
+                .deleteChannel,
+                .sendChatting:
             return nil
+        case .fetchChattingList(_, _, let cursorDate):
+            return ["cursor_date": cursorDate]
+        case .fetchUnreadCount(_, _, let after):
+            return ["after": after]
         }
     }
     
     var body: Data? {
         switch self {
-        case .fetchMyChannelList, .fetchChannelList, .fetchChannel, .deleteChannel:
+        case .fetchMyChannelList,
+                .fetchChannelList,
+                .fetchChannel,
+                .deleteChannel,
+                .fetchChattingList,
+                .fetchUnreadCount:
             return nil
         case .createChannel(_, let body), .editChannel(_, _, let body):
+            return try? JSONEncoder().encode(body)
+        case .sendChatting(_, _, let body):
             return try? JSONEncoder().encode(body)
         }
     }

@@ -34,8 +34,8 @@ final class NetworkManager {
                 throw error
             }
             
-        case 400:
-            // 상태 코드가 400일 때 ErrorResponse로 디코딩
+        case 400, 500:
+            // 상태 코드가 400 또는 500일 때 ErrorResponse로 디코딩
             do {
                 let errorData = try JSONDecoder().decode(
                     ErrorResponse.self,
@@ -47,7 +47,7 @@ final class NetworkManager {
             }
             
         default:
-            // 그 외의 경우 일반 오류 처리 (서버 에러)
+            // 그 외의 경우 일반 오류 처리
             throw AFError.responseValidationFailed(
                 reason: .unacceptableStatusCode(code: statusCode)
             )
