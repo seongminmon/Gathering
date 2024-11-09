@@ -17,11 +17,11 @@ struct GatheringApp: App {
             RootView()
             // MARK: - 네트워크 테스트
                 .task {
-                    UserDefaultsManager.accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiOTczZDYyZWMtMTc3Ni00NDZmLTkwZWEtZjM1ZDE4OWJiN2IzIiwibmlja25hbWUiOiJrc20xIiwiaWF0IjoxNzMxMTIwNTc4LCJleHAiOjE3MzExMjA4NzgsImlzcyI6InNscCJ9.YMskSDBa7Rw3T0wSXR1vEsh8A0TKkvyReaSWtqHpTBk"
+                    UserDefaultsManager.accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiOTczZDYyZWMtMTc3Ni00NDZmLTkwZWEtZjM1ZDE4OWJiN2IzIiwibmlja25hbWUiOiJrc20xIiwiaWF0IjoxNzMxMTIyNTA3LCJleHAiOjE3MzExMjI4MDcsImlzcyI6InNscCJ9.iHYGrKErXeL79IkTdn8fhJk1ESo8AXSASm9w5bKS1QM"
                     
                     do {
-                        let result: ChattingResponse = try await NetworkManager.shared.request(
-                            api: ChannelRouter.fetchUnreadCount(channelID: "a", workspaceID: "a", after: "")
+                        let result: [ChannelResponse] = try await NetworkManager.shared.request(
+                            api: ChannelRouter.exitChannel(channelID: "a", workspaceID: "a")
                         )
                         print("Success: \(result)")
                     } catch let error as ErrorResponse {

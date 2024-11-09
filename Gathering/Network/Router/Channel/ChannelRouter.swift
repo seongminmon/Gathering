@@ -27,6 +27,12 @@ enum ChannelRouter {
     case sendChatting(channelID: String, workspaceID: String, body: ChattingRequest)
     // 읽지 않은 채널 채팅 개수
     case fetchUnreadCount(channelID: String, workspaceID: String, after: String = "")
+    // 채널 멤버 조회
+    case fetchMembers(channelID: String, workspaceID: String)
+    // 채널 관리자 변경
+    case changeOwner(channelID: String, workspaceID: String, body: OwnerRequest)
+    // 채널 나가기
+    case exitChannel(channelID: String, workspaceID: String)
 }
 
 extension ChannelRouter: TargetType {
@@ -37,12 +43,14 @@ extension ChannelRouter: TargetType {
                 .fetchChannelList,
                 .fetchChannel,
                 .fetchChattingList,
-                .fetchUnreadCount:
+                .fetchUnreadCount,
+                .fetchMembers,
+                .exitChannel:
             return .get
         case .createChannel, 
                 .sendChatting:
             return .post
-        case .editChannel:
+        case .editChannel, .changeOwner:
             return .put
         case .deleteChannel:
             return .delete
@@ -69,6 +77,12 @@ extension ChannelRouter: TargetType {
             return "/workspaces/\(workspaceID)/channels/\(channelID)/chats"
         case .fetchUnreadCount(let channelID, let workspaceID, _):
             return "/workspaces/\(workspaceID)/channels/\(channelID)/unreads"
+        case .fetchMembers(channelID: let channelID, workspaceID: let workspaceID):
+            return "/workspaces/\(workspaceID)/channels/\(channelID)/members"
+        case .changeOwner(let channelID, let workspaceID, _):
+            return "/workspaces/\(workspaceID)/channels/\(channelID)/transfer/ownership"
+        case .exitChannel(let channelID, let workspaceID):
+            return "/workspaces/\(workspaceID)/channels/\(channelID)/exit"
         }
     }
     
@@ -81,7 +95,10 @@ extension ChannelRouter: TargetType {
                 .editChannel,
                 .deleteChannel,
                 .fetchChattingList,
-                .fetchUnreadCount:
+                .fetchUnreadCount,
+                .fetchMembers,
+                .changeOwner,
+                .exitChannel:
             return [
                 Header.sesacKey.rawValue: APIAuth.key,
                 Header.contentType.rawValue: Header.json.rawValue,
@@ -104,7 +121,10 @@ extension ChannelRouter: TargetType {
                 .fetchChannel,
                 .editChannel,
                 .deleteChannel,
-                .sendChatting:
+                .sendChatting,
+                .fetchMembers,
+                .changeOwner,
+                .exitChannel:
             return nil
         case .fetchChattingList(_, _, let cursorDate):
             return ["cursor_date": cursorDate]
@@ -120,11 +140,15 @@ extension ChannelRouter: TargetType {
                 .fetchChannel,
                 .deleteChannel,
                 .fetchChattingList,
-                .fetchUnreadCount:
+                .fetchUnreadCount,
+                .fetchMembers,
+                .exitChannel:
             return nil
         case .createChannel(_, let body), .editChannel(_, _, let body):
             return try? JSONEncoder().encode(body)
         case .sendChatting(_, _, let body):
+            return try? JSONEncoder().encode(body)
+        case .changeOwner(_, _, let body):
             return try? JSONEncoder().encode(body)
         }
     }

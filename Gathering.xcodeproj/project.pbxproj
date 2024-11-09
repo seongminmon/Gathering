@@ -47,6 +47,7 @@
 		24ABE98A2CDF004D000E7EC5 /* ChattingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9892CDF004D000E7EC5 /* ChattingResponse.swift */; };
 		24ABE98C2CDF005F000E7EC5 /* MemberResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE98B2CDF005F000E7EC5 /* MemberResponse.swift */; };
 		24ABE98E2CDF02E1000E7EC5 /* ChattingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE98D2CDF02E1000E7EC5 /* ChattingRequest.swift */; };
+		24ABE9902CDF0CFB000E7EC5 /* OwnerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE98F2CDF0CFB000E7EC5 /* OwnerRequest.swift */; };
 		847A3F812CD8FFEF004A9361 /* CounterFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F802CD8FFEF004A9361 /* CounterFeature.swift */; };
 		847A3F842CD9000F004A9361 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F832CD9000F004A9361 /* HomeView.swift */; };
 		847A3F882CD9C032004A9361 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F872CD9C032004A9361 /* ProfileImageView.swift */; };
@@ -112,6 +113,7 @@
 		24ABE9892CDF004D000E7EC5 /* ChattingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingResponse.swift; sourceTree = "<group>"; };
 		24ABE98B2CDF005F000E7EC5 /* MemberResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberResponse.swift; sourceTree = "<group>"; };
 		24ABE98D2CDF02E1000E7EC5 /* ChattingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingRequest.swift; sourceTree = "<group>"; };
+		24ABE98F2CDF0CFB000E7EC5 /* OwnerRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerRequest.swift; sourceTree = "<group>"; };
 		847A3F802CD8FFEF004A9361 /* CounterFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterFeature.swift; sourceTree = "<group>"; };
 		847A3F832CD9000F004A9361 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		847A3F872CD9C032004A9361 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 			children = (
 				24ABE9872CDE172F000E7EC5 /* ChannelRequest.swift */,
 				24ABE98D2CDF02E1000E7EC5 /* ChattingRequest.swift */,
+				24ABE98F2CDF0CFB000E7EC5 /* OwnerRequest.swift */,
 			);
 			path = RequestModel;
 			sourceTree = "<group>";
@@ -467,6 +470,7 @@
 				24ABE97D2CDCF15D000E7EC5 /* PayValidationRequest.swift in Sources */,
 				24ABE95F2CDB93B5000E7EC5 /* View+.swift in Sources */,
 				24ABE9822CDE0FE9000E7EC5 /* ChannelRouter.swift in Sources */,
+				24ABE9902CDF0CFB000E7EC5 /* OwnerRequest.swift in Sources */,
 				24ABE96A2CDB9AB8000E7EC5 /* KakaoLoginButton.swift in Sources */,
 				847A3F8B2CD9EA54004A9361 /* TempModel.swift in Sources */,
 				24ABE9622CDB99B1000E7EC5 /* ChannelOutButton.swift in Sources */,

@@ -29,8 +29,10 @@ final class NetworkManager {
                     ModelType.self,
                     from: response.data ?? Data()
                 )
+                print("통신 성공")
                 return decodedData
             } catch {
+                print("모델 디코딩 실패")
                 throw error
             }
             
@@ -41,13 +43,16 @@ final class NetworkManager {
                     ErrorResponse.self,
                     from: response.data ?? Data()
                 )
-                throw errorData // ErrorResponse를 던져 오류로 처리
+                print("통신 에러")
+                throw errorData
             } catch {
+                print("에러 모델 디코딩 실패")
                 throw error
             }
             
         default:
             // 그 외의 경우 일반 오류 처리
+            print("알 수 없는 에러")
             throw AFError.responseValidationFailed(
                 reason: .unacceptableStatusCode(code: statusCode)
             )
