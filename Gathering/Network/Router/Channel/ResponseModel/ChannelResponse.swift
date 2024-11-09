@@ -14,4 +14,12 @@ struct ChannelResponse: Decodable {
     let coverImage: String
     let owner_id: String
     let createdAt: String
+    let channelMembers: [MemberResponse]?
+}
+
+struct MemberResponse: Decodable {
+    let user_id: String
+    let email: String
+    let nickname: String
+    let profileImage: String
 }
