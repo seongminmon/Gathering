@@ -50,7 +50,7 @@ struct RootView: View {
             
             // MARK: - 검색
             NavigationStack {
-                EmptyView()
+                ChattingView()
             }
             .tabItem {
                 Image(tabInfo == .search ? .profileActive : .profileInactive)

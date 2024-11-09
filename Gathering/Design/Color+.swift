@@ -14,4 +14,5 @@ extension Design {
     static let black = Color(.appBlack)
     static let gray = Color(.appGray)
     static let white = Color(.appWhite)
+    static let background = Color(.background)
 }
