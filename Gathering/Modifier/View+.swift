@@ -32,5 +32,3 @@ extension View {
             .clipShape(Capsule())
     }
 }
-
-
