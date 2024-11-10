@@ -12,8 +12,9 @@ import UIKit
 struct ChatMessage: Identifiable {
     var id = UUID()
     let name: String
-    let text: String
+    let text: String?
     let images: [UIImage]
+    let imageNames: [String]?
     let date = Date()
     let isMine: Bool
     let profile: String?

@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct ChattingImageView: View {
-    var imageName: String
+    var imageNames: [String]
     var body: some View {
-        Image(imageName)
-            .resizable()
-            .aspectRatio(contentMode: .fill)
-            .frame(width: 240, height: 160)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
+        HStack {
+            Image(imageNames[0])
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .clipShape(RoundedRectangle(cornerRadius: 4))
+        }
+        .frame(width: 240, height: 160)
+        .background(.blue)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }
-
-
