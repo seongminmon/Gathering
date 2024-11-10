@@ -52,6 +52,7 @@
 		847A3F9D2CDB0E6B004A9361 /* AddChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F9C2CDB0E6B004A9361 /* AddChannelView.swift */; };
 		A0E444C52CDD0A5C0024AE71 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444C42CDD0A5C0024AE71 /* ChatMessage.swift */; };
 		A0E444CA2CDDF4520024AE71 /* ChattingPhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444C92CDDF4520024AE71 /* ChattingPhotoPicker.swift */; };
+		A0E444CC2CDE010D0024AE71 /* ChattingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444CB2CDE010D0024AE71 /* ChattingImageView.swift */; };
 		A0EEC1982CDA46B700D81239 /* ChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EEC1972CDA46B700D81239 /* ChattingView.swift */; };
 		847A3F9F2CDB6AC4004A9361 /* ToolbarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F9E2CDB6AC4004A9361 /* ToolbarModifier.swift */; };
 		847A3FA12CDCB96E004A9361 /* SheetHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3FA02CDCB96E004A9361 /* SheetHeaderView.swift */; };
@@ -117,6 +118,7 @@
 		847A3F9C2CDB0E6B004A9361 /* AddChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChannelView.swift; sourceTree = "<group>"; };
 		A0E444C42CDD0A5C0024AE71 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		A0E444C92CDDF4520024AE71 /* ChattingPhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingPhotoPicker.swift; sourceTree = "<group>"; };
+		A0E444CB2CDE010D0024AE71 /* ChattingImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingImageView.swift; sourceTree = "<group>"; };
 		A0EEC1972CDA46B700D81239 /* ChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingView.swift; sourceTree = "<group>"; };
 		847A3F9E2CDB6AC4004A9361 /* ToolbarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarModifier.swift; sourceTree = "<group>"; };
 		847A3FA02CDCB96E004A9361 /* SheetHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetHeaderView.swift; sourceTree = "<group>"; };
@@ -356,6 +358,7 @@
 			isa = PBXGroup;
 			children = (
 				A0EEC1972CDA46B700D81239 /* ChattingView.swift */,
+				A0E444CB2CDE010D0024AE71 /* ChattingImageView.swift */,
 			);
 			path = Chatting;
 			sourceTree = "<group>";
@@ -450,6 +453,7 @@
 			files = (
 				847A3F9B2CDAFF04004A9361 /* Header.swift in Sources */,
 				A0E444CA2CDDF4520024AE71 /* ChattingPhotoPicker.swift in Sources */,
+				A0E444CC2CDE010D0024AE71 /* ChattingImageView.swift in Sources */,
 				24ABE9402CD4B6D1000E7EC5 /* APIAuth.swift in Sources */,
 				847A3F942CDAB7A2004A9361 /* OptionSheet.swift in Sources */,
 				24ABE95C2CDB8701000E7EC5 /* Design.swift in Sources */,
