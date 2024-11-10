@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProfileImageView: View {
+    // TODO: 네트워킹 완성되면 바꿔야됨
     let imageName: String
     var size: CGFloat
     

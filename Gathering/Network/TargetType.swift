@@ -21,16 +21,17 @@ protocol TargetType: URLRequestConvertible {
 extension TargetType {
     
     var baseURL: String {
-        return APIAuth.baseURL + "/v1"
+        return APIAuth.baseURL + "v1"
     }
+    
     var encoding: ParameterEncoding {
-            switch method {
-            case .get:
-                return URLEncoding.default
-            default:
-                return JSONEncoding.default
-            }
+        switch method {
+        case .get:
+            return URLEncoding.default
+        default:
+            return JSONEncoding.default
         }
+    }
     
     func asURLRequest() throws -> URLRequest {
         let url = try baseURL.asURL().appendingPathComponent(path)
