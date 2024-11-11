@@ -9,6 +9,7 @@ import SwiftUI
 
 import PhotosUI
 import Combine
+import Alamofire
 
 struct ChattingView: View {
     @State private var messageText: String = ""
