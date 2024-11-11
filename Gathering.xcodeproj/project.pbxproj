@@ -66,6 +66,12 @@
 		A0E444C52CDD0A5C0024AE71 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444C42CDD0A5C0024AE71 /* ChatMessage.swift */; };
 		A0E444CA2CDDF4520024AE71 /* ChattingPhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444C92CDDF4520024AE71 /* ChattingPhotoPicker.swift */; };
 		A0E444CC2CDE010D0024AE71 /* ChattingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444CB2CDE010D0024AE71 /* ChattingImageView.swift */; };
+		A0E444D12CE29A850024AE71 /* WorkSpaceRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444D02CE29A850024AE71 /* WorkSpaceRouter.swift */; };
+		A0E444D92CE2A90C0024AE71 /* WorkspaceCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444D82CE2A90C0024AE71 /* WorkspaceCreateRequest.swift */; };
+		A0E444DB2CE2AC130024AE71 /* WorkspaceEditRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444DA2CE2AC130024AE71 /* WorkspaceEditRequest.swift */; };
+		A0E444DD2CE2AD690024AE71 /* InviteMemberRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444DC2CE2AD690024AE71 /* InviteMemberRequest.swift */; };
+		A0E444DF2CE2B1ED0024AE71 /* WorkspaceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444DE2CE2B1ED0024AE71 /* WorkspaceResponse.swift */; };
+		A0E444E12CE2B37D0024AE71 /* WorkspaceInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444E02CE2B37D0024AE71 /* WorkspaceInfoResponse.swift */; };
 		A0EEC1982CDA46B700D81239 /* ChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EEC1972CDA46B700D81239 /* ChattingView.swift */; };
 /* End PBXBuildFile section */
 
@@ -140,6 +146,12 @@
 		A0E444C42CDD0A5C0024AE71 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		A0E444C92CDDF4520024AE71 /* ChattingPhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingPhotoPicker.swift; sourceTree = "<group>"; };
 		A0E444CB2CDE010D0024AE71 /* ChattingImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingImageView.swift; sourceTree = "<group>"; };
+		A0E444D02CE29A850024AE71 /* WorkSpaceRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceRouter.swift; sourceTree = "<group>"; };
+		A0E444D82CE2A90C0024AE71 /* WorkspaceCreateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceCreateRequest.swift; sourceTree = "<group>"; };
+		A0E444DA2CE2AC130024AE71 /* WorkspaceEditRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceEditRequest.swift; sourceTree = "<group>"; };
+		A0E444DC2CE2AD690024AE71 /* InviteMemberRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteMemberRequest.swift; sourceTree = "<group>"; };
+		A0E444DE2CE2B1ED0024AE71 /* WorkspaceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceResponse.swift; sourceTree = "<group>"; };
+		A0E444E02CE2B37D0024AE71 /* WorkspaceInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInfoResponse.swift; sourceTree = "<group>"; };
 		A0EEC1972CDA46B700D81239 /* ChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -301,6 +313,8 @@
 		24ABE9742CDCEFB4000E7EC5 /* Router */ = {
 			isa = PBXGroup;
 			children = (
+				A0E444CF2CE283AD0024AE71 /* Dms */,
+				A0E444CE2CE283A40024AE71 /* WorkSpace */,
 				24ABE9802CDE0FDB000E7EC5 /* Channel */,
 				24ABE9712CDCEF8D000E7EC5 /* Store */,
 			);
@@ -412,6 +426,42 @@
 			path = PhotoPicker;
 			sourceTree = "<group>";
 		};
+		A0E444CE2CE283A40024AE71 /* WorkSpace */ = {
+			isa = PBXGroup;
+			children = (
+				A0E444D02CE29A850024AE71 /* WorkSpaceRouter.swift */,
+				A0E444D22CE29B450024AE71 /* RequestModel */,
+				A0E444D32CE29B4E0024AE71 /* ResponseModel */,
+			);
+			path = WorkSpace;
+			sourceTree = "<group>";
+		};
+		A0E444CF2CE283AD0024AE71 /* Dms */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Dms;
+			sourceTree = "<group>";
+		};
+		A0E444D22CE29B450024AE71 /* RequestModel */ = {
+			isa = PBXGroup;
+			children = (
+				A0E444D82CE2A90C0024AE71 /* WorkspaceCreateRequest.swift */,
+				A0E444DA2CE2AC130024AE71 /* WorkspaceEditRequest.swift */,
+				A0E444DC2CE2AD690024AE71 /* InviteMemberRequest.swift */,
+			);
+			path = RequestModel;
+			sourceTree = "<group>";
+		};
+		A0E444D32CE29B4E0024AE71 /* ResponseModel */ = {
+			isa = PBXGroup;
+			children = (
+				A0E444DE2CE2B1ED0024AE71 /* WorkspaceResponse.swift */,
+				A0E444E02CE2B37D0024AE71 /* WorkspaceInfoResponse.swift */,
+			);
+			path = ResponseModel;
+			sourceTree = "<group>";
+		};
 		A0EEC1962CDA469E00D81239 /* Chatting */ = {
 			isa = PBXGroup;
 			children = (
@@ -512,12 +562,16 @@
 			files = (
 				847A3F9B2CDAFF04004A9361 /* Header.swift in Sources */,
 				A0E444CA2CDDF4520024AE71 /* ChattingPhotoPicker.swift in Sources */,
+				A0E444DD2CE2AD690024AE71 /* InviteMemberRequest.swift in Sources */,
 				A0E444CC2CDE010D0024AE71 /* ChattingImageView.swift in Sources */,
 				24ABE9402CD4B6D1000E7EC5 /* APIAuth.swift in Sources */,
 				24ABE95C2CDB8701000E7EC5 /* Design.swift in Sources */,
 				2447AB562CE1D0EC00399C4D /* StoreClient.swift in Sources */,
 				24ABE9702CDCEDB2000E7EC5 /* UserDefaultsManager.swift in Sources */,
+				A0E444E12CE2B37D0024AE71 /* WorkspaceInfoResponse.swift in Sources */,
+				A0E444DB2CE2AC130024AE71 /* WorkspaceEditRequest.swift in Sources */,
 				24ABE96C2CDB9AF9000E7EC5 /* AppleLoginButton.swift in Sources */,
+				A0E444DF2CE2B1ED0024AE71 /* WorkspaceResponse.swift in Sources */,
 				24ABE97D2CDCF15D000E7EC5 /* PayValidationRequest.swift in Sources */,
 				24ABE95F2CDB93B5000E7EC5 /* View+.swift in Sources */,
 				24ABE9822CDE0FE9000E7EC5 /* ChannelRouter.swift in Sources */,
@@ -540,6 +594,7 @@
 				24ABE9662CDB99D0000E7EC5 /* StartInactiveButton.swift in Sources */,
 				847A3F922CDA9FC0004A9361 /* GatheringNavigationStack.swift in Sources */,
 				847A3F812CD8FFEF004A9361 /* CounterFeature.swift in Sources */,
+				A0E444D92CE2A90C0024AE71 /* WorkspaceCreateRequest.swift in Sources */,
 				847A3F902CDA440F004A9361 /* CustomDisclosure.swift in Sources */,
 				24ABE9542CD8B711000E7EC5 /* Font+.swift in Sources */,
 				24ABE97B2CDCF03D000E7EC5 /* StoreItemResponse.swift in Sources */,
@@ -552,6 +607,7 @@
 				24ABE91D2CD4AEDB000E7EC5 /* GatheringApp.swift in Sources */,
 				A0EEC1982CDA46B700D81239 /* ChattingView.swift in Sources */,
 				24ABE94E2CD8A71D000E7EC5 /* RootView.swift in Sources */,
+				A0E444D12CE29A850024AE71 /* WorkSpaceRouter.swift in Sources */,
 				24ABE9432CD4B7CC000E7EC5 /* SeungHyunView.swift in Sources */,
 				24ABE98E2CDF02E1000E7EC5 /* ChattingRequest.swift in Sources */,
 				24ABE98C2CDF005F000E7EC5 /* MemberResponse.swift in Sources */,
