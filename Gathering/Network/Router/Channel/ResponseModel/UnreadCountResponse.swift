@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct UnreadCountResponse: Decodable {
+    let channel_id: String
+    let name: String
+    let count: Int
+}
