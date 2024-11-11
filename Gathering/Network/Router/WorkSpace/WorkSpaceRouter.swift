@@ -12,19 +12,19 @@ import Alamofire
 enum WorkspaceRouter {
     case fetchMyWorkspaceList    // 내가 속한 워크스페이스 리스트 조회
     case createWorkspace(body: WorkspaceCreateRequest)         // 워크스페이스 생성
-    case fetchWorkspaceInfo(worksapceID: String)      // 내가 속한 특정 워크스페이스 정보 조회
-    case editWorkspace(worksapceID: String,
+    case fetchWorkspaceInfo(workspaceID: String)      // 내가 속한 특정 워크스페이스 정보 조회
+    case editWorkspace(workspaceID: String,
                        body: WorkspaceEditRequest)          // 워크스페이스 편집
-    case deleteWorkspace(worksapceID: String)         // 워크스페이스 삭제
-    case inviteMember(worksapceID: String, body: InviteMemberRequest)            // 워크스페이스 멤버 초대
-    case fetchWorkspaceMembers(worksapceID: String)   // 워크스페이스 멤버 조회
-    case fetchSpecificMemberInfo(worksapceID: String,
+    case deleteWorkspace(workspaceID: String)         // 워크스페이스 삭제
+    case inviteMember(workspaceID: String, body: InviteMemberRequest)            // 워크스페이스 멤버 초대
+    case fetchWorkspaceMembers(workspaceID: String)   // 워크스페이스 멤버 조회
+    case fetchSpecificMemberInfo(workspaceID: String,
                                  userID: String) // 워크스페이스 특정 멤버 조회
-    case searchInWorkspace(worksapceID: String,
+    case searchInWorkspace(workspaceID: String,
                            keyword: String)       // 워크스페이스 내 검색
-    case changeWorkspaceAdmin(worksapceID: String, 
+    case changeWorkspaceAdmin(workspaceID: String,
                               body: OwnerRequest)    // 워크스페이스 관리자 변경
-    case leaveWorkspace(worksapceID: String)          // 워크스페이스 나가기
+    case leaveWorkspace(workspaceID: String)          // 워크스페이스 나가기
     
 }
 
@@ -55,24 +55,24 @@ extension WorkspaceRouter: TargetType {
             return "workspaces"
         case .createWorkspace:
             return "workspaces"
-        case .fetchWorkspaceInfo(let worksapceID):
-            return "workspaces/\(worksapceID)"
-        case .editWorkspace(let worksapceID, _):
-            return "workspaces/\(worksapceID)"
-        case .deleteWorkspace(let worksapceID):
-            return "workspaces/\(worksapceID)"
-        case .inviteMember(let worksapceID, _):
-            return "workspaces/\(worksapceID)/members"
-        case .fetchWorkspaceMembers(let worksapceID):
-            return "workspaces/\(worksapceID)/members"
-        case .fetchSpecificMemberInfo(let worksapceID, let userID):
-            return "workspaces/\(worksapceID)/members/\(userID)"
-        case .searchInWorkspace(let worksapceID, _):
-            return "workspaces/\(worksapceID)/search"
-        case .changeWorkspaceAdmin(let worksapceID, _):
-            return "workspaces/\(worksapceID)/transfer/ownership"
-        case .leaveWorkspace(let worksapceID):
-            return "workspaces/\(worksapceID)/exit"
+        case .fetchWorkspaceInfo(let workspaceID):
+            return "workspaces/\(workspaceID)"
+        case .editWorkspace(let workspaceID, _):
+            return "workspaces/\(workspaceID)"
+        case .deleteWorkspace(let workspaceID):
+            return "workspaces/\(workspaceID)"
+        case .inviteMember(let workspaceID, _):
+            return "workspaces/\(workspaceID)/members"
+        case .fetchWorkspaceMembers(let workspaceID):
+            return "workspaces/\(workspaceID)/members"
+        case .fetchSpecificMemberInfo(let workspaceID, let userID):
+            return "workspaces/\(workspaceID)/members/\(userID)"
+        case .searchInWorkspace(let workspaceID, _):
+            return "workspaces/\(workspaceID)/search"
+        case .changeWorkspaceAdmin(let workspaceID, _):
+            return "workspaces/\(workspaceID)/transfer/ownership"
+        case .leaveWorkspace(let workspaceID):
+            return "workspaces/\(workspaceID)/exit"
         }
     }
     
@@ -111,7 +111,6 @@ extension WorkspaceRouter: TargetType {
         }
     }
 
-    
     var body: Data? {
         switch self {
         case .createWorkspace(let body):
@@ -126,6 +125,4 @@ extension WorkspaceRouter: TargetType {
             return nil
         }
     }
-    
-
 }
