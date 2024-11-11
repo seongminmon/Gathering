@@ -6,11 +6,8 @@
 //
 
 import Foundation
-import Alamofire
 
-struct ErrorResponse: Decodable, Error {
-    let errorCode: String
-}
+import Alamofire
 
 final class NetworkManager {
     static let shared = NetworkManager()
