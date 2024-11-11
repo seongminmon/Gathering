@@ -20,6 +20,13 @@ struct DMView: View {
                     // MARK: - tca bind test
                     TextField("닉네임 입력", text: $store.nickname)
                     
+                    // MARK: - tca dependency network test
+                    Button {
+                        store.send(.networkButtonTap)
+                    } label: {
+                        StartActiveButton()
+                    }
+                    
                     if store.chattingList.isEmpty {
                         emptyMemberView()
                     } else {
@@ -102,30 +109,61 @@ struct DMView: View {
 @Reducer
 struct DMFeature {
     
+    @Dependency(\.storeClient) var storeClient
+    
     @ObservableState
     struct State {
         var userList = Dummy.users
         var chattingList = Dummy.users
         var nickname: String = ""
+        var itemReponse: [StoreItemResponse] = []
     }
     
     enum Action: BindableAction {
-        case profileButtonTap
         case binding(BindingAction<State>)
+        case profileButtonTap
+        case networkButtonTap
+        case networkResponse([StoreItemResponse])
+        case errorResponse(Error)
     }
     
     var body: some ReducerOf<Self> {
         BindingReducer()
         Reduce { state, action in
             switch action {
+            case .binding:
+                return .none
+                
+            case .binding(\.nickname):
+                print(state.nickname)
+                return .none
+                
             case .profileButtonTap:
                 print("프로필 버튼 탭")
                 return .none
                 
-            case .binding(\.nickname):
+            case .networkButtonTap:
+                print("네트워크 버튼 탭")
+                
+                // 네트워크 비동기 작업을 별도 효과로 수행
+                return .run { send in
+                    do {
+                        let result = try await storeClient.itemList()
+                        await send(.networkResponse(result))
+                    } catch {
+                        print("네트워크 에러 발생: \(error)")
+                        await send(.errorResponse(error))
+                    }
+                }
+                
+            case .networkResponse(let response):
+                // 네트워크 응답 처리
+                print(response)
+                state.itemReponse = response
                 return .none
                 
-            case .binding:
+            case .errorResponse(let error):
+                print(error)
                 return .none
             }
         }
