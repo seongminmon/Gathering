@@ -90,7 +90,7 @@ struct ChattingView: View {
                 ChatMessage(name: "ㅇㄹㄴ",
                             text: messageText,
                             images: selectedImages,
-                            imageNames: [],
+                            imageNames: nil,
                             isMine: true,
                             profile: nil)
             )
