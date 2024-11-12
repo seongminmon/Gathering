@@ -81,6 +81,7 @@
 		A0E444EB2CE2C7E20024AE71 /* DmsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444EA2CE2C7E20024AE71 /* DmsResponse.swift */; };
 		A0E444ED2CE2C9C70024AE71 /* UnreadDmsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444EC2CE2C9C70024AE71 /* UnreadDmsResponse.swift */; };
 		A0E444EF2CE2CA8C0024AE71 /* DmsRoomResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444EE2CE2CA8C0024AE71 /* DmsRoomResponse.swift */; };
+		A0E444F12CE326170024AE71 /* WorkspaceClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444F02CE326170024AE71 /* WorkspaceClient.swift */; };
 		A0EEC1982CDA46B700D81239 /* ChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EEC1972CDA46B700D81239 /* ChattingView.swift */; };
 /* End PBXBuildFile section */
 
@@ -170,6 +171,7 @@
 		A0E444EA2CE2C7E20024AE71 /* DmsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmsResponse.swift; sourceTree = "<group>"; };
 		A0E444EC2CE2C9C70024AE71 /* UnreadDmsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadDmsResponse.swift; sourceTree = "<group>"; };
 		A0E444EE2CE2CA8C0024AE71 /* DmsRoomResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmsRoomResponse.swift; sourceTree = "<group>"; };
+		A0E444F02CE326170024AE71 /* WorkspaceClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceClient.swift; sourceTree = "<group>"; };
 		A0EEC1972CDA46B700D81239 /* ChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -193,6 +195,7 @@
 			children = (
 				2447AB592CE2200100399C4D /* ChannelClient.swift */,
 				2447AB552CE1D0EC00399C4D /* StoreClient.swift */,
+				A0E444F02CE326170024AE71 /* WorkspaceClient.swift */,
 			);
 			path = Client;
 			sourceTree = "<group>";
@@ -616,6 +619,7 @@
 				A0E444EF2CE2CA8C0024AE71 /* DmsRoomResponse.swift in Sources */,
 				A0E444DB2CE2AC130024AE71 /* WorkspaceEditRequest.swift in Sources */,
 				24ABE96C2CDB9AF9000E7EC5 /* AppleLoginButton.swift in Sources */,
+				A0E444F12CE326170024AE71 /* WorkspaceClient.swift in Sources */,
 				A0E444DF2CE2B1ED0024AE71 /* WorkspaceResponse.swift in Sources */,
 				24ABE97D2CDCF15D000E7EC5 /* PayValidationRequest.swift in Sources */,
 				24ABE95F2CDB93B5000E7EC5 /* View+.swift in Sources */,
