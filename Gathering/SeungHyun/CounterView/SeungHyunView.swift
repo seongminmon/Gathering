@@ -11,6 +11,7 @@ import ComposableArchitecture
 struct CounterView: View {
     let store: StoreOf<CounterFeature>
     
+    
     var body: some View {
         VStack {
             Text("\(store.count)")
@@ -36,12 +37,12 @@ struct CounterView: View {
                 .cornerRadius(10)
             }
             Button(store.isTimerRunning ? "Stop timer" : "Start timer") {
-                    store.send(.toggleTimerButtonTapped)
-                  }
-                  .font(.largeTitle)
-                  .padding()
-                  .background(Color.black.opacity(0.1))
-                  .cornerRadius(10)
+                store.send(.toggleTimerButtonTapped)
+            }
+            .font(.largeTitle)
+            .padding()
+            .background(Color.black.opacity(0.1))
+            .cornerRadius(10)
             
             Button("Fact") {
                 store.send(.factButtonTapped)
@@ -59,6 +60,7 @@ struct CounterView: View {
                     .multilineTextAlignment(.center)
                     .padding()
             }
+            
         }
     }
 }

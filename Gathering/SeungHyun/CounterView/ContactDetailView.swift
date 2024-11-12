@@ -5,4 +5,15 @@
 //  Created by dopamint on 11/12/24.
 //
 
-import Foundation
+//import ComposableArchitecture
+//import SwiftUI
+//
+//struct ContactDetailView: View {
+//  let store: StoreOf<ContactDetailFeature>
+//  
+//  var body: some View {
+//    Form {
+//    }
+//    .navigationTitle(Text(store.contact.name))
+//  }
+//}

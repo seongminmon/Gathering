@@ -18,10 +18,10 @@ struct AppView: View {
           Text("Counter 1")
         }
       
-        ContactsView(store: store.scope(state: \.tab2, action: \.tab2))
-        .tabItem {
-          Text("Counter 2")
-        }
+//        ContactsView(store: store.scope(state: \.tab2, action: \.tab2))
+//        .tabItem {
+//          Text("Counter 2")
+//        }
     }
   }
 }

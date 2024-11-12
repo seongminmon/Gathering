@@ -60,10 +60,8 @@ struct RootView: View {
             
             // MARK: - 설정
             NavigationStack {
-                CounterView(store: Store(initialState: CounterFeature.State(), reducer: {
-                    CounterFeature()
-                })
-            )}
+                EmptyView()
+            }
             .tabItem {
                 Image(tabInfo == .setting ? .settingActive : .settingInactive)
                 Text(TabInfo.setting.rawValue)
