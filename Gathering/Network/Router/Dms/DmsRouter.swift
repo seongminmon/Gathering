@@ -45,9 +45,9 @@ extension DmsRouter: TargetType {
             return "workspaces/\(workspaceID)/dms"
         case .sendDMMessage(let workspaceID, let roomID, _):
             return "workspaces/\(workspaceID)/dms/\(roomID)/chats"
-        case .fetchDMChatHistory(let workspaceID, let roomID, let cursorDate):
+        case .fetchDMChatHistory(let workspaceID, let roomID, _):
             return "workspaces/\(workspaceID)/dms/\(roomID)/chats"
-        case .fetchUnreadDMCount(let workspaceID, let roomID, let after):
+        case .fetchUnreadDMCount(let workspaceID, let roomID, _):
             return "workspaces/\(workspaceID)/dms/\(roomID)/unreads"
         }
     }
