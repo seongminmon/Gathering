@@ -27,6 +27,13 @@ struct DMView: View {
                         StartActiveButton()
                     }
                     
+                    // MARK: - toast test
+                    Button {
+                        store.send(.toastButtonTap)
+                    } label: {
+                        ContinueEmailButton()
+                    }
+                    
                     if store.chattingList.isEmpty {
                         emptyMemberView()
                     } else {
@@ -125,6 +132,7 @@ struct DMFeature {
         case networkButtonTap
         case networkResponse([StoreItemResponse])
         case errorResponse(Error)
+        case toastButtonTap
     }
     
     var body: some ReducerOf<Self> {
@@ -164,6 +172,16 @@ struct DMFeature {
                 
             case .errorResponse(let error):
                 print(error)
+                return .none
+                
+            case .toastButtonTap:
+                print("토스트 버튼 탭")
+                let toast = Toast(title: "토스트 테스트 메시지입니다")
+                NotificationCenter.default.post(
+                    name: .showToast,
+                    object: nil,
+                    userInfo: [Notification.UserInfoKey.toast: toast]
+                )
                 return .none
             }
         }
