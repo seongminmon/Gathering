@@ -27,7 +27,7 @@ struct RootView: View {
     private func tabView() -> some View {
         TabView(selection: $tabInfo) {
             // MARK: - 홈
-            GatheringNavigationStack(gatheringImage: "bird2", profileImage: "bird3") {
+            GatheringNavigationStack(gatheringImage: "bird2",title: "짹사모", profileImage: "bird3") {
                 HomeView()
             }
             .tabItem {
@@ -60,8 +60,10 @@ struct RootView: View {
             
             // MARK: - 설정
             NavigationStack {
-                EmptyView()
-            }
+                CounterView(store: Store(initialState: CounterFeature.State(), reducer: {
+                    CounterFeature()
+                })
+            )}
             .tabItem {
                 Image(tabInfo == .setting ? .settingActive : .settingInactive)
                 Text(TabInfo.setting.rawValue)

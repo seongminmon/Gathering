@@ -9,7 +9,7 @@ import SwiftUI
 
 import ComposableArchitecture
 
-@main
+//@main
 struct GatheringApp: App {
     
     @State private var toast: Toast?
