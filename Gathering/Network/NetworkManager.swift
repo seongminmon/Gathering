@@ -32,7 +32,7 @@ final class NetworkManager {
                     ErrorResponse.self,
                     from: response.data ?? Data()
                 )
-                print("통신 에러")
+                print("통신 에러 \(errorData.errorCode)")
                 throw errorData
             } catch {
                 print("에러 모델 디코딩 실패")

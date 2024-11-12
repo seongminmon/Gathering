@@ -9,6 +9,7 @@ import SwiftUI
 
 import PhotosUI
 import Combine
+import Alamofire
 
 struct ChattingView: View {
     @State private var messageText: String = ""
@@ -40,6 +41,10 @@ struct ChattingView: View {
                         .id(scrollViewID)
                     }
                     .frame(maxWidth: .infinity)
+                    .onAppear{ 
+                        proxy
+                            .scrollTo(scrollViewID, anchor: .bottom)
+                    }
                     .onChange(of: messages.count) { _ in
                         // 메시지 추가 시 자동 스크롤
                         withAnimation {
@@ -169,9 +174,9 @@ extension ChattingView {
                             )
                             .offset(x: 22, y: -22)
                     })
-                   
-                }
                     
+                }
+                
             }
         })
         .frame(height: 55)
@@ -274,7 +279,7 @@ extension View {
     // 키보드 숨기기 메서드
     func hideKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
-                                        to: nil, 
+                                        to: nil,
                                         from: nil,
                                         for: nil)
     }
