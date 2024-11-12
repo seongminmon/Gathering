@@ -17,34 +17,13 @@ struct StoreClient {
 extension StoreClient: DependencyKey {
     static let liveValue = StoreClient(
         payValidation: { body in
-            do {
-                let result: PayValidationResponse = try await NetworkManager.shared.request(
-                    api: StoreRouter.payValidation(body: body)
-                )
-                print("Success: \(result)")
-                return result
-            } catch let error as ErrorResponse {
-                print("Error code: \(error.errorCode)")
-                throw error
-            } catch {
-                print("Unexpected error: \(error)")
-                throw error
-            }
-            
+            return try await NetworkManager.shared.request(
+                api: StoreRouter.payValidation(body: body)
+            )
         }, itemList: {
-            do {
-                let result: [StoreItemResponse] = try await NetworkManager.shared.request(
-                    api: StoreRouter.itemList
-                )
-                print("Success: \(result)")
-                return result
-            } catch let error as ErrorResponse {
-                print("Error code: \(error.errorCode)")
-                throw error
-            } catch {
-                print("Unexpected error: \(error)")
-                throw error
-            }
+            return try await NetworkManager.shared.request(
+                api: StoreRouter.itemList
+            )
         }
     )
 }
