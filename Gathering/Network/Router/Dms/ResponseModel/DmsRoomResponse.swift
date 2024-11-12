@@ -11,6 +11,6 @@ typealias DmsRooms = [DmsRoomResponse]
 
 struct DmsRoomResponse: Decodable {
     let room_id: String
-    let creatAt: String
+    let createdAt: String
     let user: MemberResponse
 }
