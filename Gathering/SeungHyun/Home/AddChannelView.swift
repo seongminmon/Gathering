@@ -23,7 +23,7 @@ struct ChannelAddView: View {
                     TextField("", text: $channelName)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                 }
-                
+
                 VStack(alignment: .leading, spacing: 8) {
                     Text("채널 설명")
                         .font(.title2)
@@ -39,12 +39,12 @@ struct ChannelAddView: View {
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.green)
+                        .background(Design.green)
                         .cornerRadius(8)
                 }
             }
             .padding()
         }
-        .background(Color.background)
+        .background(Design.background)
     }
 }

@@ -40,7 +40,7 @@ struct SheetHeaderView: View {
             .padding(.horizontal)
         }
         .frame(height: 60)
-        .background(Color.white)
+        .background(Design.white)
         Divider()
     }
 }
