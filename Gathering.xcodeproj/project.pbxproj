@@ -19,6 +19,9 @@
 		2447AB682CE329BB00399C4D /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB672CE329BB00399C4D /* Toast.swift */; };
 		2447AB6A2CE32B6800399C4D /* ToastModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB692CE32B6800399C4D /* ToastModifier.swift */; };
 		2447AB6D2CE32ED300399C4D /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB6C2CE32ED300399C4D /* Notification.swift */; };
+		2447AB6F2CE3326D00399C4D /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB6E2CE3326D00399C4D /* OnboardingView.swift */; };
+		2447AB712CE3789600399C4D /* LoginPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB702CE3789600399C4D /* LoginPopUpView.swift */; };
+		2447AB732CE378B600399C4D /* OnboardingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB722CE378B600399C4D /* OnboardingFeature.swift */; };
 		24ABE91D2CD4AEDB000E7EC5 /* GatheringApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE91C2CD4AEDB000E7EC5 /* GatheringApp.swift */; };
 		24ABE91F2CD4AEDB000E7EC5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE91E2CD4AEDB000E7EC5 /* ContentView.swift */; };
 		24ABE9212CD4AEDD000E7EC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24ABE9202CD4AEDD000E7EC5 /* Assets.xcassets */; };
@@ -119,6 +122,9 @@
 		2447AB672CE329BB00399C4D /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		2447AB692CE32B6800399C4D /* ToastModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastModifier.swift; sourceTree = "<group>"; };
 		2447AB6C2CE32ED300399C4D /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		2447AB6E2CE3326D00399C4D /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		2447AB702CE3789600399C4D /* LoginPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPopUpView.swift; sourceTree = "<group>"; };
+		2447AB722CE378B600399C4D /* OnboardingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFeature.swift; sourceTree = "<group>"; };
 		24ABE9192CD4AEDB000E7EC5 /* Gathering.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gathering.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24ABE91C2CD4AEDB000E7EC5 /* GatheringApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatheringApp.swift; sourceTree = "<group>"; };
 		24ABE91E2CD4AEDB000E7EC5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -218,6 +224,9 @@
 		2447AB5F2CE324C400399C4D /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				2447AB6E2CE3326D00399C4D /* OnboardingView.swift */,
+				2447AB722CE378B600399C4D /* OnboardingFeature.swift */,
+				2447AB702CE3789600399C4D /* LoginPopUpView.swift */,
 				2447AB602CE3276A00399C4D /* AuthView.swift */,
 			);
 			path = Auth;
@@ -662,9 +671,11 @@
 				24ABE9702CDCEDB2000E7EC5 /* UserDefaultsManager.swift in Sources */,
 				A0E444EB2CE2C7E20024AE71 /* DmsResponse.swift in Sources */,
 				A0E444E12CE2B37D0024AE71 /* WorkspaceInfoResponse.swift in Sources */,
+				2447AB6F2CE3326D00399C4D /* OnboardingView.swift in Sources */,
 				A0E444EF2CE2CA8C0024AE71 /* DmsRoomResponse.swift in Sources */,
 				A0E444DB2CE2AC130024AE71 /* WorkspaceEditRequest.swift in Sources */,
 				24ABE96C2CDB9AF9000E7EC5 /* AppleLoginButton.swift in Sources */,
+				2447AB712CE3789600399C4D /* LoginPopUpView.swift in Sources */,
 				A0E444F32CE336F30024AE71 /* DmsClient.swift in Sources */,
 				A0E444F12CE326170024AE71 /* WorkspaceClient.swift in Sources */,
 				A0E444DF2CE2B1ED0024AE71 /* WorkspaceResponse.swift in Sources */,
@@ -699,6 +710,7 @@
 				847A3F902CDA440F004A9361 /* CustomDisclosure.swift in Sources */,
 				24ABE9542CD8B711000E7EC5 /* Font+.swift in Sources */,
 				24ABE97B2CDCF03D000E7EC5 /* StoreItemResponse.swift in Sources */,
+				2447AB732CE378B600399C4D /* OnboardingFeature.swift in Sources */,
 				847A3F972CDAFB19004A9361 /* TargetType.swift in Sources */,
 				2447AB662CE329AB00399C4D /* ToastWindowManager.swift in Sources */,
 				24ABE9792CDCF02A000E7EC5 /* PayValidationResponse.swift in Sources */,
