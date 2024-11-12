@@ -16,7 +16,6 @@ extension View {
             .frame(height: 44)
             .background(backgroundColor)
             .clipShape(RoundedRectangle(cornerRadius: 8))
-            .padding()
     }
     
     func badge(
