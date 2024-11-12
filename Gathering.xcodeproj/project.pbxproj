@@ -197,6 +197,13 @@
 			path = Client;
 			sourceTree = "<group>";
 		};
+		2447AB5F2CE324C400399C4D /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 		24ABE9102CD4AEDB000E7EC5 = {
 			isa = PBXGroup;
 			children = (
@@ -260,6 +267,7 @@
 		24ABE9442CD4B7DC000E7EC5 /* SeongMin */ = {
 			isa = PBXGroup;
 			children = (
+				2447AB5F2CE324C400399C4D /* Auth */,
 				24ABE9512CD8B65E000E7EC5 /* DMView.swift */,
 			);
 			path = SeongMin;
