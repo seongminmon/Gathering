@@ -13,7 +13,10 @@ struct GatheringNavigationStack<Content: View>: View {
     let gatheringImage: String
     let profileImage: String
     
-    init(gatheringImage: String?, title: String, profileImage: String?, @ViewBuilder content: () -> Content) {
+    init(gatheringImage: String?, 
+         title: String,
+         profileImage: String?,
+         content: () -> Content) {
         self.content = content()
         self.title = title
         self.gatheringImage = gatheringImage ?? "bird"

@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+import ComposableArchitecture
+
 struct HomeView: View {
     let channels = Dummy.channels
     let users = Dummy.users
