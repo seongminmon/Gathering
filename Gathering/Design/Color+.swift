@@ -13,6 +13,7 @@ extension Design {
     static let red = Color(.error)
     static let black = Color(.appBlack)
     static let gray = Color(.appGray)
+    static let textGray = Color(.textSecondary)
     static let white = Color(.appWhite)
     static let background = Color(.background)
 }
