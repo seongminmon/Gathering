@@ -13,7 +13,7 @@ import ComposableArchitecture
 struct GatheringApp: App {
     
     @State private var toast: Toast?
-    @State var isLogin = false
+    @State var isLogin = true
     
     var body: some Scene {
         WindowGroup {
