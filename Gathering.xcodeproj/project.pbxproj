@@ -99,6 +99,8 @@
 		84B8AD172CE3696400011D73 /* UserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B8AD162CE3696400011D73 /* UserClient.swift */; };
 		84B8AD1A2CE3815D00011D73 /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B8AD192CE3815D00011D73 /* AuthRouter.swift */; };
 		84B8AD1C2CE3859400011D73 /* AuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B8AD1B2CE3859400011D73 /* AuthClient.swift */; };
+		84B8AD212CE3D55000011D73 /* HomeFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B8AD202CE3D55000011D73 /* HomeFeature.swift */; };
+		84B8AD232CE46A8E00011D73 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B8AD222CE46A8E00011D73 /* CustomAlert.swift */; };
 		A0E444C52CDD0A5C0024AE71 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444C42CDD0A5C0024AE71 /* ChatMessage.swift */; };
 		A0E444CA2CDDF4520024AE71 /* ChattingPhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444C92CDDF4520024AE71 /* ChattingPhotoPicker.swift */; };
 		A0E444CC2CDE010D0024AE71 /* ChattingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444CB2CDE010D0024AE71 /* ChattingImageView.swift */; };
@@ -223,6 +225,8 @@
 		84B8AD162CE3696400011D73 /* UserClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClient.swift; sourceTree = "<group>"; };
 		84B8AD192CE3815D00011D73 /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
 		84B8AD1B2CE3859400011D73 /* AuthClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthClient.swift; sourceTree = "<group>"; };
+		84B8AD202CE3D55000011D73 /* HomeFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeature.swift; sourceTree = "<group>"; };
+		84B8AD222CE46A8E00011D73 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		A0E444C42CDD0A5C0024AE71 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		A0E444C92CDDF4520024AE71 /* ChattingPhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingPhotoPicker.swift; sourceTree = "<group>"; };
 		A0E444CB2CDE010D0024AE71 /* ChattingImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingImageView.swift; sourceTree = "<group>"; };
@@ -399,8 +403,8 @@
 				847A3F872CD9C032004A9361 /* ProfileImageView.swift */,
 				847A3F8F2CDA440F004A9361 /* CustomDisclosure.swift */,
 				847A3F912CDA9FC0004A9361 /* GatheringNavigationStack.swift */,
-				847A3F9E2CDB6AC4004A9361 /* ToolbarModifier.swift */,
 				847A3FA02CDCB96E004A9361 /* SheetHeaderView.swift */,
+				84B8AD222CE46A8E00011D73 /* CustomAlert.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -409,6 +413,7 @@
 			isa = PBXGroup;
 			children = (
 				24ABE95E2CDB93B5000E7EC5 /* View+.swift */,
+				847A3F9E2CDB6AC4004A9361 /* ToolbarModifier.swift */,
 			);
 			path = Modifier;
 			sourceTree = "<group>";
@@ -553,7 +558,7 @@
 		847A3F822CD8FFFD004A9361 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				847A3F832CD9000F004A9361 /* HomeView.swift */,
+				84B8AD1F2CE3D53E00011D73 /* HomeView */,
 				847A3F9C2CDB0E6B004A9361 /* AddChannelView.swift */,
 				847A3FA42CDE1183004A9361 /* ChannelExploreView.swift */,
 				847A3FA22CDE111A004A9361 /* InviteMemberView.swift */,
@@ -590,6 +595,15 @@
 				84B8AD192CE3815D00011D73 /* AuthRouter.swift */,
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		84B8AD1F2CE3D53E00011D73 /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+				847A3F832CD9000F004A9361 /* HomeView.swift */,
+				84B8AD202CE3D55000011D73 /* HomeFeature.swift */,
+			);
+			path = HomeView;
 			sourceTree = "<group>";
 		};
 		A0E444C32CDD0A460024AE71 /* Model */ = {
@@ -765,11 +779,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				847A3F9B2CDAFF04004A9361 /* Header.swift in Sources */,
+				84B8AD212CE3D55000011D73 /* HomeFeature.swift in Sources */,
 				A0E444CA2CDDF4520024AE71 /* ChattingPhotoPicker.swift in Sources */,
 				843E7FD92CE31BA10057A426 /* JoinRequest.swift in Sources */,
 				843E7FE12CE337550057A426 /* KakaoLoginRequest.swift in Sources */,
 				843E7FEF2CE349550057A426 /* ContactDetailFeature.swift in Sources */,
 				84B8AD172CE3696400011D73 /* UserClient.swift in Sources */,
+				84B8AD232CE46A8E00011D73 /* CustomAlert.swift in Sources */,
 				A0E444DD2CE2AD690024AE71 /* InviteMemberRequest.swift in Sources */,
 				A0E444CC2CDE010D0024AE71 /* ChattingImageView.swift in Sources */,
 				843E7FE32CE3379B0057A426 /* AppleLoginRequest.swift in Sources */,

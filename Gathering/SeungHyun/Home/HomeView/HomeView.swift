@@ -7,9 +7,13 @@
 
 import SwiftUI
 
+import ComposableArchitecture
+
 struct HomeView: View {
     let channels = Dummy.channels
     let users = Dummy.users
+    
+    @State private var showCustomAlert = false
     
     @State private var isChannelExpanded = true
     @State private var isDMExpanded = true
@@ -25,7 +29,9 @@ struct HomeView: View {
                 scrollView()
                 FloatingActionButton {
                     print("탭탭")
+                    showCustomAlert = true
                 }
+                
             }
         }
         .sheet(isPresented: $showChannelAdd) {
@@ -51,6 +57,7 @@ struct HomeView: View {
                     channelListView()
                     makeAddButton(text: "채널 추가") {
                         showOptionSheet = true
+                        
                     }
                     .confirmationDialog("",
                                         isPresented: $showOptionSheet,
