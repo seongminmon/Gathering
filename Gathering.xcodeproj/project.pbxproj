@@ -101,6 +101,7 @@
 		84B8AD1C2CE3859400011D73 /* AuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B8AD1B2CE3859400011D73 /* AuthClient.swift */; };
 		84B8AD212CE3D55000011D73 /* HomeFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B8AD202CE3D55000011D73 /* HomeFeature.swift */; };
 		84B8AD232CE46A8E00011D73 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B8AD222CE46A8E00011D73 /* CustomAlert.swift */; };
+		A0DBC0FB2CE654FE008E4665 /* ChannelSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DBC0FA2CE654FE008E4665 /* ChannelSettingView.swift */; };
 		A0E444C52CDD0A5C0024AE71 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444C42CDD0A5C0024AE71 /* ChatMessage.swift */; };
 		A0E444CA2CDDF4520024AE71 /* ChattingPhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444C92CDDF4520024AE71 /* ChattingPhotoPicker.swift */; };
 		A0E444CC2CDE010D0024AE71 /* ChattingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444CB2CDE010D0024AE71 /* ChattingImageView.swift */; };
@@ -227,6 +228,7 @@
 		84B8AD1B2CE3859400011D73 /* AuthClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthClient.swift; sourceTree = "<group>"; };
 		84B8AD202CE3D55000011D73 /* HomeFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeature.swift; sourceTree = "<group>"; };
 		84B8AD222CE46A8E00011D73 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
+		A0DBC0FA2CE654FE008E4665 /* ChannelSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSettingView.swift; sourceTree = "<group>"; };
 		A0E444C42CDD0A5C0024AE71 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		A0E444C92CDDF4520024AE71 /* ChattingPhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingPhotoPicker.swift; sourceTree = "<group>"; };
 		A0E444CB2CDE010D0024AE71 /* ChattingImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingImageView.swift; sourceTree = "<group>"; };
@@ -685,6 +687,7 @@
 			children = (
 				A0EEC1972CDA46B700D81239 /* ChattingView.swift */,
 				A0E444CB2CDE010D0024AE71 /* ChattingImageView.swift */,
+				A0DBC0FA2CE654FE008E4665 /* ChannelSettingView.swift */,
 			);
 			path = Chatting;
 			sourceTree = "<group>";
@@ -784,6 +787,7 @@
 				843E7FD92CE31BA10057A426 /* JoinRequest.swift in Sources */,
 				843E7FE12CE337550057A426 /* KakaoLoginRequest.swift in Sources */,
 				843E7FEF2CE349550057A426 /* ContactDetailFeature.swift in Sources */,
+				A0DBC0FB2CE654FE008E4665 /* ChannelSettingView.swift in Sources */,
 				84B8AD172CE3696400011D73 /* UserClient.swift in Sources */,
 				84B8AD232CE46A8E00011D73 /* CustomAlert.swift in Sources */,
 				A0E444DD2CE2AD690024AE71 /* InviteMemberRequest.swift in Sources */,

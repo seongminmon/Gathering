@@ -10,6 +10,7 @@ import SwiftUI
 import PhotosUI
 import Combine
 import Alamofire
+import ComposableArchitecture
 
 struct ChattingView: View {
     @State private var messageText: String = ""
@@ -41,7 +42,7 @@ struct ChattingView: View {
                         .id(scrollViewID)
                     }
                     .frame(maxWidth: .infinity)
-                    .onAppear{ 
+                    .onAppear{
                         proxy
                             .scrollTo(scrollViewID, anchor: .bottom)
                     }
@@ -288,3 +289,5 @@ extension View {
 #Preview {
     ChattingView()
 }
+
+
