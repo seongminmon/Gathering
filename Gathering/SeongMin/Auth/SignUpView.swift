@@ -47,11 +47,16 @@ struct SignUpView: View {
         }
     }
     
+    @ViewBuilder
     private func signUpButton() -> some View {
         if store.isButtonValid {
-            RoundedButton(text: "가입하기",
-                          foregroundColor: Design.white,
-                          backgroundColor: Design.green)
+            Button {
+                print("가입하기 탭")
+            } label: {
+                RoundedButton(text: "가입하기",
+                              foregroundColor: Design.white,
+                              backgroundColor: Design.green)
+            }
         } else {
             RoundedButton(text: "가입하기",
                           foregroundColor: Design.white,
