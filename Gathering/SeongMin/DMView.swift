@@ -25,7 +25,9 @@ struct DMView: View {
                     Button {
                         store.send(.networkButtonTap)
                     } label: {
-                        StartActiveButton()
+                        RoundedButton(text: "네트워크 테스트",
+                                      foregroundColor: Design.white,
+                                      backgroundColor: Design.green)
                     }
                     
                     // MARK: - toast test
