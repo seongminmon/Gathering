@@ -34,10 +34,9 @@ struct GatheringApp: App {
                     }
             } else {
                 OnboardingView(
-                    store: Store(initialState: OnboardingFeature.State()) {OnboardingFeature()}
+                    store: Store(initialState: OnboardingFeature.State()) { OnboardingFeature() }
                 )
             }
-            
         }
     }
 }

@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-struct ChannelOutButton: View {
+struct RoundedBorderButton: View {
+    var text: String
+    
     var body: some View {
-        Text("채널에서 나가기")
+        Text(text)
             .font(Design.title2)
             .foregroundStyle(Design.black)
             .frame(maxWidth: .infinity)

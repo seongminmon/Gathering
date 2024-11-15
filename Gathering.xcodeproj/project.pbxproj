@@ -22,6 +22,7 @@
 		2447AB6F2CE3326D00399C4D /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB6E2CE3326D00399C4D /* OnboardingView.swift */; };
 		2447AB712CE3789600399C4D /* LoginPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB702CE3789600399C4D /* LoginPopUpView.swift */; };
 		2447AB732CE378B600399C4D /* OnboardingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB722CE378B600399C4D /* OnboardingFeature.swift */; };
+		2447AB752CE37F7A00399C4D /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB742CE37F7A00399C4D /* AuthInterceptor.swift */; };
 		24ABE91D2CD4AEDB000E7EC5 /* GatheringApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE91C2CD4AEDB000E7EC5 /* GatheringApp.swift */; };
 		24ABE91F2CD4AEDB000E7EC5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE91E2CD4AEDB000E7EC5 /* ContentView.swift */; };
 		24ABE9212CD4AEDD000E7EC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24ABE9202CD4AEDD000E7EC5 /* Assets.xcassets */; };
@@ -42,10 +43,9 @@
 		24ABE95A2CDB86F3000E7EC5 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9592CDB86F3000E7EC5 /* Color+.swift */; };
 		24ABE95C2CDB8701000E7EC5 /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE95B2CDB8701000E7EC5 /* Design.swift */; };
 		24ABE95F2CDB93B5000E7EC5 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE95E2CDB93B5000E7EC5 /* View+.swift */; };
-		24ABE9622CDB99B1000E7EC5 /* ChannelOutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9612CDB99B1000E7EC5 /* ChannelOutButton.swift */; };
+		24ABE9622CDB99B1000E7EC5 /* RoundedBorderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9612CDB99B1000E7EC5 /* RoundedBorderButton.swift */; };
 		24ABE9642CDB99C8000E7EC5 /* ContinueEmailButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9632CDB99C8000E7EC5 /* ContinueEmailButton.swift */; };
-		24ABE9662CDB99D0000E7EC5 /* StartInactiveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9652CDB99D0000E7EC5 /* StartInactiveButton.swift */; };
-		24ABE9682CDB99D6000E7EC5 /* StartActiveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9672CDB99D6000E7EC5 /* StartActiveButton.swift */; };
+		24ABE9662CDB99D0000E7EC5 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9652CDB99D0000E7EC5 /* RoundedButton.swift */; };
 		24ABE96A2CDB9AB8000E7EC5 /* KakaoLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9692CDB9AB8000E7EC5 /* KakaoLoginButton.swift */; };
 		24ABE96C2CDB9AF9000E7EC5 /* AppleLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE96B2CDB9AF9000E7EC5 /* AppleLoginButton.swift */; };
 		24ABE96E2CDCE2A3000E7EC5 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE96D2CDCE2A3000E7EC5 /* NetworkManager.swift */; };
@@ -125,6 +125,7 @@
 		2447AB6E2CE3326D00399C4D /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		2447AB702CE3789600399C4D /* LoginPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPopUpView.swift; sourceTree = "<group>"; };
 		2447AB722CE378B600399C4D /* OnboardingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFeature.swift; sourceTree = "<group>"; };
+		2447AB742CE37F7A00399C4D /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
 		24ABE9192CD4AEDB000E7EC5 /* Gathering.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gathering.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24ABE91C2CD4AEDB000E7EC5 /* GatheringApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatheringApp.swift; sourceTree = "<group>"; };
 		24ABE91E2CD4AEDB000E7EC5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -142,10 +143,9 @@
 		24ABE9592CDB86F3000E7EC5 /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
 		24ABE95B2CDB8701000E7EC5 /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
 		24ABE95E2CDB93B5000E7EC5 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
-		24ABE9612CDB99B1000E7EC5 /* ChannelOutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelOutButton.swift; sourceTree = "<group>"; };
+		24ABE9612CDB99B1000E7EC5 /* RoundedBorderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedBorderButton.swift; sourceTree = "<group>"; };
 		24ABE9632CDB99C8000E7EC5 /* ContinueEmailButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinueEmailButton.swift; sourceTree = "<group>"; };
-		24ABE9652CDB99D0000E7EC5 /* StartInactiveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartInactiveButton.swift; sourceTree = "<group>"; };
-		24ABE9672CDB99D6000E7EC5 /* StartActiveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartActiveButton.swift; sourceTree = "<group>"; };
+		24ABE9652CDB99D0000E7EC5 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		24ABE9692CDB9AB8000E7EC5 /* KakaoLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginButton.swift; sourceTree = "<group>"; };
 		24ABE96B2CDB9AF9000E7EC5 /* AppleLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginButton.swift; sourceTree = "<group>"; };
 		24ABE96D2CDCE2A3000E7EC5 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -366,10 +366,9 @@
 		24ABE9602CDB99A8000E7EC5 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
-				24ABE9672CDB99D6000E7EC5 /* StartActiveButton.swift */,
-				24ABE9652CDB99D0000E7EC5 /* StartInactiveButton.swift */,
+				24ABE9652CDB99D0000E7EC5 /* RoundedButton.swift */,
+				24ABE9612CDB99B1000E7EC5 /* RoundedBorderButton.swift */,
 				24ABE9632CDB99C8000E7EC5 /* ContinueEmailButton.swift */,
-				24ABE9612CDB99B1000E7EC5 /* ChannelOutButton.swift */,
 				24ABE9692CDB9AB8000E7EC5 /* KakaoLoginButton.swift */,
 				24ABE96B2CDB9AF9000E7EC5 /* AppleLoginButton.swift */,
 			);
@@ -479,6 +478,7 @@
 				847A3F962CDAFB19004A9361 /* TargetType.swift */,
 				847A3F982CDAFC6B004A9361 /* Router.swift */,
 				847A3F9A2CDAFF04004A9361 /* Header.swift */,
+				2447AB742CE37F7A00399C4D /* AuthInterceptor.swift */,
 				24ABE96D2CDCE2A3000E7EC5 /* NetworkManager.swift */,
 				2447AB5B2CE22D1300399C4D /* APIError.swift */,
 				2447AB572CE1E16200399C4D /* ErrorResponse.swift */,
@@ -661,6 +661,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				847A3F9B2CDAFF04004A9361 /* Header.swift in Sources */,
+				2447AB752CE37F7A00399C4D /* AuthInterceptor.swift in Sources */,
 				A0E444CA2CDDF4520024AE71 /* ChattingPhotoPicker.swift in Sources */,
 				A0E444DD2CE2AD690024AE71 /* InviteMemberRequest.swift in Sources */,
 				A0E444CC2CDE010D0024AE71 /* ChattingImageView.swift in Sources */,
@@ -688,14 +689,13 @@
 				A0E444E92CE2C3D80024AE71 /* DmOpponentRequest.swift in Sources */,
 				847A3FA12CDCB96E004A9361 /* SheetHeaderView.swift in Sources */,
 				847A3F8B2CD9EA54004A9361 /* TempModel.swift in Sources */,
-				24ABE9622CDB99B1000E7EC5 /* ChannelOutButton.swift in Sources */,
+				24ABE9622CDB99B1000E7EC5 /* RoundedBorderButton.swift in Sources */,
 				24ABE91F2CD4AEDB000E7EC5 /* ContentView.swift in Sources */,
 				847A3F992CDAFC6B004A9361 /* Router.swift in Sources */,
 				24ABE96E2CDCE2A3000E7EC5 /* NetworkManager.swift in Sources */,
 				A0E444C52CDD0A5C0024AE71 /* ChatMessage.swift in Sources */,
 				2447AB642CE327C800399C4D /* ToastView.swift in Sources */,
 				2447AB5C2CE22D1300399C4D /* APIError.swift in Sources */,
-				24ABE9682CDB99D6000E7EC5 /* StartActiveButton.swift in Sources */,
 				24ABE95A2CDB86F3000E7EC5 /* Color+.swift in Sources */,
 				847A3F9F2CDB6AC4004A9361 /* ToolbarModifier.swift in Sources */,
 				847A3F882CD9C032004A9361 /* ProfileImageView.swift in Sources */,
@@ -703,7 +703,7 @@
 				847A3F842CD9000F004A9361 /* HomeView.swift in Sources */,
 				A0E444ED2CE2C9C70024AE71 /* UnreadDmsResponse.swift in Sources */,
 				24ABE9862CDE12BE000E7EC5 /* ChannelResponse.swift in Sources */,
-				24ABE9662CDB99D0000E7EC5 /* StartInactiveButton.swift in Sources */,
+				24ABE9662CDB99D0000E7EC5 /* RoundedButton.swift in Sources */,
 				847A3F922CDA9FC0004A9361 /* GatheringNavigationStack.swift in Sources */,
 				847A3F812CD8FFEF004A9361 /* CounterFeature.swift in Sources */,
 				A0E444D92CE2A90C0024AE71 /* WorkspaceCreateRequest.swift in Sources */,

@@ -31,7 +31,9 @@ struct OnboardingView: View {
                     print("시작하기 버튼 탭")
                     store.send(.startButtonTap)
                 } label: {
-                    StartActiveButton()
+                    RoundedButton(text: "시작하기", 
+                                  foregroundColor: Design.white,
+                                  backgroundColor: Design.green)
                 }
             }
             .padding(20)
