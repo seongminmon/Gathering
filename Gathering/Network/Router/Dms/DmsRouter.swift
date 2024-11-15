@@ -93,6 +93,4 @@ extension DmsRouter: TargetType {
             return nil
         }
     }
-    
-    
 }

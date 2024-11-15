@@ -8,7 +8,9 @@
 import SwiftUI
 
 extension View {
-    func asButtonStyle(foregroundColor: Color, backgroundColor: Color) -> some View {
+    func asButtonStyle(foregroundColor: Color,
+                       backgroundColor: Color
+    ) -> some View {
         self
             .font(Design.title2)
             .foregroundStyle(foregroundColor)
@@ -18,9 +20,8 @@ extension View {
             .clipShape(RoundedRectangle(cornerRadius: 8))
     }
     
-    func badge(
-        backgroundColor: Color = Design.green,
-        textColor: Color = Design.white
+    func badge(backgroundColor: Color = Design.green,
+               textColor: Color = Design.white
     ) -> some View {
         self
             .font(.caption)

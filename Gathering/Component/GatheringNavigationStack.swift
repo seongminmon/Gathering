@@ -9,11 +9,16 @@ import SwiftUI
 
 struct GatheringNavigationStack<Content: View>: View {
     let content: Content
+    let title: String
     let gatheringImage: String
     let profileImage: String
     
-    init(@ViewBuilder content: () -> Content, gatheringImage: String?, profileImage: String?) {
+    init(gatheringImage: String?, 
+         title: String,
+         profileImage: String?,
+         content: () -> Content) {
         self.content = content()
+        self.title = title
         self.gatheringImage = gatheringImage ?? "bird"
         self.profileImage = profileImage ?? "bird"
     }
@@ -25,11 +30,10 @@ struct GatheringNavigationStack<Content: View>: View {
                     ToolbarItem(placement: .topBarLeading) {
                         HStack {
                             ProfileImageView(imageName: gatheringImage, size: 32)
-                            Text("iOS Developers Study")
+                            Text(title)
                                 .font(Design.title1)
                         }
                     }
-                    
                     ToolbarItem(placement: .topBarTrailing) {
                         Image(systemName: profileImage)
                             .resizable()

@@ -15,7 +15,8 @@ struct DMView: View {
     
     var body: some View {
         WithPerceptionTracking {
-            GatheringNavigationStack(content: {
+            GatheringNavigationStack(gatheringImage: "bird2", title: "짹사모", profileImage: "bird2") {
+                // "Direct Message" (네비게이션 타이틀)
                 VStack {
                     // MARK: - tca bind test
                     TextField("닉네임 입력", text: $store.nickname)
@@ -57,10 +58,9 @@ struct DMView: View {
                             })
                         }
                     }
-                    
                     Spacer()
                 }
-            }, gatheringImage: "bird", profileImage: "bird")  // "Direct Message" (네비게이션 타이틀)
+            }
                
         }
     }
