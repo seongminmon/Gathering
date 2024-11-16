@@ -87,8 +87,16 @@ struct SignUpFeature {
                 }
                 
             case .signUpResponse(let data):
-                // 통신 성공 시 화면 전환
                 print(data)
+                
+                // userdefaults에 유저 정보 저장
+                UserDefaultsManager.signIn(
+                    data.token.accessToken,
+                    data.token.refreshToken ?? "",
+                    data.userID
+                )
+                // TODO: - 통신 성공 시 화면 전환
+                
                 return .none
                 
             case .signUpError(let error):

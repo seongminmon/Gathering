@@ -43,10 +43,9 @@ final class NetworkManager {
                                 refreshToken: UserDefaultsManager.refreshToken
                             )
                         )
-                        // 헤더에 세팅 후 재통신하기
-                        UserDefaultsManager.accessToken = result.accessToken
-                        
-                        // 기존 요청을 재시도
+                        // 엑세스 토큰 저장
+                        UserDefaultsManager.refresh(result.accessToken)
+                        // 기존 요청 재시도
                         return try await performRequest(api: api)
                     } catch {
                         print("토큰 갱신 에러")

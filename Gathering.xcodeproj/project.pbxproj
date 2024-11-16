@@ -26,6 +26,9 @@
 		2447AB792CE7329000399C4D /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB782CE7329000399C4D /* SignUpView.swift */; };
 		2447AB7B2CE732C400399C4D /* TextFieldWithTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB7A2CE732C400399C4D /* TextFieldWithTitle.swift */; };
 		2447AB7D2CE734ED00399C4D /* SignUpFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB7C2CE734ED00399C4D /* SignUpFeature.swift */; };
+		2447AB7F2CE878AA00399C4D /* LoginPopUpFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB7E2CE878AA00399C4D /* LoginPopUpFeature.swift */; };
+		2447AB812CE87A3A00399C4D /* EmailLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB802CE87A3A00399C4D /* EmailLoginView.swift */; };
+		2447AB832CE87A9200399C4D /* EmailLoginFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB822CE87A9200399C4D /* EmailLoginFeature.swift */; };
 		24ABE91D2CD4AEDB000E7EC5 /* GatheringApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE91C2CD4AEDB000E7EC5 /* GatheringApp.swift */; };
 		24ABE91F2CD4AEDB000E7EC5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE91E2CD4AEDB000E7EC5 /* ContentView.swift */; };
 		24ABE9212CD4AEDD000E7EC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24ABE9202CD4AEDD000E7EC5 /* Assets.xcassets */; };
@@ -158,6 +161,9 @@
 		2447AB782CE7329000399C4D /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		2447AB7A2CE732C400399C4D /* TextFieldWithTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithTitle.swift; sourceTree = "<group>"; };
 		2447AB7C2CE734ED00399C4D /* SignUpFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFeature.swift; sourceTree = "<group>"; };
+		2447AB7E2CE878AA00399C4D /* LoginPopUpFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPopUpFeature.swift; sourceTree = "<group>"; };
+		2447AB802CE87A3A00399C4D /* EmailLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginView.swift; sourceTree = "<group>"; };
+		2447AB822CE87A9200399C4D /* EmailLoginFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginFeature.swift; sourceTree = "<group>"; };
 		24ABE9192CD4AEDB000E7EC5 /* Gathering.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gathering.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24ABE91C2CD4AEDB000E7EC5 /* GatheringApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatheringApp.swift; sourceTree = "<group>"; };
 		24ABE91E2CD4AEDB000E7EC5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -284,11 +290,8 @@
 		2447AB5F2CE324C400399C4D /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				2447AB6E2CE3326D00399C4D /* OnboardingView.swift */,
-				2447AB722CE378B600399C4D /* OnboardingFeature.swift */,
-				2447AB702CE3789600399C4D /* LoginPopUpView.swift */,
-				2447AB782CE7329000399C4D /* SignUpView.swift */,
-				2447AB7C2CE734ED00399C4D /* SignUpFeature.swift */,
+				2447AB842CE87D9A00399C4D /* View */,
+				2447AB852CE87DAE00399C4D /* Reducer */,
 				2447AB602CE3276A00399C4D /* AuthView.swift */,
 			);
 			path = Auth;
@@ -311,6 +314,28 @@
 				2447AB6C2CE32ED300399C4D /* Notification.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		2447AB842CE87D9A00399C4D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2447AB6E2CE3326D00399C4D /* OnboardingView.swift */,
+				2447AB702CE3789600399C4D /* LoginPopUpView.swift */,
+				2447AB802CE87A3A00399C4D /* EmailLoginView.swift */,
+				2447AB782CE7329000399C4D /* SignUpView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2447AB852CE87DAE00399C4D /* Reducer */ = {
+			isa = PBXGroup;
+			children = (
+				2447AB722CE378B600399C4D /* OnboardingFeature.swift */,
+				2447AB7E2CE878AA00399C4D /* LoginPopUpFeature.swift */,
+				2447AB822CE87A9200399C4D /* EmailLoginFeature.swift */,
+				2447AB7C2CE734ED00399C4D /* SignUpFeature.swift */,
+			);
+			path = Reducer;
 			sourceTree = "<group>";
 		};
 		24ABE9102CD4AEDB000E7EC5 = {
@@ -802,6 +827,8 @@
 				24ABE9402CD4B6D1000E7EC5 /* APIAuth.swift in Sources */,
 				84B8AD1A2CE3815D00011D73 /* AuthRouter.swift in Sources */,
 				843E7FED2CE338420057A426 /* EditMyProfileResponse.swift in Sources */,
+				2447AB832CE87A9200399C4D /* EmailLoginFeature.swift in Sources */,
+				2447AB812CE87A3A00399C4D /* EmailLoginView.swift in Sources */,
 				24ABE95C2CDB8701000E7EC5 /* Design.swift in Sources */,
 				2447AB562CE1D0EC00399C4D /* StoreClient.swift in Sources */,
 				2447AB6A2CE32B6800399C4D /* ToastModifier.swift in Sources */,
@@ -851,6 +878,7 @@
 				A0E444ED2CE2C9C70024AE71 /* UnreadDmsResponse.swift in Sources */,
 				24ABE9862CDE12BE000E7EC5 /* ChannelResponse.swift in Sources */,
 				24ABE9662CDB99D0000E7EC5 /* RoundedButton.swift in Sources */,
+				2447AB7F2CE878AA00399C4D /* LoginPopUpFeature.swift in Sources */,
 				847A3F922CDA9FC0004A9361 /* GatheringNavigationStack.swift in Sources */,
 				847A3F812CD8FFEF004A9361 /* CounterFeature.swift in Sources */,
 				A0E444D92CE2A90C0024AE71 /* WorkspaceCreateRequest.swift in Sources */,
