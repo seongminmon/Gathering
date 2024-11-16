@@ -28,7 +28,9 @@ struct RootView: View {
         TabView(selection: $tabInfo) {
             // MARK: - 홈
             GatheringNavigationStack(gatheringImage: "bird2",title: "짹사모", profileImage: "bird3") {
-                HomeView()
+                HomeView(store: Store(initialState: HomeFeature.State()) {
+                    HomeFeature()
+                })
             }
             .tabItem {
                 Image(tabInfo == .home ? .homeActive : .homeInactive)
