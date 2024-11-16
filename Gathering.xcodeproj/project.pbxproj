@@ -23,6 +23,13 @@
 		2447AB712CE3789600399C4D /* LoginPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB702CE3789600399C4D /* LoginPopUpView.swift */; };
 		2447AB732CE378B600399C4D /* OnboardingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB722CE378B600399C4D /* OnboardingFeature.swift */; };
 		2447AB752CE37F7A00399C4D /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB742CE37F7A00399C4D /* AuthInterceptor.swift */; };
+		2447AB792CE7329000399C4D /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB782CE7329000399C4D /* SignUpView.swift */; };
+		2447AB7B2CE732C400399C4D /* TextFieldWithTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB7A2CE732C400399C4D /* TextFieldWithTitle.swift */; };
+		2447AB7D2CE734ED00399C4D /* SignUpFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB7C2CE734ED00399C4D /* SignUpFeature.swift */; };
+		2447AB7F2CE878AA00399C4D /* LoginPopUpFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB7E2CE878AA00399C4D /* LoginPopUpFeature.swift */; };
+		2447AB812CE87A3A00399C4D /* EmailLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB802CE87A3A00399C4D /* EmailLoginView.swift */; };
+		2447AB832CE87A9200399C4D /* EmailLoginFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB822CE87A9200399C4D /* EmailLoginFeature.swift */; };
+		2447AB872CE8C25C00399C4D /* SecureTextFieldWithTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB862CE8C25C00399C4D /* SecureTextFieldWithTitle.swift */; };
 		24ABE91D2CD4AEDB000E7EC5 /* GatheringApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE91C2CD4AEDB000E7EC5 /* GatheringApp.swift */; };
 		24ABE91F2CD4AEDB000E7EC5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE91E2CD4AEDB000E7EC5 /* ContentView.swift */; };
 		24ABE9212CD4AEDD000E7EC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24ABE9202CD4AEDD000E7EC5 /* Assets.xcassets */; };
@@ -152,6 +159,13 @@
 		2447AB702CE3789600399C4D /* LoginPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPopUpView.swift; sourceTree = "<group>"; };
 		2447AB722CE378B600399C4D /* OnboardingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFeature.swift; sourceTree = "<group>"; };
 		2447AB742CE37F7A00399C4D /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
+		2447AB782CE7329000399C4D /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		2447AB7A2CE732C400399C4D /* TextFieldWithTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithTitle.swift; sourceTree = "<group>"; };
+		2447AB7C2CE734ED00399C4D /* SignUpFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFeature.swift; sourceTree = "<group>"; };
+		2447AB7E2CE878AA00399C4D /* LoginPopUpFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPopUpFeature.swift; sourceTree = "<group>"; };
+		2447AB802CE87A3A00399C4D /* EmailLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginView.swift; sourceTree = "<group>"; };
+		2447AB822CE87A9200399C4D /* EmailLoginFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginFeature.swift; sourceTree = "<group>"; };
+		2447AB862CE8C25C00399C4D /* SecureTextFieldWithTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureTextFieldWithTitle.swift; sourceTree = "<group>"; };
 		24ABE9192CD4AEDB000E7EC5 /* Gathering.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gathering.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24ABE91C2CD4AEDB000E7EC5 /* GatheringApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatheringApp.swift; sourceTree = "<group>"; };
 		24ABE91E2CD4AEDB000E7EC5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -278,9 +292,8 @@
 		2447AB5F2CE324C400399C4D /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				2447AB6E2CE3326D00399C4D /* OnboardingView.swift */,
-				2447AB722CE378B600399C4D /* OnboardingFeature.swift */,
-				2447AB702CE3789600399C4D /* LoginPopUpView.swift */,
+				2447AB842CE87D9A00399C4D /* View */,
+				2447AB852CE87DAE00399C4D /* Reducer */,
 				2447AB602CE3276A00399C4D /* AuthView.swift */,
 			);
 			path = Auth;
@@ -303,6 +316,28 @@
 				2447AB6C2CE32ED300399C4D /* Notification.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		2447AB842CE87D9A00399C4D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2447AB6E2CE3326D00399C4D /* OnboardingView.swift */,
+				2447AB702CE3789600399C4D /* LoginPopUpView.swift */,
+				2447AB802CE87A3A00399C4D /* EmailLoginView.swift */,
+				2447AB782CE7329000399C4D /* SignUpView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2447AB852CE87DAE00399C4D /* Reducer */ = {
+			isa = PBXGroup;
+			children = (
+				2447AB722CE378B600399C4D /* OnboardingFeature.swift */,
+				2447AB7E2CE878AA00399C4D /* LoginPopUpFeature.swift */,
+				2447AB822CE87A9200399C4D /* EmailLoginFeature.swift */,
+				2447AB7C2CE734ED00399C4D /* SignUpFeature.swift */,
+			);
+			path = Reducer;
 			sourceTree = "<group>";
 		};
 		24ABE9102CD4AEDB000E7EC5 = {
@@ -405,6 +440,8 @@
 				847A3F912CDA9FC0004A9361 /* GatheringNavigationStack.swift */,
 				847A3FA02CDCB96E004A9361 /* SheetHeaderView.swift */,
 				84B8AD222CE46A8E00011D73 /* CustomAlert.swift */,
+				2447AB7A2CE732C400399C4D /* TextFieldWithTitle.swift */,
+				2447AB862CE8C25C00399C4D /* SecureTextFieldWithTitle.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -793,6 +830,8 @@
 				24ABE9402CD4B6D1000E7EC5 /* APIAuth.swift in Sources */,
 				84B8AD1A2CE3815D00011D73 /* AuthRouter.swift in Sources */,
 				843E7FED2CE338420057A426 /* EditMyProfileResponse.swift in Sources */,
+				2447AB832CE87A9200399C4D /* EmailLoginFeature.swift in Sources */,
+				2447AB812CE87A3A00399C4D /* EmailLoginView.swift in Sources */,
 				24ABE95C2CDB8701000E7EC5 /* Design.swift in Sources */,
 				2447AB562CE1D0EC00399C4D /* StoreClient.swift in Sources */,
 				2447AB6A2CE32B6800399C4D /* ToastModifier.swift in Sources */,
@@ -824,14 +863,17 @@
 				24ABE91F2CD4AEDB000E7EC5 /* ContentView.swift in Sources */,
 				847A3F992CDAFC6B004A9361 /* Router.swift in Sources */,
 				24ABE96E2CDCE2A3000E7EC5 /* NetworkManager.swift in Sources */,
+				2447AB792CE7329000399C4D /* SignUpView.swift in Sources */,
 				A0E444C52CDD0A5C0024AE71 /* ChatMessage.swift in Sources */,
 				843E7FDD2CE337330057A426 /* EmailValidationRequest.swift in Sources */,
+				2447AB7B2CE732C400399C4D /* TextFieldWithTitle.swift in Sources */,
 				2447AB642CE327C800399C4D /* ToastView.swift in Sources */,
 				2447AB5C2CE22D1300399C4D /* APIError.swift in Sources */,
 				843E7FDB2CE3283E0057A426 /* JoinLoginResponse.swift in Sources */,
 				24ABE95A2CDB86F3000E7EC5 /* Color+.swift in Sources */,
 				847A3F9F2CDB6AC4004A9361 /* ToolbarModifier.swift in Sources */,
 				847A3F882CD9C032004A9361 /* ProfileImageView.swift in Sources */,
+				2447AB7D2CE734ED00399C4D /* SignUpFeature.swift in Sources */,
 				843E7FD02CE221590057A426 /* AddContactFeature.swift in Sources */,
 				24ABE9882CDE172F000E7EC5 /* ChannelRequest.swift in Sources */,
 				843E7FCA2CE21E830057A426 /* MyApp.swift in Sources */,
@@ -839,6 +881,7 @@
 				A0E444ED2CE2C9C70024AE71 /* UnreadDmsResponse.swift in Sources */,
 				24ABE9862CDE12BE000E7EC5 /* ChannelResponse.swift in Sources */,
 				24ABE9662CDB99D0000E7EC5 /* RoundedButton.swift in Sources */,
+				2447AB7F2CE878AA00399C4D /* LoginPopUpFeature.swift in Sources */,
 				847A3F922CDA9FC0004A9361 /* GatheringNavigationStack.swift in Sources */,
 				847A3F812CD8FFEF004A9361 /* CounterFeature.swift in Sources */,
 				A0E444D92CE2A90C0024AE71 /* WorkspaceCreateRequest.swift in Sources */,
@@ -879,6 +922,7 @@
 				847A3FA32CDE111A004A9361 /* InviteMemberView.swift in Sources */,
 				2447AB582CE1E16200399C4D /* ErrorResponse.swift in Sources */,
 				2447AB5E2CE2371C00399C4D /* UnreadCountResponse.swift in Sources */,
+				2447AB872CE8C25C00399C4D /* SecureTextFieldWithTitle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1020,7 +1064,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Gathering/Preview Content\"";
-				DEVELOPMENT_TEAM = HP4XA8YZN3;
+				DEVELOPMENT_TEAM = Z6H2JVV9PA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gathering/Info.plist;
@@ -1059,7 +1103,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Gathering/Preview Content\"";
-				DEVELOPMENT_TEAM = HP4XA8YZN3;
+				DEVELOPMENT_TEAM = Z6H2JVV9PA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gathering/Info.plist;

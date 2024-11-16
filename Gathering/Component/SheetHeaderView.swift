@@ -29,8 +29,7 @@ struct SheetHeaderView: View {
                 Spacer()
                 
                 Text(title)
-                    .font(.title3)
-                    .fontWeight(.semibold)
+                    .font(.system(size: 17, weight: .bold))
                 
                 Spacer()
                 
@@ -38,9 +37,12 @@ struct SheetHeaderView: View {
                     .frame(width: 17)
             }
             .padding(.horizontal)
+            
+            Spacer()
+                .frame(height: 10)
+            Divider()
         }
         .frame(height: 60)
         .background(Design.white)
-        Divider()
     }
 }

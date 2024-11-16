@@ -13,53 +13,53 @@ import ComposableArchitecture
 struct GatheringApp: App {
     
     @State private var toast: Toast?
-    @State var isLogin = false
+    @State private var isLogin = false
     
     var body: some Scene {
         WindowGroup {
-            if isLogin {
-                RootView()
-                    .onAppear {
-                        // Toast NotificationCenter 구독
-                        NotificationCenter.default.addObserver(
-                            forName: .showToast,
-                            object: nil,
-                            queue: .main
-                        ) { notification in
-                            if let toast = notification.toast {
-                                self.toast = toast
-                                ToastWindowManager.shared.showToast(toast: self.$toast)
-                            }
+            rootView()
+                .onAppear {
+                    // Toast NotificationCenter 구독
+                    NotificationCenter.default.addObserver(
+                        forName: .showToast,
+                        object: nil,
+                        queue: .main
+                    ) { notification in
+                        if let toast = notification.toast {
+                            self.toast = toast
+                            ToastWindowManager.shared.showToast(toast: self.$toast)
                         }
                     }
-            } else {
-                OnboardingView(
-                    store: Store(initialState: OnboardingFeature.State()) { OnboardingFeature() }
-                )
+                }
                 .task {
-                    UserDefaultsManager.accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiOTczZDYyZWMtMTc3Ni00NDZmLTkwZWEtZjM1ZDE4OWJiN2IzIiwibmlja25hbWUiOiJrc20xIiwiaWF0IjoxNzMxNjU0OTU0LCJleHAiOjE3MzE2NTUyNTQsImlzcyI6InNscCJ9.rfucZPQ_mqMg5VxhZ7LkXO9N3glVG07s_yTXD1G-Pbk"
-                    
-                    UserDefaultsManager.refreshToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiOTczZDYyZWMtMTc3Ni00NDZmLTkwZWEtZjM1ZDE4OWJiN2IzIiwiaWF0IjoxNzMxNjU0OTU0LCJleHAiOjE3MzE2NTg1NTQsImlzcyI6InNscCJ9.fZuxhT2z-L9MTnTZ_8BULK-Fsp1i6i7Qg_2Zu2_LjhY"
-  
-                    // 토큰 갱신 테스트
-//                    do {
-//                        let result: Token = try await NetworkManager.shared.request(
-//                            api: AuthRouter.refreshToken(refreshToken: UserDefaultsManager.refreshToken)
-//                        )
-//                        print(result)
-//                    } catch {
-//                        print("error")
-//                    }
-                    
-                    // MARK: - 네트워크 테스트
+                    // TODO: - 자동 로그인 시 네트워크 통신 중 OnboardingView가 보였다가 전환됨
+                    // 자동 로그인
                     do {
-                        let result: [WorkspaceResponse] = try await NetworkManager.shared.request(api: WorkspaceRouter.fetchMyWorkspaceList)
-                        print(result)
+                        let result: Token = try await NetworkManager.shared.request(
+                            api: AuthRouter.refreshToken(
+                                refreshToken: UserDefaultsManager.refreshToken
+                            )
+                        )
+                        // 엑세스 토큰 저장
+                        UserDefaultsManager.refresh(result.accessToken)
+                        isLogin = true
+                        print("자동 로그인 성공")
                     } catch {
-                        print(error)
+                        print("자동 로그인 실패 (리프레시 토큰 만료)")
+                        isLogin = false
                     }
                 }
-            }
+        }
+    }
+    
+    @ViewBuilder
+    private func rootView() -> some View {
+        if isLogin {
+            RootView()
+        } else {
+            OnboardingView(
+                store: Store(initialState: OnboardingFeature.State()) { OnboardingFeature() }
+            )
         }
     }
 }
