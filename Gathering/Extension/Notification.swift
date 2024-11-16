@@ -20,7 +20,8 @@ extension Notification {
         return userInfo?[UserInfoKey.toast] as? Toast
     }
     
-    static func postToast(toast: Toast) {
+    static func postToast(title: String) {
+        let toast = Toast(title: title)
         NotificationCenter.default.post(
             name: .showToast,
             object: nil,

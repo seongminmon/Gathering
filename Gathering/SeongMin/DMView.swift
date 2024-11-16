@@ -19,23 +19,23 @@ struct DMView: View {
                 // "Direct Message" (네비게이션 타이틀)
                 VStack {
                     // MARK: - tca bind test
-                    TextField("닉네임 입력", text: $store.nickname)
+//                    TextField("닉네임 입력", text: $store.nickname)
                     
                     // MARK: - tca dependency network test
-                    Button {
-                        store.send(.networkButtonTap)
-                    } label: {
-                        RoundedButton(text: "네트워크 테스트",
-                                      foregroundColor: Design.white,
-                                      backgroundColor: Design.green)
-                    }
+//                    Button {
+//                        store.send(.networkButtonTap)
+//                    } label: {
+//                        RoundedButton(text: "네트워크 테스트",
+//                                      foregroundColor: Design.white,
+//                                      backgroundColor: Design.green)
+//                    }
                     
                     // MARK: - toast test
-                    Button {
-                        store.send(.toastButtonTap)
-                    } label: {
-                        ContinueEmailButton()
-                    }
+//                    Button {
+//                        store.send(.toastButtonTap)
+//                    } label: {
+//                        ContinueEmailButton()
+//                    }
                     
                     if store.chattingList.isEmpty {
                         emptyMemberView()
