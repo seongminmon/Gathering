@@ -63,8 +63,7 @@ struct EmailLoginFeature {
                         }
                     }
                 } else {
-                    let toast = Toast(title: "로그인 유효성 검증 실패")
-                    Notification.postToast(toast: toast)
+                    Notification.postToast(title: "로그인 유효성 검증 실패")
                     return .none
                 }
                 
@@ -84,8 +83,7 @@ struct EmailLoginFeature {
             case .logInError(let error):
                 // 통신 실패 시 토스트 메시지
                 print(error)
-                let toast = Toast(title: "로그인 통신 실패")
-                Notification.postToast(toast: toast)
+                Notification.postToast(title: "로그인 통신 실패")
                 return .none
             }
         }

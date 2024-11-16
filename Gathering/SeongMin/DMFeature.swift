@@ -72,8 +72,7 @@ struct DMFeature {
                 
             case .toastButtonTap:
                 print("토스트 버튼 탭")
-                let toast = Toast(title: "토스트 테스트 메시지입니다")
-                Notification.postToast(toast: toast)
+                Notification.postToast(title: "토스트 테스트 메시지입니다")
                 return .none
             }
         }
