@@ -29,6 +29,11 @@ struct SignUpView: View {
                         TextFieldWithTitle(title: "연락처",
                                            placeholder: "전화번호를 입력하세요",
                                            text: $store.phoneText)
+                        .keyboardType(.phonePad)
+                        .onChange(of: store.phoneText) { newValue in
+                            store.send(.phoneTextChange(newValue))
+                        }
+                        
                         TextFieldWithTitle(title: "비밀번호",
                                            placeholder: "비밀번호를 입력하세요",
                                            text: $store.passwordText)
@@ -51,7 +56,7 @@ struct SignUpView: View {
     private func signUpButton() -> some View {
         if store.isButtonValid {
             Button {
-                print("가입하기 탭")
+                store.send(.signUpButtonTap)
             } label: {
                 RoundedButton(text: "가입하기",
                               foregroundColor: Design.white,

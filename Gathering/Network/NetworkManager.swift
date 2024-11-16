@@ -39,7 +39,9 @@ final class NetworkManager {
                     do {
                         // 토큰 갱신 통신
                         let result: Token = try await NetworkManager.shared.request(
-                            api: AuthRouter.refreshToken(refreshToken: UserDefaultsManager.refreshToken)
+                            api: AuthRouter.refreshToken(
+                                refreshToken: UserDefaultsManager.refreshToken
+                            )
                         )
                         // 헤더에 세팅 후 재통신하기
                         UserDefaultsManager.accessToken = result.accessToken

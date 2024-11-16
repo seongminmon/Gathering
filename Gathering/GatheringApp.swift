@@ -17,26 +17,31 @@ struct GatheringApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if isLogin {
-                RootView()
-                    .onAppear {
-                        // Toast NotificationCenter 구독
-                        NotificationCenter.default.addObserver(
-                            forName: .showToast,
-                            object: nil,
-                            queue: .main
-                        ) { notification in
-                            if let toast = notification.toast {
-                                self.toast = toast
-                                ToastWindowManager.shared.showToast(toast: self.$toast)
-                            }
+            rootView()
+                .onAppear {
+                    // Toast NotificationCenter 구독
+                    NotificationCenter.default.addObserver(
+                        forName: .showToast,
+                        object: nil,
+                        queue: .main
+                    ) { notification in
+                        if let toast = notification.toast {
+                            self.toast = toast
+                            ToastWindowManager.shared.showToast(toast: self.$toast)
                         }
                     }
-            } else {
-                OnboardingView(
-                    store: Store(initialState: OnboardingFeature.State()) { OnboardingFeature() }
-                )
-            }
+                }
+        }
+    }
+    
+    @ViewBuilder
+    private func rootView() -> some View {
+        if isLogin {
+            RootView()
+        } else {
+            OnboardingView(
+                store: Store(initialState: OnboardingFeature.State()) { OnboardingFeature() }
+            )
         }
     }
 }
