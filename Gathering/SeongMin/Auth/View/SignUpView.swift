@@ -34,10 +34,10 @@ struct SignUpView: View {
                             store.send(.phoneTextChange(newValue))
                         }
                         
-                        TextFieldWithTitle(title: "비밀번호",
+                        SecureTextFieldWithTitle(title: "비밀번호",
                                            placeholder: "비밀번호를 입력하세요",
                                            text: $store.passwordText)
-                        TextFieldWithTitle(title: "비밀번호 확인",
+                        SecureTextFieldWithTitle(title: "비밀번호 확인",
                                            placeholder: "비밀번호를 한 번 더 입력하세요",
                                            text: $store.passwordCheckText)
                     }

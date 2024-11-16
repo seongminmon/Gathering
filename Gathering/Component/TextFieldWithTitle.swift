@@ -20,6 +20,8 @@ struct TextFieldWithTitle: View {
             TextField(placeholder, text: $text)
                 .font(Design.body)
                 .textFieldStyle(.roundedBorder)
+                .autocorrectionDisabled()
+                .textInputAutocapitalization(.never)
         }
     }
 }

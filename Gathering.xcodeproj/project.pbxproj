@@ -29,6 +29,7 @@
 		2447AB7F2CE878AA00399C4D /* LoginPopUpFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB7E2CE878AA00399C4D /* LoginPopUpFeature.swift */; };
 		2447AB812CE87A3A00399C4D /* EmailLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB802CE87A3A00399C4D /* EmailLoginView.swift */; };
 		2447AB832CE87A9200399C4D /* EmailLoginFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB822CE87A9200399C4D /* EmailLoginFeature.swift */; };
+		2447AB872CE8C25C00399C4D /* SecureTextFieldWithTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB862CE8C25C00399C4D /* SecureTextFieldWithTitle.swift */; };
 		24ABE91D2CD4AEDB000E7EC5 /* GatheringApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE91C2CD4AEDB000E7EC5 /* GatheringApp.swift */; };
 		24ABE91F2CD4AEDB000E7EC5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE91E2CD4AEDB000E7EC5 /* ContentView.swift */; };
 		24ABE9212CD4AEDD000E7EC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24ABE9202CD4AEDD000E7EC5 /* Assets.xcassets */; };
@@ -164,6 +165,7 @@
 		2447AB7E2CE878AA00399C4D /* LoginPopUpFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPopUpFeature.swift; sourceTree = "<group>"; };
 		2447AB802CE87A3A00399C4D /* EmailLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginView.swift; sourceTree = "<group>"; };
 		2447AB822CE87A9200399C4D /* EmailLoginFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginFeature.swift; sourceTree = "<group>"; };
+		2447AB862CE8C25C00399C4D /* SecureTextFieldWithTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureTextFieldWithTitle.swift; sourceTree = "<group>"; };
 		24ABE9192CD4AEDB000E7EC5 /* Gathering.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gathering.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24ABE91C2CD4AEDB000E7EC5 /* GatheringApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatheringApp.swift; sourceTree = "<group>"; };
 		24ABE91E2CD4AEDB000E7EC5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -439,6 +441,7 @@
 				847A3FA02CDCB96E004A9361 /* SheetHeaderView.swift */,
 				84B8AD222CE46A8E00011D73 /* CustomAlert.swift */,
 				2447AB7A2CE732C400399C4D /* TextFieldWithTitle.swift */,
+				2447AB862CE8C25C00399C4D /* SecureTextFieldWithTitle.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -919,6 +922,7 @@
 				847A3FA32CDE111A004A9361 /* InviteMemberView.swift in Sources */,
 				2447AB582CE1E16200399C4D /* ErrorResponse.swift in Sources */,
 				2447AB5E2CE2371C00399C4D /* UnreadCountResponse.swift in Sources */,
+				2447AB872CE8C25C00399C4D /* SecureTextFieldWithTitle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1060,7 +1064,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Gathering/Preview Content\"";
-				DEVELOPMENT_TEAM = HP4XA8YZN3;
+				DEVELOPMENT_TEAM = Z6H2JVV9PA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gathering/Info.plist;
@@ -1099,7 +1103,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Gathering/Preview Content\"";
-				DEVELOPMENT_TEAM = HP4XA8YZN3;
+				DEVELOPMENT_TEAM = Z6H2JVV9PA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gathering/Info.plist;

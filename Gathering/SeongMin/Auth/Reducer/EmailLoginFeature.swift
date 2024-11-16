@@ -30,9 +30,7 @@ struct EmailLoginFeature {
     
     var body: some ReducerOf<Self> {
         BindingReducer()
-        Reduce {
-            state,
-            action in
+        Reduce { state, action in
             switch action {
             case .binding:
                 // 연락처를 제외한 모든 값(이메일/닉네임/비밀번호/비밀번호 확인)이 입력된 경우 버튼 유효성 업데이트

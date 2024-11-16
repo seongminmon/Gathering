@@ -13,7 +13,7 @@ import ComposableArchitecture
 struct GatheringApp: App {
     
     @State private var toast: Toast?
-    @State var isLogin = false
+    @State private var isLogin = false
     
     var body: some Scene {
         WindowGroup {
@@ -29,6 +29,24 @@ struct GatheringApp: App {
                             self.toast = toast
                             ToastWindowManager.shared.showToast(toast: self.$toast)
                         }
+                    }
+                }
+                .task {
+                    // TODO: - 자동 로그인 시 네트워크 통신 중 OnboardingView가 보였다가 전환됨
+                    // 자동 로그인
+                    do {
+                        let result: Token = try await NetworkManager.shared.request(
+                            api: AuthRouter.refreshToken(
+                                refreshToken: UserDefaultsManager.refreshToken
+                            )
+                        )
+                        // 엑세스 토큰 저장
+                        UserDefaultsManager.refresh(result.accessToken)
+                        isLogin = true
+                        print("자동 로그인 성공")
+                    } catch {
+                        print("자동 로그인 실패 (리프레시 토큰 만료)")
+                        isLogin = false
                     }
                 }
         }
