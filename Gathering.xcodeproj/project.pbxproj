@@ -30,6 +30,7 @@
 		2447AB812CE87A3A00399C4D /* EmailLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB802CE87A3A00399C4D /* EmailLoginView.swift */; };
 		2447AB832CE87A9200399C4D /* EmailLoginFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB822CE87A9200399C4D /* EmailLoginFeature.swift */; };
 		2447AB872CE8C25C00399C4D /* SecureTextFieldWithTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB862CE8C25C00399C4D /* SecureTextFieldWithTitle.swift */; };
+		2447AB892CE8C46B00399C4D /* DMFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB882CE8C46B00399C4D /* DMFeature.swift */; };
 		24ABE91D2CD4AEDB000E7EC5 /* GatheringApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE91C2CD4AEDB000E7EC5 /* GatheringApp.swift */; };
 		24ABE91F2CD4AEDB000E7EC5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE91E2CD4AEDB000E7EC5 /* ContentView.swift */; };
 		24ABE9212CD4AEDD000E7EC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24ABE9202CD4AEDD000E7EC5 /* Assets.xcassets */; };
@@ -166,6 +167,7 @@
 		2447AB802CE87A3A00399C4D /* EmailLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginView.swift; sourceTree = "<group>"; };
 		2447AB822CE87A9200399C4D /* EmailLoginFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginFeature.swift; sourceTree = "<group>"; };
 		2447AB862CE8C25C00399C4D /* SecureTextFieldWithTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureTextFieldWithTitle.swift; sourceTree = "<group>"; };
+		2447AB882CE8C46B00399C4D /* DMFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMFeature.swift; sourceTree = "<group>"; };
 		24ABE9192CD4AEDB000E7EC5 /* Gathering.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gathering.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24ABE91C2CD4AEDB000E7EC5 /* GatheringApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatheringApp.swift; sourceTree = "<group>"; };
 		24ABE91E2CD4AEDB000E7EC5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -407,6 +409,7 @@
 				2447AB622CE3278E00399C4D /* Toast */,
 				2447AB5F2CE324C400399C4D /* Auth */,
 				24ABE9512CD8B65E000E7EC5 /* DMView.swift */,
+				2447AB882CE8C46B00399C4D /* DMFeature.swift */,
 			);
 			path = SeongMin;
 			sourceTree = "<group>";
@@ -838,6 +841,7 @@
 				24ABE9702CDCEDB2000E7EC5 /* UserDefaultsManager.swift in Sources */,
 				A0E444EB2CE2C7E20024AE71 /* DmsResponse.swift in Sources */,
 				A0E444E12CE2B37D0024AE71 /* WorkspaceInfoResponse.swift in Sources */,
+				2447AB892CE8C46B00399C4D /* DMFeature.swift in Sources */,
 				2447AB6F2CE3326D00399C4D /* OnboardingView.swift in Sources */,
 				A0E444EF2CE2CA8C0024AE71 /* DmsRoomResponse.swift in Sources */,
 				843E7FDF2CE337420057A426 /* EmailLoginRequest.swift in Sources */,

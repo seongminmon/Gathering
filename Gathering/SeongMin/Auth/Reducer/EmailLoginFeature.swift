@@ -64,11 +64,7 @@ struct EmailLoginFeature {
                     }
                 } else {
                     let toast = Toast(title: "로그인 유효성 검증 실패")
-                    NotificationCenter.default.post(
-                        name: .showToast,
-                        object: nil,
-                        userInfo: [Notification.UserInfoKey.toast: toast]
-                    )
+                    Notification.postToast(toast: toast)
                     return .none
                 }
                 
@@ -89,11 +85,7 @@ struct EmailLoginFeature {
                 // 통신 실패 시 토스트 메시지
                 print(error)
                 let toast = Toast(title: "로그인 통신 실패")
-                NotificationCenter.default.post(
-                    name: .showToast,
-                    object: nil,
-                    userInfo: [Notification.UserInfoKey.toast: toast]
-                )
+                Notification.postToast(toast: toast)
                 return .none
             }
         }
