@@ -3,8 +3,8 @@
 //  Gathering
 //
 //  Created by dopamint on 11/11/24.
-//
-//
+
+
 //import Foundation
 //import ComposableArchitecture
 //
@@ -19,7 +19,7 @@
 //struct ContactsFeature {
 //    
 //    @ObservableState
-//    struct State: Equatable {
+//    struct State {
 ////        @Presents var addContact: AddContactFeature.State?
 ////        @Presents var alert: AlertState<Action.Alert>?
 //        @Presents var destination: Destination.State?
@@ -82,4 +82,4 @@
 //    case alert(AlertState<ContactsFeature.Action.Alert>)
 //  }
 //}
-//extension ContactsFeature.Destination.State: Equatable {}
+////extension ContactsFeature.Destination.State: Equatable {}
