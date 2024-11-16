@@ -16,16 +16,7 @@
 //        NavigationStack {
 //            List {
 //                ForEach(store.contacts) { contact in
-//                    HStack {
-//                        Text(contact.name)
-//                        Spacer()
-//                        Button {
-//                            store.send(.deleteButtonTapped(id: contact.id))
-//                        } label: {
-//                            Image(systemName: "trash")
-//                                .foregroundColor(.red)
-//                        }
-//                    }
+//                    Text(contact.name)
 //                }
 //            }
 //            .navigationTitle("Contacts")
@@ -46,6 +37,5 @@
 //                AddContactView(store: addContactStore)
 //            }
 //        }
-//        .alert($store.scope(state: \.alert, action: \.alert))
 //    }
 //}
