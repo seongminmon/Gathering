@@ -19,4 +19,12 @@ extension Notification {
     var toast: Toast? {
         return userInfo?[UserInfoKey.toast] as? Toast
     }
+    
+    static func postToast(toast: Toast) {
+        NotificationCenter.default.post(
+            name: .showToast,
+            object: nil,
+            userInfo: [UserInfoKey.toast: toast]
+        )
+    }
 }

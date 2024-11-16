@@ -78,11 +78,7 @@ struct SignUpFeature {
                     }
                 } else {
                     let toast = Toast(title: "회원가입 유효성 검증 실패")
-                    NotificationCenter.default.post(
-                        name: .showToast,
-                        object: nil,
-                        userInfo: [Notification.UserInfoKey.toast: toast]
-                    )
+                    Notification.postToast(toast: toast)
                     return .none
                 }
                 
@@ -103,11 +99,7 @@ struct SignUpFeature {
                 // 통신 실패 시 토스트 메시지
                 print(error)
                 let toast = Toast(title: "회원가입 통신 실패")
-                NotificationCenter.default.post(
-                    name: .showToast,
-                    object: nil,
-                    userInfo: [Notification.UserInfoKey.toast: toast]
-                )
+                Notification.postToast(toast: toast)
                 return .none
             }
         }
