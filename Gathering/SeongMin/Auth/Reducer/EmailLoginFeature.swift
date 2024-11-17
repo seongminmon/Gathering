@@ -77,7 +77,7 @@ struct EmailLoginFeature {
                     data.userID
                 )
                 // TODO: - 통신 성공 시 화면 전환
-                
+                // isLogin = true
                 return .none
                 
             case .logInError(let error):
@@ -90,7 +90,7 @@ struct EmailLoginFeature {
     }
     
     private func emailValidation(_ str: String) -> Bool {
-        return str.contains("@") && str.contains(".com")
+        return str.contains("@") && str.contains(".")
     }
     
     private func passwordValidation(_ str: String) -> Bool {

@@ -12,7 +12,8 @@ final class ToastWindowManager {
     static let shared = ToastWindowManager()
     private init() {}
     
-    func showToast(toast: Binding<Toast?>) {
+    func showToast(toast: Toast?) {
+        print(#function, "\(toast?.title ?? "토스트 타이틀 없음")")
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let window = windowScene.windows.first else { return }
         

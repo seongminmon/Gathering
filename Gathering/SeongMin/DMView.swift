@@ -31,11 +31,11 @@ struct DMView: View {
 //                    }
                     
                     // MARK: - toast test
-//                    Button {
-//                        store.send(.toastButtonTap)
-//                    } label: {
-//                        ContinueEmailButton()
-//                    }
+                    Button {
+                        store.send(.toastButtonTap)
+                    } label: {
+                        ContinueEmailButton()
+                    }
                     
                     if store.chattingList.isEmpty {
                         emptyMemberView()
