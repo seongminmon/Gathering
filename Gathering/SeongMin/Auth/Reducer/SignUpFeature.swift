@@ -104,7 +104,7 @@ struct SignUpFeature {
     }
     
     private func emailValidation(_ str: String) -> Bool {
-        return str.contains("@") && str.contains(".")
+        return str.contains("@") && str.contains(".com")
     }
     
     private func nicknameValidation(_ str: String) -> Bool {

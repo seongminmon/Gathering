@@ -76,8 +76,8 @@ struct EmailLoginFeature {
                     data.token.refreshToken ?? "",
                     data.userID
                 )
-                // TODO: - 통신 성공 시 화면 전환
-                // isLogin = true
+                // TODO: - 통신 성공 시 홈 화면 전환
+                
                 return .none
                 
             case .logInError(let error):
@@ -90,7 +90,7 @@ struct EmailLoginFeature {
     }
     
     private func emailValidation(_ str: String) -> Bool {
-        return str.contains("@") && str.contains(".")
+        return str.contains("@") && str.contains(".com")
     }
     
     private func passwordValidation(_ str: String) -> Bool {
