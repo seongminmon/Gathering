@@ -9,8 +9,8 @@
 //import ComposableArchitecture
 //
 //struct AddContactView: View {
-//    @Perception.Bindable
-//    var store: StoreOf<AddContactFeature>
+//    @Perception.Bindable var store: StoreOf<AddContactFeature>
+//    
 //    var body: some View {
 //        Form {
 //            TextField("Name", text: $store.contact.name.sending(\.setName))

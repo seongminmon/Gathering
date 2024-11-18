@@ -35,7 +35,8 @@ extension AuthRouter: TargetType {
             return [
                 Header.sesacKey.rawValue: APIAuth.key,
                 Header.contentType.rawValue: Header.json.rawValue,
-                Header.authorization.rawValue: UserDefaultsManager.accessToken
+                Header.authorization.rawValue: UserDefaultsManager.accessToken,
+                "RefreshToken": UserDefaultsManager.refreshToken
             ]
         }
     }
@@ -54,4 +55,3 @@ extension AuthRouter: TargetType {
         }
     }
 }
-

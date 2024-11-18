@@ -38,9 +38,11 @@ struct OnboardingView: View {
             }
             .padding(20)
             .sheet(isPresented: $store.isShowPopUpView) {
-                LoginPopUpView()
-                    .presentationDetents([.height(290)])
-                    .presentationDragIndicator(.visible)
+                LoginPopUpView(
+                    store: Store(initialState: LoginPopUpFeature.State()) { LoginPopUpFeature() }
+                )
+                .presentationDetents([.height(290)])
+                .presentationDragIndicator(.visible)
             }
         }
     }

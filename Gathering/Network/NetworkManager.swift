@@ -33,6 +33,24 @@ final class NetworkManager {
                     from: response.data ?? Data()
                 )
                 print("통신 에러 \(errorData.errorCode)")
+                
+                // 엑세스 토큰 만료일 경우
+                if errorData.errorCode == APIError.accessTokenExpired.rawValue {
+                    do {
+                        // 토큰 갱신 통신
+                        let result: Token = try await NetworkManager.shared.request(
+                            api: AuthRouter.refreshToken(
+                                refreshToken: UserDefaultsManager.refreshToken
+                            )
+                        )
+                        // 엑세스 토큰 저장
+                        UserDefaultsManager.refresh(result.accessToken)
+                        // 기존 요청 재시도
+                        return try await performRequest(api: api)
+                    } catch {
+                        print("토큰 갱신 에러")
+                    }
+                }
                 throw errorData
             } catch {
                 print("에러 모델 디코딩 실패")

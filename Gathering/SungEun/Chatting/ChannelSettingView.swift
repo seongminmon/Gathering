@@ -17,6 +17,7 @@ struct ChannelSettingView: View {
             VStack(alignment: .leading, spacing: 20) {
                 Text(channelInfo.name)
                     .font(Design.title2)
+                    .padding(.vertical, 16)
                 
                 Text(channelInfo.description ?? "")
                     .font(Design.body)
@@ -24,17 +25,14 @@ struct ChannelSettingView: View {
                 CustomDisclosureGroup(
                     label: "멤버 (\(channelInfo.channelMembers?.count ?? 0))",
                     isExpanded: $isMemeberExpand) {
-                    memberGridView()
-                }
-                .foregroundColor(Design.black)
+                        memberGridView()
+                    }
+                    .foregroundColor(Design.black)
                 
-                Button {
-                    //채널 편집 시트
-                } label: {
-                    channelSettingButton(title: "채널 편집")
-                }
+                channelSettingButtonView()
             }
             .padding(.horizontal, 16)
+            
         }
         .frame(maxWidth: .infinity)
         .customToolbar(title: "채널 설정",
@@ -43,12 +41,7 @@ struct ChannelSettingView: View {
         }))
         
     }
-    func channelSettingButton(title: String) -> some View {
-        Text(title)
-            .asButtonStyle(foregroundColor: Design.black, backgroundColor: Design.white)
-            .border(Design.black)
-           
-    }
+    
     func memberGridView() -> some View {
         VStack {
             let columns = [
@@ -74,14 +67,67 @@ struct ChannelSettingView: View {
                         }
                     }
                 }
-            
+                
             }
         }
         .padding(.vertical, 16)
-        
     }
+    
+    func channelSettingButtonView() -> some View {
+        VStack(spacing: 10) {
+            if channelInfo.owner_id == UserDefaultsManager.userID {
+                Button {
+                    //채널 편집 시트
+                } label: {
+                    RoundedBorderButton(
+                        text: "채널 편집",
+                        foregroundColor: Design.black,
+                        backgroundColor: Design.white,
+                        borderColor: Design.black)
+                }
+                Button {
+                    //채널 편집 시트
+                } label: {
+                    RoundedBorderButton(
+                        text: "채널에서 나가기",
+                        foregroundColor: Design.black,
+                        backgroundColor: Design.white,
+                        borderColor: Design.black)
+                }
+                Button {
+                    //채널 편집 시트
+                } label: {
+                    RoundedBorderButton(
+                        text: "채널 관리자 변경",
+                        foregroundColor: Design.black,
+                        backgroundColor: Design.white,
+                        borderColor: Design.black)
+                }
+                Button {
+                    //채널 편집 시트
+                } label: {
+                    RoundedBorderButton(
+                        text: "채널 삭제",
+                        foregroundColor: Design.red,
+                        backgroundColor: Design.white,
+                        borderColor: Design.red)
+                    
+                }
+            } else {
+                Button {
+                    //채널 편집 시트
+                } label: {
+                    RoundedBorderButton(
+                        text: "채널에서 나가기",
+                        foregroundColor: Design.black,
+                        backgroundColor: Design.white,
+                        borderColor: Design.black)
+                }
+            }
+        }
+    }
+    
 }
-
 //#Preview {
 //    ChannelSettingView()
 //}

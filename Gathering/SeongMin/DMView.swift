@@ -19,23 +19,23 @@ struct DMView: View {
                 // "Direct Message" (네비게이션 타이틀)
                 VStack {
                     // MARK: - tca bind test
-                    TextField("닉네임 입력", text: $store.nickname)
+//                    TextField("닉네임 입력", text: $store.nickname)
                     
                     // MARK: - tca dependency network test
-                    Button {
-                        store.send(.networkButtonTap)
-                    } label: {
-                        RoundedButton(text: "네트워크 테스트",
-                                      foregroundColor: Design.white,
-                                      backgroundColor: Design.green)
-                    }
+//                    Button {
+//                        store.send(.networkButtonTap)
+//                    } label: {
+//                        RoundedButton(text: "네트워크 테스트",
+//                                      foregroundColor: Design.white,
+//                                      backgroundColor: Design.green)
+//                    }
                     
                     // MARK: - toast test
-                    Button {
-                        store.send(.toastButtonTap)
-                    } label: {
-                        ContinueEmailButton()
-                    }
+//                    Button {
+//                        store.send(.toastButtonTap)
+//                    } label: {
+//                        ContinueEmailButton()
+//                    }
                     
                     if store.chattingList.isEmpty {
                         emptyMemberView()
@@ -112,80 +112,5 @@ struct DMView: View {
             }
         }
         .padding(.horizontal, 16)
-    }
-}
-
-@Reducer
-struct DMFeature {
-    
-    @Dependency(\.storeClient) var storeClient
-    
-    @ObservableState
-    struct State {
-        var userList = Dummy.users
-        var chattingList = Dummy.users
-        var nickname: String = ""
-        var itemReponse: [StoreItemResponse] = []
-    }
-    
-    enum Action: BindableAction {
-        case binding(BindingAction<State>)
-        case profileButtonTap
-        case networkButtonTap
-        case networkResponse([StoreItemResponse])
-        case errorResponse(Error)
-        case toastButtonTap
-    }
-    
-    var body: some ReducerOf<Self> {
-        BindingReducer()
-        Reduce { state, action in
-            switch action {
-            case .binding:
-                return .none
-                
-            case .binding(\.nickname):
-                print(state.nickname)
-                return .none
-                
-            case .profileButtonTap:
-                print("프로필 버튼 탭")
-                return .none
-                
-            case .networkButtonTap:
-                print("네트워크 버튼 탭")
-                
-                // 네트워크 비동기 작업을 별도 효과로 수행
-                return .run { send in
-                    do {
-                        let result = try await storeClient.itemList()
-                        await send(.networkResponse(result))
-                    } catch {
-                        print("네트워크 에러 발생: \(error)")
-                        await send(.errorResponse(error))
-                    }
-                }
-                
-            case .networkResponse(let response):
-                // 네트워크 응답 처리
-                print(response)
-                state.itemReponse = response
-                return .none
-                
-            case .errorResponse(let error):
-                print(error)
-                return .none
-                
-            case .toastButtonTap:
-                print("토스트 버튼 탭")
-                let toast = Toast(title: "토스트 테스트 메시지입니다")
-                NotificationCenter.default.post(
-                    name: .showToast,
-                    object: nil,
-                    userInfo: [Notification.UserInfoKey.toast: toast]
-                )
-                return .none
-            }
-        }
     }
 }
