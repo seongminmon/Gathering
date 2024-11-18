@@ -28,7 +28,7 @@ struct InviteMemberFeature {
         
         Reduce { state, action in
             switch action {
-            case .binding(_):
+            case .binding:
                 return .none
             }
         }

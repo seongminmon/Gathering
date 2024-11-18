@@ -30,7 +30,8 @@
 //        case timerTick
 //        case toggleTimerButtonTapped
 //    }
-//    var body: some ReducerOf<Self> { // typealias ReducerOf<R: Reducer> = Reducer<R.State, R.Action>
+// typealias ReducerOf<R: Reducer> = Reducer<R.State, R.Action>
+//    var body: some ReducerOf<Self> {
 //        Reduce { state, action in
 //            switch action {
 //            case .decrementButtonTapped:

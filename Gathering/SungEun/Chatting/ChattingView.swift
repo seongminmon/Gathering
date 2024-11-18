@@ -41,7 +41,7 @@ struct ChattingView: View {
                         .id(scrollViewID)
                     }
                     .frame(maxWidth: .infinity)
-                    .onAppear{ 
+                    .onAppear {
                         proxy
                             .scrollTo(scrollViewID, anchor: .bottom)
                     }

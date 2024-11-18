@@ -63,7 +63,7 @@ extension DmsRouter: TargetType {
                 Header.contentType.rawValue: Header.json.rawValue,
                 Header.authorization.rawValue: UserDefaultsManager.accessToken
             ]
-        case .sendDMMessage(let workspaceID, let roomID, let body):
+        case .sendDMMessage:
             return [
                 Header.sesacKey.rawValue: APIAuth.key,
                 Header.contentType.rawValue: Header.multiPart.rawValue,
