@@ -16,15 +16,27 @@ struct LoginPopUpFeature {
     struct State {
         var isEmailLoginViewPresented = false
         var isSignUpViewPresented = false
+        
+        var emailLogin = EmailLoginFeature.State()
+        var signUp = SignUpFeature.State()
     }
     
     enum Action: BindableAction {
         case binding(BindingAction<State>)
         case emailLoginButtonTap
         case signUpButtonTap
+        
+        case emailLogin(EmailLoginFeature.Action)
+        case signUp(SignUpFeature.Action)
     }
     
     var body: some ReducerOf<Self> {
+        Scope(state: \.emailLogin, action: \.emailLogin) {
+            EmailLoginFeature()
+        }
+        Scope(state: \.signUp, action: \.signUp) {
+            SignUpFeature()
+        }
         BindingReducer()
         Reduce { state, action in
             switch action {
@@ -37,6 +49,12 @@ struct LoginPopUpFeature {
                 
             case .signUpButtonTap:
                 state.isSignUpViewPresented = true
+                return .none
+                
+            case .emailLogin:
+                return .none
+                
+            case .signUp:
                 return .none
             }
         }

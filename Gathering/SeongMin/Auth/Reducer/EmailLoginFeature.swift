@@ -44,8 +44,6 @@ struct EmailLoginFeature {
                 let flag = emailValidation(state.emailText) &&
                 passwordValidation(state.passwordText)
                 
-                print("로그인 버튼 탭", flag)
-                
                 // 회원가입 통신
                 if flag {
                     return .run { [state = state] send in
@@ -68,15 +66,12 @@ struct EmailLoginFeature {
                 }
                 
             case .logInResponse(let data):
-                print(data)
-                
                 // userdefaults에 유저 정보 저장
                 UserDefaultsManager.signIn(
                     data.token.accessToken,
                     data.token.refreshToken ?? "",
                     data.userID
                 )
-                // TODO: - 통신 성공 시 홈 화면 전환
                 
                 return .none
                 

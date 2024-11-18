@@ -57,8 +57,6 @@ struct SignUpFeature {
                 passwordValidation(state.passwordText) &&
                 passwordCheckValidation(state.passwordText, state.passwordCheckText)
                 
-                print("회원가입 버튼 탭", flag)
-                
                 // 회원가입 통신
                 if flag {
                     return .run { [state = state] send in
@@ -82,16 +80,12 @@ struct SignUpFeature {
                 }
                 
             case .signUpResponse(let data):
-                print(data)
-                
                 // userdefaults에 유저 정보 저장
                 UserDefaultsManager.signIn(
                     data.token.accessToken,
                     data.token.refreshToken ?? "",
                     data.userID
                 )
-                // TODO: - 통신 성공 시 화면 전환
-                
                 return .none
                 
             case .signUpError(let error):

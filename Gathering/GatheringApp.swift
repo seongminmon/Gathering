@@ -31,7 +31,7 @@ struct GatheringApp: App {
             RootView()
         case .fail:
             OnboardingView(
-                store: Store(initialState: OnboardingFeature.State()) { OnboardingFeature() }
+                store: store.scope(state: \.onboarding, action: \.onboarding)
             )
         case .loading:
             ProgressView()
