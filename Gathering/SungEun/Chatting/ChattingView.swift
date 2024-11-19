@@ -16,7 +16,7 @@ struct ChattingView: View {
     @State private var messageText: String = ""
     @State private var selectedImages: [UIImage] = []
     @State private var messages: [ChatMessage] = [
-        ChatMessage(name: "지수", text: "아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘", images: [], imageNames: ["star"], isMine: false, profile: "bird"),
+        ChatMessage(name: "지수", text: "아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘", images: [], imageNames: ["bird"], isMine: false, profile: "bird"),
         ChatMessage(name: "아라", text: "그래그래 사진 보내줘~", images: [], imageNames: nil, isMine: false, profile: "bird2"),
         ChatMessage(name: "나야나", text: "아직 못보내~....", images: [], imageNames: nil, isMine: true, profile: "bird3"),
         ChatMessage(name: "성은", text: "^^>....", images: [], imageNames: nil, isMine: false, profile: "bird3")
@@ -41,7 +41,7 @@ struct ChattingView: View {
                         .id(scrollViewID)
                     }
                     .frame(maxWidth: .infinity)
-                    .onAppear{
+                    .onAppear {
                         proxy
                             .scrollTo(scrollViewID, anchor: .bottom)
                     }

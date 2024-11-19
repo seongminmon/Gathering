@@ -27,7 +27,6 @@ struct LoginPopUpView: View {
                     KakaoLoginButton()
                 }
                 Button {
-                    print("이메일 로그인 버튼 탭")
                     store.send(.emailLoginButtonTap)
                 } label: {
                     ContinueEmailButton()
@@ -48,14 +47,14 @@ struct LoginPopUpView: View {
             // 이메일 로그인 뷰
             .sheet(isPresented: $store.isEmailLoginViewPresented) {
                 EmailLoginView(
-                    store: Store(initialState: EmailLoginFeature.State()) { EmailLoginFeature() }
+                    store: store.scope(state: \.emailLogin, action: \.emailLogin)
                 )
                 .presentationDragIndicator(.visible)
             }
             // 회원 가입 뷰
             .sheet(isPresented: $store.isSignUpViewPresented) {
                 SignUpView(
-                    store: Store(initialState: SignUpFeature.State()) { SignUpFeature() }
+                    store: store.scope(state: \.signUp, action: \.signUp)
                 )
                 .presentationDragIndicator(.visible)
             }

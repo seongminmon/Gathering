@@ -43,13 +43,9 @@ struct DMFeature {
                 return .none
                 
             case .profileButtonTap:
-                print("프로필 버튼 탭")
                 return .none
                 
             case .networkButtonTap:
-                print("네트워크 버튼 탭")
-                
-                // 네트워크 비동기 작업을 별도 효과로 수행
                 return .run { send in
                     do {
                         let result = try await storeClient.itemList()

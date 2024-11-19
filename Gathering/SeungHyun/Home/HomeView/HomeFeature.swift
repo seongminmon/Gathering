@@ -91,9 +91,9 @@ struct HomeFeature {
                 return .none
             case .floatingButtonTap:
                 return .none
-            case .channelTap(_):
+            case .channelTap:
                 return .none
-            case .dmTap(_):
+            case .dmTap:
                 return .none
             case .confirmationDialog(.presented(.createChannelButtonTap)):
                         state.destination = .channelAdd(CreateChannelFeature.State())

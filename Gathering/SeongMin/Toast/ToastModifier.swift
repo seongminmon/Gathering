@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct ToastModifier: ViewModifier {
-    @Binding var toast: Toast?
+    
+    @State var toast: Toast?
     @State private var workItem: DispatchWorkItem?
+    
+    init(toast: Toast? = nil) {
+        _toast = State(initialValue: toast)
+    }
     
     func body(content: Content) -> some View {
         content

@@ -28,7 +28,6 @@ struct OnboardingView: View {
                 Spacer()
                 
                 Button {
-                    print("시작하기 버튼 탭")
                     store.send(.startButtonTap)
                 } label: {
                     RoundedButton(text: "시작하기", 
@@ -39,7 +38,7 @@ struct OnboardingView: View {
             .padding(20)
             .sheet(isPresented: $store.isShowPopUpView) {
                 LoginPopUpView(
-                    store: Store(initialState: LoginPopUpFeature.State()) { LoginPopUpFeature() }
+                    store: store.scope(state: \.loginPopUp, action: \.loginPopUp)
                 )
                 .presentationDetents([.height(290)])
                 .presentationDragIndicator(.visible)

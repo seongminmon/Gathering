@@ -31,11 +31,11 @@ struct DMView: View {
 //                    }
                     
                     // MARK: - toast test
-//                    Button {
-//                        store.send(.toastButtonTap)
-//                    } label: {
-//                        ContinueEmailButton()
-//                    }
+                    Button {
+                        store.send(.toastButtonTap)
+                    } label: {
+                        ContinueEmailButton()
+                    }
                     
                     if store.chattingList.isEmpty {
                         emptyMemberView()
@@ -72,7 +72,6 @@ struct DMView: View {
             Text("새로운 팀원을 초대해보세요.")
                 .font(.body)
             Button("팀원 초대하기") {
-                print("팀원 초대 버튼 탭")
                 store.send(.profileButtonTap)
             }
             .font(.title2)

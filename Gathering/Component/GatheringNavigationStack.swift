@@ -35,7 +35,7 @@ struct GatheringNavigationStack<Content: View>: View {
                         }
                     }
                     ToolbarItem(placement: .topBarTrailing) {
-                        Image(systemName: profileImage)
+                        Image(profileImage)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 30, height: 30)
