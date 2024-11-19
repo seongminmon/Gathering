@@ -127,13 +127,13 @@
 		A0E444DF2CE2B1ED0024AE71 /* WorkspaceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444DE2CE2B1ED0024AE71 /* WorkspaceResponse.swift */; };
 		A0E444E12CE2B37D0024AE71 /* WorkspaceInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444E02CE2B37D0024AE71 /* WorkspaceInfoResponse.swift */; };
 		A0E444E32CE2C0F20024AE71 /* DmsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444E22CE2C0F20024AE71 /* DmsRouter.swift */; };
-		A0E444E72CE2C3800024AE71 /* DmMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444E62CE2C3800024AE71 /* DmMessageRequest.swift */; };
-		A0E444E92CE2C3D80024AE71 /* DmOpponentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444E82CE2C3D80024AE71 /* DmOpponentRequest.swift */; };
-		A0E444EB2CE2C7E20024AE71 /* DmsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444EA2CE2C7E20024AE71 /* DmsResponse.swift */; };
-		A0E444ED2CE2C9C70024AE71 /* UnreadDmsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444EC2CE2C9C70024AE71 /* UnreadDmsResponse.swift */; };
-		A0E444EF2CE2CA8C0024AE71 /* DmsRoomResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444EE2CE2CA8C0024AE71 /* DmsRoomResponse.swift */; };
+		A0E444E72CE2C3800024AE71 /* DMMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444E62CE2C3800024AE71 /* DMMessageRequest.swift */; };
+		A0E444E92CE2C3D80024AE71 /* DMOpponentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444E82CE2C3D80024AE71 /* DMOpponentRequest.swift */; };
+		A0E444EB2CE2C7E20024AE71 /* DMsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444EA2CE2C7E20024AE71 /* DMsResponse.swift */; };
+		A0E444ED2CE2C9C70024AE71 /* UnreadDMsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444EC2CE2C9C70024AE71 /* UnreadDMsResponse.swift */; };
+		A0E444EF2CE2CA8C0024AE71 /* DMsRoomResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444EE2CE2CA8C0024AE71 /* DMsRoomResponse.swift */; };
 		A0E444F12CE326170024AE71 /* WorkspaceClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444F02CE326170024AE71 /* WorkspaceClient.swift */; };
-		A0E444F32CE336F30024AE71 /* DmsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444F22CE336F30024AE71 /* DmsClient.swift */; };
+		A0E444F32CE336F30024AE71 /* DMsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444F22CE336F30024AE71 /* DMsClient.swift */; };
 		A0EEC1982CDA46B700D81239 /* ChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EEC1972CDA46B700D81239 /* ChattingView.swift */; };
 /* End PBXBuildFile section */
 
@@ -269,13 +269,13 @@
 		A0E444DE2CE2B1ED0024AE71 /* WorkspaceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceResponse.swift; sourceTree = "<group>"; };
 		A0E444E02CE2B37D0024AE71 /* WorkspaceInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInfoResponse.swift; sourceTree = "<group>"; };
 		A0E444E22CE2C0F20024AE71 /* DmsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmsRouter.swift; sourceTree = "<group>"; };
-		A0E444E62CE2C3800024AE71 /* DmMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmMessageRequest.swift; sourceTree = "<group>"; };
-		A0E444E82CE2C3D80024AE71 /* DmOpponentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmOpponentRequest.swift; sourceTree = "<group>"; };
-		A0E444EA2CE2C7E20024AE71 /* DmsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmsResponse.swift; sourceTree = "<group>"; };
-		A0E444EC2CE2C9C70024AE71 /* UnreadDmsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadDmsResponse.swift; sourceTree = "<group>"; };
-		A0E444EE2CE2CA8C0024AE71 /* DmsRoomResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmsRoomResponse.swift; sourceTree = "<group>"; };
+		A0E444E62CE2C3800024AE71 /* DMMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMMessageRequest.swift; sourceTree = "<group>"; };
+		A0E444E82CE2C3D80024AE71 /* DMOpponentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMOpponentRequest.swift; sourceTree = "<group>"; };
+		A0E444EA2CE2C7E20024AE71 /* DMsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMsResponse.swift; sourceTree = "<group>"; };
+		A0E444EC2CE2C9C70024AE71 /* UnreadDMsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadDMsResponse.swift; sourceTree = "<group>"; };
+		A0E444EE2CE2CA8C0024AE71 /* DMsRoomResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMsRoomResponse.swift; sourceTree = "<group>"; };
 		A0E444F02CE326170024AE71 /* WorkspaceClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceClient.swift; sourceTree = "<group>"; };
-		A0E444F22CE336F30024AE71 /* DmsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmsClient.swift; sourceTree = "<group>"; };
+		A0E444F22CE336F30024AE71 /* DMsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMsClient.swift; sourceTree = "<group>"; };
 		A0EEC1972CDA46B700D81239 /* ChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -297,13 +297,13 @@
 		2447AB542CE1D0D400399C4D /* Client */ = {
 			isa = PBXGroup;
 			children = (
-				2447AB592CE2200100399C4D /* ChannelClient.swift */,
-				2447AB552CE1D0EC00399C4D /* StoreClient.swift */,
-				84B8AD162CE3696400011D73 /* UserClient.swift */,
-				84B8AD1B2CE3859400011D73 /* AuthClient.swift */,
-				A0E444F02CE326170024AE71 /* WorkspaceClient.swift */,
-				A0E444F22CE336F30024AE71 /* DmsClient.swift */,
 				249FB0CD2CEC9F5B00CA418B /* ImageClient.swift */,
+				84B8AD1B2CE3859400011D73 /* AuthClient.swift */,
+				84B8AD162CE3696400011D73 /* UserClient.swift */,
+				A0E444F02CE326170024AE71 /* WorkspaceClient.swift */,
+				2447AB592CE2200100399C4D /* ChannelClient.swift */,
+				A0E444F22CE336F30024AE71 /* DMsClient.swift */,
+				2447AB552CE1D0EC00399C4D /* StoreClient.swift */,
 			);
 			path = Client;
 			sourceTree = "<group>";
@@ -483,8 +483,8 @@
 		249FB0E12CECABE300CA418B /* DMs */ = {
 			isa = PBXGroup;
 			children = (
-				A0E444E62CE2C3800024AE71 /* DmMessageRequest.swift */,
-				A0E444E82CE2C3D80024AE71 /* DmOpponentRequest.swift */,
+				A0E444E62CE2C3800024AE71 /* DMMessageRequest.swift */,
+				A0E444E82CE2C3D80024AE71 /* DMOpponentRequest.swift */,
 			);
 			path = DMs;
 			sourceTree = "<group>";
@@ -492,9 +492,9 @@
 		249FB0E22CECABF000CA418B /* DMs */ = {
 			isa = PBXGroup;
 			children = (
-				A0E444EE2CE2CA8C0024AE71 /* DmsRoomResponse.swift */,
-				A0E444EA2CE2C7E20024AE71 /* DmsResponse.swift */,
-				A0E444EC2CE2C9C70024AE71 /* UnreadDmsResponse.swift */,
+				A0E444EE2CE2CA8C0024AE71 /* DMsRoomResponse.swift */,
+				A0E444EA2CE2C7E20024AE71 /* DMsResponse.swift */,
+				A0E444EC2CE2C9C70024AE71 /* UnreadDMsResponse.swift */,
 			);
 			path = DMs;
 			sourceTree = "<group>";
@@ -993,17 +993,17 @@
 				2447AB562CE1D0EC00399C4D /* StoreClient.swift in Sources */,
 				2447AB6A2CE32B6800399C4D /* ToastModifier.swift in Sources */,
 				24ABE9702CDCEDB2000E7EC5 /* UserDefaultsManager.swift in Sources */,
-				A0E444EB2CE2C7E20024AE71 /* DmsResponse.swift in Sources */,
+				A0E444EB2CE2C7E20024AE71 /* DMsResponse.swift in Sources */,
 				249FB0C72CEC70F700CA418B /* ChannelChattingRealmModel.swift in Sources */,
 				A0E444E12CE2B37D0024AE71 /* WorkspaceInfoResponse.swift in Sources */,
 				2447AB892CE8C46B00399C4D /* DMFeature.swift in Sources */,
 				2447AB6F2CE3326D00399C4D /* OnboardingView.swift in Sources */,
-				A0E444EF2CE2CA8C0024AE71 /* DmsRoomResponse.swift in Sources */,
+				A0E444EF2CE2CA8C0024AE71 /* DMsRoomResponse.swift in Sources */,
 				843E7FDF2CE337420057A426 /* EmailLoginRequest.swift in Sources */,
 				A0E444DB2CE2AC130024AE71 /* WorkspaceEditRequest.swift in Sources */,
 				24ABE96C2CDB9AF9000E7EC5 /* AppleLoginButton.swift in Sources */,
 				2447AB712CE3789600399C4D /* LoginPopUpView.swift in Sources */,
-				A0E444F32CE336F30024AE71 /* DmsClient.swift in Sources */,
+				A0E444F32CE336F30024AE71 /* DMsClient.swift in Sources */,
 				A0E444F12CE326170024AE71 /* WorkspaceClient.swift in Sources */,
 				A0E444DF2CE2B1ED0024AE71 /* WorkspaceResponse.swift in Sources */,
 				24ABE97D2CDCF15D000E7EC5 /* PayValidationRequest.swift in Sources */,
@@ -1012,7 +1012,7 @@
 				249FB0D22CECA8EE00CA418B /* RealmManager.swift in Sources */,
 				24ABE9902CDF0CFB000E7EC5 /* OwnerRequest.swift in Sources */,
 				24ABE96A2CDB9AB8000E7EC5 /* KakaoLoginButton.swift in Sources */,
-				A0E444E92CE2C3D80024AE71 /* DmOpponentRequest.swift in Sources */,
+				A0E444E92CE2C3D80024AE71 /* DMOpponentRequest.swift in Sources */,
 				847A3FA12CDCB96E004A9361 /* SheetHeaderView.swift in Sources */,
 				847A3F8B2CD9EA54004A9361 /* TempModel.swift in Sources */,
 				24ABE9622CDB99B1000E7EC5 /* RoundedBorderButton.swift in Sources */,
@@ -1035,7 +1035,7 @@
 				24ABE9882CDE172F000E7EC5 /* ChannelRequest.swift in Sources */,
 				843E7FCA2CE21E830057A426 /* MyApp.swift in Sources */,
 				847A3F842CD9000F004A9361 /* HomeView.swift in Sources */,
-				A0E444ED2CE2C9C70024AE71 /* UnreadDmsResponse.swift in Sources */,
+				A0E444ED2CE2C9C70024AE71 /* UnreadDMsResponse.swift in Sources */,
 				249FB0CE2CEC9F5B00CA418B /* ImageClient.swift in Sources */,
 				24ABE9862CDE12BE000E7EC5 /* ChannelResponse.swift in Sources */,
 				24ABE9662CDB99D0000E7EC5 /* RoundedButton.swift in Sources */,
@@ -1069,7 +1069,7 @@
 				843E7FE52CE337BA0057A426 /* SaveDeviceTokenRequest.swift in Sources */,
 				2447AB5A2CE2200100399C4D /* ChannelClient.swift in Sources */,
 				A0E444E32CE2C0F20024AE71 /* DmsRouter.swift in Sources */,
-				A0E444E72CE2C3800024AE71 /* DmMessageRequest.swift in Sources */,
+				A0E444E72CE2C3800024AE71 /* DMMessageRequest.swift in Sources */,
 				843E7FEB2CE3382F0057A426 /* MyProfileResponse.swift in Sources */,
 				A0E444D12CE29A850024AE71 /* WorkSpaceRouter.swift in Sources */,
 				24ABE9432CD4B7CC000E7EC5 /* CounterView.swift in Sources */,
@@ -1227,7 +1227,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Gathering/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Gathering/Resource/Preview Content\"";
 				DEVELOPMENT_TEAM = Z6H2JVV9PA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1266,7 +1266,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Gathering/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Gathering/Resource/Preview Content\"";
 				DEVELOPMENT_TEAM = Z6H2JVV9PA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

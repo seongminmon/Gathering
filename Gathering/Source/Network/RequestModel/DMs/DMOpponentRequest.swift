@@ -1,5 +1,5 @@
 //
-//  DmOpponentRequest.swift
+//  DMOpponentRequest.swift
 //  Gathering
 //
 //  Created by 여성은 on 11/12/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DmOpponentRequest: Encodable {
+struct DMOpponentRequest: Encodable {
     let opponentID: String
     
     enum CodingKeys: String, CodingKey {

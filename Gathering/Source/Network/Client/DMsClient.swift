@@ -1,5 +1,5 @@
 //
-//  DmsClient.swift
+//  DMsClient.swift
 //  Gathering
 //
 //  Created by 여성은 on 11/12/24.
@@ -9,19 +9,19 @@ import Foundation
 
 import ComposableArchitecture
 
-struct DmsClient {
-    var fetchOrCreateDM: (String, DmOpponentRequest) async throws -> DmsRoomResponse
-    var fetchDMSList: (String) async throws -> [DmsRoomResponse]
-    var sendDMMessage: (String, String, DmMessageRequest) async throws -> DmsResponse
-    var fetchDMChatHistory: (String, String, String) async throws -> [DmsResponse]
+struct DMsClient {
+    var fetchOrCreateDM: (String, DMOpponentRequest) async throws -> DMsRoomResponse
+    var fetchDMSList: (String) async throws -> [DMsRoomResponse]
+    var sendDMMessage: (String, String, DMMessageRequest) async throws -> DMsResponse
+    var fetchDMChatHistory: (String, String, String) async throws -> [DMsResponse]
     var fetchUnreadDMCount: (String, String, String) async throws -> UnreadCountResponse
 }
 
-extension DmsClient: DependencyKey {
-    static let liveValue = DmsClient(
+extension DMsClient: DependencyKey {
+    static let liveValue = DMsClient(
         fetchOrCreateDM: { workspaceID, body in
             return try await NetworkManager.shared.request(
-                api: DmsRouter.fetchOrCreateDM(
+                api: DMsRouter.fetchOrCreateDM(
                     workspaceID: workspaceID,
                     body: body
                 )
@@ -29,14 +29,14 @@ extension DmsClient: DependencyKey {
         },
         fetchDMSList: { workspaceID in
             return try await NetworkManager.shared.request(
-                api: DmsRouter.fetchDMSList(
+                api: DMsRouter.fetchDMSList(
                     workspaceID: workspaceID
                 )
             )
         },
         sendDMMessage: { workspaceID, roomID, body in
             return try await NetworkManager.shared.request(
-                api: DmsRouter.sendDMMessage(
+                api: DMsRouter.sendDMMessage(
                     workspaceID: workspaceID,
                     roomID: roomID,
                     body: body
@@ -45,7 +45,7 @@ extension DmsClient: DependencyKey {
         },
         fetchDMChatHistory: { workspaceID, roomID, cursorDate in
             return try await NetworkManager.shared.request(
-                api: DmsRouter.fetchDMChatHistory(
+                api: DMsRouter.fetchDMChatHistory(
                     workspaceID: workspaceID,
                     roomID: roomID,
                     cursorDate: cursorDate
@@ -54,7 +54,7 @@ extension DmsClient: DependencyKey {
         },
         fetchUnreadDMCount: { workspaceID, roomID, after in
             return try await NetworkManager.shared.request(
-                api: DmsRouter.fetchUnreadDMCount(
+                api: DMsRouter.fetchUnreadDMCount(
                     workspaceID: workspaceID,
                     roomID: roomID,
                     after: after
@@ -64,8 +64,8 @@ extension DmsClient: DependencyKey {
     )
 }
 extension DependencyValues {
-    var dmsClient: DmsClient {
-        get { self[DmsClient.self] }
-        set { self[DmsClient.self] = newValue }
+    var dmsClient: DMsClient {
+        get { self[DMsClient.self] }
+        set { self[DMsClient.self] = newValue }
     }
 }

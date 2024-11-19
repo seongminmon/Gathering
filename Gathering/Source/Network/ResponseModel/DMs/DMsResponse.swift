@@ -1,5 +1,5 @@
 //
-//  DmsResponse.swift
+//  DMsResponse.swift
 //  Gathering
 //
 //  Created by 여성은 on 11/12/24.
@@ -7,10 +7,10 @@
 
 import Foundation
 
-typealias Dms = [DmsResponse]
+typealias DMs = [DMsResponse]
 
 // MARK: - DM 채팅 소켓 모델도 공유
-struct DmsResponse: Decodable {
+struct DMsResponse: Decodable {
     let dm_id: String
     let room_id: String
     let content: String?
@@ -19,7 +19,7 @@ struct DmsResponse: Decodable {
     let user: MemberResponse
 }
 
-//extension DmsResponse {
+//extension DMsResponse {
 //    var toChattingPresentModel: ChattingPresentModel {
 //        return ChattingPresentModel(
 //            name: self.dm_id,

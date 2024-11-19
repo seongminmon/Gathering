@@ -1,5 +1,5 @@
 //
-//  DmsRouter.swift
+//  DMsRouter.swift
 //  Gathering
 //
 //  Created by 여성은 on 11/12/24.
@@ -9,13 +9,13 @@ import Foundation
 
 import Alamofire
 
-enum DmsRouter {
+enum DMsRouter {
     case fetchOrCreateDM(workspaceID: String,
-                         body: DmOpponentRequest)       // DM방 조회(생성)
+                         body: DMOpponentRequest)       // DM방 조회(생성)
     case fetchDMSList(workspaceID: String)           // DM방 리스트 조회
     case sendDMMessage(workspaceID: String,
                        roomID: String,
-                       body: DmMessageRequest)             // DM 채팅 보내기
+                       body: DMMessageRequest)             // DM 채팅 보내기
     case fetchDMChatHistory(workspaceID: String,
                             roomID: String,
                             cursorDate:String)        // DM 채팅 내역 리스트 조회
@@ -24,7 +24,7 @@ enum DmsRouter {
                             after: String)        // 읽지 않은 DM 채팅 개수
 }
 
-extension DmsRouter: TargetType {
+extension DMsRouter: TargetType {
     var method: HTTPMethod {
         switch self {
         case .fetchOrCreateDM,
