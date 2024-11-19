@@ -14,7 +14,6 @@ struct HomeView: View {
     
     var body: some View {
         WithPerceptionTracking {
-            //            NavigationStack(path: $store.navigationPath) {
             ZStack(alignment: .bottomTrailing) {
                 scrollView()
                 makeFloatingButton {
@@ -26,8 +25,8 @@ struct HomeView: View {
                     state: \.destination?.channelAdd,
                     action: \.destination.channelAdd
                 )
-            ) { (store: StoreOf<CreateChannelFeature>) in
-                    CreateChannelView(store: store)
+            ) { store in
+                CreateChannelView(store: store)
             }
             .fullScreenCover(
                 item: $store.scope(
@@ -35,7 +34,7 @@ struct HomeView: View {
                     action: \.destination.channelExplore
                 )
             ) { store in
-                    ChannelExploreView(store: store)
+                ChannelExploreView(store: store)
             }
             .sheet(
                 item: $store.scope(
@@ -43,7 +42,7 @@ struct HomeView: View {
                     action: \.destination.inviteMember
                 )
             ) { store in
-                    InviteMemberView(store: store)
+                InviteMemberView(store: store)
             }
             .confirmationDialog(
                 store: self.store.scope(

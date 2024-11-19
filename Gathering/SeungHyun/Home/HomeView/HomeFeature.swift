@@ -20,11 +20,10 @@ struct HomeFeature {
     @ObservableState
     struct State {
         @Presents var destination: Destination.State?
-        @Presents var confirmationDialog: ConfirmationDialogState<Action>?
+        @Presents var confirmationDialog: ConfirmationDialogState<Action.ConfirmationDialog>?
         
         var isChannelExpanded = true
         var isDMExpanded = true
-        var showOptionSheet = false
         
         var channels: [Channel] = Dummy.channels
         var users: [DMUser] = Dummy.users
@@ -33,12 +32,14 @@ struct HomeFeature {
     enum Action: BindableAction {
         case binding(BindingAction<State>)
         case destination(PresentationAction<Destination.Action>)
-        case confirmationDialog(PresentationAction<Action>)
+        case confirmationDialog(PresentationAction<ConfirmationDialog>)
         
+        enum ConfirmationDialog {
+            case createChannelButtonTap
+            case exploreChannelButtonTap
+        }
 //        // View에서 발생하는 사용자 액션들
         case addChannelButtonTap
-        case createChannelButtonTap
-        case exploreChannelButtonTap
         case inviteMemberButtonTap
         case floatingButtonTap
         
@@ -57,7 +58,12 @@ struct HomeFeature {
             switch action {
             case .binding:
                 return .none
-                
+            case .confirmationDialog(.presented(.createChannelButtonTap)):
+                state.destination = .channelAdd(CreateChannelFeature.State())
+                return .none
+            case .confirmationDialog(.presented(.exploreChannelButtonTap)):
+                state.destination = .channelExplore(ChannelExploreFeature.State())
+                return .none
             case .addChannelButtonTap:
                 state.confirmationDialog = ConfirmationDialogState {
                     TextState("")
@@ -74,12 +80,12 @@ struct HomeFeature {
                 }
 //                state.showOptionSheet = true
                 return .none
-            case .createChannelButtonTap:
-                state.destination = .channelAdd(CreateChannelFeature.State())
-                return .none
-            case .exploreChannelButtonTap:
-                state.destination = .channelExplore(ChannelExploreFeature.State())
-                return .none
+//            case .createChannelButtonTap:
+//                state.destination = .channelAdd(CreateChannelFeature.State())
+//                return .none
+//            case .exploreChannelButtonTap:
+//                state.destination = .channelExplore(ChannelExploreFeature.State())
+//                return .none
             case .inviteMemberButtonTap:
                 state.destination = .inviteMember(InviteMemberFeature.State())
                 return .none
@@ -95,13 +101,7 @@ struct HomeFeature {
                 return .none
             case .dmTap:
                 return .none
-            case .confirmationDialog(.presented(.createChannelButtonTap)):
-                        state.destination = .channelAdd(CreateChannelFeature.State())
-                        return .none
-            case .confirmationDialog(.presented(.exploreChannelButtonTap)):
-                state.destination = .channelExplore(ChannelExploreFeature.State())
-                return .none
-            case .confirmationDialog:
+            case .confirmationDialog(.dismiss):
                 return .none
             }
         }

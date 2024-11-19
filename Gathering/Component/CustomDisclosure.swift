@@ -27,7 +27,7 @@ struct CustomDisclosureGroup<Content: View>: View {
             } label: {
                 HStack {
                     Text(label)
-                        .font(Design.title2)
+                        .font(.title2)
                     Spacer()
                     Image(.chevronRight)
                         .rotationEffect(.degrees(isExpanded ? 90 : 0))
