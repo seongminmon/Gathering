@@ -52,7 +52,7 @@ struct ToolbarModifier: ViewModifier {
         // 중앙 타이틀
         ToolbarItem(placement: .principal) {
             Text(config.title)
-                .font(.title2)
+                .font(Design.title2)
                 .foregroundColor(Design.black)
         }
         
