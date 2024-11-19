@@ -10,6 +10,7 @@ import SwiftUI
 import PhotosUI
 import Combine
 import Alamofire
+import ComposableArchitecture
 
 struct ChattingView: View {
     @State private var messageText: String = ""
@@ -22,7 +23,6 @@ struct ChattingView: View {
         
     ]
     @State private var scrollViewID = UUID()
-    @State private var keyboardHeight: CGFloat = 0 // 키보드 높이 상태 저장
     
     private var keyboardSubscriber: AnyCancellable?
     
@@ -41,7 +41,7 @@ struct ChattingView: View {
                         .id(scrollViewID)
                     }
                     .frame(maxWidth: .infinity)
-                    .onAppear{ 
+                    .onAppear{
                         proxy
                             .scrollTo(scrollViewID, anchor: .bottom)
                     }
@@ -90,15 +90,6 @@ struct ChattingView: View {
             scrollViewID = UUID() // 새로운 메시지가 들어올 때마다 스크롤 ID 갱신
         }
     }
-    
-    // PHPicker를 표시하는 함수
-    //    func showImagePicker() {
-    //        let picker = PHPickerViewController(
-    //            configuration: PHPickerConfiguration(photoLibrary: .shared())
-    //        )
-    //        picker.delegate = PHPickerHandler(selectedImages: $selectedImages)
-    //        UIApplication.shared.windows.first?.rootViewController?.present(picker, animated: true)
-    //    }
 }
 extension ChattingView {
     private func messageInputView() -> some View {
@@ -279,3 +270,5 @@ extension View {
 #Preview {
     ChattingView()
 }
+
+
