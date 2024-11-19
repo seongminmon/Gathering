@@ -38,6 +38,7 @@
 		249FB0CE2CEC9F5B00CA418B /* ImageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0CD2CEC9F5B00CA418B /* ImageClient.swift */; };
 		249FB0D22CECA8EE00CA418B /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0D12CECA8EE00CA418B /* RealmManager.swift */; };
 		249FB0DB2CECAB3B00CA418B /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0DA2CECAB3B00CA418B /* Token.swift */; };
+		249FB0FC2CECBCDB00CA418B /* BadgeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0FB2CECBCDB00CA418B /* BadgeModifier.swift */; };
 		24ABE91D2CD4AEDB000E7EC5 /* GatheringApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE91C2CD4AEDB000E7EC5 /* GatheringApp.swift */; };
 		24ABE9212CD4AEDD000E7EC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24ABE9202CD4AEDD000E7EC5 /* Assets.xcassets */; };
 		24ABE9242CD4AEDD000E7EC5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24ABE9232CD4AEDD000E7EC5 /* Preview Assets.xcassets */; };
@@ -56,7 +57,7 @@
 		24ABE9542CD8B711000E7EC5 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9532CD8B711000E7EC5 /* Font+.swift */; };
 		24ABE95A2CDB86F3000E7EC5 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9592CDB86F3000E7EC5 /* Color+.swift */; };
 		24ABE95C2CDB8701000E7EC5 /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE95B2CDB8701000E7EC5 /* Design.swift */; };
-		24ABE95F2CDB93B5000E7EC5 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE95E2CDB93B5000E7EC5 /* View+.swift */; };
+		24ABE95F2CDB93B5000E7EC5 /* RoundButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE95E2CDB93B5000E7EC5 /* RoundButtonModifier.swift */; };
 		24ABE9622CDB99B1000E7EC5 /* RoundedBorderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9612CDB99B1000E7EC5 /* RoundedBorderButton.swift */; };
 		24ABE9642CDB99C8000E7EC5 /* ContinueEmailButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9632CDB99C8000E7EC5 /* ContinueEmailButton.swift */; };
 		24ABE9662CDB99D0000E7EC5 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9652CDB99D0000E7EC5 /* RoundedButton.swift */; };
@@ -100,7 +101,7 @@
 		847A3F842CD9000F004A9361 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F832CD9000F004A9361 /* HomeView.swift */; };
 		847A3F882CD9C032004A9361 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F872CD9C032004A9361 /* ProfileImageView.swift */; };
 		847A3F8B2CD9EA54004A9361 /* TempModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F8A2CD9EA54004A9361 /* TempModel.swift */; };
-		847A3F902CDA440F004A9361 /* CustomDisclosure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F8F2CDA440F004A9361 /* CustomDisclosure.swift */; };
+		847A3F902CDA440F004A9361 /* CustomDisclosureGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F8F2CDA440F004A9361 /* CustomDisclosureGroup.swift */; };
 		847A3F922CDA9FC0004A9361 /* GatheringNavigationStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F912CDA9FC0004A9361 /* GatheringNavigationStack.swift */; };
 		847A3F972CDAFB19004A9361 /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F962CDAFB19004A9361 /* TargetType.swift */; };
 		847A3F9B2CDAFF04004A9361 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F9A2CDAFF04004A9361 /* Header.swift */; };
@@ -127,7 +128,7 @@
 		A0E444DF2CE2B1ED0024AE71 /* WorkspaceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444DE2CE2B1ED0024AE71 /* WorkspaceResponse.swift */; };
 		A0E444E12CE2B37D0024AE71 /* WorkspaceInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444E02CE2B37D0024AE71 /* WorkspaceInfoResponse.swift */; };
 		A0E444E32CE2C0F20024AE71 /* DmsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444E22CE2C0F20024AE71 /* DmsRouter.swift */; };
-		A0E444E72CE2C3800024AE71 /* DMMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444E62CE2C3800024AE71 /* DMMessageRequest.swift */; };
+		A0E444E72CE2C3800024AE71 /* DMRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444E62CE2C3800024AE71 /* DMRequest.swift */; };
 		A0E444E92CE2C3D80024AE71 /* DMOpponentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444E82CE2C3D80024AE71 /* DMOpponentRequest.swift */; };
 		A0E444EB2CE2C7E20024AE71 /* DMsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444EA2CE2C7E20024AE71 /* DMsResponse.swift */; };
 		A0E444ED2CE2C9C70024AE71 /* UnreadDMsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444EC2CE2C9C70024AE71 /* UnreadDMsResponse.swift */; };
@@ -183,6 +184,7 @@
 		249FB0CD2CEC9F5B00CA418B /* ImageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageClient.swift; sourceTree = "<group>"; };
 		249FB0D12CECA8EE00CA418B /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		249FB0DA2CECAB3B00CA418B /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		249FB0FB2CECBCDB00CA418B /* BadgeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeModifier.swift; sourceTree = "<group>"; };
 		24ABE9192CD4AEDB000E7EC5 /* Gathering.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gathering.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24ABE91C2CD4AEDB000E7EC5 /* GatheringApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatheringApp.swift; sourceTree = "<group>"; };
 		24ABE9202CD4AEDD000E7EC5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -198,7 +200,7 @@
 		24ABE9532CD8B711000E7EC5 /* Font+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+.swift"; sourceTree = "<group>"; };
 		24ABE9592CDB86F3000E7EC5 /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
 		24ABE95B2CDB8701000E7EC5 /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
-		24ABE95E2CDB93B5000E7EC5 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
+		24ABE95E2CDB93B5000E7EC5 /* RoundButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButtonModifier.swift; sourceTree = "<group>"; };
 		24ABE9612CDB99B1000E7EC5 /* RoundedBorderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedBorderButton.swift; sourceTree = "<group>"; };
 		24ABE9632CDB99C8000E7EC5 /* ContinueEmailButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinueEmailButton.swift; sourceTree = "<group>"; };
 		24ABE9652CDB99D0000E7EC5 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
@@ -242,7 +244,7 @@
 		847A3F832CD9000F004A9361 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		847A3F872CD9C032004A9361 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		847A3F8A2CD9EA54004A9361 /* TempModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempModel.swift; sourceTree = "<group>"; };
-		847A3F8F2CDA440F004A9361 /* CustomDisclosure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDisclosure.swift; sourceTree = "<group>"; };
+		847A3F8F2CDA440F004A9361 /* CustomDisclosureGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDisclosureGroup.swift; sourceTree = "<group>"; };
 		847A3F912CDA9FC0004A9361 /* GatheringNavigationStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatheringNavigationStack.swift; sourceTree = "<group>"; };
 		847A3F962CDAFB19004A9361 /* TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
 		847A3F9A2CDAFF04004A9361 /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
@@ -269,7 +271,7 @@
 		A0E444DE2CE2B1ED0024AE71 /* WorkspaceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceResponse.swift; sourceTree = "<group>"; };
 		A0E444E02CE2B37D0024AE71 /* WorkspaceInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInfoResponse.swift; sourceTree = "<group>"; };
 		A0E444E22CE2C0F20024AE71 /* DmsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmsRouter.swift; sourceTree = "<group>"; };
-		A0E444E62CE2C3800024AE71 /* DMMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMMessageRequest.swift; sourceTree = "<group>"; };
+		A0E444E62CE2C3800024AE71 /* DMRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMRequest.swift; sourceTree = "<group>"; };
 		A0E444E82CE2C3D80024AE71 /* DMOpponentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMOpponentRequest.swift; sourceTree = "<group>"; };
 		A0E444EA2CE2C7E20024AE71 /* DMsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMsResponse.swift; sourceTree = "<group>"; };
 		A0E444EC2CE2C9C70024AE71 /* UnreadDMsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadDMsResponse.swift; sourceTree = "<group>"; };
@@ -483,7 +485,7 @@
 		249FB0E12CECABE300CA418B /* DMs */ = {
 			isa = PBXGroup;
 			children = (
-				A0E444E62CE2C3800024AE71 /* DMMessageRequest.swift */,
+				A0E444E62CE2C3800024AE71 /* DMRequest.swift */,
 				A0E444E82CE2C3D80024AE71 /* DMOpponentRequest.swift */,
 			);
 			path = DMs;
@@ -734,13 +736,13 @@
 		24ABE9582CDA167C000E7EC5 /* Component */ = {
 			isa = PBXGroup;
 			children = (
-				249FB0F72CECB45A00CA418B /* TextField */,
-				249FB0F62CECB44C00CA418B /* ImageView */,
 				24ABE9602CDB99A8000E7EC5 /* Button */,
-				847A3F8F2CDA440F004A9361 /* CustomDisclosure.swift */,
+				249FB0F62CECB44C00CA418B /* ImageView */,
+				249FB0F72CECB45A00CA418B /* TextField */,
 				847A3F912CDA9FC0004A9361 /* GatheringNavigationStack.swift */,
 				847A3FA02CDCB96E004A9361 /* SheetHeaderView.swift */,
 				84B8AD222CE46A8E00011D73 /* CustomAlert.swift */,
+				847A3F8F2CDA440F004A9361 /* CustomDisclosureGroup.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -748,7 +750,8 @@
 		24ABE95D2CDB931B000E7EC5 /* Modifier */ = {
 			isa = PBXGroup;
 			children = (
-				24ABE95E2CDB93B5000E7EC5 /* View+.swift */,
+				24ABE95E2CDB93B5000E7EC5 /* RoundButtonModifier.swift */,
+				249FB0FB2CECBCDB00CA418B /* BadgeModifier.swift */,
 				847A3F9E2CDB6AC4004A9361 /* ToolbarModifier.swift */,
 			);
 			path = Modifier;
@@ -1007,7 +1010,7 @@
 				A0E444F12CE326170024AE71 /* WorkspaceClient.swift in Sources */,
 				A0E444DF2CE2B1ED0024AE71 /* WorkspaceResponse.swift in Sources */,
 				24ABE97D2CDCF15D000E7EC5 /* PayValidationRequest.swift in Sources */,
-				24ABE95F2CDB93B5000E7EC5 /* View+.swift in Sources */,
+				24ABE95F2CDB93B5000E7EC5 /* RoundButtonModifier.swift in Sources */,
 				24ABE9822CDE0FE9000E7EC5 /* ChannelRouter.swift in Sources */,
 				249FB0D22CECA8EE00CA418B /* RealmManager.swift in Sources */,
 				24ABE9902CDF0CFB000E7EC5 /* OwnerRequest.swift in Sources */,
@@ -1026,6 +1029,7 @@
 				2447AB7B2CE732C400399C4D /* TextFieldWithTitle.swift in Sources */,
 				2447AB642CE327C800399C4D /* ToastView.swift in Sources */,
 				2447AB5C2CE22D1300399C4D /* APIError.swift in Sources */,
+				249FB0FC2CECBCDB00CA418B /* BadgeModifier.swift in Sources */,
 				843E7FDB2CE3283E0057A426 /* JoinLoginResponse.swift in Sources */,
 				24ABE95A2CDB86F3000E7EC5 /* Color+.swift in Sources */,
 				847A3F9F2CDB6AC4004A9361 /* ToolbarModifier.swift in Sources */,
@@ -1044,7 +1048,7 @@
 				847A3F922CDA9FC0004A9361 /* GatheringNavigationStack.swift in Sources */,
 				847A3F812CD8FFEF004A9361 /* CounterFeature.swift in Sources */,
 				A0E444D92CE2A90C0024AE71 /* WorkspaceCreateRequest.swift in Sources */,
-				847A3F902CDA440F004A9361 /* CustomDisclosure.swift in Sources */,
+				847A3F902CDA440F004A9361 /* CustomDisclosureGroup.swift in Sources */,
 				24ABE9542CD8B711000E7EC5 /* Font+.swift in Sources */,
 				24ABE97B2CDCF03D000E7EC5 /* StoreItemResponse.swift in Sources */,
 				2447AB732CE378B600399C4D /* OnboardingFeature.swift in Sources */,
@@ -1069,7 +1073,7 @@
 				843E7FE52CE337BA0057A426 /* SaveDeviceTokenRequest.swift in Sources */,
 				2447AB5A2CE2200100399C4D /* ChannelClient.swift in Sources */,
 				A0E444E32CE2C0F20024AE71 /* DmsRouter.swift in Sources */,
-				A0E444E72CE2C3800024AE71 /* DMMessageRequest.swift in Sources */,
+				A0E444E72CE2C3800024AE71 /* DMRequest.swift in Sources */,
 				843E7FEB2CE3382F0057A426 /* MyProfileResponse.swift in Sources */,
 				A0E444D12CE29A850024AE71 /* WorkSpaceRouter.swift in Sources */,
 				24ABE9432CD4B7CC000E7EC5 /* CounterView.swift in Sources */,

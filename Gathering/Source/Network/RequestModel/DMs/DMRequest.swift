@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DMMessageRequest: Encodable {
+struct DMRequest: Encodable {
     let content: String?
     let files: [Data]?
 }

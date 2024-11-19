@@ -15,6 +15,6 @@ struct AppleLoginButton: View {
                 .frame(width: 20, height: 20)
             Text("APPLE로 계속하기")
         }
-        .asButtonStyle(foregroundColor: Design.white, backgroundColor: Design.black)
+        .asRoundButton(foregroundColor: Design.white, backgroundColor: Design.black)
     }
 }

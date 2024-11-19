@@ -14,6 +14,6 @@ struct RoundedButton: View {
     
     var body: some View {
         Text(text)
-            .asButtonStyle(foregroundColor: foregroundColor, backgroundColor: backgroundColor)
+            .asRoundButton(foregroundColor: foregroundColor, backgroundColor: backgroundColor)
     }
 }

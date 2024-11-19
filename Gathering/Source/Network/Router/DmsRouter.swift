@@ -15,7 +15,7 @@ enum DMsRouter {
     case fetchDMSList(workspaceID: String)           // DM방 리스트 조회
     case sendDMMessage(workspaceID: String,
                        roomID: String,
-                       body: DMMessageRequest)             // DM 채팅 보내기
+                       body: DMRequest)             // DM 채팅 보내기
     case fetchDMChatHistory(workspaceID: String,
                             roomID: String,
                             cursorDate:String)        // DM 채팅 내역 리스트 조회

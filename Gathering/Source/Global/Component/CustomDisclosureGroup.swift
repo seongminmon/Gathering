@@ -1,5 +1,5 @@
 //
-//  CustomDisclosure.swift
+//  CustomDisclosureGroup.swift
 //  Gathering
 //
 //  Created by dopamint on 11/5/24.

@@ -15,6 +15,6 @@ struct KakaoLoginButton: View {
                 .frame(width: 20, height: 20)
             Text("카카오톡으로 계속하기")
         }
-        .asButtonStyle(foregroundColor: Design.black, backgroundColor: .yellow)
+        .asRoundButton(foregroundColor: Design.black, backgroundColor: .yellow)
     }
 }

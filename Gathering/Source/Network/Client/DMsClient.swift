@@ -12,7 +12,7 @@ import ComposableArchitecture
 struct DMsClient {
     var fetchOrCreateDM: (String, DMOpponentRequest) async throws -> DMsRoomResponse
     var fetchDMSList: (String) async throws -> [DMsRoomResponse]
-    var sendDMMessage: (String, String, DMMessageRequest) async throws -> DMsResponse
+    var sendDMMessage: (String, String, DMRequest) async throws -> DMsResponse
     var fetchDMChatHistory: (String, String, String) async throws -> [DMsResponse]
     var fetchUnreadDMCount: (String, String, String) async throws -> UnreadCountResponse
 }
