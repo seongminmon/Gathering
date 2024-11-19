@@ -19,11 +19,11 @@ struct DmsResponse: Decodable {
     let user: MemberResponse
 }
 
-extension DmsResponse {
-    var toChattingPresentModel: ChattingPresentModel {
-        return ChattingPresentModel(
-            name: self.dm_id,
-            age: self.createdAt
-        )
-    }
-}
+//extension DmsResponse {
+//    var toChattingPresentModel: ChattingPresentModel {
+//        return ChattingPresentModel(
+//            name: self.dm_id,
+//            age: self.createdAt
+//        )
+//    }
+//}

@@ -28,8 +28,3 @@ struct JoinLoginResponse: Decodable {
         case token
     }
 }
-
-struct Token: Decodable {
-    let accessToken: String
-    let refreshToken: String?
-}
