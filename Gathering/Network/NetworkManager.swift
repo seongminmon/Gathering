@@ -83,4 +83,46 @@ final class NetworkManager {
     func requestWithoutResponse<Router: TargetType>(api: Router) async throws {
         _ = try await performRequest(api: api)
     }
+    
+    // 이미지 URL 통신 (캐시 적용)
+//    func loadImage(_ urlString: String) async throws -> UIImage {
+//        guard let imageURL = URL(string: APIAuth.baseURL + "v1" + urlString) else {
+//            print("URL 없음")
+//            throw
+//        }
+//        
+//        // 캐시 확인
+//        if let cachedImage = ImageCache.shared.object(forKey: imageURL as NSURL) {
+//            print("캐시 히트")
+//            return cachedImage
+//        }
+//        
+//        print("캐시 미스")
+//        
+//        // 캐시에 없으면 네트워크 요청
+//        var request = URLRequest(url: imageURL)
+//        request.setValue(APIAuth.key, forHTTPHeaderField: Header.sesacKey.rawValue)
+//        request.setValue(
+//            UserDefaultsManager.accessToken,
+//            forHTTPHeaderField: Header.authorization.rawValue
+//        )
+//        
+//        URLSession.shared.dataTask(with: request) { data, response, error in
+//            if let data = data, let downloadedImage = UIImage(data: data) {
+//                print("이미지 다운로드 성공")
+//                DispatchQueue.main.async {
+//                    // 다운로드한 이미지 캐싱
+//                    ImageCache.shared.setObject(downloadedImage, forKey: imageURL as NSURL)
+//                    self.uiImage = downloadedImage
+//                    self.isLoading = false
+//                }
+//            } else {
+//                print("이미지 다운로드 실패")
+//                DispatchQueue.main.async {
+//                    self.isLoading = false
+//                }
+//            }
+//        }
+//        .resume()
+//    }
 }

@@ -31,6 +31,12 @@
 		2447AB872CE8C25C00399C4D /* SecureTextFieldWithTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB862CE8C25C00399C4D /* SecureTextFieldWithTitle.swift */; };
 		2447AB892CE8C46B00399C4D /* DMFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB882CE8C46B00399C4D /* DMFeature.swift */; };
 		2447AB8B2CE9E58700399C4D /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB8A2CE9E58700399C4D /* AppFeature.swift */; };
+		249FB0C02CEC643800CA418B /* ImageFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0BF2CEC643800CA418B /* ImageFileManager.swift */; };
+		249FB0C52CEC70EA00CA418B /* DMChattingRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0C42CEC70EA00CA418B /* DMChattingRealmModel.swift */; };
+		249FB0C72CEC70F700CA418B /* ChannelChattingRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0C62CEC70F700CA418B /* ChannelChattingRealmModel.swift */; };
+		249FB0C92CEC711800CA418B /* MemberRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0C82CEC711800CA418B /* MemberRealmModel.swift */; };
+		249FB0CC2CEC9F4400CA418B /* ImageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0CB2CEC9F4400CA418B /* ImageRouter.swift */; };
+		249FB0CE2CEC9F5B00CA418B /* ImageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0CD2CEC9F5B00CA418B /* ImageClient.swift */; };
 		24ABE91D2CD4AEDB000E7EC5 /* GatheringApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE91C2CD4AEDB000E7EC5 /* GatheringApp.swift */; };
 		24ABE91F2CD4AEDB000E7EC5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE91E2CD4AEDB000E7EC5 /* ContentView.swift */; };
 		24ABE9212CD4AEDD000E7EC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24ABE9202CD4AEDD000E7EC5 /* Assets.xcassets */; };
@@ -171,6 +177,12 @@
 		2447AB862CE8C25C00399C4D /* SecureTextFieldWithTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureTextFieldWithTitle.swift; sourceTree = "<group>"; };
 		2447AB882CE8C46B00399C4D /* DMFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMFeature.swift; sourceTree = "<group>"; };
 		2447AB8A2CE9E58700399C4D /* AppFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
+		249FB0BF2CEC643800CA418B /* ImageFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFileManager.swift; sourceTree = "<group>"; };
+		249FB0C42CEC70EA00CA418B /* DMChattingRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChattingRealmModel.swift; sourceTree = "<group>"; };
+		249FB0C62CEC70F700CA418B /* ChannelChattingRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChattingRealmModel.swift; sourceTree = "<group>"; };
+		249FB0C82CEC711800CA418B /* MemberRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberRealmModel.swift; sourceTree = "<group>"; };
+		249FB0CB2CEC9F4400CA418B /* ImageRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRouter.swift; sourceTree = "<group>"; };
+		249FB0CD2CEC9F5B00CA418B /* ImageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageClient.swift; sourceTree = "<group>"; };
 		24ABE9192CD4AEDB000E7EC5 /* Gathering.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gathering.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24ABE91C2CD4AEDB000E7EC5 /* GatheringApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatheringApp.swift; sourceTree = "<group>"; };
 		24ABE91E2CD4AEDB000E7EC5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -293,6 +305,7 @@
 				84B8AD1B2CE3859400011D73 /* AuthClient.swift */,
 				A0E444F02CE326170024AE71 /* WorkspaceClient.swift */,
 				A0E444F22CE336F30024AE71 /* DmsClient.swift */,
+				249FB0CD2CEC9F5B00CA418B /* ImageClient.swift */,
 			);
 			path = Client;
 			sourceTree = "<group>";
@@ -348,6 +361,41 @@
 			path = Reducer;
 			sourceTree = "<group>";
 		};
+		249FB0C12CEC65FF00CA418B /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				249FB0C32CEC70E000CA418B /* Models */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		249FB0C22CEC660F00CA418B /* LocalStorage */ = {
+			isa = PBXGroup;
+			children = (
+				24ABE96F2CDCEDB2000E7EC5 /* UserDefaultsManager.swift */,
+				249FB0BF2CEC643800CA418B /* ImageFileManager.swift */,
+			);
+			path = LocalStorage;
+			sourceTree = "<group>";
+		};
+		249FB0C32CEC70E000CA418B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				249FB0C42CEC70EA00CA418B /* DMChattingRealmModel.swift */,
+				249FB0C62CEC70F700CA418B /* ChannelChattingRealmModel.swift */,
+				249FB0C82CEC711800CA418B /* MemberRealmModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		249FB0CA2CEC9F3F00CA418B /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				249FB0CB2CEC9F4400CA418B /* ImageRouter.swift */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
 		24ABE9102CD4AEDB000E7EC5 = {
 			isa = PBXGroup;
 			children = (
@@ -374,10 +422,11 @@
 				2447AB522CE1C4C100399C4D /* LaunchScreen.storyboard */,
 				24ABE91C2CD4AEDB000E7EC5 /* GatheringApp.swift */,
 				2447AB8A2CE9E58700399C4D /* AppFeature.swift */,
+				24ABE93F2CD4B6D1000E7EC5 /* APIAuth.swift */,
 				24ABE94D2CD8A71D000E7EC5 /* RootView.swift */,
 				24ABE91E2CD4AEDB000E7EC5 /* ContentView.swift */,
-				24ABE93F2CD4B6D1000E7EC5 /* APIAuth.swift */,
-				24ABE96F2CDCEDB2000E7EC5 /* UserDefaultsManager.swift */,
+				249FB0C12CEC65FF00CA418B /* Database */,
+				249FB0C22CEC660F00CA418B /* LocalStorage */,
 				2447AB6B2CE32EC900399C4D /* Extension */,
 				847A3F952CDAFAFF004A9361 /* Network */,
 				24ABE95D2CDB931B000E7EC5 /* Modifier */,
@@ -490,6 +539,7 @@
 		24ABE9742CDCEFB4000E7EC5 /* Router */ = {
 			isa = PBXGroup;
 			children = (
+				249FB0CA2CEC9F3F00CA418B /* Image */,
 				84B8AD182CE3813C00011D73 /* Auth */,
 				843E7FD32CE30B4C0057A426 /* User */,
 				A0E444CF2CE283AD0024AE71 /* Dms */,
@@ -901,6 +951,7 @@
 				84B8AD172CE3696400011D73 /* UserClient.swift in Sources */,
 				84B8AD232CE46A8E00011D73 /* CustomAlert.swift in Sources */,
 				A0E444DD2CE2AD690024AE71 /* InviteMemberRequest.swift in Sources */,
+				249FB0C02CEC643800CA418B /* ImageFileManager.swift in Sources */,
 				A0E444CC2CDE010D0024AE71 /* ChattingImageView.swift in Sources */,
 				843E7FE32CE3379B0057A426 /* AppleLoginRequest.swift in Sources */,
 				24ABE9402CD4B6D1000E7EC5 /* APIAuth.swift in Sources */,
@@ -909,10 +960,12 @@
 				2447AB832CE87A9200399C4D /* EmailLoginFeature.swift in Sources */,
 				2447AB812CE87A3A00399C4D /* EmailLoginView.swift in Sources */,
 				24ABE95C2CDB8701000E7EC5 /* Design.swift in Sources */,
+				249FB0C92CEC711800CA418B /* MemberRealmModel.swift in Sources */,
 				2447AB562CE1D0EC00399C4D /* StoreClient.swift in Sources */,
 				2447AB6A2CE32B6800399C4D /* ToastModifier.swift in Sources */,
 				24ABE9702CDCEDB2000E7EC5 /* UserDefaultsManager.swift in Sources */,
 				A0E444EB2CE2C7E20024AE71 /* DmsResponse.swift in Sources */,
+				249FB0C72CEC70F700CA418B /* ChannelChattingRealmModel.swift in Sources */,
 				A0E444E12CE2B37D0024AE71 /* WorkspaceInfoResponse.swift in Sources */,
 				2447AB892CE8C46B00399C4D /* DMFeature.swift in Sources */,
 				2447AB6F2CE3326D00399C4D /* OnboardingView.swift in Sources */,
@@ -956,9 +1009,11 @@
 				843E7FCA2CE21E830057A426 /* MyApp.swift in Sources */,
 				847A3F842CD9000F004A9361 /* HomeView.swift in Sources */,
 				A0E444ED2CE2C9C70024AE71 /* UnreadDmsResponse.swift in Sources */,
+				249FB0CE2CEC9F5B00CA418B /* ImageClient.swift in Sources */,
 				24ABE9862CDE12BE000E7EC5 /* ChannelResponse.swift in Sources */,
 				24ABE9662CDB99D0000E7EC5 /* RoundedButton.swift in Sources */,
 				2447AB7F2CE878AA00399C4D /* LoginPopUpFeature.swift in Sources */,
+				249FB0CC2CEC9F4400CA418B /* ImageRouter.swift in Sources */,
 				847A3F922CDA9FC0004A9361 /* GatheringNavigationStack.swift in Sources */,
 				847A3F812CD8FFEF004A9361 /* CounterFeature.swift in Sources */,
 				A0E444D92CE2A90C0024AE71 /* WorkspaceCreateRequest.swift in Sources */,
@@ -998,6 +1053,7 @@
 				843E7FC82CE21B9B0057A426 /* AppView.swift in Sources */,
 				843E7FD72CE30DC30057A426 /* UserRouter.swift in Sources */,
 				847A3FA52CDE1183004A9361 /* ExploreChannelView.swift in Sources */,
+				249FB0C52CEC70EA00CA418B /* DMChattingRealmModel.swift in Sources */,
 				2447AB6D2CE32ED300399C4D /* Notification.swift in Sources */,
 				847A3FA32CDE111A004A9361 /* InviteMemberView.swift in Sources */,
 				2447AB582CE1E16200399C4D /* ErrorResponse.swift in Sources */,
