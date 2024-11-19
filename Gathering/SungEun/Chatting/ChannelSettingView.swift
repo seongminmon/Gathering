@@ -161,4 +161,12 @@ struct ChannelDummy {
         MemberResponse(user_id: "ㄹ", email: "dsf", nickname: "dsf", profileImage: "bird2"),
         MemberResponse(user_id: "ㅍ", email: "dsf", nickname: "gre", profileImage: "bird3")
     ]
+    
+    static let messages: [ChatMessage] = [
+        ChatMessage(name: "지수", text: "아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘", images: [], imageNames: ["star"], isMine: false, profile: "bird"),
+        ChatMessage(name: "아라", text: "그래그래 사진 보내줘~", images: [], imageNames: nil, isMine: false, profile: "bird2"),
+        ChatMessage(name: "나야나", text: "아직 못보내~....", images: [], imageNames: nil, isMine: true, profile: "bird3"),
+        ChatMessage(name: "성은", text: "^^>....", images: [], imageNames: nil, isMine: false, profile: "bird3")
+        
+    ]
 }
