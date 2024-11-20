@@ -20,8 +20,9 @@ struct DMView: View {
     // ✅ 3. 내 프로필 이미지 불러오기
     
     // TODO: - 워크 스페이스 멤버
-    // 1. 유저 프로필 이미지
-    // 2. 유저 닉네임
+    // >> ✅ 워크스페이스 멤버 조회
+    // ✅ 1. 유저 프로필 이미지
+    // ✅ 2. 유저 닉네임
     
     // TODO: - DM 채팅방
     // 1. 상대방 프로필 이미지
@@ -39,33 +40,62 @@ struct DMView: View {
                 title: "Direct Message",
                 profileImage: store.myProfile?.profileImage
             ) {
-                Text("DMView")
+                VStack {
+                    // 워크 스페이스에 나밖에 없다면
+                    if store.workspaceMembers.count <= 1 {
+                        emptyMemberView()
+                    } else {
+                        // 워크 스페이스 멤버
+                        ScrollView(.horizontal) {
+                            LazyHStack(spacing: 10) {
+                                ForEach(store.workspaceMembers, id: \.id) { item in
+                                    userCell(user: item)
+                                }
+                            }
+                            .frame(height: 100)
+                            .padding(.horizontal, 20)
+                        }
+                        
+                        // DM 채팅방
+//                        ScrollView {
+//                            LazyVStack(spacing: 20) {
+//                                ForEach(store.chattingList, id: \.self) { item in
+//                                    chattingCell(data: item)
+//                                }
+//                            }
+//                        }
+                        
+                        Spacer()
+                    }
+                }
             }
             .task { store.send(.task) }
         }
     }
     
     private func emptyMemberView() -> some View {
-        VStack(spacing: 20) {
-            Text("워크스페이스에 \n멤버가 없어요.")
+        VStack(spacing: 8) {
+            Text("모임에 멤버가 없어요.")
                 .font(Design.title1)
             Text("새로운 팀원을 초대해보세요.")
-                .font(.body)
-            Button("팀원 초대하기") {
+                .font(Design.body)
+            Button {
                 store.send(.inviteMemberButtonTap)
+            } label: {
+                RoundedButton(
+                    text: "팀원 초대하기",
+                    foregroundColor: Design.white,
+                    backgroundColor: Design.green
+                )
             }
-            .font(.title2)
-            .foregroundStyle(.white)
-            .frame(width: 269, height: 44)
-            .background(.green)
-            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .padding()
         }
     }
     
-    private func userCell(user: DMUser) -> some View {
+    private func userCell(user: Member) -> some View {
         VStack(spacing: 4) {
-            ProfileImageView(urlString: user.profileImage, size: 44)
-            Text(user.name)
+            ProfileImageView(urlString: user.profileImage ?? "", size: 44)
+            Text(user.nickname)
                 .font(Design.body)
                 .frame(width: 44)
                 .lineLimit(1)
