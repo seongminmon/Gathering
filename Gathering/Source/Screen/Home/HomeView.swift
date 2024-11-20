@@ -93,7 +93,7 @@ extension HomeView {
             ForEach(store.channels, id: \.id) { channel in
                 HStack {
                     ProfileImageView(
-                        imageName: channel.unreadCount == nil ? "thin" : "hashTagthick",
+                        urlString: channel.unreadCount == nil ? "thin" : "hashTagthick",
                         size: 15
                     )
                     Button {
@@ -119,7 +119,7 @@ extension HomeView {
         VStack(alignment: .leading, spacing: 12) {
             ForEach(store.users) { user in
                 HStack {
-                    ProfileImageView(imageName: user.profileImage, size: 30)
+                    ProfileImageView(urlString: user.profileImage, size: 30)
                     Button {
                         store.send(.dmTap(user))
                     } label: {

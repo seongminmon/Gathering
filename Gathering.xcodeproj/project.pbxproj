@@ -39,6 +39,7 @@
 		249FB0D22CECA8EE00CA418B /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0D12CECA8EE00CA418B /* RealmManager.swift */; };
 		249FB0DB2CECAB3B00CA418B /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0DA2CECAB3B00CA418B /* Token.swift */; };
 		249FB0FC2CECBCDB00CA418B /* BadgeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0FB2CECBCDB00CA418B /* BadgeModifier.swift */; };
+		249FB0FE2CEDA92000CA418B /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0FD2CEDA92000CA418B /* ImageCache.swift */; };
 		24ABE91D2CD4AEDB000E7EC5 /* GatheringApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE91C2CD4AEDB000E7EC5 /* GatheringApp.swift */; };
 		24ABE9212CD4AEDD000E7EC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24ABE9202CD4AEDD000E7EC5 /* Assets.xcassets */; };
 		24ABE9242CD4AEDD000E7EC5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24ABE9232CD4AEDD000E7EC5 /* Preview Assets.xcassets */; };
@@ -185,6 +186,7 @@
 		249FB0D12CECA8EE00CA418B /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		249FB0DA2CECAB3B00CA418B /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		249FB0FB2CECBCDB00CA418B /* BadgeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeModifier.swift; sourceTree = "<group>"; };
+		249FB0FD2CEDA92000CA418B /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		24ABE9192CD4AEDB000E7EC5 /* Gathering.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gathering.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24ABE91C2CD4AEDB000E7EC5 /* GatheringApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatheringApp.swift; sourceTree = "<group>"; };
 		24ABE9202CD4AEDD000E7EC5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -325,6 +327,7 @@
 			isa = PBXGroup;
 			children = (
 				2447AB6C2CE32ED300399C4D /* Notification.swift */,
+				249FB0FD2CEDA92000CA418B /* ImageCache.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -992,6 +995,7 @@
 				2447AB832CE87A9200399C4D /* EmailLoginFeature.swift in Sources */,
 				2447AB812CE87A3A00399C4D /* EmailLoginView.swift in Sources */,
 				24ABE95C2CDB8701000E7EC5 /* Design.swift in Sources */,
+				249FB0FE2CEDA92000CA418B /* ImageCache.swift in Sources */,
 				249FB0C92CEC711800CA418B /* MemberRealmModel.swift in Sources */,
 				2447AB562CE1D0EC00399C4D /* StoreClient.swift in Sources */,
 				2447AB6A2CE32B6800399C4D /* ToastModifier.swift in Sources */,

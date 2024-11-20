@@ -5,7 +5,7 @@
 //  Created by 김성민 on 11/7/24.
 //
 
-import Foundation
+import UIKit
 
 import Alamofire
 
@@ -54,75 +54,59 @@ final class NetworkManager {
                 throw errorData
             } catch {
                 print("에러 모델 디코딩 실패")
-                throw error
+                throw APIError.etc
             }
             
         default:
             print("알 수 없는 에러")
-            throw AFError.responseValidationFailed(
-                reason: .unacceptableStatusCode(code: statusCode)
-            )
+            throw APIError.etc
         }
     }
     
-    // 데이터가 필요한 요청
+    /// 데이터가 필요한 요청
     func request<Router: TargetType, ModelType: Decodable>(api: Router) async throws -> ModelType {
         guard let data = try await performRequest(api: api) else {
-            throw AFError.responseSerializationFailed(reason: .inputDataNilOrZeroLength)
+            throw APIError.etc
         }
         
         do {
             return try JSONDecoder().decode(ModelType.self, from: data)
         } catch {
             print("모델 디코딩 실패")
-            throw error
+            throw APIError.etc
         }
     }
     
-    // 응답 데이터가 필요 없는 요청
+    /// 응답 데이터가 필요 없는 요청
     func requestWithoutResponse<Router: TargetType>(api: Router) async throws {
         _ = try await performRequest(api: api)
     }
     
-    // 이미지 URL 통신 (캐시 적용)
-//    func loadImage(_ urlString: String) async throws -> UIImage {
-//        guard let imageURL = URL(string: APIAuth.baseURL + "v1" + urlString) else {
-//            print("URL 없음")
-//            throw
-//        }
-//        
-//        // 캐시 확인
-//        if let cachedImage = ImageCache.shared.object(forKey: imageURL as NSURL) {
-//            print("캐시 히트")
-//            return cachedImage
-//        }
-//        
-//        print("캐시 미스")
-//        
-//        // 캐시에 없으면 네트워크 요청
-//        var request = URLRequest(url: imageURL)
-//        request.setValue(APIAuth.key, forHTTPHeaderField: Header.sesacKey.rawValue)
-//        request.setValue(
-//            UserDefaultsManager.accessToken,
-//            forHTTPHeaderField: Header.authorization.rawValue
-//        )
-//        
-//        URLSession.shared.dataTask(with: request) { data, response, error in
-//            if let data = data, let downloadedImage = UIImage(data: data) {
-//                print("이미지 다운로드 성공")
-//                DispatchQueue.main.async {
-//                    // 다운로드한 이미지 캐싱
-//                    ImageCache.shared.setObject(downloadedImage, forKey: imageURL as NSURL)
-//                    self.uiImage = downloadedImage
-//                    self.isLoading = false
-//                }
-//            } else {
-//                print("이미지 다운로드 실패")
-//                DispatchQueue.main.async {
-//                    self.isLoading = false
-//                }
-//            }
-//        }
-//        .resume()
-//    }
+    /// 이미지 URL 통신 (메모리 캐시 적용)
+    func requestImage(_ api: ImageRouter) async throws -> UIImage {
+        let request = try api.asURLRequest()
+        
+        guard let url = request.url else {
+            throw APIError.etc
+        }
+        
+        // 캐시 확인
+        if let cachedImage = ImageCache.shared.object(forKey: url as NSURL) {
+            print("캐시 히트")
+            return cachedImage
+        }
+        
+        print("캐시 미스")
+        guard let data = try await performRequest(api: api) else {
+            throw APIError.etc
+        }
+        
+        if let uiImage = UIImage(data: data) {
+            print("캐시 저장")
+            ImageCache.shared.setObject(uiImage, forKey: url as NSURL)
+            return uiImage
+        } else {
+            throw APIError.etc
+        }
+    }
 }

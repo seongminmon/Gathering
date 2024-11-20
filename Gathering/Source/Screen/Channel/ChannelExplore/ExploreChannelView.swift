@@ -45,7 +45,7 @@ struct ChannelExploreView: View {
                 ForEach(store.channels, id: \.id) { channel in
                     HStack(spacing: 12) {
                         ProfileImageView(
-                            imageName: "hashTagthick",
+                            urlString: "hashTagthick",
                             size: 18
                         )
                         

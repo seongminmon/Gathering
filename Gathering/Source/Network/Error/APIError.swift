@@ -24,6 +24,8 @@ enum APIError: String, Error {
     case serverError = "E99"
     // 리프레시 토큰 만료
     case refreshTokenExpired = "E06"
+    // 기타
+    case etc
 }
 
 extension APIError: LocalizedError {
@@ -45,6 +47,8 @@ extension APIError: LocalizedError {
             return "서버 오류"
         case .refreshTokenExpired:
             return "리프레시 토큰 만료"
+        case .etc:
+            return "기타 오류"
         }
     }
 }

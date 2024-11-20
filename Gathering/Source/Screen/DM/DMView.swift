@@ -84,7 +84,7 @@ struct DMView: View {
     
     private func userCell(user: DMUser) -> some View {
         VStack(spacing: 4) {
-            ProfileImageView(imageName: user.profileImage, size: 44)
+            ProfileImageView(urlString: user.profileImage, size: 44)
             Text(user.name)
                 .font(Design.body)
                 .frame(width: 44)
@@ -94,7 +94,7 @@ struct DMView: View {
     
     private func chattingCell(data: DMUser) -> some View {
         HStack(spacing: 4) {
-            ProfileImageView(imageName: data.profileImage, size: 34)
+            ProfileImageView(urlString: data.profileImage, size: 34)
             VStack(spacing: 4) {
                 Text(data.name)
                     .font(Design.body)
