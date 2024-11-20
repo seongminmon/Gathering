@@ -22,7 +22,7 @@ final class NetworkManager {
         switch statusCode {
         case 200:
             // 성공 시 데이터를 반환
-            print("통신 성공")
+            print("\(api) 성공")
             return response.data
             
         case 400, 500:
@@ -32,7 +32,7 @@ final class NetworkManager {
                     ErrorResponse.self,
                     from: response.data ?? Data()
                 )
-                print("통신 에러 \(errorData.errorCode)")
+                print("\(api) 에러 \(errorData.errorCode)")
                 
                 // 엑세스 토큰 만료일 경우
                 if errorData.errorCode == APIError.accessTokenExpired.rawValue {
@@ -48,17 +48,17 @@ final class NetworkManager {
                         // 기존 요청 재시도
                         return try await performRequest(api: api)
                     } catch {
-                        print("토큰 갱신 에러")
+                        print("\(api) 토큰 갱신 에러")
                     }
                 }
                 throw errorData
             } catch {
-                print("에러 모델 디코딩 실패")
+                print("\(api) 에러 모델 디코딩 실패")
                 throw APIError.etc
             }
             
         default:
-            print("알 수 없는 에러")
+            print("\(api) 알 수 없는 에러")
             throw APIError.etc
         }
     }
@@ -72,7 +72,7 @@ final class NetworkManager {
         do {
             return try JSONDecoder().decode(ModelType.self, from: data)
         } catch {
-            print("모델 디코딩 실패")
+            print("\(api) 디코딩 실패")
             throw APIError.etc
         }
     }
@@ -92,17 +92,15 @@ final class NetworkManager {
         
         // 캐시 확인
         if let cachedImage = ImageCache.shared.object(forKey: url as NSURL) {
-            print("캐시 히트")
+            print("이미지 캐시 히트 성공")
             return cachedImage
         }
         
-        print("캐시 미스")
         guard let data = try await performRequest(api: api) else {
             throw APIError.etc
         }
         
         if let uiImage = UIImage(data: data) {
-            print("캐시 저장")
             ImageCache.shared.setObject(uiImage, forKey: url as NSURL)
             return uiImage
         } else {

@@ -25,8 +25,10 @@ struct DMView: View {
     // ✅ 2. 유저 닉네임
     
     // TODO: - DM 채팅방
-    // 1. 상대방 프로필 이미지
-    // 2. 상대방 닉네임 
+    // >> ✅ DM 방 리스트 조회
+    
+    // 1. ✅ 상대방 프로필 이미지
+    // 2. ✅ 상대방 닉네임
     // 3. 최근 메시지 내용
     // 4. 최근 메시지 날짜 / 오늘이라면 시간
     // 5. 안 읽은 메시지 갯수
@@ -52,18 +54,18 @@ struct DMView: View {
                                     userCell(user: item)
                                 }
                             }
-                            .frame(height: 100)
+                            .frame(width: 80, height: 100)
                             .padding(.horizontal, 20)
                         }
                         
                         // DM 채팅방
-//                        ScrollView {
-//                            LazyVStack(spacing: 20) {
-//                                ForEach(store.chattingList, id: \.self) { item in
-//                                    chattingCell(data: item)
-//                                }
-//                            }
-//                        }
+                        ScrollView {
+                            LazyVStack(spacing: 20) {
+                                ForEach(store.dmRoomList, id: \.self) { item in
+                                    dmCell(dm: item)
+                                }
+                            }
+                        }
                         
                         Spacer()
                     }
@@ -100,26 +102,39 @@ struct DMView: View {
                 .frame(width: 44)
                 .lineLimit(1)
         }
+        .background(.red)
     }
     
-    private func chattingCell(data: DMUser) -> some View {
-        HStack(spacing: 4) {
-            ProfileImageView(urlString: data.profileImage, size: 34)
-            VStack(spacing: 4) {
-                Text(data.name)
+    private func dmCell(dm: DMsRoom) -> some View {
+        HStack(alignment: .top, spacing: 4) {
+            ProfileImageView(urlString: dm.user.profileImage ?? "", size: 34)
+            
+            // 닉네임, 최근 DM 내용
+            VStack(alignment: .leading, spacing: 4) {
+                Text(dm.user.nickname)
                     .font(Design.body)
-                Text(data.name)
+                
+                // TODO: - 최신 DM 내용
+                Text(dm.user.email)
                     .font(Design.body)
                     .foregroundStyle(Design.gray)
             }
+            
             Spacer()
-            VStack(spacing: 4) {
+            
+            // 닉네임, 최근 DM 내용
+            VStack(alignment: .trailing, spacing: 4) {
+                // TODO: - 최신 DM 날짜 or 시간
                 Text("PM 11:23")
                     .font(Design.body)
                     .foregroundStyle(Design.gray)
-                EmptyView().badge(10)
+                
+                // TODO: - 안 읽은 갯수
+                Text("\(10)")
+                    .badge()
             }
         }
         .padding(.horizontal, 16)
+        .background(.blue)
     }
 }

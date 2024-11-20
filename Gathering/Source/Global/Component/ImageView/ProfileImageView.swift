@@ -23,9 +23,7 @@ struct ProfileImageView: View {
                             ImageRouter.fetchImage(path: newValue)
                         )
                         uiImage = result
-                    } catch {
-                        print("이미지 로드 실패")
-                    }
+                    } catch {}
                 }
             }
             .task {
@@ -36,9 +34,7 @@ struct ProfileImageView: View {
                         ImageRouter.fetchImage(path: urlString)
                     )
                     uiImage = result
-                } catch {
-                    print("이미지 로드 실패")
-                }
+                } catch {}
             }
     }
     

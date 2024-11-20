@@ -14,6 +14,7 @@ struct DMFeature {
     
     @Dependency(\.workspaceClient) var workspaceClient
     @Dependency(\.userClient) var userClient
+    @Dependency(\.dmsClient) var dmsClient
     
     @ObservableState
     struct State {
@@ -35,6 +36,8 @@ struct DMFeature {
         // (2) 워크스페이스 멤버 조회
         // (1) 선택
         var workspaceMembers: [Member] = []
+        
+        var dmRoomList: [DMsRoom] = []
     }
     
     enum Action: BindableAction {
@@ -49,6 +52,8 @@ struct DMFeature {
         case myProfileResponse(MyProfileResponse)
         case fetchWorkspaceMembers
         case workspaceMember([Member])
+        case fetchDMRooms
+        case dmRoomsResponse([DMsRoom])
     }
     
     var body: some ReducerOf<Self> {
@@ -71,6 +76,7 @@ struct DMFeature {
                         await send(.myProfileResponse(profileResult))
                         // workspaceList를 받은 후에 멤버 조회 액션 전송
                         await send(.fetchWorkspaceMembers)
+                        await send(.fetchDMRooms)
                     } catch {}
                     
 //                    do {
@@ -120,15 +126,29 @@ struct DMFeature {
                         await send(.workspaceMember(
                             result.workspaceMembers?.map { $0.toMember } ?? []
                         ))
-                    } catch {
-                        print("Error fetching workspace members:", error)
-                    }
+                    } catch {}
+                }
+                
+            case .fetchDMRooms:
+                guard let workspaceID = state.currentWorkspace?.workspace_id else {
+                    return .none
+                }
+                
+                return .run { send in
+                    do {
+                        let result = try await dmsClient.fetchDMSList(workspaceID)
+                        await send(.dmRoomsResponse(result.map { $0.toDmsRoom }))
+                    } catch {}
                 }
                 
             case .workspaceMember(let result):
                 state.workspaceMembers = result
-                print("워크 스페이스 멤버 조회")
-                print(state.workspaceMembers)
+                return .none
+                
+            case .dmRoomsResponse(let result):
+                state.dmRoomList = result
+                print("dmRoom 리스트 통신")
+                print(state.dmRoomList)
                 return .none
                 
             case .inviteMemberButtonTap:
