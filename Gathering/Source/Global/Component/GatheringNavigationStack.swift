@@ -29,7 +29,7 @@ struct GatheringNavigationStack<Content: View>: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         HStack {
-                            ProfileImageView(imageName: gatheringImage, size: 32)
+                            ProfileImageView(urlString: gatheringImage, size: 32)
                             Text(title)
                                 .font(Design.title1)
                         }

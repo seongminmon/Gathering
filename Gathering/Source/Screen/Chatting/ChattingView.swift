@@ -211,7 +211,7 @@ struct ChatMessageView: View {
             .frame(maxWidth: .infinity)
         } else {
             HStack(alignment: .top) {
-                ProfileImageView(imageName: message.profile ?? "bird",
+                ProfileImageView(urlString: message.profile ?? "bird",
                                  size: 34)
                 VStack(alignment: .leading) {
                     Text(message.name)
