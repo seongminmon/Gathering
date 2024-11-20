@@ -13,7 +13,7 @@ struct GatheringNavigationStack<Content: View>: View {
     let gatheringImage: String
     let profileImage: String
     
-    init(gatheringImage: String?, 
+    init(gatheringImage: String?,
          title: String,
          profileImage: String?,
          content: () -> Content) {
@@ -35,11 +35,8 @@ struct GatheringNavigationStack<Content: View>: View {
                         }
                     }
                     ToolbarItem(placement: .topBarTrailing) {
-                        Image(profileImage)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 30, height: 30)
-                            .foregroundColor(Design.gray)
+                        ProfileImageView(urlString: profileImage, size: 30)
+                            .clipShape(Circle())
                             .overlay(
                                 Circle()
                                     .stroke(.black, lineWidth: 2)

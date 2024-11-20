@@ -16,11 +16,13 @@ struct DMView: View {
     // >> 내가 속한 워크스페이스 리스트 통신
     // >> coverImage
     
-    // 2. 네비게이션 타이틀 DirectMessage 고정
-    // 3. 내 프로필 이미지 불러오기
+    // ✅ 2. 네비게이션 타이틀 DirectMessage 고정
+    // ✅ 3. 내 프로필 이미지 불러오기
+    
     // TODO: - 워크 스페이스 멤버
     // 1. 유저 프로필 이미지
     // 2. 유저 닉네임
+    
     // TODO: - DM 채팅방
     // 1. 상대방 프로필 이미지
     // 2. 상대방 닉네임 
@@ -35,7 +37,7 @@ struct DMView: View {
             GatheringNavigationStack(
                 gatheringImage: store.currentWorkspace?.coverImage,
                 title: "Direct Message",
-                profileImage: "bird2"
+                profileImage: store.myProfile?.profileImage
             ) {
                 Text("DMView")
             }
@@ -50,7 +52,7 @@ struct DMView: View {
             Text("새로운 팀원을 초대해보세요.")
                 .font(.body)
             Button("팀원 초대하기") {
-                store.send(.profileButtonTap)
+                store.send(.inviteMemberButtonTap)
             }
             .font(.title2)
             .foregroundStyle(.white)

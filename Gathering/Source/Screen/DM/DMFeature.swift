@@ -13,6 +13,7 @@ import ComposableArchitecture
 struct DMFeature {
     
     @Dependency(\.workspaceClient) var workspaceClient
+    @Dependency(\.userClient) var userClient
     
     @ObservableState
     struct State {
@@ -25,6 +26,9 @@ struct DMFeature {
         // 워크 스페이스 정보
         var myWorkspaceList: [WorkspaceResponse] = []
         var currentWorkspace: WorkspaceResponse?
+        
+        // 내 프로필 정보
+        var myProfile: MyProfileResponse?
     }
     
     enum Action: BindableAction {
@@ -32,10 +36,11 @@ struct DMFeature {
         
         // MARK: - 유저 Action
         case task
-        case profileButtonTap
+        case inviteMemberButtonTap
         
         // MARK: - 내부 Action
         case myWorkspaceList([WorkspaceResponse])
+        case myProfileResponse(MyProfileResponse)
     }
     
     var body: some ReducerOf<Self> {
@@ -53,16 +58,26 @@ struct DMFeature {
                     } catch {
                         //
                     }
+                    
+                    do {
+                        let result = try await userClient.fetchMyProfile()
+                        await send(.myProfileResponse(result))
+                    } catch {
+                        //
+                    }
                 }
                 
             case .myWorkspaceList(let result):
                 state.myWorkspaceList = result
                 state.currentWorkspace = result.first
-                print("현재 워크스페이스")
-                print(state.currentWorkspace)
                 return .none
                 
-            case .profileButtonTap:
+            case .myProfileResponse(let result):
+                state.myProfile = result
+                return .none
+                
+            case .inviteMemberButtonTap:
+                print("프로필 버튼 탭")
                 return .none
             }
         }
