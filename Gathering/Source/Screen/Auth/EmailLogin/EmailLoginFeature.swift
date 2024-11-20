@@ -16,9 +16,14 @@ struct EmailLoginFeature {
     
     @ObservableState
     struct State {
-        var emailText = ""
-        var passwordText = ""
-        var isButtonValid = false
+//        var emailText = ""
+//        var passwordText = ""
+//        var isButtonValid = false
+        
+        // MARK: - 테스트를 위해 이메일 로그인 기본값 적용
+        var emailText = "ksm1@ksm.com"
+        var passwordText = "1q2w3e4R!"
+        var isButtonValid = true
     }
     
     enum Action: BindableAction {

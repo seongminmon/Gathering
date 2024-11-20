@@ -11,7 +11,7 @@ struct MyProfileResponse: Decodable {
     let userID: String
     let email: String
     let nickname: String
-    let profilImage: String?
+    let profileImage: String?
     let phone: String?
     let provider: String?
     let sesacCoin: Int
@@ -21,7 +21,7 @@ struct MyProfileResponse: Decodable {
         case userID = "user_id"
         case email
         case nickname
-        case profilImage
+        case profileImage
         case phone
         case provider
         case sesacCoin
