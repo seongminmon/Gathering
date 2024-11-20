@@ -15,7 +15,22 @@ struct ProfileImageView: View {
     
     var body: some View {
         imageView()
+            .onChange(of: urlString) { newValue in
+                // URL이 변경될 때마다 이미지를 새로 로드
+                Task {
+                    do {
+                        let result = try await NetworkManager.shared.requestImage(
+                            ImageRouter.fetchImage(path: newValue)
+                        )
+                        uiImage = result
+                    } catch {
+                        print("이미지 로드 실패")
+                    }
+                }
+            }
             .task {
+                // 초기 로드
+                guard !urlString.isEmpty else { return }
                 do {
                     let result = try await NetworkManager.shared.requestImage(
                         ImageRouter.fetchImage(path: urlString)

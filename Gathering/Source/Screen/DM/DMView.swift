@@ -11,57 +11,35 @@ import ComposableArchitecture
 
 struct DMView: View {
     
+    // TODO: - 네비게이션 바
+    // ✅ 1. 워크 스페이스 이미지 불러오기
+    // >> 내가 속한 워크스페이스 리스트 통신
+    // >> coverImage
+    
+    // 2. 네비게이션 타이틀 DirectMessage 고정
+    // 3. 내 프로필 이미지 불러오기
+    // TODO: - 워크 스페이스 멤버
+    // 1. 유저 프로필 이미지
+    // 2. 유저 닉네임
+    // TODO: - DM 채팅방
+    // 1. 상대방 프로필 이미지
+    // 2. 상대방 닉네임 
+    // 3. 최근 메시지 내용
+    // 4. 최근 메시지 날짜 / 오늘이라면 시간
+    // 5. 안 읽은 메시지 갯수
+    
     @Perception.Bindable var store: StoreOf<DMFeature>
     
     var body: some View {
         WithPerceptionTracking {
-            GatheringNavigationStack(gatheringImage: "bird2", title: "짹사모", profileImage: "bird2") {
-                // "Direct Message" (네비게이션 타이틀)
-                VStack {
-                    // MARK: - tca bind test
-//                    TextField("닉네임 입력", text: $store.nickname)
-                    
-                    // MARK: - tca dependency network test
-//                    Button {
-//                        store.send(.networkButtonTap)
-//                    } label: {
-//                        RoundedButton(text: "네트워크 테스트",
-//                                      foregroundColor: Design.white,
-//                                      backgroundColor: Design.green)
-//                    }
-                    
-                    // MARK: - toast test
-                    Button {
-                        store.send(.toastButtonTap)
-                    } label: {
-                        ContinueEmailButton()
-                    }
-                    
-                    if store.chattingList.isEmpty {
-                        emptyMemberView()
-                    } else {
-                        ScrollView(.horizontal) {
-                            LazyHStack(spacing: 10) {
-                                ForEach(store.userList, id: \.self) { item in
-                                    userCell(user: item)
-                                }
-                            }
-                            .frame(height: 100)
-                            .padding(.horizontal, 20)
-                        }
-                        
-                        ScrollView {
-                            LazyVStack(spacing: 20, content: {
-                                ForEach(store.chattingList, id: \.self) { item in
-                                    chattingCell(data: item)
-                                }
-                            })
-                        }
-                    }
-                    Spacer()
-                }
+            GatheringNavigationStack(
+                gatheringImage: store.currentWorkspace?.coverImage,
+                title: "Direct Message",
+                profileImage: "bird2"
+            ) {
+                Text("DMView")
             }
-               
+            .task { store.send(.task) }
         }
     }
     
