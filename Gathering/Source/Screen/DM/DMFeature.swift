@@ -34,10 +34,13 @@ struct DMFeature {
         // 워크 스페이스 멤버 조회는 2가지 방법이 있음
         // (1) 내가 속한 특정 워크스페이스 정보 조회
         // (2) 워크스페이스 멤버 조회
-        // (1) 선택
+        // (1) 방법 선택
         var workspaceMembers: [Member] = []
         
         var dmRoomList: [DMsRoom] = []
+        
+        // 멤버 초대
+        var inviteMemberViewPresented = false
     }
     
     enum Action: BindableAction {
@@ -78,34 +81,11 @@ struct DMFeature {
                         await send(.fetchWorkspaceMembers)
                         await send(.fetchDMRooms)
                     } catch {}
-                    
-//                    do {
-//                    // 내가 속한 워크스페이스 리스트 조회
-//                        let result = try await workspaceClient.fetchMyWorkspaceList()
-//                        await send(.myWorkspaceList(result))
-//                    } catch {}
-//                    
-//                    // 내 프로필 조회
-//                    do {
-//                        print(2)
-//                        let result = try await userClient.fetchMyProfile()
-//                        await send(.myProfileResponse(result))
-//                    } catch {}
-                    
-                    // 내가 속한 특정 워크스페이스 정보 조회
-//                    if let workspaceID = state.currentWorkspace?.workspace_id {
-//                        print(3)
-//                        do {
-//                            let result = try await workspaceClient.fetchWorkspaceInfo(workspaceID)
-//                            await send(.workspaceMember(
-//                                result.workspaceMembers?.map { $0.toMember } ?? []
-//                            ))
-//                        } catch {}
-//                    }
                 }
                 
             case .myWorkspaceList(let result):
                 state.myWorkspaceList = result
+                // 임의로 첫번째 워크스페이스로 선택
                 state.currentWorkspace = result.first
                 return .none
                 
@@ -142,7 +122,8 @@ struct DMFeature {
                 }
                 
             case .workspaceMember(let result):
-                state.workspaceMembers = result
+                // 본인을 제외한 다른 멤버들만 보여주기
+                state.workspaceMembers = result.filter { $0.id != UserDefaultsManager.userID }
                 return .none
                 
             case .dmRoomsResponse(let result):
@@ -153,6 +134,7 @@ struct DMFeature {
                 
             case .inviteMemberButtonTap:
                 print("팀원 초대 버튼 탭")
+                state.inviteMemberViewPresented = true
                 return .none
             }
         }

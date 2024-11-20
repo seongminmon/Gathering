@@ -33,6 +33,8 @@ struct DMView: View {
     // 4. 최근 메시지 날짜 / 오늘이라면 시간
     // 5. 안 읽은 메시지 갯수
     
+    // TODO: - 워크스페이스 멤버 초대
+    
     @Perception.Bindable var store: StoreOf<DMFeature>
     
     var body: some View {
@@ -43,8 +45,8 @@ struct DMView: View {
                 profileImage: store.myProfile?.profileImage
             ) {
                 VStack {
-                    // 워크 스페이스에 나밖에 없다면
-                    if store.workspaceMembers.count <= 1 {
+                    // 워크 스페이스에 나밖에 없다면 (workspaceMembers는 내가 제외 되어 있음)
+                    if store.workspaceMembers.isEmpty {
                         emptyMemberView()
                     } else {
                         // 워크 스페이스 멤버
@@ -72,6 +74,9 @@ struct DMView: View {
                 }
             }
             .task { store.send(.task) }
+            .sheet(isPresented: $store.inviteMemberViewPresented) {
+                inviteMemberView()
+            }
         }
     }
     
@@ -136,5 +141,9 @@ struct DMView: View {
         }
         .padding(.horizontal, 16)
         .background(.blue)
+    }
+    
+    private func inviteMemberView() -> some View {
+        SheetHeaderView(title: "팀원 초대")
     }
 }
