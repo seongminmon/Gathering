@@ -34,6 +34,11 @@ struct DMView: View {
     // 5. 안 읽은 메시지 갯수
     
     // TODO: - 워크스페이스 멤버 초대
+    // ✅ 1. 워크스페이스 EmptyView
+    // ✅ 2. 워크스페이스 멤버 초대 뷰
+    // ✅ 3. 워크스페이스 멤버 초대
+    
+    // TODO: - 간헐적으로 통신은 완료 되었는데 Loading 뷰가 사라지지 않는 현상
     
     @Perception.Bindable var store: StoreOf<DMFeature>
     
@@ -45,11 +50,12 @@ struct DMView: View {
                 profileImage: store.myProfile?.profileImage
             ) {
                 VStack {
-                    // 워크 스페이스에 나밖에 없다면 (workspaceMembers는 내가 제외 되어 있음)
-                    if store.workspaceMembers.isEmpty {
+                    if store.isLoading {
+                        ProgressView()
+                    } else if store.workspaceMembers.isEmpty {
                         emptyMemberView()
                     } else {
-                        // 워크 스페이스 멤버
+                        // 워크 스페이스 멤버 리스트
                         ScrollView(.horizontal) {
                             LazyHStack(spacing: 10) {
                                 ForEach(store.workspaceMembers, id: \.id) { item in
@@ -57,7 +63,7 @@ struct DMView: View {
                                 }
                             }
                             .frame(width: 80, height: 100)
-                            .padding(.horizontal, 20)
+                            .padding(.horizontal, 16)
                         }
                         
                         // DM 채팅방
@@ -87,7 +93,7 @@ struct DMView: View {
             Text("새로운 팀원을 초대해보세요.")
                 .font(Design.body)
             Button {
-                store.send(.inviteMemberButtonTap)
+                store.send(.inviteMemberSheetButtonTap)
             } label: {
                 RoundedButton(
                     text: "팀원 초대하기",
@@ -107,7 +113,6 @@ struct DMView: View {
                 .frame(width: 44)
                 .lineLimit(1)
         }
-        .background(.red)
     }
     
     private func dmCell(dm: DMsRoom) -> some View {
@@ -140,10 +145,39 @@ struct DMView: View {
             }
         }
         .padding(.horizontal, 16)
-        .background(.blue)
     }
     
     private func inviteMemberView() -> some View {
-        SheetHeaderView(title: "팀원 초대")
+        VStack {
+            SheetHeaderView(title: "팀원 초대")
+                .background(Design.white)
+            ScrollView {
+                // TODO: - first responder 만들기
+                TextFieldWithTitle(
+                    title: "이메일",
+                    placeholder: "초대하려는 팀원의 이메일을 입력하세요.",
+                    text: $store.email
+                )
+                .padding()
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
+            inviteButton()
+                .padding([.horizontal, .bottom])
+        }
+        .background(Design.gray)
+    }
+    
+    private func inviteButton() -> some View {
+        Button {
+            store.send(.inviteMemberButtonTap)
+        } label: {
+            RoundedButton(
+                text: "초대 보내기",
+                foregroundColor: Design.white,
+                backgroundColor: Design.green
+            )
+        }
+        .disabled(!store.inviteButtonValid)
     }
 }

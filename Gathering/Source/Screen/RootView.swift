@@ -63,7 +63,7 @@ struct RootView: View {
             
             // MARK: - 설정
             NavigationStack {
-                SettingView()
+                ChannelSettingView()
             }
             .tabItem {
                 Image(tabInfo == .setting ? .settingActive : .settingInactive)

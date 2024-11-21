@@ -69,10 +69,10 @@ extension HomeView {
         VStack(alignment: .leading, spacing: 12) {
             ForEach(store.channels, id: \.id) { channel in
                 HStack {
-                    ProfileImageView(
-                        urlString: channel.unreadCount == nil ? "thin" : "hashTagthick",
-                        size: 15
-                    )
+                    Image(channel.unreadCount == nil ? .thin : .hashTagthick)
+                        .resizable()
+                        .frame(width: 15, height: 15)
+                    
                     Button {
                         store.send(.channelTap(channel))
                     } label: {
