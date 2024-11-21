@@ -35,9 +35,10 @@ struct DMView: View {
     
     // TODO: - 워크스페이스 멤버 초대
     // ✅ 1. 워크스페이스 EmptyView
-    // ✅ 2.
+    // ✅ 2. 워크스페이스 멤버 초대 뷰
+    // ✅ 3. 워크스페이스 멤버 초대
     
-    // TODO: - 간헐적으로 워크스페이스가 안 비어 있어도 Empty 뷰가 뜨는 현상
+    // TODO: - 간헐적으로 통신은 완료 되었는데 Loading 뷰가 사라지지 않는 현상
     
     @Perception.Bindable var store: StoreOf<DMFeature>
     
@@ -49,11 +50,12 @@ struct DMView: View {
                 profileImage: store.myProfile?.profileImage
             ) {
                 VStack {
-                    // 워크 스페이스에 나밖에 없다면 (workspaceMembers는 내가 제외 되어 있음)
-                    if store.workspaceMembers.isEmpty {
+                    if store.isLoading {
+                        ProgressView()
+                    } else if store.workspaceMembers.isEmpty {
                         emptyMemberView()
                     } else {
-                        // 워크 스페이스 멤버
+                        // 워크 스페이스 멤버 리스트
                         ScrollView(.horizontal) {
                             LazyHStack(spacing: 10) {
                                 ForEach(store.workspaceMembers, id: \.id) { item in
@@ -61,7 +63,7 @@ struct DMView: View {
                                 }
                             }
                             .frame(width: 80, height: 100)
-                            .padding(.horizontal, 20)
+                            .padding(.horizontal, 16)
                         }
                         
                         // DM 채팅방
@@ -166,24 +168,16 @@ struct DMView: View {
         .background(Design.gray)
     }
     
-    @ViewBuilder
     private func inviteButton() -> some View {
-        if store.inviteButtonValid {
-            Button {
-                store.send(.inviteMemberButtonTap)
-            } label: {
-                RoundedButton(
-                    text: "초대 보내기",
-                    foregroundColor: Design.white,
-                    backgroundColor: Design.green
-                )
-            }
-        } else {
+        Button {
+            store.send(.inviteMemberButtonTap)
+        } label: {
             RoundedButton(
                 text: "초대 보내기",
                 foregroundColor: Design.white,
-                backgroundColor: Design.darkGray
+                backgroundColor: Design.green
             )
         }
+        .disabled(!store.inviteButtonValid)
     }
 }
