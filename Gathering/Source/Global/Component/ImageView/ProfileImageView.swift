@@ -43,12 +43,14 @@ struct ProfileImageView: View {
         if let uiImage {
             Image(uiImage: uiImage)
                 .resizable()
-                .aspectRatio(contentMode: .fill)
+                .aspectRatio(contentMode: .fit)
                 .frame(width: size, height: size)
                 .clipShape(RoundedRectangle(cornerRadius: size * 0.2))
                 .shadow(color: Design.black.opacity(0.1), radius: 2, x: 0, y: 1)
         } else {
             Image("bird")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
                 .frame(width: size, height: size)
                 .clipShape(RoundedRectangle(cornerRadius: size * 0.2))
                 .shadow(color: Design.black.opacity(0.1), radius: 2, x: 0, y: 1)
