@@ -24,9 +24,3 @@ extension DMsRoomResponse {
         )
     }
 }
-
-struct DMsRoom: Hashable, Identifiable {
-    let id: String
-    let createdAt: String
-    let user: Member
-}

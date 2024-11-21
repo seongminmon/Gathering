@@ -24,10 +24,3 @@ extension MemberResponse {
         )
     }
 }
-
-struct Member: Hashable, Identifiable {
-    let id: String
-    let email: String
-    let nickname: String
-    let profileImage: String?
-}
