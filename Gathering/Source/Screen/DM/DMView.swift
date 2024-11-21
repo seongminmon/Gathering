@@ -34,6 +34,10 @@ struct DMView: View {
     // 5. 안 읽은 메시지 갯수
     
     // TODO: - 워크스페이스 멤버 초대
+    // ✅ 1. 워크스페이스 EmptyView
+    // ✅ 2.
+    
+    // TODO: - 간헐적으로 워크스페이스가 안 비어 있어도 Empty 뷰가 뜨는 현상
     
     @Perception.Bindable var store: StoreOf<DMFeature>
     
@@ -107,7 +111,6 @@ struct DMView: View {
                 .frame(width: 44)
                 .lineLimit(1)
         }
-        .background(.red)
     }
     
     private func dmCell(dm: DMsRoom) -> some View {
@@ -140,7 +143,6 @@ struct DMView: View {
             }
         }
         .padding(.horizontal, 16)
-        .background(.blue)
     }
     
     private func inviteMemberView() -> some View {
@@ -148,6 +150,7 @@ struct DMView: View {
             SheetHeaderView(title: "팀원 초대")
                 .background(Design.white)
             ScrollView {
+                // TODO: - first responder 만들기
                 TextFieldWithTitle(
                     title: "이메일",
                     placeholder: "초대하려는 팀원의 이메일을 입력하세요.",
