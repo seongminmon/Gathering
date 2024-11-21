@@ -87,7 +87,7 @@ struct DMView: View {
             Text("새로운 팀원을 초대해보세요.")
                 .font(Design.body)
             Button {
-                store.send(.inviteMemberButtonTap)
+                store.send(.inviteMemberSheetButtonTap)
             } label: {
                 RoundedButton(
                     text: "팀원 초대하기",
@@ -144,6 +144,43 @@ struct DMView: View {
     }
     
     private func inviteMemberView() -> some View {
-        SheetHeaderView(title: "팀원 초대")
+        VStack {
+            SheetHeaderView(title: "팀원 초대")
+                .background(Design.white)
+            ScrollView {
+                TextFieldWithTitle(
+                    title: "이메일",
+                    placeholder: "초대하려는 팀원의 이메일을 입력하세요.",
+                    text: $store.email
+                )
+                .padding()
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
+            inviteButton()
+                .padding([.horizontal, .bottom])
+        }
+        .background(Design.gray)
+    }
+    
+    @ViewBuilder
+    private func inviteButton() -> some View {
+        if store.inviteButtonValid {
+            Button {
+                store.send(.inviteMemberButtonTap)
+            } label: {
+                RoundedButton(
+                    text: "초대 보내기",
+                    foregroundColor: Design.white,
+                    backgroundColor: Design.green
+                )
+            }
+        } else {
+            RoundedButton(
+                text: "초대 보내기",
+                foregroundColor: Design.white,
+                backgroundColor: Design.darkGray
+            )
+        }
     }
 }
