@@ -120,6 +120,13 @@
 		84B8AD2D2CE6788400011D73 /* CreateChannelFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B8AD2C2CE6788400011D73 /* CreateChannelFeature.swift */; };
 		84B8AD2F2CE6795100011D73 /* ExploreChannelFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B8AD2E2CE6795100011D73 /* ExploreChannelFeature.swift */; };
 		84B8AD312CE6797C00011D73 /* InviteMemberFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B8AD302CE6797C00011D73 /* InviteMemberFeature.swift */; };
+		84E8A8152CEE01B000589171 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A8142CEE01B000589171 /* SettingView.swift */; };
+		84E8A8182CEF0D8100589171 /* ChannelChattingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A8172CEF0D8100589171 /* ChannelChattingFeature.swift */; };
+		84E8A81B2CEF171C00589171 /* DMChattingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A81A2CEF171C00589171 /* DMChattingFeature.swift */; };
+		84E8A81D2CEF1B1300589171 /* DMChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A81C2CEF1B1300589171 /* DMChattingView.swift */; };
+		84E8A81F2CEF1B3E00589171 /* ChannelChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A81E2CEF1B3E00589171 /* ChannelChattingView.swift */; };
+		84E8A8212CEF240D00589171 /* ChannelSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A8202CEF240D00589171 /* ChannelSettingView.swift */; };
+		84E8A8232CEF241C00589171 /* ChannelSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A8222CEF241C00589171 /* ChannelSettingFeature.swift */; };
 		A0DBC1032CEE4CC0008E4665 /* ChannelSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DBC1022CEE4CC0008E4665 /* ChannelSettingView.swift */; };
 		84E8A8152CEE01B000589171 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A8142CEE01B000589171 /* SettingView.swift */; };
 		84E8A8182CEF0D8100589171 /* ChannelChattingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A8172CEF0D8100589171 /* ChannelChattingFeature.swift */; };
