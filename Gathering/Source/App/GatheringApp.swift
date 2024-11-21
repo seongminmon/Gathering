@@ -30,10 +30,9 @@ struct GatheringApp: App {
         case .success:
             RootView()
         case .fail:
-//            OnboardingView(
-//                store: store.scope(state: \.onboarding, action: \.onboarding)
-//            )
-            RootView()
+            OnboardingView(
+                store: store.scope(state: \.onboarding, action: \.onboarding)
+            )
         case .loading:
             ProgressView()
         }
