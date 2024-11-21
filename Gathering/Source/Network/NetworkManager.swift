@@ -49,6 +49,7 @@ final class NetworkManager {
                         return try await performRequest(api: api)
                     } catch {
                         print("\(api) 토큰 갱신 에러")
+                        // TODO: - 온보딩 화면 이동
                     }
                 }
                 throw errorData
@@ -72,7 +73,7 @@ final class NetworkManager {
         do {
             return try JSONDecoder().decode(ModelType.self, from: data)
         } catch {
-            print("\(api) 디코딩 실패")
+            print("\(api) 모델 디코딩 실패")
             throw APIError.etc
         }
     }
@@ -80,6 +81,11 @@ final class NetworkManager {
     /// 응답 데이터가 필요 없는 요청
     func requestWithoutResponse<Router: TargetType>(api: Router) async throws {
         _ = try await performRequest(api: api)
+    }
+    
+    // TODO: - multipartFormData 요청
+    func requestWithMultipart<Router: TargetType>(api: Router) async throws {
+        
     }
     
     /// 이미지 URL 통신 (메모리 캐시 적용)
