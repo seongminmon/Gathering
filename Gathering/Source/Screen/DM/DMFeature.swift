@@ -41,6 +41,8 @@ struct DMFeature {
         
         // 멤버 초대
         var inviteMemberViewPresented = false
+        var email = ""
+        var inviteButtonValid = false
     }
     
     enum Action: BindableAction {
@@ -48,6 +50,7 @@ struct DMFeature {
         
         // MARK: - 유저 Action
         case task
+        case inviteMemberSheetButtonTap
         case inviteMemberButtonTap
         
         // MARK: - 내부 Action
@@ -63,6 +66,10 @@ struct DMFeature {
         BindingReducer()
         Reduce { state, action in
             switch action {
+            case .binding(\.email):
+                state.inviteButtonValid = !state.email.isEmpty
+                return .none
+                
             case .binding:
                 return .none
                 
@@ -132,9 +139,13 @@ struct DMFeature {
                 print(state.dmRoomList)
                 return .none
                 
-            case .inviteMemberButtonTap:
+            case .inviteMemberSheetButtonTap:
                 print("팀원 초대 버튼 탭")
                 state.inviteMemberViewPresented = true
+                return .none
+                
+            case .inviteMemberButtonTap:
+                print("초대 보내기 버튼 탭")
                 return .none
             }
         }
