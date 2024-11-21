@@ -39,6 +39,12 @@ enum UserDefaultsManager {
     @UserDefault(key: Key.userID.rawValue, defaultValue: "")
     static var userID
     
+    static var isLoggedIn: Bool {
+            !accessToken.isEmpty &&
+            !refreshToken.isEmpty &&
+            !userID.isEmpty
+        }
+    
     static func refresh(_ accessToken: String) {
         UserDefaultsManager.accessToken = accessToken
     }

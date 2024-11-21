@@ -22,6 +22,7 @@ struct RootView: View {
     
     var body: some View {
         tabView()
+            .tint(.green)
     }
     
     private func tabView() -> some View {
@@ -71,6 +72,5 @@ struct RootView: View {
             .tag(TabInfo.setting)
             
         }
-        .tint(.green)
     }
 }
