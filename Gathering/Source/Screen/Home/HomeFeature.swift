@@ -5,8 +5,9 @@
 //  Created by dopamint on 11/13/24.
 //
 
-import ComposableArchitecture
 import SwiftUI
+
+import ComposableArchitecture
 
 @Reducer
 struct HomeFeature {
@@ -15,6 +16,8 @@ struct HomeFeature {
         case channelAdd(CreateChannelFeature)
         case channelExplore(ChannelExploreFeature)
         case inviteMember(InviteMemberFeature)
+        case channelChatting(ChannelChattingFeature)
+        case DMChatting(DMChattingFeature)
     }
     
     @ObservableState
@@ -43,10 +46,7 @@ struct HomeFeature {
         case inviteMemberButtonTap
         case floatingButtonTap
         
-        // 채널 관련 액션
         case channelTap(Channel)
-        
-        // DM 관련 액션
         case dmTap(DMUser)
 //        case startNewMessageTap
     }
@@ -78,28 +78,22 @@ struct HomeFeature {
                         TextState("취소")
                     }
                 }
-//                state.showOptionSheet = true
                 return .none
-//            case .createChannelButtonTap:
-//                state.destination = .channelAdd(CreateChannelFeature.State())
-//                return .none
-//            case .exploreChannelButtonTap:
-//                state.destination = .channelExplore(ChannelExploreFeature.State())
-//                return .none
             case .inviteMemberButtonTap:
                 state.destination = .inviteMember(InviteMemberFeature.State())
                 return .none
-                
+            case .channelTap:
+                state.destination = .channelChatting(ChannelChattingFeature.State())
+                return .none
+            case .dmTap:
+                state.destination = .DMChatting(DMChattingFeature.State())
+                return .none
             case .destination(.dismiss):
                 state.destination = nil
                 return .none
             case .destination:
                 return .none
             case .floatingButtonTap:
-                return .none
-            case .channelTap:
-                return .none
-            case .dmTap:
                 return .none
             case .confirmationDialog(.dismiss):
                 return .none
