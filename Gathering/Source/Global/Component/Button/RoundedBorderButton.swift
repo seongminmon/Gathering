@@ -22,6 +22,5 @@ struct RoundedBorderButton: View {
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(Design.black, lineWidth: 1)
             )
-            .padding()
     }
 }
