@@ -104,7 +104,6 @@ struct AppFeature {
                 return .none
                 
             case .onboarding:
-                print("APP - 온보딩 뷰 액션 감지")
                 return .none
             }
         }

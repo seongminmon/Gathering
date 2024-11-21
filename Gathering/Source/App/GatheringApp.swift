@@ -16,16 +16,10 @@ struct GatheringApp: App {
     
     var body: some Scene {
         WindowGroup {
-            WithPerceptionTracking {
+            WithPerceptionTracking {                
                 rootView()
                     .onAppear { store.send(.onAppear) }
                     .task { store.send(.task) }
-                
-                // MARK: - URL(+ 헤더) 이미지 Test
-//                URLImageView(urlString: "/static/profiles/1731219820927.jpg")
-//                    .onAppear {
-//                        UserDefaultsManager.accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiOTczZDYyZWMtMTc3Ni00NDZmLTkwZWEtZjM1ZDE4OWJiN2IzIiwibmlja25hbWUiOiJrc20xIiwiaWF0IjoxNzMyMDA1NTc5LCJleHAiOjE3MzIwMDU4NzksImlzcyI6InNscCJ9.SXZiBzjGp-_jSiQARtBlLebIhPUGovdB6a3666DJN_8"
-//                    }
             }
         }
     }

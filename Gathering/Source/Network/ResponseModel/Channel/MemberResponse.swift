@@ -13,3 +13,21 @@ struct MemberResponse: Decodable {
     let nickname: String
     let profileImage: String?
 }
+
+extension MemberResponse {
+    var toMember: Member {
+        return Member(
+            id: self.user_id,
+            email: self.email,
+            nickname: self.nickname,
+            profileImage: self.profileImage
+        )
+    }
+}
+
+struct Member: Hashable, Identifiable {
+    let id: String
+    let email: String
+    let nickname: String
+    let profileImage: String?
+}

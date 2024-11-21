@@ -12,23 +12,51 @@ import ComposableArchitecture
 @Reducer
 struct DMFeature {
     
-    @Dependency(\.storeClient) var storeClient
+    @Dependency(\.workspaceClient) var workspaceClient
+    @Dependency(\.userClient) var userClient
+    @Dependency(\.dmsClient) var dmsClient
     
     @ObservableState
     struct State {
+        // test
         var userList = Dummy.users
         var chattingList = Dummy.users
         var nickname: String = ""
         var itemReponse: [StoreItemResponse] = []
+        
+        // 워크 스페이스 정보
+        var myWorkspaceList: [WorkspaceResponse] = []
+        var currentWorkspace: WorkspaceResponse?
+        
+        // 내 프로필 정보
+        var myProfile: MyProfileResponse?
+        
+        // 워크 스페이스 멤버 조회는 2가지 방법이 있음
+        // (1) 내가 속한 특정 워크스페이스 정보 조회
+        // (2) 워크스페이스 멤버 조회
+        // (1) 방법 선택
+        var workspaceMembers: [Member] = []
+        
+        var dmRoomList: [DMsRoom] = []
+        
+        // 멤버 초대
+        var inviteMemberViewPresented = false
     }
     
     enum Action: BindableAction {
         case binding(BindingAction<State>)
-        case profileButtonTap
-        case networkButtonTap
-        case networkResponse([StoreItemResponse])
-        case errorResponse(Error)
-        case toastButtonTap
+        
+        // MARK: - 유저 Action
+        case task
+        case inviteMemberButtonTap
+        
+        // MARK: - 내부 Action
+        case myWorkspaceList([WorkspaceResponse])
+        case myProfileResponse(MyProfileResponse)
+        case fetchWorkspaceMembers
+        case workspaceMember([Member])
+        case fetchDMRooms
+        case dmRoomsResponse([DMsRoom])
     }
     
     var body: some ReducerOf<Self> {
@@ -38,39 +66,78 @@ struct DMFeature {
             case .binding:
                 return .none
                 
-            case .binding(\.nickname):
-                print(state.nickname)
-                return .none
-                
-            case .profileButtonTap:
-                return .none
-                
-            case .networkButtonTap:
+            case .task:
                 return .run { send in
+                    // 내가 속한 워크스페이스 리스트 조회
+                    async let workspaces = workspaceClient.fetchMyWorkspaceList()
+                    // 내 프로필 조회
+                    async let profile = userClient.fetchMyProfile()
+                    
                     do {
-                        let result = try await storeClient.itemList()
-                        await send(.networkResponse(result))
-                    } catch {
-                        print("네트워크 에러 발생: \(error)")
-                        await send(.errorResponse(error))
-                    }
+                        let (workspaceResult, profileResult) = try await (workspaces, profile)
+                        await send(.myWorkspaceList(workspaceResult))
+                        await send(.myProfileResponse(profileResult))
+                        // workspaceList를 받은 후에 멤버 조회 액션 전송
+                        await send(.fetchWorkspaceMembers)
+                        await send(.fetchDMRooms)
+                    } catch {}
                 }
                 
-            case .networkResponse(let response):
-                // 네트워크 응답 처리
-                print(response)
-                state.itemReponse = response
+            case .myWorkspaceList(let result):
+                state.myWorkspaceList = result
+                // 임의로 첫번째 워크스페이스로 선택
+                state.currentWorkspace = result.first
                 return .none
                 
-            case .errorResponse(let error):
-                print(error)
+            case .myProfileResponse(let result):
+                state.myProfile = result
                 return .none
                 
-            case .toastButtonTap:
-                print("토스트 버튼 탭")
-                Notification.postToast(title: "토스트 테스트 메시지입니다")
+            case .fetchWorkspaceMembers:
+                // 내가 속한 특정 워크스페이스 정보 조회
+                guard let workspaceID = state.currentWorkspace?.workspace_id else {
+                    print("워크스페이스 ID 없음")
+                    return .none
+                }
+                
+                return .run { send in
+                    do {
+                        let result = try await workspaceClient.fetchWorkspaceInfo(workspaceID)
+                        await send(.workspaceMember(
+                            result.workspaceMembers?.map { $0.toMember } ?? []
+                        ))
+                    } catch {}
+                }
+                
+            case .fetchDMRooms:
+                guard let workspaceID = state.currentWorkspace?.workspace_id else {
+                    return .none
+                }
+                
+                return .run { send in
+                    do {
+                        let result = try await dmsClient.fetchDMSList(workspaceID)
+                        await send(.dmRoomsResponse(result.map { $0.toDmsRoom }))
+                    } catch {}
+                }
+                
+            case .workspaceMember(let result):
+                // 본인을 제외한 다른 멤버들만 보여주기
+                state.workspaceMembers = result.filter { $0.id != UserDefaultsManager.userID }
+                return .none
+                
+            case .dmRoomsResponse(let result):
+                state.dmRoomList = result
+                print("dmRoom 리스트 통신")
+                print(state.dmRoomList)
+                return .none
+                
+            case .inviteMemberButtonTap:
+                print("팀원 초대 버튼 탭")
+                state.inviteMemberViewPresented = true
                 return .none
             }
         }
+        
     }
 }
