@@ -18,12 +18,6 @@ struct DMFeature {
     
     @ObservableState
     struct State {
-        // test
-        var userList = Dummy.users
-        var chattingList = Dummy.users
-        var nickname: String = ""
-        var itemReponse: [StoreItemResponse] = []
-        
         // 워크 스페이스 정보
         var myWorkspaceList: [WorkspaceResponse] = []
         var currentWorkspace: WorkspaceResponse?
@@ -60,6 +54,7 @@ struct DMFeature {
         case workspaceMember([Member])
         case fetchDMRooms
         case dmRoomsResponse([DMsRoom])
+        case inviteMemberResponse(Member)
     }
     
     var body: some ReducerOf<Self> {
@@ -68,6 +63,13 @@ struct DMFeature {
             switch action {
             case .binding(\.email):
                 state.inviteButtonValid = !state.email.isEmpty
+                return .none
+                
+            case .binding(\.inviteMemberViewPresented):
+                if !state.inviteMemberViewPresented {
+                    state.email = ""
+                    state.inviteButtonValid = !state.email.isEmpty
+                }
                 return .none
                 
             case .binding:
@@ -129,7 +131,7 @@ struct DMFeature {
                 }
                 
             case .workspaceMember(let result):
-                // 본인을 제외한 다른 멤버들만 보여주기
+                // 본인 제외 다른 멤버들만 보여주기
                 state.workspaceMembers = result.filter { $0.id != UserDefaultsManager.userID }
                 return .none
                 
@@ -140,12 +142,32 @@ struct DMFeature {
                 return .none
                 
             case .inviteMemberSheetButtonTap:
-                print("팀원 초대 버튼 탭")
+                print("팀원 초대 시트 버튼 탭")
                 state.inviteMemberViewPresented = true
                 return .none
                 
             case .inviteMemberButtonTap:
                 print("초대 보내기 버튼 탭")
+                guard let workspaceID = state.currentWorkspace?.workspace_id else {
+                    print("워크스페이스 아이디 없음")
+                    return .none
+                }
+                
+                return .run { [email = state.email] send in
+                    do {
+                        let result = try await workspaceClient.inviteMember(
+                            workspaceID,
+                            InviteMemberRequest(email: email)
+                        )
+                        await send(.inviteMemberResponse(result.toMember))
+                    } catch { print("팀원 초대 통신 실패") }
+                }
+                
+            case .inviteMemberResponse(let result):
+                print("멤버 초대 성공")
+                print(result)
+                state.workspaceMembers.append(result)
+                state.inviteMemberViewPresented = false
                 return .none
             }
         }
