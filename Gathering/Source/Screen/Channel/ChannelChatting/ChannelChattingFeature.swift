@@ -14,8 +14,8 @@ struct ChannelChattingFeature {
     
     @Reducer
     enum Path {
-        case channelSetting(RedFeature)
-        case profile(BlueFeature)
+        case channelSetting(ChannelSettingFeature)
+//        case profile(BlueFeature)
     }
     
     @ObservableState
@@ -25,6 +25,7 @@ struct ChannelChattingFeature {
     
     enum Action {
         case path(StackActionOf<Path>)
+        case settingButtonTap
     }
     
     var body: some ReducerOf<Self> {
@@ -32,6 +33,10 @@ struct ChannelChattingFeature {
         Reduce { state, action in
             switch action {
                 
+            case .settingButtonTap:
+                state.path.append(
+                    .channelSetting(ChannelSettingFeature.State()))
+                return .none
             case .path:
                 return .none
             }

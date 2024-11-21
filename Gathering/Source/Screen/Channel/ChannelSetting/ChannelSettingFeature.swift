@@ -31,7 +31,7 @@ struct ChannelSettingFeature {
         Reduce { state, action in
             switch action {
 
-            case .path(_):
+            case .path:
                 return .none
             }
         }

@@ -17,14 +17,6 @@ extension ToolbarConfig {
     struct BarButton {
         let icon: String
         let action: () -> Void
-        //
-        //        static func back(action: @escaping () -> Void) -> BarButton {
-        //            BarButton(icon: "chevron.left", action: action)
-        //        }
-        //
-        //        static func close(action: @escaping () -> Void) -> BarButton {
-        //            BarButton(icon: "close", action: action)
-        //        }
     }
 }
 
