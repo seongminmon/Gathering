@@ -52,7 +52,6 @@
 		24ABE9402CD4B6D1000E7EC5 /* APIAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE93F2CD4B6D1000E7EC5 /* APIAuth.swift */; };
 		24ABE9432CD4B7CC000E7EC5 /* CounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9422CD4B7CC000E7EC5 /* CounterView.swift */; };
 		24ABE94B2CD4B8A9000E7EC5 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 24ABE94A2CD4B8A9000E7EC5 /* .swiftlint.yml */; };
-		24ABE94C2CD4BACD000E7EC5 /* APIKey.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 24ABE93D2CD4B557000E7EC5 /* APIKey.xcconfig */; };
 		24ABE94E2CD8A71D000E7EC5 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE94D2CD8A71D000E7EC5 /* RootView.swift */; };
 		24ABE9522CD8B65E000E7EC5 /* DMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9512CD8B65E000E7EC5 /* DMView.swift */; };
 		24ABE9542CD8B711000E7EC5 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9532CD8B711000E7EC5 /* Font+.swift */; };
@@ -119,6 +118,13 @@
 		84B8AD2D2CE6788400011D73 /* CreateChannelFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B8AD2C2CE6788400011D73 /* CreateChannelFeature.swift */; };
 		84B8AD2F2CE6795100011D73 /* ExploreChannelFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B8AD2E2CE6795100011D73 /* ExploreChannelFeature.swift */; };
 		84B8AD312CE6797C00011D73 /* InviteMemberFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B8AD302CE6797C00011D73 /* InviteMemberFeature.swift */; };
+		84E8A8152CEE01B000589171 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A8142CEE01B000589171 /* SettingView.swift */; };
+		84E8A8182CEF0D8100589171 /* ChannelChattingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A8172CEF0D8100589171 /* ChannelChattingFeature.swift */; };
+		84E8A81B2CEF171C00589171 /* DMChattingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A81A2CEF171C00589171 /* DMChattingFeature.swift */; };
+		84E8A81D2CEF1B1300589171 /* DMChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A81C2CEF1B1300589171 /* DMChattingView.swift */; };
+		84E8A81F2CEF1B3E00589171 /* ChannelChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A81E2CEF1B3E00589171 /* ChannelChattingView.swift */; };
+		84E8A8212CEF240D00589171 /* ChannelSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A8202CEF240D00589171 /* ChannelSettingView.swift */; };
+		84E8A8232CEF241C00589171 /* ChannelSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A8222CEF241C00589171 /* ChannelSettingFeature.swift */; };
 		A0E444C52CDD0A5C0024AE71 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444C42CDD0A5C0024AE71 /* ChatMessage.swift */; };
 		A0E444CA2CDDF4520024AE71 /* ChattingPhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444C92CDDF4520024AE71 /* ChattingPhotoPicker.swift */; };
 		A0E444CC2CDE010D0024AE71 /* ChattingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444CB2CDE010D0024AE71 /* ChattingImageView.swift */; };
@@ -192,7 +198,6 @@
 		24ABE9202CD4AEDD000E7EC5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		24ABE9232CD4AEDD000E7EC5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		24ABE93B2CD4B4D9000E7EC5 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		24ABE93D2CD4B557000E7EC5 /* APIKey.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = APIKey.xcconfig; sourceTree = "<group>"; };
 		24ABE93E2CD4B5B9000E7EC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Gathering/Resource/Info.plist; sourceTree = SOURCE_ROOT; };
 		24ABE93F2CD4B6D1000E7EC5 /* APIAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAuth.swift; sourceTree = "<group>"; };
 		24ABE9422CD4B7CC000E7EC5 /* CounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterView.swift; sourceTree = "<group>"; };
@@ -263,6 +268,14 @@
 		84B8AD2C2CE6788400011D73 /* CreateChannelFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChannelFeature.swift; sourceTree = "<group>"; };
 		84B8AD2E2CE6795100011D73 /* ExploreChannelFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreChannelFeature.swift; sourceTree = "<group>"; };
 		84B8AD302CE6797C00011D73 /* InviteMemberFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteMemberFeature.swift; sourceTree = "<group>"; };
+		84E8A8122CEDA53600589171 /* APIKey.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = APIKey.xcconfig; sourceTree = "<group>"; };
+		84E8A8142CEE01B000589171 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		84E8A8172CEF0D8100589171 /* ChannelChattingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChattingFeature.swift; sourceTree = "<group>"; };
+		84E8A81A2CEF171C00589171 /* DMChattingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChattingFeature.swift; sourceTree = "<group>"; };
+		84E8A81C2CEF1B1300589171 /* DMChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChattingView.swift; sourceTree = "<group>"; };
+		84E8A81E2CEF1B3E00589171 /* ChannelChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChattingView.swift; sourceTree = "<group>"; };
+		84E8A8202CEF240D00589171 /* ChannelSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSettingView.swift; sourceTree = "<group>"; };
+		84E8A8222CEF241C00589171 /* ChannelSettingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSettingFeature.swift; sourceTree = "<group>"; };
 		A0E444C42CDD0A5C0024AE71 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		A0E444C92CDDF4520024AE71 /* ChattingPhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingPhotoPicker.swift; sourceTree = "<group>"; };
 		A0E444CB2CDE010D0024AE71 /* ChattingImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingImageView.swift; sourceTree = "<group>"; };
@@ -378,7 +391,7 @@
 			isa = PBXGroup;
 			children = (
 				24ABE93E2CD4B5B9000E7EC5 /* Info.plist */,
-				24ABE93D2CD4B557000E7EC5 /* APIKey.xcconfig */,
+				84E8A8122CEDA53600589171 /* APIKey.xcconfig */,
 				2447AB522CE1C4C100399C4D /* LaunchScreen.storyboard */,
 				24ABE9202CD4AEDD000E7EC5 /* Assets.xcassets */,
 				24ABE9552CD8BC3A000E7EC5 /* Design */,
@@ -541,6 +554,7 @@
 				249FB0F22CECB12000CA418B /* DM */,
 				249FB0F32CECB12400CA418B /* Profile */,
 				249FB0F82CECB5E700CA418B /* Chatting */,
+				84E8A8132CEE019600589171 /* Setting */,
 			);
 			path = Screen;
 			sourceTree = "<group>";
@@ -602,6 +616,8 @@
 		249FB0F12CECB11900CA418B /* Channel */ = {
 			isa = PBXGroup;
 			children = (
+				84E8A8162CEF0C3600589171 /* ChannelChatting */,
+				84E8A8242CEF241F00589171 /* ChannelSetting */,
 				84B8AD292CE6785800011D73 /* CreateChannel */,
 				84B8AD2A2CE6786100011D73 /* ChannelExplore */,
 				84B8AD2B2CE6787000011D73 /* InviteMember */,
@@ -612,6 +628,7 @@
 		249FB0F22CECB12000CA418B /* DM */ = {
 			isa = PBXGroup;
 			children = (
+				84E8A8192CEF162300589171 /* DMChatting */,
 				24ABE9512CD8B65E000E7EC5 /* DMView.swift */,
 				2447AB882CE8C46B00399C4D /* DMFeature.swift */,
 			);
@@ -887,6 +904,41 @@
 			path = InviteMember;
 			sourceTree = "<group>";
 		};
+		84E8A8132CEE019600589171 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				84E8A8142CEE01B000589171 /* SettingView.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		84E8A8162CEF0C3600589171 /* ChannelChatting */ = {
+			isa = PBXGroup;
+			children = (
+				84E8A81E2CEF1B3E00589171 /* ChannelChattingView.swift */,
+				84E8A8172CEF0D8100589171 /* ChannelChattingFeature.swift */,
+			);
+			path = ChannelChatting;
+			sourceTree = "<group>";
+		};
+		84E8A8192CEF162300589171 /* DMChatting */ = {
+			isa = PBXGroup;
+			children = (
+				84E8A81C2CEF1B1300589171 /* DMChattingView.swift */,
+				84E8A81A2CEF171C00589171 /* DMChattingFeature.swift */,
+			);
+			path = DMChatting;
+			sourceTree = "<group>";
+		};
+		84E8A8242CEF241F00589171 /* ChannelSetting */ = {
+			isa = PBXGroup;
+			children = (
+				84E8A8202CEF240D00589171 /* ChannelSettingView.swift */,
+				84E8A8222CEF241C00589171 /* ChannelSettingFeature.swift */,
+			);
+			path = ChannelSetting;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -960,7 +1012,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				24ABE94C2CD4BACD000E7EC5 /* APIKey.xcconfig in Resources */,
 				24ABE94B2CD4B8A9000E7EC5 /* .swiftlint.yml in Resources */,
 				24ABE9242CD4AEDD000E7EC5 /* Preview Assets.xcassets in Resources */,
 				2447AB532CE1C4C100399C4D /* LaunchScreen.storyboard in Resources */,
@@ -977,6 +1028,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				847A3F9B2CDAFF04004A9361 /* Header.swift in Sources */,
+				84E8A81B2CEF171C00589171 /* DMChattingFeature.swift in Sources */,
 				2447AB8B2CE9E58700399C4D /* AppFeature.swift in Sources */,
 				84B8AD212CE3D55000011D73 /* HomeFeature.swift in Sources */,
 				A0E444CA2CDDF4520024AE71 /* ChattingPhotoPicker.swift in Sources */,
@@ -997,11 +1049,13 @@
 				24ABE95C2CDB8701000E7EC5 /* Design.swift in Sources */,
 				249FB0FE2CEDA92000CA418B /* ImageCache.swift in Sources */,
 				249FB0C92CEC711800CA418B /* MemberRealmModel.swift in Sources */,
+				84E8A8152CEE01B000589171 /* SettingView.swift in Sources */,
 				2447AB562CE1D0EC00399C4D /* StoreClient.swift in Sources */,
 				2447AB6A2CE32B6800399C4D /* ToastModifier.swift in Sources */,
 				24ABE9702CDCEDB2000E7EC5 /* UserDefaultsManager.swift in Sources */,
 				A0E444EB2CE2C7E20024AE71 /* DMsResponse.swift in Sources */,
 				249FB0C72CEC70F700CA418B /* ChannelChattingRealmModel.swift in Sources */,
+				84E8A81D2CEF1B1300589171 /* DMChattingView.swift in Sources */,
 				A0E444E12CE2B37D0024AE71 /* WorkspaceInfoResponse.swift in Sources */,
 				2447AB892CE8C46B00399C4D /* DMFeature.swift in Sources */,
 				2447AB6F2CE3326D00399C4D /* OnboardingView.swift in Sources */,
@@ -1015,6 +1069,7 @@
 				A0E444DF2CE2B1ED0024AE71 /* WorkspaceResponse.swift in Sources */,
 				24ABE97D2CDCF15D000E7EC5 /* PayValidationRequest.swift in Sources */,
 				24ABE95F2CDB93B5000E7EC5 /* RoundButtonModifier.swift in Sources */,
+				84E8A81F2CEF1B3E00589171 /* ChannelChattingView.swift in Sources */,
 				24ABE9822CDE0FE9000E7EC5 /* ChannelRouter.swift in Sources */,
 				249FB0D22CECA8EE00CA418B /* RealmManager.swift in Sources */,
 				24ABE9902CDF0CFB000E7EC5 /* OwnerRequest.swift in Sources */,
@@ -1027,6 +1082,7 @@
 				843E7FCC2CE21FF80057A426 /* ContactsFeature.swift in Sources */,
 				843E7FE92CE337F80057A426 /* EditMyProfileImageRequest.swift in Sources */,
 				24ABE96E2CDCE2A3000E7EC5 /* NetworkManager.swift in Sources */,
+				84E8A8212CEF240D00589171 /* ChannelSettingView.swift in Sources */,
 				2447AB792CE7329000399C4D /* SignUpView.swift in Sources */,
 				A0E444C52CDD0A5C0024AE71 /* ChatMessage.swift in Sources */,
 				843E7FDD2CE337330057A426 /* EmailValidationRequest.swift in Sources */,
@@ -1069,6 +1125,7 @@
 				24ABE9732CDCEF9D000E7EC5 /* StoreRouter.swift in Sources */,
 				84B8AD2D2CE6788400011D73 /* CreateChannelFeature.swift in Sources */,
 				24ABE91D2CD4AEDB000E7EC5 /* GatheringApp.swift in Sources */,
+				84E8A8182CEF0D8100589171 /* ChannelChattingFeature.swift in Sources */,
 				2447AB682CE329BB00399C4D /* Toast.swift in Sources */,
 				A0EEC1982CDA46B700D81239 /* ChattingView.swift in Sources */,
 				84B8AD2F2CE6795100011D73 /* ExploreChannelFeature.swift in Sources */,
@@ -1081,6 +1138,7 @@
 				843E7FEB2CE3382F0057A426 /* MyProfileResponse.swift in Sources */,
 				A0E444D12CE29A850024AE71 /* WorkSpaceRouter.swift in Sources */,
 				24ABE9432CD4B7CC000E7EC5 /* CounterView.swift in Sources */,
+				84E8A8232CEF241C00589171 /* ChannelSettingFeature.swift in Sources */,
 				24ABE98E2CDF02E1000E7EC5 /* ChattingRequest.swift in Sources */,
 				24ABE98C2CDF005F000E7EC5 /* MemberResponse.swift in Sources */,
 				84B8AD312CE6797C00011D73 /* InviteMemberFeature.swift in Sources */,
@@ -1110,6 +1168,7 @@
 /* Begin XCBuildConfiguration section */
 		24ABE9252CD4AEDD000E7EC5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 84E8A8122CEDA53600589171 /* APIKey.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -1173,6 +1232,7 @@
 		};
 		24ABE9262CD4AEDD000E7EC5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 84E8A8122CEDA53600589171 /* APIKey.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -1229,7 +1289,7 @@
 		};
 		24ABE9282CD4AEDD000E7EC5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 24ABE93D2CD4B557000E7EC5 /* APIKey.xcconfig */;
+			baseConfigurationReference = 84E8A8122CEDA53600589171 /* APIKey.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1268,7 +1328,7 @@
 		};
 		24ABE9292CD4AEDD000E7EC5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 24ABE93D2CD4B557000E7EC5 /* APIKey.xcconfig */;
+			baseConfigurationReference = 84E8A8122CEDA53600589171 /* APIKey.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
