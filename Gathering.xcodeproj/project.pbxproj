@@ -127,6 +127,14 @@
 		84E8A81F2CEF1B3E00589171 /* ChannelChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A81E2CEF1B3E00589171 /* ChannelChattingView.swift */; };
 		84E8A8232CEF241C00589171 /* ChannelSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A8222CEF241C00589171 /* ChannelSettingFeature.swift */; };
 		A0DBC1032CEE4CC0008E4665 /* ChannelSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DBC1022CEE4CC0008E4665 /* ChannelSettingView.swift */; };
+		84E8A8152CEE01B000589171 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A8142CEE01B000589171 /* SettingView.swift */; };
+		84E8A8182CEF0D8100589171 /* ChannelChattingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A8172CEF0D8100589171 /* ChannelChattingFeature.swift */; };
+		84E8A81B2CEF171C00589171 /* DMChattingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A81A2CEF171C00589171 /* DMChattingFeature.swift */; };
+		84E8A81D2CEF1B1300589171 /* DMChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A81C2CEF1B1300589171 /* DMChattingView.swift */; };
+		84E8A81F2CEF1B3E00589171 /* ChannelChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A81E2CEF1B3E00589171 /* ChannelChattingView.swift */; };
+		84E8A8212CEF240D00589171 /* ChannelSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A8202CEF240D00589171 /* ChannelSettingView.swift */; };
+		84E8A8232CEF241C00589171 /* ChannelSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A8222CEF241C00589171 /* ChannelSettingFeature.swift */; };
+		A0DBC1032CEE4CC0008E4665 /* ChannelSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DBC1022CEE4CC0008E4665 /* ChannelSettingView.swift */; };
 		A0E444C52CDD0A5C0024AE71 /* ChattingPresentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444C42CDD0A5C0024AE71 /* ChattingPresentModel.swift */; };
 		A0E444CA2CDDF4520024AE71 /* ChattingPhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444C92CDDF4520024AE71 /* ChattingPhotoPicker.swift */; };
 		A0E444CC2CDE010D0024AE71 /* ChattingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444CB2CDE010D0024AE71 /* ChattingImageView.swift */; };
