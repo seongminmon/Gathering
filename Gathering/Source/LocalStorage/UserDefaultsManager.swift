@@ -28,6 +28,7 @@ enum UserDefaultsManager {
         case accessToken
         case refreshToken
         case userID
+        case workspaceID
     }
     
     @UserDefault(key: Key.accessToken.rawValue, defaultValue: "")
@@ -38,6 +39,9 @@ enum UserDefaultsManager {
     
     @UserDefault(key: Key.userID.rawValue, defaultValue: "")
     static var userID
+    
+    @UserDefault(key: Key.workspaceID.rawValue, defaultValue: "")
+    static var workspaceID
     
     static var isLoggedIn: Bool {
             !accessToken.isEmpty &&
@@ -54,6 +58,11 @@ enum UserDefaultsManager {
         UserDefaultsManager.refreshToken = refreshToken
         UserDefaultsManager.userID = id
     }
+    
+    static func recentWorkspaceID(_ workspaceID: String) {
+        UserDefaultsManager.workspaceID = workspaceID
+    }
+    
     
     static func removeAll() {
         UserDefaultsManager.accessToken = ""

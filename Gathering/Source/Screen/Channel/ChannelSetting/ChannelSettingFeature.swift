@@ -20,6 +20,7 @@ struct ChannelSettingFeature {
     @ObservableState
     struct State {
         var path = StackState<Path.State>()
+
     }
     
     enum Action {
