@@ -74,7 +74,7 @@
 		24ABE9822CDE0FE9000E7EC5 /* ChannelRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9812CDE0FE9000E7EC5 /* ChannelRouter.swift */; };
 		24ABE9862CDE12BE000E7EC5 /* ChannelResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9852CDE12BE000E7EC5 /* ChannelResponse.swift */; };
 		24ABE9882CDE172F000E7EC5 /* ChannelRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9872CDE172F000E7EC5 /* ChannelRequest.swift */; };
-		24ABE98A2CDF004D000E7EC5 /* ChattingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9892CDF004D000E7EC5 /* ChattingResponse.swift */; };
+		24ABE98A2CDF004D000E7EC5 /* ChannelChattingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE9892CDF004D000E7EC5 /* ChannelChattingResponse.swift */; };
 		24ABE98C2CDF005F000E7EC5 /* MemberResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE98B2CDF005F000E7EC5 /* MemberResponse.swift */; };
 		24ABE98E2CDF02E1000E7EC5 /* ChattingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE98D2CDF02E1000E7EC5 /* ChattingRequest.swift */; };
 		24ABE9902CDF0CFB000E7EC5 /* OwnerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE98F2CDF0CFB000E7EC5 /* OwnerRequest.swift */; };
@@ -227,7 +227,7 @@
 		24ABE9812CDE0FE9000E7EC5 /* ChannelRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelRouter.swift; sourceTree = "<group>"; };
 		24ABE9852CDE12BE000E7EC5 /* ChannelResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelResponse.swift; sourceTree = "<group>"; };
 		24ABE9872CDE172F000E7EC5 /* ChannelRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelRequest.swift; sourceTree = "<group>"; };
-		24ABE9892CDF004D000E7EC5 /* ChattingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingResponse.swift; sourceTree = "<group>"; };
+		24ABE9892CDF004D000E7EC5 /* ChannelChattingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChattingResponse.swift; sourceTree = "<group>"; };
 		24ABE98B2CDF005F000E7EC5 /* MemberResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberResponse.swift; sourceTree = "<group>"; };
 		24ABE98D2CDF02E1000E7EC5 /* ChattingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingRequest.swift; sourceTree = "<group>"; };
 		24ABE98F2CDF0CFB000E7EC5 /* OwnerRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerRequest.swift; sourceTree = "<group>"; };
@@ -498,7 +498,7 @@
 			children = (
 				24ABE9852CDE12BE000E7EC5 /* ChannelResponse.swift */,
 				24ABE98B2CDF005F000E7EC5 /* MemberResponse.swift */,
-				24ABE9892CDF004D000E7EC5 /* ChattingResponse.swift */,
+				24ABE9892CDF004D000E7EC5 /* ChannelChattingResponse.swift */,
 				2447AB5D2CE2371C00399C4D /* UnreadCountResponse.swift */,
 			);
 			path = Channel;
@@ -1131,7 +1131,7 @@
 				843E7FF12CE349C90057A426 /* ContactDetailView.swift in Sources */,
 				843E7FC62CE202530057A426 /* AppFeaturePractice.swift in Sources */,
 				249FB1022CEF5E0600CA418B /* WorkspaceView.swift in Sources */,
-				24ABE98A2CDF004D000E7EC5 /* ChattingResponse.swift in Sources */,
+				24ABE98A2CDF004D000E7EC5 /* ChannelChattingResponse.swift in Sources */,
 				24ABE9522CD8B65E000E7EC5 /* DMView.swift in Sources */,
 				843E7FE72CE337E70057A426 /* EditMyProfileRequest.swift in Sources */,
 				24ABE9732CDCEF9D000E7EC5 /* StoreRouter.swift in Sources */,
@@ -1302,7 +1302,6 @@
 		24ABE9282CD4AEDD000E7EC5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 84E8A8122CEDA53600589171 /* APIKey.xcconfig */;
-
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1341,7 +1340,6 @@
 		};
 		24ABE9292CD4AEDD000E7EC5 /* Release */ = {
 			isa = XCBuildConfiguration;
-
 			baseConfigurationReference = 84E8A8122CEDA53600589171 /* APIKey.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
