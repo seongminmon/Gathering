@@ -16,6 +16,11 @@ struct ChannelChattingFeature {
     enum Path {
         case channelSetting(RedFeature)
         case profile(BlueFeature)
+        var message = ChannelDummy.messages
+        var messageText = ""
+        var selectedImages: [UIImage] = []
+        var scrollViewID = UUID()
+        var keyboardHeight: CGFloat = 0
     }
     
     @ObservableState

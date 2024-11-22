@@ -62,15 +62,15 @@ struct ChattingView: View {
                 // 뷰가 사라질 때 키보드 노티피케이션 구독 해제
                 keyboardSubscriber?.cancel()
             }
-            .customToolbar(title: "#모야모여모여랏", 
+            .customToolbar(title: "#모야모여모여랏",
                            leftItem: .init(icon: "chevron.left") {
                 print("뒤로가기")
             },
                            rightItem: .init(icon: "list.bullet") {
                 print("설정")
             })
-//            .navigationTitle("#모야모여모여랏")
-//            .navigationBarTitleDisplayMode(.inline)
+            //            .navigationTitle("#모야모여모여랏")
+            //            .navigationBarTitleDisplayMode(.inline)
         }
         
     }
