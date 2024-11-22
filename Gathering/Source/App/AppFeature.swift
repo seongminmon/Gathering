@@ -12,8 +12,6 @@ import ComposableArchitecture
 @Reducer
 struct AppFeature {
     
-//    @Dependency(\.realmClient) var realmClient
-    
     enum LoginState {
         case success
         case fail
@@ -26,11 +24,6 @@ struct AppFeature {
         var loginState: LoginState = .loading
         
         var onboarding = OnboardingFeature.State()
-        
-        // MARK: - Realm Test
-//        var channelChats: [ChannelChattingRealmModel] = []
-//        var dmChats: [DMChattingRealmModel] = []
-//        var currentUsers: [MemberRealmModel] = []
     }
     
     enum Action {
@@ -41,15 +34,6 @@ struct AppFeature {
         case loginFail
         
         case onboarding(OnboardingFeature.Action)
-        
-        // MARK: - Realm Test
-//        case loadChannelChats
-//        case loadDMChats
-//        case loadCurrentUsers
-//        
-//        case addChannelChat(ChannelChattingRealmModel)
-//        case addDMChat(DMChattingRealmModel)
-//        case addUser(MemberRealmModel)
     }
     
     var body: some ReducerOf<Self> {
@@ -121,59 +105,6 @@ struct AppFeature {
                 
             case .onboarding:
                 return .none
-                
-            // MARK: - Realm Test
-//            case .loadChannelChats:
-//                do {
-//                    state.channelChats = try realmClient.fetchAllChannelChats()
-//                } catch {
-//                    print("catch - loadChannelChats")
-//                }
-//                
-//                return .none
-//                
-//            case .loadDMChats:
-//                do {
-//                    state.dmChats = try realmClient.fetchAllDMChats()
-//                } catch {
-//                    print("catch - loadDMChats")
-//                }
-//                return .none
-//                
-//            case .loadCurrentUsers:
-//                do {
-//                    state.currentUsers = try realmClient.fetchAllMembers()
-//                } catch {
-//                    print("catch - loadDMChats")
-//                }
-//                return .none
-//                
-//            case .addUser(let data):
-//                do {
-//                    try realmClient.create(data)
-//                    state.currentUsers.append(data)
-//                    return .none
-//                } catch {
-//                    return .none
-//                }
-//                
-//            case .addChannelChat(let data):
-//                do {
-//                    try realmClient.create(data)
-//                    state.channelChats.append(data)
-//                    return .none
-//                } catch {
-//                    return .none
-//                }
-//                
-//            case .addDMChat(let data):
-//                do {
-//                    try realmClient.create(data)
-//                    state.dmChats.append(data)
-//                    return .none
-//                } catch {
-//                    return .none
-//                }
             }
         }
     }

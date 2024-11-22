@@ -15,10 +15,6 @@ struct RealmClient {
     var update: @Sendable (Object) throws -> Void
     var delete: @Sendable (Object) throws -> Void
     
-    // Member 관련
-//    var fetchMember: @Sendable (String) throws -> MemberRealmModel?
-//    var fetchAllMembers: @Sendable () throws -> [MemberRealmModel]
-    
     // Channel Chatting 관련
     var fetchChannelChat: @Sendable (String) throws -> ChannelChattingRealmModel?
     var fetchChannelChats: @Sendable (String) throws -> [ChannelChattingRealmModel]
@@ -51,16 +47,6 @@ extension RealmClient: DependencyKey {
                 realm.delete(object)
             }
         },
-        
-        // MARK: - Member 관련
-//        fetchMember: { userID in
-//            let realm = try Realm()
-//            return realm.object(ofType: MemberRealmModel.self, forPrimaryKey: userID)
-//        },
-//        fetchAllMembers: {
-//            let realm = try Realm()
-//            return Array(realm.objects(MemberRealmModel.self))
-//        },
         
         // MARK: - Channel Chatting 관련
         fetchChannelChat: { chatID in
