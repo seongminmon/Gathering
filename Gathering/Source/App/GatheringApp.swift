@@ -16,9 +16,10 @@ struct GatheringApp: App {
     
     var body: some Scene {
         WindowGroup {
-            WithPerceptionTracking {                
+            WithPerceptionTracking {
                 rootView()
-                    .onAppear { store.send(.onAppear) }
+                    .onAppear {
+                        store.send(.onAppear) }
                     .task { store.send(.task) }
             }
         }

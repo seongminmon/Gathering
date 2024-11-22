@@ -22,8 +22,8 @@ extension Date {
     
     func toString(_ dateFormat: DateFormat) -> String {
         Self.dateFormatter.dateFormat = dateFormat.rawValue
-        // View에 표시할 땐 현재 기기의 timeZone으로 설정하기 위해 기본값 사용하기
-        //Self.dateFormatter.timeZone = .gmt
+        // View에 표시할 땐 현재 기기의 timeZone과 locale인 기본값 사용
+        // Self.dateFormatter.timeZone = .gmt
         return Self.dateFormatter.string(from: self)
     }
 }

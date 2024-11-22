@@ -36,7 +36,7 @@
 		249FB0C92CEC711800CA418B /* MemberRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0C82CEC711800CA418B /* MemberRealmModel.swift */; };
 		249FB0CC2CEC9F4400CA418B /* ImageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0CB2CEC9F4400CA418B /* ImageRouter.swift */; };
 		249FB0CE2CEC9F5B00CA418B /* ImageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0CD2CEC9F5B00CA418B /* ImageClient.swift */; };
-		249FB0D22CECA8EE00CA418B /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0D12CECA8EE00CA418B /* RealmManager.swift */; };
+		249FB0D22CECA8EE00CA418B /* RealmClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0D12CECA8EE00CA418B /* RealmClient.swift */; };
 		249FB0DB2CECAB3B00CA418B /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0DA2CECAB3B00CA418B /* Token.swift */; };
 		249FB0FC2CECBCDB00CA418B /* BadgeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0FB2CECBCDB00CA418B /* BadgeModifier.swift */; };
 		249FB0FE2CEDA92000CA418B /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0FD2CEDA92000CA418B /* ImageCache.swift */; };
@@ -188,7 +188,7 @@
 		249FB0C82CEC711800CA418B /* MemberRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberRealmModel.swift; sourceTree = "<group>"; };
 		249FB0CB2CEC9F4400CA418B /* ImageRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRouter.swift; sourceTree = "<group>"; };
 		249FB0CD2CEC9F5B00CA418B /* ImageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageClient.swift; sourceTree = "<group>"; };
-		249FB0D12CECA8EE00CA418B /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		249FB0D12CECA8EE00CA418B /* RealmClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmClient.swift; sourceTree = "<group>"; };
 		249FB0DA2CECAB3B00CA418B /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		249FB0FB2CECBCDB00CA418B /* BadgeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeModifier.swift; sourceTree = "<group>"; };
 		249FB0FD2CEDA92000CA418B /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
@@ -347,7 +347,7 @@
 		249FB0C12CEC65FF00CA418B /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				249FB0D12CECA8EE00CA418B /* RealmManager.swift */,
+				249FB0D12CECA8EE00CA418B /* RealmClient.swift */,
 				249FB0C32CEC70E000CA418B /* Model */,
 			);
 			path = Database;
@@ -1033,7 +1033,7 @@
 				24ABE97D2CDCF15D000E7EC5 /* PayValidationRequest.swift in Sources */,
 				24ABE95F2CDB93B5000E7EC5 /* RoundButtonModifier.swift in Sources */,
 				24ABE9822CDE0FE9000E7EC5 /* ChannelRouter.swift in Sources */,
-				249FB0D22CECA8EE00CA418B /* RealmManager.swift in Sources */,
+				249FB0D22CECA8EE00CA418B /* RealmClient.swift in Sources */,
 				24ABE9902CDF0CFB000E7EC5 /* OwnerRequest.swift in Sources */,
 				24ABE96A2CDB9AB8000E7EC5 /* KakaoLoginButton.swift in Sources */,
 				A0E444E92CE2C3D80024AE71 /* DMOpponentRequest.swift in Sources */,
