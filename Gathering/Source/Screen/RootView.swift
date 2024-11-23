@@ -28,11 +28,11 @@ struct RootView: View {
     private func tabView() -> some View {
         TabView(selection: $tabInfo) {
             // MARK: - 홈
-            GatheringNavigationStack(gatheringImage: "bird2",title: "짹사모", profileImage: "bird3") {
+//            GatheringNavigationStack(gatheringImage: "bird2",title: "짹사모", profileImage: "bird3") {
                 HomeView(store: Store(initialState: HomeFeature.State()) {
                     HomeFeature()
                 })
-            }
+//            }
             .tabItem {
                 Image(tabInfo == .home ? .homeActive : .homeInactive)
                 Text(TabInfo.home.rawValue)
@@ -40,11 +40,11 @@ struct RootView: View {
             .tag(TabInfo.home)
             
             // MARK: - DM
-            NavigationStack {
+//            NavigationStack {
                 DMView(store: Store(initialState: DMFeature.State()) {
                     DMFeature()
                 })
-            }
+//            }
             .tabItem {
                 Image(tabInfo == .dm ? .messageActive : .messageInactive)
                 Text(TabInfo.dm.rawValue)
