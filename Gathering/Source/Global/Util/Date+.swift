@@ -26,6 +26,11 @@ extension Date {
         // Self.dateFormatter.timeZone = .gmt
         return Self.dateFormatter.string(from: self)
     }
+    
+    var isToday: Bool {
+        let calendar = Calendar.current
+        return calendar.isDateInToday(self)
+    }
 }
 
 extension String {
