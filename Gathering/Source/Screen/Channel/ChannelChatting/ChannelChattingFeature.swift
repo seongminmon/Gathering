@@ -26,15 +26,18 @@ struct ChannelChattingFeature {
         var selectedImages: [UIImage] = []
         var scrollViewID = UUID()
         var keyboardHeight: CGFloat = 0
+        
+        var messageButtonValid = false
     }
     
-    enum Action {
+    enum Action: BindableAction {
         case path(StackActionOf<Path>)
+        case binding(BindingAction<State>)
         case settingButtonTap
     }
     
     var body: some ReducerOf<Self> {
-        
+        BindingReducer()
         Reduce { state, action in
             switch action {
                 
@@ -42,8 +45,23 @@ struct ChannelChattingFeature {
                 state.path.append(
                     .channelSetting(ChannelSettingFeature.State()))
                 return .none
+                
             case .path:
                 return .none
+                
+            case .binding(\.messageText):
+                state.messageButtonValid = !state.messageText.isEmpty
+                || !state.selectedImages.isEmpty
+                return .none
+                
+            case .binding(\.selectedImages):
+                state.messageButtonValid = !state.selectedImages.isEmpty
+                || !state.selectedImages.isEmpty
+                return .none
+                
+            case .binding(_):
+                return .none
+                
             }
         }
         .forEach(\.path, action: \.path)

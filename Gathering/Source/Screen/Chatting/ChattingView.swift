@@ -16,13 +16,7 @@ struct ChattingView: View {
     
     @State private var messageText: String = ""
     @State private var selectedImages: [UIImage] = []
-    @State private var messages: [ChattingPresentModel] = [
-//        ChatMessage(name: "지수", text: "아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘", images: [], imageNames: ["bird"], isMine: false, profile: "bird"),
-//        ChatMessage(name: "아라", text: "그래그래 사진 보내줘~", images: [], imageNames: nil, isMine: false, profile: "bird2"),
-//        ChatMessage(name: "나야나", text: "아직 못보내~....", images: [], imageNames: nil, isMine: true, profile: "bird3"),
-//        ChatMessage(name: "성은", text: "^^>....", images: [], imageNames: nil, isMine: false, profile: "bird3")
-        
-    ]
+    @State private var messages: [ChattingPresentModel] = []
     @State private var scrollViewID = UUID()
     @State private var keyboardHeight: CGFloat = 0 // 키보드 높이 상태 저장
     
@@ -36,7 +30,9 @@ struct ChattingView: View {
                     ScrollView {
                         LazyVStack {
                             ForEach(messages) { message in
-                                ChatMessageView(message: message)
+//                                ChatMessageView(message: message)
+                                messageListView(message: message)
+                                
                             }
                         }
                         .padding(.horizontal, 20)
@@ -54,6 +50,7 @@ struct ChattingView: View {
                         }
                     }
                 }
+                // 채팅보내는 부분
                 messageInputView()
             }
             .onTapGesture {
@@ -103,6 +100,94 @@ struct ChattingView: View {
     //    }
 }
 extension ChattingView {
+    private func myMessageView(message: ChattingPresentModel) -> some View {
+        VStack(alignment: .trailing) {
+            HStack(alignment: .bottom) {
+                Spacer()
+                Text("오후 8:10")
+                    .font(Design.caption2)
+                    .foregroundStyle(Design.darkGray)
+                VStack(alignment: .leading) {
+                    if let text = message.text {
+                        Text(text)
+                            .font(Font.body)
+                            .padding(8)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12) // 둥근 모서리
+                                    .fill(Design.white) // 배경색 설정
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(Design.gray, lineWidth: 1) // 테두리 색과 두께 설정
+                            )
+                    }
+                }
+            }
+            
+        }
+        .frame(maxWidth: .infinity)
+    }
+    
+    private func othersMessageView(message: ChattingPresentModel) -> some View {
+        HStack(alignment: .top) {
+            ProfileImageView(urlString: message.profile ?? "bird",
+                             size: 34)
+            VStack(alignment: .leading) {
+                Text(message.name)
+                    .font(Design.caption)
+                HStack(alignment: .bottom) {
+                    VStack(alignment: .leading) {
+                        if let text = message.text {
+                            Text(text)
+                                .font(Font.body)
+                                .padding(8)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12) // 둥근 모서리
+                                        .fill(Design.white) // 배경색 설정
+                                )
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(Design.gray, lineWidth: 1) // 테두리 색과 두께 설정
+                                )
+                        }
+//                            if let imageName = message.imageNames {
+//                                ChattingImageView(imageNames: imageName)
+//                            }
+                    }
+                    Text("오후 8:10")
+                        .font(Design.caption2)
+                        .foregroundStyle(Design.darkGray)
+                    Spacer()
+                    
+                }
+                
+            }
+            .frame(maxWidth: .infinity)
+        }
+        .padding(.bottom, 5)
+
+    }
+    
+    @ViewBuilder
+    private func messageListView(message: ChattingPresentModel) -> some View {
+        if message.isMine {
+           myMessageView(message: message)
+        } else {
+           othersMessageView(message: message)
+        }
+    }
+}
+extension ChattingView {
+    
+    private func dynamicHeigtTextField() -> some View {
+        VStack {
+            TextField("메세지를 입력하세요", text: $messageText, axis: .vertical)
+                .lineLimit(1...5)
+                .background(Color.clear)
+                .font(Design.body)
+        }
+    }
+    
     private func messageInputView() -> some View {
         HStack {
             // 입력 뷰
@@ -116,7 +201,8 @@ extension ChattingView {
                 }
                 VStack(alignment: .leading) {
                     // 메시지 입력 필드
-                    DynamicHeightTextField(text: $messageText)
+//                    DynamicHeightTextField(text: $messageText)
+                    dynamicHeigtTextField()
                     if !selectedImages.isEmpty {
                         selectePhotoView(images: selectedImages)
                     }
@@ -176,107 +262,99 @@ extension ChattingView {
     }
 }
 
-// 채팅 메시지 뷰
-struct ChatMessageView: View {
-    var message: ChattingPresentModel
-    
-    var body: some View {
-        
-        if message.isMine {
-            VStack(alignment: .trailing) {
-                HStack(alignment: .bottom) {
-                    Spacer()
-                    Text("오후 8:10")
-                        .font(Design.caption2)
-                        .foregroundStyle(Design.darkGray)
-                    VStack(alignment: .leading) {
-                        if let text = message.text {
-                            Text(text)
-                                .font(Font.body)
-                                .padding(8)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 12) // 둥근 모서리
-                                        .fill(Design.white) // 배경색 설정
-                                )
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .stroke(Design.gray, lineWidth: 1) // 테두리 색과 두께 설정
-                                )
-                        }
-//                        if let imageName = message.imageNames {
-//                            ChattingImageView(imageNames: imageName)
+//// 채팅 메시지 뷰
+//struct ChatMessageView: View {
+//    var message: ChattingPresentModel
+//    
+//    var body: some View {
+//        
+//        if message.isMine {
+//            VStack(alignment: .trailing) {
+//                HStack(alignment: .bottom) {
+//                    Spacer()
+//                    Text("오후 8:10")
+//                        .font(Design.caption2)
+//                        .foregroundStyle(Design.darkGray)
+//                    VStack(alignment: .leading) {
+//                        if let text = message.text {
+//                            Text(text)
+//                                .font(Font.body)
+//                                .padding(8)
+//                                .background(
+//                                    RoundedRectangle(cornerRadius: 12) // 둥근 모서리
+//                                        .fill(Design.white) // 배경색 설정
+//                                )
+//                                .overlay(
+//                                    RoundedRectangle(cornerRadius: 12)
+//                                        .stroke(Design.gray, lineWidth: 1) // 테두리 색과 두께 설정
+//                                )
 //                        }
-                    }
-                }
-                
-            }
-            .frame(maxWidth: .infinity)
-        } else {
-            HStack(alignment: .top) {
-                ProfileImageView(urlString: message.profile ?? "bird",
-                                 size: 34)
-                VStack(alignment: .leading) {
-                    Text(message.name)
-                        .font(Design.caption)
-                    HStack(alignment: .bottom) {
-                        VStack(alignment: .leading) {
-                            if let text = message.text {
-                                Text(text)
-                                    .font(Font.body)
-                                    .padding(8)
-                                    .background(
-                                        RoundedRectangle(cornerRadius: 12) // 둥근 모서리
-                                            .fill(Design.white) // 배경색 설정
-                                    )
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 12)
-                                            .stroke(Design.gray, lineWidth: 1) // 테두리 색과 두께 설정
-                                    )
-                            }
-//                            if let imageName = message.imageNames {
-//                                ChattingImageView(imageNames: imageName)
+////                        if let imageName = message.imageNames {
+////                            ChattingImageView(imageNames: imageName)
+////                        }
+//                    }
+//                }
+//                
+//            }
+//            .frame(maxWidth: .infinity)
+//        } else {
+//            HStack(alignment: .top) {
+//                ProfileImageView(urlString: message.profile ?? "bird",
+//                                 size: 34)
+//                VStack(alignment: .leading) {
+//                    Text(message.name)
+//                        .font(Design.caption)
+//                    HStack(alignment: .bottom) {
+//                        VStack(alignment: .leading) {
+//                            if let text = message.text {
+//                                Text(text)
+//                                    .font(Font.body)
+//                                    .padding(8)
+//                                    .background(
+//                                        RoundedRectangle(cornerRadius: 12) // 둥근 모서리
+//                                            .fill(Design.white) // 배경색 설정
+//                                    )
+//                                    .overlay(
+//                                        RoundedRectangle(cornerRadius: 12)
+//                                            .stroke(Design.gray, lineWidth: 1) // 테두리 색과 두께 설정
+//                                    )
 //                            }
-                        }
-                        Text("오후 8:10")
-                            .font(Design.caption2)
-                            .foregroundStyle(Design.darkGray)
-                        Spacer()
-                        
-                    }
-                    
-                }
-                .frame(maxWidth: .infinity)
-            }
-            .padding(.bottom, 5)
-            
-        }
-        
-    }
-}
+////                            if let imageName = message.imageNames {
+////                                ChattingImageView(imageNames: imageName)
+////                            }
+//                        }
+//                        Text("오후 8:10")
+//                            .font(Design.caption2)
+//                            .foregroundStyle(Design.darkGray)
+//                        Spacer()
+//                        
+//                    }
+//                    
+//                }
+//                .frame(maxWidth: .infinity)
+//            }
+//            .padding(.bottom, 5)
+//            
+//        }
+//        
+//    }
+//}
 
-struct DynamicHeightTextField: View {
-    @Binding var text: String
-    private let placeholder = "메세지를 입력하세요"
-    
-    var body: some View {
-        VStack {
-            TextField("메세지를 입력하세요", text: $text, axis: .vertical)
-                .lineLimit(1...5)
-                .background(Color.clear)
-                .font(Design.body)
-        }
-    }
-}
+//struct DynamicHeightTextField: View {
+//    @Binding var text: String
+//    private let placeholder = "메세지를 입력하세요"
+//    
+//    var body: some View {
+//        VStack {
+//            TextField("메세지를 입력하세요", text: $text, axis: .vertical)
+//                .lineLimit(1...5)
+//                .background(Color.clear)
+//                .font(Design.body)
+//        }
+//    }
+//}
 
-extension View {
-    // 키보드 숨기기 메서드
-    func hideKeyboard() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
-                                        to: nil,
-                                        from: nil,
-                                        for: nil)
-    }
-}
+
 
 #Preview {
     ChattingView()

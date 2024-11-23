@@ -53,7 +53,12 @@ struct RootView: View {
             
             // MARK: - 검색
             NavigationStack {
-                ChattingView()
+                ChannelChattingView(
+                    store: Store(initialState: ChannelChattingFeature.State(),
+                                                 reducer: {
+                    ChannelChattingFeature()
+                })
+                )
             }
             .tabItem {
                 Image(tabInfo == .search ? .profileActive : .profileInactive)
