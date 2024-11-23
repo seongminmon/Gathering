@@ -16,9 +16,9 @@ struct ProfileView: View {
     var body: some View {
         WithPerceptionTracking {
             List {
-                    ProfileImageView(urlString: "bird2", size: 200)
+                ProfileImageView(urlString: "bird2", size: 200)
                     .frame(maxWidth: .infinity, alignment: .center)
-                        .listRowBackground(Color.clear)
+                    .listRowBackground(Color.clear)
                 
                 Section {
                     HStack {
@@ -48,32 +48,31 @@ struct ProfileView: View {
                     }
                 }
             }
-                .listStyle(.insetGrouped)
-                .navigationBarBackButtonHidden()
-                .customToolbar(
-                    title: store.state.profileType == .me ? "내 정보 수정" : "프로필",
-                    leftItem: .init(icon: .chevronLeft) {
-                        dismiss()
-                    }
-                )
-            }
-            .customAlert(
-                isPresented: $store.showAlert,
-                title: "로그아웃",
-                message: "로그아웃 하시겠습니까?",
-                primaryButton: .init(
-                    title: "확인",
-                    action: {
-                        store.send(.logoutConfirm)
-                    }
-                ),
-                secondaryButton: .init(
-                    title: "취소",
-                    action: {
-                        store.send(.logoutCancel)
-                    }
-                )
+            .listStyle(.insetGrouped)
+            .navigationBarBackButtonHidden()
+            .customToolbar(
+                title: store.state.profileType == .me ? "내 정보 수정" : "프로필",
+                leftItem: .init(icon: .chevronLeft) {
+                    dismiss()
+                }
             )
         }
+        .customAlert(
+            isPresented: $store.showAlert,
+            title: "로그아웃",
+            message: "로그아웃 하시겠습니까?",
+            primaryButton: .init(
+                title: "확인",
+                action: {
+                    store.send(.logoutConfirm)
+                }
+            ),
+            secondaryButton: .init(
+                title: "취소",
+                action: {
+                    store.send(.logoutCancel)
+                }
+            )
+        )
     }
-
+}

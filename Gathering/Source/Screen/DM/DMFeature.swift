@@ -15,6 +15,7 @@ struct DMFeature {
     @Dependency(\.workspaceClient) var workspaceClient
     @Dependency(\.userClient) var userClient
     @Dependency(\.dmsClient) var dmsClient
+    @Dependency(\.realmClient) var realmClient
     
     @ObservableState
     struct State {
@@ -148,6 +149,16 @@ struct DMFeature {
                 
             case .dmRoomsResponse(let result):
                 state.dmRoomList = result
+                for dmRoom in state.dmRoomList {
+                    // realm에서 roomID 기준으로 필터링
+                    do {
+                        let dmChats = try realmClient.fetchDMChats(dmRoom.id)
+                        print("RoomID:", dmRoom.id)
+                        print("dmChats:", dmChats)
+                    } catch {
+                        print("Realm DM 채팅 fetch 실패")
+                    }
+                }
                 return .none
                 
             case .inviteMemberResponse(let result):

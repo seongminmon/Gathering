@@ -44,10 +44,10 @@ enum UserDefaultsManager {
     static var workspaceID
     
     static var isLoggedIn: Bool {
-            !accessToken.isEmpty &&
-            !refreshToken.isEmpty &&
-            !userID.isEmpty
-        }
+        return !accessToken.isEmpty &&
+        !refreshToken.isEmpty &&
+        !userID.isEmpty
+    }
     
     static func refresh(_ accessToken: String) {
         UserDefaultsManager.accessToken = accessToken
@@ -62,7 +62,6 @@ enum UserDefaultsManager {
     static func recentWorkspaceID(_ workspaceID: String) {
         UserDefaultsManager.workspaceID = workspaceID
     }
-    
     
     static func removeAll() {
         UserDefaultsManager.accessToken = ""
