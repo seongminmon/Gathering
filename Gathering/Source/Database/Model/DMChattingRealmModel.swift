@@ -38,4 +38,21 @@ class DMChattingRealmModel: Object {
     }
 }
 
-extension DMChattingRealmModel: Identifiable {}
+extension DMChattingRealmModel: Identifiable {
+    func toResponseModel() -> DMsResponse {
+        let user = self.user?.toResponseModel() ?? MemberResponse(
+            user_id: "",
+            email: "",
+            nickname: "",
+            profileImage: nil
+        )
+        return DMsResponse(
+            dm_id: self.dmID,
+            room_id: self.roomID,
+            content: self.content,
+            createdAt: self.createdAt,
+            files: [], // TODO: - 변경 필요
+            user: user
+        )
+    }
+}

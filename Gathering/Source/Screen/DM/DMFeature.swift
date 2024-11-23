@@ -21,12 +21,15 @@ struct DMFeature {
     struct State {
         var isLoading = true
         
-        var myWorkspaceList: [WorkspaceResponse] = []
         var currentWorkspace: WorkspaceResponse?
         var myProfile: MyProfileResponse?
         
         var workspaceMembers: [Member] = []
         var dmRoomList: [DMsRoom] = []
+        
+        // DMRoom 별로 채팅들 + UnRead Count 가져야 함
+        var dmChattings = [DMsRoom: [DMsResponse]]()
+        var dmUnreads = [DMsRoom: UnreadDMsResponse]()
         
         // 멤버 초대
         var inviteMemberViewPresented = false
@@ -44,11 +47,15 @@ struct DMFeature {
         case inviteMemberButtonTap
         
         // MARK: - 내부 Action
-        case myWorkspaceListResponse([WorkspaceResponse])
+        case myWorkspaceResponse(WorkspaceResponse?)
         case myProfileResponse(MyProfileResponse)
-
+        
         case workspaceMemberResponse([Member])
         case dmRoomsResponse([DMsRoom])
+        
+        case addDMChats(DMsRoom, [DMsResponse])
+        case dmChatsResponse(DMsRoom, [DMsResponse])
+        case unreadCountResponse(DMsRoom, UnreadDMsResponse)
         
         case inviteMemberResponse(Member)
     }
@@ -57,6 +64,7 @@ struct DMFeature {
         BindingReducer()
         Reduce { state, action in
             switch action {
+                
             // MARK: - Binding
             case .binding(\.email):
                 state.inviteButtonValid = !state.email.isEmpty
@@ -78,17 +86,25 @@ struct DMFeature {
                 return .run { send in
                     do {
                         let (workspaceResult, profileResult) = try await fetchInitialData()
-                        await send(.myWorkspaceListResponse(workspaceResult))
                         await send(.myProfileResponse(profileResult))
                         
-                        // 워크스페이스 ID 추출 (첫 번째 워크스페이스 ID 사용)
-                        guard let workspaceID = workspaceResult.first?.workspace_id else {
-                            Notification.postToast(title: "현재 워크 스페이스 없음")
-                            return
+                        if let filtered = workspaceResult.filter(
+                            { $0.workspace_id == UserDefaultsManager.workspaceID }
+                        ).first {
+                            // UserDefaults에 있는 워크스페이스 선택
+                            await send(.myWorkspaceResponse(filtered))
+                        } else {
+                            // UserDefaults에 없으면 첫번째 워크스페이스 선택
+                            guard let workspaceID = workspaceResult.first?.workspace_id else {
+                                Notification.postToast(title: "현재 워크 스페이스 없음")
+                                return
+                            }
+                            UserDefaultsManager.recentWorkspaceID(workspaceID)
+                            await send(.myWorkspaceResponse(workspaceResult.first))
                         }
                         
                         let (memberResult, dmRoomResult) = try await fetchWorkspaceDetails(
-                            workspaceID: workspaceID
+                            workspaceID: UserDefaultsManager.workspaceID 
                         )
                         await send(.workspaceMemberResponse(memberResult))
                         await send(.dmRoomsResponse(dmRoomResult))
@@ -131,10 +147,8 @@ struct DMFeature {
                 state.isLoading = false
                 return .none
                 
-            case .myWorkspaceListResponse(let result):
-                state.myWorkspaceList = result
-                // MARK: - 임의로 첫번째 워크스페이스로 선택
-                state.currentWorkspace = result.first
+            case .myWorkspaceResponse(let workspace):
+                state.currentWorkspace = workspace
                 return .none
                 
             case .myProfileResponse(let result):
@@ -147,18 +161,65 @@ struct DMFeature {
                 state.workspaceMembers = filteredMembers
                 return .none
                 
-            case .dmRoomsResponse(let result):
-                state.dmRoomList = result
-                for dmRoom in state.dmRoomList {
-                    // realm에서 roomID 기준으로 필터링
-                    do {
-                        let dmChats = try realmClient.fetchDMChats(dmRoom.id)
-                        print("RoomID:", dmRoom.id)
-                        print("dmChats:", dmChats)
-                    } catch {
-                        print("Realm DM 채팅 fetch 실패")
-                    }
+            case .dmRoomsResponse(let dmRooms):
+                state.dmRoomList = dmRooms
+                
+                guard let workspaceID = state.currentWorkspace?.workspace_id else {
+                    Notification.postToast(title: "현재 워크 스페이스 없음")
+                    return .none
                 }
+                
+                // DM Room List 구한 뒤 모든 DM Room에 대한 Effect를 병렬로 실행
+                return .merge(state.dmRoomList.map { dmRoom in
+                        .run { send in
+                            do {
+                                // Realm에서 roomID 기준으로 DM 채팅 내역 가져오기
+                                let dmChats = try realmClient.fetchDMChats(dmRoom.id)
+                                let lastCreatedAt = dmChats.last?.createdAt ?? ""
+                                
+                                // realm에서 불러온 데이터들 state에 저장
+                                await send(.addDMChats(
+                                    dmRoom,
+                                    dmChats.map { $0.toResponseModel() }
+                                ))
+                                
+                                let (chats, unreadCount) = try await fetchDMRoomDetails(
+                                    workspaceID: workspaceID,
+                                    roomID: dmRoom.id,
+                                    lastCreatedAt: lastCreatedAt
+                                )
+                                
+                                await send(.dmChatsResponse(dmRoom, chats))
+                                await send(.unreadCountResponse(dmRoom, unreadCount))
+                            } catch {
+                                print("DM 채팅 조회 실패:", error)
+                            }
+                        }
+                })
+                
+            case .addDMChats(let dmRoom, let chats):
+                print("스테이트 DMChats에 추가하기", chats)
+                state.dmChattings[dmRoom, default: []].append(contentsOf: chats)
+                return .none
+                
+            case .dmChatsResponse(let dmRoom, let chats):
+                // dm 채팅 내역 리스트 조회 결과
+                state.dmChattings[dmRoom, default: []].append(contentsOf: chats)
+                
+                // Realm에 저장하기
+                chats.forEach {
+                    do {
+                        try realmClient.create($0.toRealmModel())
+                    } catch {
+                        print("Realm 추가 실패")
+                    }
+                    // TODO: - 파일매니저에 이미지 저장
+                }
+                return .none
+                
+            case .unreadCountResponse(let dmRoom, let unreadCount):
+                // dm 안 읽은 개수 조회 결과
+                state.dmUnreads[dmRoom] = unreadCount
                 return .none
                 
             case .inviteMemberResponse(let result):
@@ -170,13 +231,9 @@ struct DMFeature {
                 return .none
             }
         }
-        
     }
     
-    private func fetchInitialData() async throws -> (
-        workspaceList: [WorkspaceResponse],
-        profile: MyProfileResponse
-    ) {
+    private func fetchInitialData() async throws -> ([WorkspaceResponse], MyProfileResponse) {
         // 내가 속한 워크스페이스 리스트 조회
         async let workspaces = workspaceClient.fetchMyWorkspaceList()
         // 내 프로필 조회
@@ -186,12 +243,31 @@ struct DMFeature {
     
     private func fetchWorkspaceDetails(
         workspaceID: String
-    ) async throws -> (members: [Member], dmRooms: [DMsRoom]) {
-        // 내가 속한 특정 워크스페이스 정보 조회
-        // >> 워크 스페이스 멤버 리스트 얻기
+    ) async throws -> ([Member], [DMsRoom]) {
+        // 내가 속한 특정 워크스페이스 정보 조회 >> 워크 스페이스 멤버 리스트 얻기
         async let members = workspaceClient.fetchWorkspaceMembers(workspaceID)
         // DM 방 리스트 조회
         async let dmRooms = dmsClient.fetchDMSList(workspaceID)
         return try await (members.map { $0.toMember }, dmRooms.map { $0.toDmsRoom })
+    }
+    
+    private func fetchDMRoomDetails(
+        workspaceID: String,
+        roomID: String,
+        lastCreatedAt: String
+    ) async throws -> ([DMsResponse], UnreadDMsResponse) {
+        // DM 채팅 내역 리스트 조회 API
+        async let fetchChattings = dmsClient.fetchDMChatHistory(
+            workspaceID,
+            roomID,
+            lastCreatedAt
+        )
+        // unreadCount 조회 API
+        async let fetchUnreadCount = dmsClient.fetchUnreadDMCount(
+            workspaceID,
+            roomID,
+            lastCreatedAt
+        )
+        return try await (fetchChattings, fetchUnreadCount)
     }
 }

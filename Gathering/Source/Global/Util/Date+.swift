@@ -13,7 +13,8 @@ import Foundation
 enum DateFormat: String {
 //    case createdAt = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" // ISO 8601 형식
     case todayChat = "hh:mm a"
-    case pastChat = "MM/dd h:mm a"
+    case pastChat = "M/dd h:mm a"
+    case pastChatUntilDay = "yyyy년 M월 dd일"
 }
 
 extension Date {
