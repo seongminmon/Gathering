@@ -7,39 +7,43 @@
 
 import SwiftUI
 
+import ComposableArchitecture
+
 struct ChannelSettingView: View {
+    @Perception.Bindable var store: StoreOf<ChannelSettingFeature>
     
     var channelInfo = ChannelDummy.channelInfo
     @State private var isMemeberExpand = true
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                Text(channelInfo.name)
-                    .font(Design.title2)
-                    .padding(.vertical, 16)
+        WithPerceptionTracking {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    Text(channelInfo.name)
+                        .font(Design.title2)
+                        .padding(.vertical, 16)
+                    
+                    Text(channelInfo.description ?? "")
+                        .font(Design.body)
+                    
+                    CustomDisclosureGroup(
+                        label: "멤버 (\(channelInfo.channelMembers?.count ?? 0))",
+                        isExpanded: $isMemeberExpand) {
+                            memberGridView()
+                        }
+                        .foregroundColor(Design.black)
+                    
+                    channelSettingButtonView()
+                }
+                .padding(.horizontal, 16)
                 
-                Text(channelInfo.description ?? "")
-                    .font(Design.body)
-                
-                CustomDisclosureGroup(
-                    label: "멤버 (\(channelInfo.channelMembers?.count ?? 0))",
-                    isExpanded: $isMemeberExpand) {
-                        memberGridView()
-                    }
-                    .foregroundColor(Design.black)
-                
-                channelSettingButtonView()
             }
-            .padding(.horizontal, 16)
-            
+            .frame(maxWidth: .infinity)
+            .customToolbar(title: "채널 설정",
+                           leftItem: .init(icon: "chevron.left", action: {
+                print("backbutton clicked")
+            }))
         }
-        .frame(maxWidth: .infinity)
-        .customToolbar(title: "채널 설정",
-                       leftItem: .init(icon: "chevron.left", action: {
-            print("backbutton clicked")
-        }))
-        
     }
     
     func memberGridView() -> some View {
@@ -153,11 +157,11 @@ struct ChannelDummy {
         MemberResponse(user_id: "ㅍ", email: "dsf", nickname: "gre", profileImage: "bird3")
     ]
     
-    static let messages: [ChattingPresentModel] = [
-        ChannelChattingResponse(name: "지수", text: "아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘", imageNames: ["star"], isMine: false, profile: "bird"),
-        ChannelChattingResponse(name: "아라", text: "그래그래 사진 보내줘~", imageNames: nil, isMine: false, profile: "bird2"),
-        ChannelChattingResponse(name: "나야나", text: "아직 못보내~....", imageNames: nil, isMine: true, profile: "bird3"),
-        ChannelChattingResponse(name: "성은", text: "^^>....", imageNames: nil, isMine: false, profile: "bird3")
+    static let messages: [ChatMessage] = [
+        ChatMessage(name: "지수", text: "아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘", images: [], imageNames: ["star"], isMine: false, profile: "bird"),
+        ChatMessage(name: "아라", text: "그래그래 사진 보내줘~", images: [], imageNames: nil, isMine: false, profile: "bird2"),
+        ChatMessage(name: "나야나", text: "아직 못보내~....", images: [], imageNames: nil, isMine: true, profile: "bird3"),
+        ChatMessage(name: "성은", text: "^^>....", images: [], imageNames: nil, isMine: false, profile: "bird3")
         
     ]
 }

@@ -23,19 +23,30 @@ struct GatheringApp: App {
                     .task { store.send(.task) }
             }
         }
+        
     }
     
     @ViewBuilder
     private func rootView() -> some View {
-        switch store.loginState {
-        case .success:
-            RootView()
-        case .fail:
-            OnboardingView(
-                store: store.scope(state: \.onboarding, action: \.onboarding)
-            )
-        case .loading:
-            ProgressView()
+        Group {
+            switch store.loginState {
+            case .success:
+                RootView()
+            case .fail:
+                OnboardingView(
+                    store: store.scope(state: \.onboarding, action: \.onboarding)
+                )
+            case .loading:
+                ProgressView()
+            }
+        }
+        .onReceive(
+            NotificationCenter.default.publisher(for: .changeRoot)
+        ) { notification in
+            if let loginState = notification.userInfo?[Notification.UserInfoKey.changeRoot] as? AppFeature.LoginState {
+                
+                store.send(.updateLoginState(loginState), animation: .easeOut)
+            }
         }
     }
 }

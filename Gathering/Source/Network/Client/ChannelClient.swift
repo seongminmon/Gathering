@@ -16,8 +16,8 @@ struct ChannelClient {
     var fetchChannel: (String, String) async throws -> ChannelResponse
     var editChannel: (String, String, ChannelRequest) async throws -> ChannelResponse
     var deleteChannel: (String, String) async throws -> Void
-    var fetchChattingList: (String, String, String) async throws -> [ChattingResponse]
-    var sendChatting: (String, String, ChattingRequest) async throws -> ChattingResponse
+    var fetchChattingList: (String, String, String) async throws -> [ChannelChattingResponse]
+    var sendChatting: (String, String, ChattingRequest) async throws -> ChannelChattingResponse
     var fetchUnreadCount: (String, String, String) async throws -> UnreadCountResponse
     var fetchMembers: (String, String) async throws -> [MemberResponse]
     var changeOwner: (String, String, OwnerRequest) async throws -> ChannelResponse

@@ -12,6 +12,8 @@ import Combine
 import Alamofire
 
 struct ChattingView: View {
+    @Environment(\.dismiss) private var dismiss
+    
     @State private var messageText: String = ""
     @State private var selectedImages: [UIImage] = []
     @State private var messages: [ChatMessage] = [
@@ -62,15 +64,16 @@ struct ChattingView: View {
                 // 뷰가 사라질 때 키보드 노티피케이션 구독 해제
                 keyboardSubscriber?.cancel()
             }
-            .customToolbar(title: "#모야모여모여랏", 
+            .customToolbar(title: "#모야모여모여랏",
                            leftItem: .init(icon: "chevron.left") {
-                print("뒤로가기")
+                // TODO: 스와이프 제스쳐 살리는법??
+                dismiss()
             },
                            rightItem: .init(icon: "list.bullet") {
                 print("설정")
             })
 //            .navigationTitle("#모야모여모여랏")
-//            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden()
         }
         
     }

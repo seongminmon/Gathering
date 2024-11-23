@@ -15,34 +15,10 @@ struct HomeView: View {
     var body: some View {
         WithPerceptionTracking {
             ZStack(alignment: .bottomTrailing) {
-                scrollView()
+                coverLayer
                 makeFloatingButton {
                     store.send(.floatingButtonTap)
                 }
-            }
-            .sheet(
-                item: $store.scope(
-                    state: \.destination?.channelAdd,
-                    action: \.destination.channelAdd
-                )
-            ) { store in
-                CreateChannelView(store: store)
-            }
-            .fullScreenCover(
-                item: $store.scope(
-                    state: \.destination?.channelExplore,
-                    action: \.destination.channelExplore
-                )
-            ) { store in
-                ChannelExploreView(store: store)
-            }
-            .sheet(
-                item: $store.scope(
-                    state: \.destination?.inviteMember,
-                    action: \.destination.inviteMember
-                )
-            ) { store in
-                InviteMemberView(store: store)
             }
             .confirmationDialog(
                 store: self.store.scope(
@@ -52,6 +28,7 @@ struct HomeView: View {
             )
         }
     }
+
 }
 
 extension HomeView {
@@ -172,5 +149,59 @@ extension HomeView {
             .padding(.trailing, 16)
             .padding(.bottom, 16)
         }
+    }
+}
+
+extension HomeView {
+    var navigationLayer: some View {
+        scrollView()
+            .navigationDestination(
+                item: $store.scope(
+                    state: \.destination?.channelChatting,
+                    action: \.destination.channelChatting
+                )
+            ) { store in
+                ChannelChattingView(store: store)
+            }
+            .navigationDestination(
+                item: $store.scope(
+                    state: \.destination?.DMChatting,
+                    action: \.destination.DMChatting
+                )
+            ) { store in
+                DMChattingView(store: store)
+            }
+    }
+    
+    var sheetLayer: some View {
+        navigationLayer
+            .sheet(
+                item: $store.scope(
+                    state: \.destination?.channelAdd,
+                    action: \.destination.channelAdd
+                )
+            ) { store in
+                CreateChannelView(store: store)
+            }
+            .sheet(
+                item: $store.scope(
+                    state: \.destination?.inviteMember,
+                    action: \.destination.inviteMember
+                )
+            ) { store in
+                InviteMemberView(store: store)
+            }
+    }
+    
+    var coverLayer: some View {
+        sheetLayer
+            .fullScreenCover(
+                item: $store.scope(
+                    state: \.destination?.channelExplore,
+                    action: \.destination.channelExplore
+                )
+            ) { store in
+                ChannelExploreView(store: store)
+            }
     }
 }

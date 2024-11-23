@@ -9,11 +9,13 @@ import Foundation
 
 extension Notification.Name {
     static let showToast = Notification.Name("ShowToast")
+    static let changeRoot = Notification.Name("ChangeRoot")
 }
 
 extension Notification {
     enum UserInfoKey {
         static let toast = "toast"
+        static let changeRoot = "ChangeRoot"
     }
 
     var toast: Toast? {
@@ -28,4 +30,12 @@ extension Notification {
             userInfo: [UserInfoKey.toast: toast]
         )
     }
+    
+    static func changeRoot(_ route: AppFeature.LoginState) {
+            NotificationCenter.default.post(
+                name: .changeRoot,
+                object: nil,
+                userInfo: [UserInfoKey.changeRoot: route]
+            )
+        }
 }

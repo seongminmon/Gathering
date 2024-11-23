@@ -22,7 +22,6 @@ struct AppFeature {
     struct State {
         var toast: Toast?
         var loginState: LoginState = .loading
-        
         var onboarding = OnboardingFeature.State()
     }
     
@@ -32,7 +31,7 @@ struct AppFeature {
         case task
         case loginSuccess(Token)
         case loginFail
-        
+        case updateLoginState(LoginState)
         case onboarding(OnboardingFeature.Action)
     }
     
@@ -74,10 +73,10 @@ struct AppFeature {
                                 refreshToken: UserDefaultsManager.refreshToken
                             )
                         )
-                        await send(.loginSuccess(result))
+                        await send(.loginSuccess(result), animation: .easeIn)
                         
                     } catch {
-                        await send(.loginFail)
+                        await send(.loginFail, animation: .easeIn)
                     }
                 }
                 
@@ -92,7 +91,6 @@ struct AppFeature {
                 print("자동 로그인 실패 (리프레시 토큰 만료)")
                 state.loginState = .fail
                 return .none
-                
             case .onboarding(.loginPopUp(.emailLogin(.logInResponse))):
                 print("이메일 로그인 성공!")
                 state.loginState = .success
@@ -104,6 +102,10 @@ struct AppFeature {
                 return .none
                 
             case .onboarding:
+                return .none
+                
+            case let .updateLoginState(newState):
+                state.loginState = newState
                 return .none
             }
         }

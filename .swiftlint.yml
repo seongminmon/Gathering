@@ -49,3 +49,8 @@ type_name:
 identifier_name:
     min_length: 2
     allowed_symbols: ["_"]  # 언더스코어(_) 허용
+
+# 중첩 타입 scope depth 제한
+nesting:
+    type_level:
+        warning: 3

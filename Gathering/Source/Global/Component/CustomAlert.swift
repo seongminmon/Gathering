@@ -73,14 +73,8 @@ struct CustomAlert: View {
                                 secondaryButton.action()
                             }
                         } label: {
-                            Text(secondaryButton.title)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 44)
-                                .background(Color(white: 0.9))
-                                .foregroundColor(.black)
-                                .font(.system(size: 15, weight: .medium))
-                                .cornerRadius(8)
-                        }
+                            
+                        }.asRoundButton(foregroundColor: Design.black, backgroundColor: Design.white.opacity(0.9))
                     }
                     
                     Button {
@@ -91,14 +85,8 @@ struct CustomAlert: View {
                             primaryButton.action()
                         }
                     } label: {
-                        Text(primaryButton.title)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 44)
-                            .background(Color.green)
-                            .foregroundColor(.white)
-                            .font(.system(size: 15, weight: .medium))
-                            .cornerRadius(8)
-                    }
+                        
+                    }.asRoundButton(foregroundColor: Design.white, backgroundColor: Design.green)
                     
                 }
                 .padding(.horizontal, 16)
