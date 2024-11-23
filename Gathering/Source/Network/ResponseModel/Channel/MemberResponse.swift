@@ -23,4 +23,12 @@ extension MemberResponse {
             profileImage: self.profileImage
         )
     }
+    
+    func toRealmModel() -> MemberRealmModel {
+        return MemberRealmModel(
+            userID: self.user_id,
+            email: self.email,
+            nickname: self.nickname
+        )
+    }
 }

@@ -13,7 +13,8 @@ import Foundation
 enum DateFormat: String {
 //    case createdAt = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" // ISO 8601 형식
     case todayChat = "hh:mm a"
-    case pastChat = "MM/dd h:mm a"
+    case pastChat = "M/dd h:mm a"
+    case pastChatUntilDay = "yyyy년 M월 dd일"
 }
 
 extension Date {
@@ -25,6 +26,11 @@ extension Date {
         // View에 표시할 땐 현재 기기의 timeZone과 locale인 기본값 사용
         // Self.dateFormatter.timeZone = .gmt
         return Self.dateFormatter.string(from: self)
+    }
+    
+    var isToday: Bool {
+        let calendar = Calendar.current
+        return calendar.isDateInToday(self)
     }
 }
 

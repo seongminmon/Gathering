@@ -14,7 +14,7 @@ struct DMsClient {
     var fetchDMSList: (String) async throws -> [DMsRoomResponse]
     var sendDMMessage: (String, String, DMRequest) async throws -> DMsResponse
     var fetchDMChatHistory: (String, String, String) async throws -> [DMsResponse]
-    var fetchUnreadDMCount: (String, String, String) async throws -> UnreadCountResponse
+    var fetchUnreadDMCount: (String, String, String) async throws -> UnreadDMsResponse
 }
 
 extension DMsClient: DependencyKey {

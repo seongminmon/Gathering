@@ -28,4 +28,13 @@ class MemberRealmModel: Object {
     }
 }
 
-extension MemberRealmModel: Identifiable {}
+extension MemberRealmModel: Identifiable {
+    func toResponseModel() -> MemberResponse {
+        return MemberResponse(
+            user_id: self.userID,
+            email: self.email,
+            nickname: self.nickname,
+            profileImage: nil // TODO: - 변경 필요
+        )
+    }
+}
