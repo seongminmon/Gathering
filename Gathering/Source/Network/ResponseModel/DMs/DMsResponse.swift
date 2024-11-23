@@ -29,4 +29,16 @@ extension DMsResponse {
             profile: user.profileImage
         )
     }
+    
+    func toRealmModel() -> DMChattingRealmModel {
+        let user = self.user.toRealmModel()
+        return DMChattingRealmModel(
+            dmID: self.dm_id,
+            roomID: self.room_id,
+            content: self.content,
+            createdAt: self.createdAt,
+            filesCount: self.files.count,
+            user: user
+        )
+    }
 }
