@@ -13,13 +13,16 @@ import ComposableArchitecture
 struct GatheringApp: App {
     
     let store = Store(initialState: AppFeature.State()) { AppFeature() }
+    @Dependency(\.realmClient) var realmClient
     
     var body: some Scene {
         WindowGroup {
             WithPerceptionTracking {
                 rootView()
                     .onAppear {
-                        store.send(.onAppear) }
+                        realmClient.printRealm()
+                        store.send(.onAppear)
+                    }
                     .task { store.send(.task) }
             }
         }
@@ -43,8 +46,9 @@ struct GatheringApp: App {
         .onReceive(
             NotificationCenter.default.publisher(for: .changeRoot)
         ) { notification in
-            if let loginState = notification.userInfo?[Notification.UserInfoKey.changeRoot] as? AppFeature.LoginState {
-                
+            if let loginState = notification.userInfo?[
+                Notification.UserInfoKey.changeRoot
+            ] as? AppFeature.LoginState {
                 store.send(.updateLoginState(loginState), animation: .easeOut)
             }
         }

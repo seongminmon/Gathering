@@ -11,6 +11,7 @@ import Dependencies
 import RealmSwift
 
 struct RealmClient {
+    var printRealm: () -> Void
     var create: @Sendable (Object) throws -> Void
     var update: @Sendable (Object) throws -> Void
     var delete: @Sendable (Object) throws -> Void
@@ -29,7 +30,9 @@ struct RealmClient {
 extension RealmClient: DependencyKey {
     static let liveValue = RealmClient(
         // MARK: - 기본 CRUD
-        create: { object in
+        printRealm: {
+            print(Realm.Configuration.defaultConfiguration.fileURL ?? "realm 경로 없음")
+        }, create: { object in
             let realm = try Realm()
             try realm.write {
                 realm.add(object)

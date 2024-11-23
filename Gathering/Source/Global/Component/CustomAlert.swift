@@ -74,7 +74,10 @@ struct CustomAlert: View {
                             }
                         } label: {
                             
-                        }.asRoundButton(foregroundColor: Design.black, backgroundColor: Design.white.opacity(0.9))
+                        }.asRoundButton(
+                            foregroundColor: Design.black,
+                            backgroundColor: Design.white.opacity(0.9)
+                        )
                     }
                     
                     Button {
