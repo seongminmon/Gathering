@@ -14,21 +14,22 @@ struct HomeView: View {
     
     var body: some View {
         WithPerceptionTracking {
-            ZStack(alignment: .bottomTrailing) {
-                coverLayer
-                makeFloatingButton {
-                    store.send(.floatingButtonTap)
+            GatheringNavigationStack(gatheringImage: "bird2",title: "짹사모", profileImage: "bird3") {
+                ZStack(alignment: .bottomTrailing) {
+                    coverLayer
+                    makeFloatingButton {
+                        store.send(.floatingButtonTap)
+                    }
                 }
-            }
-            .confirmationDialog(
-                store: self.store.scope(
-                    state: \.$confirmationDialog,
-                    action: \.confirmationDialog
+                .confirmationDialog(
+                    store: self.store.scope(
+                        state: \.$confirmationDialog,
+                        action: \.confirmationDialog
+                    )
                 )
-            )
+            }
         }
     }
-
 }
 
 extension HomeView {

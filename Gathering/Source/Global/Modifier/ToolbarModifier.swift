@@ -15,7 +15,7 @@ struct ToolbarConfig {
 
 extension ToolbarConfig {
     struct BarButton {
-        let icon: String
+        let icon: ImageResource
         let action: () -> Void
     }
 }
@@ -57,7 +57,7 @@ struct ToolbarModifier: ViewModifier {
     }
     private func makeBarButton(from item: ToolbarConfig.BarButton) -> some View {
         Button(action: item.action) {
-            Image(systemName: item.icon)
+            Image(item.icon)
                 .foregroundColor(Design.black)
         }
     }

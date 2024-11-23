@@ -15,7 +15,7 @@ struct ChannelExploreFeature {
     struct State {
         var channels: [Channel] = Dummy.channels
         var selectedChannel: Channel?
-        var showCustomAlert = false
+        var showAlert = false
     }
     
     enum Action: BindableAction {
@@ -35,16 +35,16 @@ struct ChannelExploreFeature {
                 
             case let .channelTap(channel):
                 state.selectedChannel = channel
-                state.showCustomAlert = true
+                state.showAlert = true
                 return .none
                 
             case .confirmJoinChannel:
                 // 여기에 채널 참여 로직 추가
-                state.showCustomAlert = false
+                state.showAlert = false
                 return .none
                 
             case .cancelJoinChannel:
-                state.showCustomAlert = false
+                state.showAlert = false
                 state.selectedChannel = nil
                 return .none
             }

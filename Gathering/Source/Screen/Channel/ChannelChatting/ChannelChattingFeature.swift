@@ -14,18 +14,18 @@ struct ChannelChattingFeature {
     
     @Reducer
     enum Path {
-        case channelSetting(RedFeature)
-        case profile(BlueFeature)
-        var message = ChannelDummy.messages
-        var messageText = ""
-        var selectedImages: [UIImage] = []
-        var scrollViewID = UUID()
-        var keyboardHeight: CGFloat = 0
+        case channelSetting(ChannelSettingFeature)
+        case profile(ProfileFeature)
     }
     
     @ObservableState
     struct State {
         var path = StackState<Path.State>()
+        var message = ChannelDummy.messages
+        var messageText = ""
+        var selectedImages: [UIImage] = []
+        var scrollViewID = UUID()
+        var keyboardHeight: CGFloat = 0
     }
     
     enum Action {
@@ -48,5 +48,4 @@ struct ChannelChattingFeature {
         }
         .forEach(\.path, action: \.path)
     }
-    
 }

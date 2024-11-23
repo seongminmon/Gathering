@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct GatheringNavigationStack<Content: View>: View {
+    @State private var showProfile = false
     let content: Content
     let title: String
     let gatheringImage: String
@@ -35,13 +37,27 @@ struct GatheringNavigationStack<Content: View>: View {
                         }
                     }
                     ToolbarItem(placement: .topBarTrailing) {
-                        ProfileImageView(urlString: profileImage, size: 30)
-                            .clipShape(Circle())
-                            .overlay(
-                                Circle()
-                                    .stroke(.black, lineWidth: 2)
-                            )
+                        Button {
+                            showProfile = true
+                        } label: {
+                            ProfileImageView(urlString: profileImage, size: 30)
+                                .clipShape(Circle())
+                                .overlay(Circle().stroke(.black, lineWidth: 2))
+                        }
                     }
+                }
+                .navigationDestination(isPresented: $showProfile) {
+                    ProfileView(
+                        store: Store(
+                            initialState: ProfileFeature.State(
+                                profileType: .me,
+                                nickname: "2일의기적",
+                                email: "miracle@gmail.com"
+                            )
+                        ) {
+                            ProfileFeature()
+                        }
+                    )
                 }
         }
     }

@@ -20,7 +20,7 @@ struct ChannelExploreView: View {
                     makeScrollView()
                 }
                 .customAlert(
-                    isPresented: $store.showCustomAlert,
+                    isPresented: $store.showAlert,
                     title: "채널 참여",
                     message: "[\(store.selectedChannel?.name ?? "")] 채널에 참여 하시겠습니까?",
                     primaryButton: .init(
