@@ -13,6 +13,8 @@ import ComposableArchitecture
 struct GatheringApp: App {
     
     let store = Store(initialState: AppFeature.State()) { AppFeature() }
+    
+    // MARK: - realm 경로 출력
     @Dependency(\.realmClient) var realmClient
     
     var body: some Scene {
@@ -20,6 +22,7 @@ struct GatheringApp: App {
             WithPerceptionTracking {
                 rootView()
                     .onAppear {
+                        // realm 경로 출력
                         realmClient.printRealm()
                         store.send(.onAppear)
                     }
