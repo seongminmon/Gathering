@@ -36,12 +36,15 @@
 		249FB0C92CEC711800CA418B /* MemberRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0C82CEC711800CA418B /* MemberRealmModel.swift */; };
 		249FB0CC2CEC9F4400CA418B /* ImageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0CB2CEC9F4400CA418B /* ImageRouter.swift */; };
 		249FB0CE2CEC9F5B00CA418B /* ImageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0CD2CEC9F5B00CA418B /* ImageClient.swift */; };
-		249FB0D22CECA8EE00CA418B /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0D12CECA8EE00CA418B /* RealmManager.swift */; };
+		249FB0D22CECA8EE00CA418B /* RealmClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0D12CECA8EE00CA418B /* RealmClient.swift */; };
 		249FB0DB2CECAB3B00CA418B /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0DA2CECAB3B00CA418B /* Token.swift */; };
 		249FB0FC2CECBCDB00CA418B /* BadgeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0FB2CECBCDB00CA418B /* BadgeModifier.swift */; };
 		249FB0FE2CEDA92000CA418B /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0FD2CEDA92000CA418B /* ImageCache.swift */; };
 		249FB1022CEF5E0600CA418B /* WorkspaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB1012CEF5E0600CA418B /* WorkspaceView.swift */; };
 		249FB1042CEF5E1000CA418B /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB1032CEF5E1000CA418B /* ProfileView.swift */; };
+		249FB1062CEF5FFD00CA418B /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB1052CEF5FFD00CA418B /* Member.swift */; };
+		249FB1082CEF602300CA418B /* DMsRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB1072CEF602300CA418B /* DMsRoom.swift */; };
+		249FB10A2CEF619A00CA418B /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB1092CEF619900CA418B /* Date+.swift */; };
 		24ABE91D2CD4AEDB000E7EC5 /* GatheringApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE91C2CD4AEDB000E7EC5 /* GatheringApp.swift */; };
 		24ABE9212CD4AEDD000E7EC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24ABE9202CD4AEDD000E7EC5 /* Assets.xcassets */; };
 		24ABE9242CD4AEDD000E7EC5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24ABE9232CD4AEDD000E7EC5 /* Preview Assets.xcassets */; };
@@ -192,12 +195,15 @@
 		249FB0C82CEC711800CA418B /* MemberRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberRealmModel.swift; sourceTree = "<group>"; };
 		249FB0CB2CEC9F4400CA418B /* ImageRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRouter.swift; sourceTree = "<group>"; };
 		249FB0CD2CEC9F5B00CA418B /* ImageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageClient.swift; sourceTree = "<group>"; };
-		249FB0D12CECA8EE00CA418B /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		249FB0D12CECA8EE00CA418B /* RealmClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmClient.swift; sourceTree = "<group>"; };
 		249FB0DA2CECAB3B00CA418B /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		249FB0FB2CECBCDB00CA418B /* BadgeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeModifier.swift; sourceTree = "<group>"; };
 		249FB0FD2CEDA92000CA418B /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		249FB1012CEF5E0600CA418B /* WorkspaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceView.swift; sourceTree = "<group>"; };
 		249FB1032CEF5E1000CA418B /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		249FB1052CEF5FFD00CA418B /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		249FB1072CEF602300CA418B /* DMsRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMsRoom.swift; sourceTree = "<group>"; };
+		249FB1092CEF619900CA418B /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		24ABE9192CD4AEDB000E7EC5 /* Gathering.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gathering.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24ABE91C2CD4AEDB000E7EC5 /* GatheringApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatheringApp.swift; sourceTree = "<group>"; };
 		24ABE9202CD4AEDD000E7EC5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -347,6 +353,7 @@
 			children = (
 				2447AB6C2CE32ED300399C4D /* Notification.swift */,
 				249FB0FD2CEDA92000CA418B /* ImageCache.swift */,
+				249FB1092CEF619900CA418B /* Date+.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -354,7 +361,7 @@
 		249FB0C12CEC65FF00CA418B /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				249FB0D12CECA8EE00CA418B /* RealmManager.swift */,
+				249FB0D12CECA8EE00CA418B /* RealmClient.swift */,
 				249FB0C32CEC70E000CA418B /* Model */,
 			);
 			path = Database;
@@ -703,6 +710,8 @@
 			children = (
 				A0E444C42CDD0A5C0024AE71 /* ChattingPresentModel.swift */,
 				847A3F8A2CD9EA54004A9361 /* TempModel.swift */,
+				249FB1052CEF5FFD00CA418B /* Member.swift */,
+				249FB1072CEF602300CA418B /* DMsRoom.swift */,
 			);
 			path = PresentModel;
 			sourceTree = "<group>";
@@ -1042,6 +1051,7 @@
 				84B8AD212CE3D55000011D73 /* HomeFeature.swift in Sources */,
 				A0E444CA2CDDF4520024AE71 /* ChattingPhotoPicker.swift in Sources */,
 				843E7FD92CE31BA10057A426 /* JoinRequest.swift in Sources */,
+				249FB1082CEF602300CA418B /* DMsRoom.swift in Sources */,
 				843E7FE12CE337550057A426 /* KakaoLoginRequest.swift in Sources */,
 				843E7FEF2CE349550057A426 /* ContactDetailFeature.swift in Sources */,
 				84B8AD172CE3696400011D73 /* UserClient.swift in Sources */,
@@ -1081,7 +1091,7 @@
 				24ABE95F2CDB93B5000E7EC5 /* RoundButtonModifier.swift in Sources */,
 				84E8A81F2CEF1B3E00589171 /* ChannelChattingView.swift in Sources */,
 				24ABE9822CDE0FE9000E7EC5 /* ChannelRouter.swift in Sources */,
-				249FB0D22CECA8EE00CA418B /* RealmManager.swift in Sources */,
+				249FB0D22CECA8EE00CA418B /* RealmClient.swift in Sources */,
 				24ABE9902CDF0CFB000E7EC5 /* OwnerRequest.swift in Sources */,
 				24ABE96A2CDB9AB8000E7EC5 /* KakaoLoginButton.swift in Sources */,
 				A0E444E92CE2C3D80024AE71 /* DMOpponentRequest.swift in Sources */,
@@ -1097,6 +1107,7 @@
 				843E7FDD2CE337330057A426 /* EmailValidationRequest.swift in Sources */,
 				2447AB7B2CE732C400399C4D /* TextFieldWithTitle.swift in Sources */,
 				2447AB642CE327C800399C4D /* ToastView.swift in Sources */,
+				249FB10A2CEF619A00CA418B /* Date+.swift in Sources */,
 				2447AB5C2CE22D1300399C4D /* APIError.swift in Sources */,
 				249FB0FC2CECBCDB00CA418B /* BadgeModifier.swift in Sources */,
 				843E7FDB2CE3283E0057A426 /* JoinLoginResponse.swift in Sources */,
@@ -1158,6 +1169,7 @@
 				843E7FC82CE21B9B0057A426 /* AppView.swift in Sources */,
 				249FB0DB2CECAB3B00CA418B /* Token.swift in Sources */,
 				843E7FD72CE30DC30057A426 /* UserRouter.swift in Sources */,
+				249FB1062CEF5FFD00CA418B /* Member.swift in Sources */,
 				847A3FA52CDE1183004A9361 /* ExploreChannelView.swift in Sources */,
 				249FB0C52CEC70EA00CA418B /* DMChattingRealmModel.swift in Sources */,
 				2447AB6D2CE32ED300399C4D /* Notification.swift in Sources */,
@@ -1338,6 +1350,7 @@
 		};
 		24ABE9292CD4AEDD000E7EC5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A0DBC1012CEE4C28008E4665 /* APIKey.xcconfig */;
 			baseConfigurationReference = 84E8A8122CEDA53600589171 /* APIKey.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;

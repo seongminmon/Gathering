@@ -18,8 +18,9 @@ struct GatheringApp: App {
         WindowGroup {
             WithPerceptionTracking {
                 rootView()
-                    .onAppear { store.send(.onAppear) }
-                    .task { await store.send(.task).finish() }
+                    .onAppear {
+                        store.send(.onAppear) }
+                    .task { store.send(.task) }
             }
         }
         

@@ -15,11 +15,9 @@ class ChannelChattingRealmModel: Object {
     @Persisted var chatID: String
     @Persisted var content: String?
     @Persisted var createdAt: String
-    // 채팅에 있는 사진들 (파일매니저에 저장됨)
-    // @Persisted var files: [String]
+    // 파일매니저에 저장된 채팅에 있는 사진 수
     @Persisted var filesCount: Int
-
-    @Persisted var user: MemberRealmModel
+    @Persisted var user: MemberRealmModel?
     @Persisted var savedDate: Date
     
     convenience init(
@@ -42,3 +40,5 @@ class ChannelChattingRealmModel: Object {
         self.savedDate = Date()
     }
 }
+
+extension ChannelChattingRealmModel: Identifiable {}
