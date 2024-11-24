@@ -75,7 +75,7 @@ struct HomeFeature {
         
         Reduce { state, action in
             switch action {
-            case .binding:
+            case .binding(_):
                 return .none
                 // MARK: destination -
             case .confirmationDialog(.presented(.createChannelButtonTap)):
@@ -108,7 +108,9 @@ struct HomeFeature {
                 ))
                 return .none
             case .dmTap:
-                state.destination = .DMChatting(DMChattingFeature.State())
+//                state.destination = .DMChattingView(
+//                    store: StoreOf<DMChattingFeature>
+//                )
                 return .none
             case .destination(.dismiss):
                 state.destination = nil

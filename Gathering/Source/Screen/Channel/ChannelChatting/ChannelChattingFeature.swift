@@ -116,8 +116,8 @@ struct ChannelChattingFeature {
         workspaceID: String
     ) async throws -> ChannelResponse {
         // 내가 속한 채널 조회
-        async let chennal = channelClient.fetchChannel(channelID, workspaceID)
-        return try await chennal
+        async let chennel = channelClient.fetchChannel(channelID, workspaceID)
+        return try await chennel
     }
     
     private func fetchChannelChatting(
@@ -131,6 +131,6 @@ struct ChannelChattingFeature {
             workspaceID,
             cursorDate
         )
-        return try await chattingList.map { $0.toChattingPresentModel() }
+        return try await chattingList.map { $0.toChattingPresentModel()}
     }
 }
