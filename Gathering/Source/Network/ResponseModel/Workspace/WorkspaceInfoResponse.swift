@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+// TODO: 이거 없어도 되나요?? 🤔
 struct WorkspaceInfoResponse: Decodable {
     let workspace_id: String
     let name: String
