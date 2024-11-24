@@ -18,7 +18,7 @@ enum UserRouter {
     case logout
     case saveDeviceToken(body: SaveDeviceTokenRequest) // FCM deviceToken 저장
     case fetchMyProfile // 내 프로필 정보 조회
-    case editMyProfile(body: EditMyProfileRequest) // 내 프로필 정보 수정 (이미지 수정)
+    case editMyProfile(body: EditMyProfileRequest) // 내 프로필 정보 수정 (이미지 제외)
     case editMyProfileImage(body: EditMyProfileImageRequest) // 내 프로필 사진 수정
     case fetchUserProfile(userID: String) // 다른 유저 프로필 조회
 }
@@ -124,8 +124,21 @@ extension UserRouter: TargetType {
             return try? JSONEncoder().encode(body)
         case .editMyProfile(let body):
             return try? JSONEncoder().encode(body)
+        default:
+            return nil
+        }
+    }
+    
+    var multipartData: [MultipartData]? {
+        switch self {
         case .editMyProfileImage(let body):
-            return try? JSONEncoder().encode(body)
+            return [
+                MultipartData(
+                    data: body.image,
+                    name: "image",
+                    fileName: "image.jpg"
+                )
+            ]
         default:
             return nil
         }
