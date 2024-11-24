@@ -88,7 +88,7 @@ struct HomeFeature {
                 ))
                 return .none
             case .dmTap:
-                state.destination = .DMChatting(DMChattingFeature.State())
+                state.destination = .DMChatting(DMChattingFeature.State(opponentID: "87b8dfe8-ed7c-4927-b2dd-9daac283758a"))
                 return .none
             case .destination(.dismiss):
                 state.destination = nil

@@ -24,6 +24,7 @@ struct DMChattingFeature {
     struct State {
         var path = StackState<Path.State>()
         
+        var opponentID: String = ""
         var message: [ChattingPresentModel] = []
         var messageText = ""
         var selectedImages: [UIImage] = []
