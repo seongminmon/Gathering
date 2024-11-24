@@ -69,7 +69,7 @@ struct ChannelSettingView: View {
             )
             // 채널 편집 화면
             .sheet(isPresented: $store.isEditChannelViewPresented) {
-                editChannelView()
+                EditChannelView()
             }
             // 관리자 변경 화면
             .sheet(isPresented: $store.isChangeAdminViewPresented) {
@@ -187,17 +187,32 @@ struct ChannelSettingView: View {
 //            SheetHeaderView(title: "채널 편집")
 //                .background(Design.white)
 //            ScrollView {
-//                // TODO: - first responder 만들기
-//                TextFieldWithTitle(
-//                    title: "채널 이름",
-//                    placeholder: "채널 이름을 입력해주세요.",
-//                    text: $store.email
-//                )
+//                VStack(spacing: 24) {
+//                    TextFieldWithTitle(
+//                        title: "채널 이름",
+//                        placeholder: "채널 이름을 입력해주세요",
+//                        text: $store.ddd
+//                    )
+//                    TextFieldWithTitle(
+//                        title: "채널 설명",
+//                        placeholder: "채널 설명을 입력해주세요",
+//                        text: $store.ddd
+//                    )
+//                }
 //                .padding()
 //            }
 //            .frame(maxWidth: .infinity, maxHeight: .infinity)
 //            
-//            inviteButton()
+//            Button {
+//                store.send(.inviteMemberButtonTap)
+//            } label: {
+//                RoundedButton(
+//                    text: "완료",
+//                    foregroundColor: Design.white,
+//                    backgroundColor: Design.green
+//                )
+//            }
+//            .disabled(!store.inviteButtonValid)
 //                .padding([.horizontal, .bottom])
 //        }
 //        .background(Design.gray)
@@ -205,5 +220,53 @@ struct ChannelSettingView: View {
     
     private func changeAdminView() -> some View {
         Text("changeAdminView")
+    }
+}
+
+struct EditChannelView: View {
+    
+    @State private var title: String = ""
+    @State private var description: String = ""
+    @State private var isButtonValid: Bool = false
+    
+    var body: some View {
+        VStack {
+            SheetHeaderView(title: "채널 편집")
+                .background(Design.white)
+            ScrollView {
+                VStack(spacing: 24) {
+                    TextFieldWithTitle(
+                        title: "채널 이름",
+                        placeholder: "채널 이름을 입력해주세요",
+                        text: $title
+                    )
+                    TextFieldWithTitle(
+                        title: "채널 설명",
+                        placeholder: "채널 설명을 입력해주세요",
+                        text: $description
+                    )
+                }
+                .padding()
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
+            Button {
+                print("완료 버튼 탭")
+                // TODO: - 채널 편집 API
+                // 성공 시 dismiss + 토스트
+            } label: {
+                RoundedButton(
+                    text: "완료",
+                    foregroundColor: Design.white,
+                    backgroundColor: isButtonValid ? Design.green : Design.darkGray
+                )
+            }
+            .disabled(!isButtonValid)
+                .padding([.horizontal, .bottom])
+        }
+        .background(Design.gray)
+        .onChange(of: title) { newValue in
+            isButtonValid = !newValue.isEmpty
+        }
     }
 }

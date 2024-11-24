@@ -48,6 +48,7 @@ struct ChannelSettingFeature {
         
         // 채널 나가기
         var isGetOutChannelAlertPresented = false
+        
     }
     
     enum Action: BindableAction {
