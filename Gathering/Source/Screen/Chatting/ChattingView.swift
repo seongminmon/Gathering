@@ -78,7 +78,8 @@ struct ChattingView: View {
     func sendMessage() {
         if !messageText.isEmpty || !selectedImages.isEmpty {
             messages.append(
-                ChattingPresentModel(name: "ㅇㄹㄴ",
+                ChattingPresentModel(id: "234rtrfd", 
+                                     name: "ㅇㄹㄴ",
                             text: messageText,
                             imageNames: [],
                             isMine: true,
