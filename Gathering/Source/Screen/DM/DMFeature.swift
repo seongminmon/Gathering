@@ -171,7 +171,7 @@ struct DMFeature {
                 
                 // DM Room List 구한 뒤 모든 DM Room에 대한 Effect를 병렬로 실행
                 return .merge(state.dmRoomList.map { dmRoom in
-                        .run { send in
+                        return .run { send in
                             do {
                                 // Realm에서 roomID 기준으로 DM 채팅 내역 가져오기
                                 let dmChats = try realmClient.fetchDMChats(dmRoom.id)
