@@ -73,11 +73,12 @@ struct CustomAlert: View {
                                 secondaryButton.action()
                             }
                         } label: {
-                            
-                        }.asRoundButton(
-                            foregroundColor: Design.black,
-                            backgroundColor: Design.white.opacity(0.9)
-                        )
+                            Text(secondaryButton.title)
+                                .asRoundButton(
+                                    foregroundColor: Design.black,
+                                    backgroundColor: Design.white.opacity(0.9)
+                                )
+                        }
                     }
                     
                     Button {
@@ -88,8 +89,9 @@ struct CustomAlert: View {
                             primaryButton.action()
                         }
                     } label: {
-                        
-                    }.asRoundButton(foregroundColor: Design.white, backgroundColor: Design.green)
+                        Text(primaryButton.title)
+                            .asRoundButton(foregroundColor: Design.white, backgroundColor: Design.green)
+                    }
                     
                 }
                 .padding(.horizontal, 16)
