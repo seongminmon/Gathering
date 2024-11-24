@@ -11,6 +11,7 @@ import ComposableArchitecture
 
 struct DMView: View {
     // TODO: - 간헐적으로 통신은 완료 되었는데 Loading 뷰가 사라지지 않는 현상
+    // TODO: - 네비게이션 화면 연결
     
     @Perception.Bindable var store: StoreOf<DMFeature>
     
