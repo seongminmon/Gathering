@@ -10,24 +10,47 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ChannelSettingView: View {
+    
+    // 채널 채팅 화면에서 메뉴 버튼 클릭시 전환되는 화면
+    // 이전 화면에서 채널에 대한 정보 전달
+    
+    // TODO: - 뷰
+    // 채널 이름
+    // 채널 설명
+    // 채널 멤버 리스트
+    
+    // 채널 관리자 여부에 따라 다른 버튼 표시
+    // 아닌 경우
+    // >> 채널에서 나가기
+    // 관리자인 경우
+    // >> 채널 편집, 채널에서 나가기, 채널 관리자 변경, 채널 삭제
+    
+    // TODO: - 화면 이동
+    // (네비게이션) 멤버 셀 선택 >> 다른 유저 프로필
+    // (시트) 채널 편집 >> 채널 편집 화면
+    // (얼럿) 채널에서 나가기 >> 채널 퇴장 화면
+    // (시트) 채널 관리자 변경 >> 채널 관리자 변경 화면
+    // (얼럿) 채널 삭제 >> 채널 삭제 화면
+    // 뒤로가기 >> dismiss
+    
     @Perception.Bindable var store: StoreOf<ChannelSettingFeature>
     
-    var channelInfo = ChannelDummy.channelInfo
+//    var channelInfo = ChannelDummy.channelInfo
     @State private var isMemeberExpand = true
     
     var body: some View {
         WithPerceptionTracking {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    Text(channelInfo.name)
+                    Text(store.currentChannel?.name ?? "채널명 없음")
                         .font(Design.title2)
                         .padding(.vertical, 16)
                     
-                    Text(channelInfo.description ?? "")
+                    Text(store.currentChannel?.description ?? "채널 설명 없음")
                         .font(Design.body)
                     
                     CustomDisclosureGroup(
-                        label: "멤버 (\(channelInfo.channelMembers?.count ?? 0))",
+                        label: "멤버 (\(store.currentChannel?.channelMembers?.count ?? 0))",
                         isExpanded: $isMemeberExpand) {
                             memberGridView()
                         }
@@ -36,17 +59,19 @@ struct ChannelSettingView: View {
                     channelSettingButtonView()
                 }
                 .padding(.horizontal, 16)
-                
             }
             .frame(maxWidth: .infinity)
-            .customToolbar(title: "채널 설정",
-                           leftItem: .init(icon: .chevronLeft, action: {
-                print("backbutton clicked")
-            }))
+            .customToolbar(
+                title: "채널 설정",
+                leftItem: .init(
+                    icon: .chevronLeft,
+                    action: { print("backbutton clicked") }
+                )
+            )
         }
     }
     
-    func memberGridView() -> some View {
+    private func memberGridView() -> some View {
         VStack {
             let columns = [
                 //추가 하면 할수록 화면에 보여지는 개수가 변함
@@ -56,112 +81,73 @@ struct ChannelSettingView: View {
                 GridItem(.flexible()),
                 GridItem(.flexible())
             ]
+            
             LazyVGrid(columns: columns, spacing: 10) {
-                if let members = channelInfo.channelMembers {
+                if let members = store.currentChannel?.channelMembers {
                     ForEach(members, id:  \.user_id) { member in
                         VStack(alignment: .center) {
-                            Image(member.profileImage ?? "bird")
-                                .resizable()
-                                .frame(width: 44, height: 44)
-                                .aspectRatio(contentMode: .fill)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                            ProfileImageView(urlString: member.profileImage ?? "", size: 44)
                             Text(member.nickname)
                                 .font(Design.body)
                                 .foregroundStyle(Design.darkGray)
                         }
                     }
                 }
-                
             }
         }
         .padding(.vertical, 16)
     }
     
-    func channelSettingButtonView() -> some View {
+    private func channelSettingButtonView() -> some View {
         VStack(spacing: 10) {
-            if channelInfo.owner_id == UserDefaultsManager.userID {
+            if store.currentChannel?.owner_id == UserDefaultsManager.userID {
                 Button {
                     //채널 편집 시트
                 } label: {
                     RoundedBorderButton(
-                        text: "채널 편집"
+                        text: "채널 편집",
+                        textColor: Design.black,
+                        borderColor: Design.black
                     )
                 }
                 Button {
                     //채널 편집 시트
                 } label: {
                     RoundedBorderButton(
-                        text: "채널에서 나가기"
+                        text: "채널에서 나가기",
+                        textColor: Design.black,
+                        borderColor: Design.black
                     )
                 }
                 Button {
                     //채널 편집 시트
                 } label: {
                     RoundedBorderButton(
-                        text: "채널 관리자 변경"
+                        text: "채널 관리자 변경",
+                        textColor: Design.black,
+                        borderColor: Design.black
                     )
                 }
                 Button {
                     //채널 편집 시트
                 } label: {
                     RoundedBorderButton(
-                        text: "채널 삭제"
+                        text: "채널 삭제",
+                        textColor: Design.red,
+                        borderColor: Design.red
                     )
-                    .foregroundColor(Design.red)
-                    
                 }
             } else {
                 Button {
                     //채널 편집 시트
                 } label: {
                     RoundedBorderButton(
-                        text: "채널에서 나가기"
+                        text: "채널에서 나가기",
+                        textColor: Design.black,
+                        borderColor: Design.black
                     )
                 }
             }
         }
     }
-    
-}
-//#Preview {
-//    ChannelSettingView()
-//}
-
-struct ChannelDummy {
-    static let channelInfo = ChannelResponse(
-        channel_id: "dfa",
-        name: "#그냥 떠들고 싶을 때",
-        description: "안녕하세요 새싹 여러분? 심심하셨죠? 이 채널은 나머지 모든 것을 위한 채널이에요. 팀원들이 농담하거나 순간적인 아이디어를 공유하는 곳이죠! 마음껏 즐기세요",
-        coverImage: nil,
-        owner_id: "sungeun",
-        createdAt: "dfs",
-        channelMembers: ChannelDummy.member
-    )
-    
-    static let member: [MemberResponse]  = [
-        MemberResponse(user_id: "sungeun", email: "dsf", nickname: "dfa", profileImage: "bird"),
-        MemberResponse(user_id: "dfad", email: "dsf", nickname: "123", profileImage: "bird"),
-        MemberResponse(user_id: "sunsfdgeun", email: "dsf", nickname: "dsf", profileImage: "bird2"),
-        MemberResponse(user_id: "ㄴㅇㄹㅁ", email: "dsf", nickname: "gre", profileImage: "bird3"),
-        MemberResponse(user_id: "ㅁㄴㅇㅎ", email: "dsf", nickname: "dfa", profileImage: "bird"),
-        MemberResponse(user_id: "ㅜㅠㅍ", email: "dsf", nickname: "123", profileImage: "bird"),
-        MemberResponse(user_id: "ㅔ", email: "dsf", nickname: "dsf", profileImage: "bird2"),
-        MemberResponse(user_id: "ㅋ", email: "dsf", nickname: "gre", profileImage: "bird3"),
-        MemberResponse(user_id: "5", email: "dsf", nickname: "dfa", profileImage: "bird"),
-        MemberResponse(user_id: "dfad", email: "dsf", nickname: "123", profileImage: "bird"),
-        MemberResponse(user_id: "ㅜ", email: "dsf", nickname: "dsf", profileImage: "bird2"),
-        MemberResponse(user_id: "ㅁ", email: "dsf", nickname: "gre", profileImage: "bird3"),
-        MemberResponse(user_id: "ㄴ", email: "dsf", nickname: "dfa", profileImage: "bird"),
-        MemberResponse(user_id: "ㅇ", email: "dsf", nickname: "123", profileImage: "bird"),
-        MemberResponse(user_id: "ㄹ", email: "dsf", nickname: "dsf", profileImage: "bird2"),
-        MemberResponse(user_id: "ㅍ", email: "dsf", nickname: "gre", profileImage: "bird3")
-    ]
-    
-    static let messages: [ChattingPresentModel] = [
-//        ChatMessage(name: "지수", text: "아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘", images: [], imageNames: ["star"], isMine: false, profile: "bird"),
-//        ChatMessage(name: "아라", text: "그래그래 사진 보내줘~", images: [], imageNames: nil, isMine: false, profile: "bird2"),
-//        ChatMessage(name: "나야나", text: "아직 못보내~....", images: [], imageNames: nil, isMine: true, profile: "bird3"),
-//        ChatMessage(name: "성은", text: "^^>....", images: [], imageNames: nil, isMine: false, profile: "bird3")
-//        
-    ]
 }
