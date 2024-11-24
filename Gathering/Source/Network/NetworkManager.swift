@@ -13,69 +13,14 @@ final class NetworkManager {
     static let shared = NetworkManager()
     private init() {}
     
-    // 공통 로직을 수행하는 내부 메서드
-    private func performRequest<Router: TargetType>(api: Router) async throws -> Data? {
-        let request = try api.asURLRequest()
-        let response = await AF.request(request).serializingData().response
-        let statusCode = response.response?.statusCode ?? 0
-        
-        switch statusCode {
-        case 200:
-            // 성공 시 데이터를 반환
-            print("\(api) 성공")
-            return response.data
-            
-        case 400, 500:
-            // 상태 코드가 400 또는 500일 때 ErrorResponse로 디코딩
-            do {
-                let errorData = try JSONDecoder().decode(
-                    ErrorResponse.self,
-                    from: response.data ?? Data()
-                )
-                print("\(api) 에러 \(errorData.errorCode)")
-                
-                // 엑세스 토큰 만료일 경우
-                if errorData.errorCode == APIError.accessTokenExpired.rawValue {
-                    do {
-                        // 토큰 갱신 통신
-                        let result: Token = try await NetworkManager.shared.request(
-                            api: AuthRouter.refreshToken(
-                                refreshToken: UserDefaultsManager.refreshToken
-                            )
-                        )
-                        // 엑세스 토큰 저장
-                        UserDefaultsManager.refresh(result.accessToken)
-                        // 기존 요청 재시도
-                        return try await performRequest(api: api)
-                    } catch {
-                        print("\(api) 토큰 갱신 에러")
-                        // TODO: - 온보딩 화면 이동
-                    }
-                }
-                throw errorData
-            } catch {
-                print("\(api) 에러 모델 디코딩 실패")
-                throw APIError.etc
-            }
-            
-        default:
-            print("\(api) 알 수 없는 에러")
-            throw APIError.etc
-        }
-    }
-    
     /// 데이터가 필요한 요청
-    func request<Router: TargetType, ModelType: Decodable>(api: Router) async throws -> ModelType {
-        guard let data = try await performRequest(api: api) else {
-            throw APIError.etc
-        }
-        
-        do {
-            return try JSONDecoder().decode(ModelType.self, from: data)
-        } catch {
-            print("\(api) 모델 디코딩 실패")
-            throw APIError.etc
-        }
+    func request<Router: TargetType, ModelType: Decodable>(
+        api: Router
+    ) async throws -> ModelType {
+        let data = api.multipartData == nil ?
+                   try await performRequest(api: api) :
+                   try await performMultipartRequest(api: api)
+        return try handleResponse(data: data, api: api)
     }
     
     /// 응답 데이터가 필요 없는 요청
@@ -83,9 +28,22 @@ final class NetworkManager {
         _ = try await performRequest(api: api)
     }
     
-    // TODO: - multipartFormData 요청
-    func requestWithMultipart<Router: TargetType>(api: Router) async throws {
-        
+    // ✅ 내 프로필 이미지 수정
+    
+    // ✅ 워크스페이스 생성
+    // ✅ 워크스페이스 편집
+    
+    // 채널 생성
+    // 채널 편집
+    // 채널 채팅 보내기
+    // DM 채팅 보내기
+    
+    /// MultipartFormData 요청
+    private func requestWithMultipart<Router: TargetType, ModelType: Decodable>(
+        api: Router
+    ) async throws -> ModelType {
+        let data = try await performMultipartRequest(api: api)
+        return try handleResponse(data: data, api: api)
     }
     
     /// 이미지 URL 통신 (메모리 캐시 적용)
@@ -110,6 +68,128 @@ final class NetworkManager {
             ImageCache.shared.setObject(uiImage, forKey: url as NSURL)
             return uiImage
         } else {
+            throw APIError.etc
+        }
+    }
+    
+    private func handleResponse<T: Decodable>(
+        data: Data?,
+        api: any TargetType
+    ) throws -> T {
+        guard let data = data else {
+            throw APIError.etc
+        }
+        
+        do {
+            return try JSONDecoder().decode(T.self, from: data)
+        } catch {
+            print("\(api) 모델 디코딩 실패")
+            throw APIError.etc
+        }
+    }
+    
+    private func handleError(
+        response: Data?,
+        api: any TargetType
+    ) async throws -> Error {
+        do {
+            let errorData = try JSONDecoder().decode(
+                ErrorResponse.self,
+                from: response ?? Data()
+            )
+            print("\(api) 에러 \(errorData.errorCode)")
+            
+            if errorData.errorCode == APIError.accessTokenExpired.rawValue {
+                return try await handleTokenRefresh(errorData: errorData)
+            }
+            return errorData
+        } catch {
+            print("\(api) 에러 모델 디코딩 실패")
+            return APIError.etc
+        }
+    }
+    
+    private func handleTokenRefresh(errorData: ErrorResponse) async throws -> Error {
+        do {
+            let result: Token = try await request(
+                api: AuthRouter.refreshToken(
+                    refreshToken: UserDefaultsManager.refreshToken
+                )
+            )
+            UserDefaultsManager.refresh(result.accessToken)
+            return errorData
+        } catch {
+            print("토큰 갱신 에러")
+            // TODO: - 온보딩 화면 이동
+            return error
+        }
+    }
+    
+    private func performRequest<Router: TargetType>(api: Router) async throws -> Data? {
+        let request = try api.asURLRequest()
+        let response = await AF.request(request).serializingData().response
+        return try await handleStatusCode(response: response, api: api)
+    }
+    
+    private func performMultipartRequest<Router: TargetType>(
+        api: Router
+    ) async throws -> Data? {
+        let request = try api.asURLRequest()
+        let response = await AF.upload(
+            multipartFormData: { multipartFormData in
+                // 일반 파라미터 추가
+                if let parameters = api.parameters {
+                    for (key, value) in parameters {
+                        let data = Data("\(value)".utf8)
+                        multipartFormData.append(data, withName: key)
+                    }
+                }
+                
+                // 멀티파트 데이터 추가
+                if let multipartDatas = api.multipartData {
+                    for item in multipartDatas {
+                        multipartFormData.append(
+                            item.data,
+                            withName: item.name,
+                            fileName: item.fileName,
+                            mimeType: item.mimeType
+                        )
+                    }
+                }
+            },
+            with: request
+        ).serializingData().response
+        
+        return try await handleStatusCode(response: response, api: api)
+    }
+    
+    private func handleStatusCode(
+        response: AFDataResponse<Data>,
+        api: any TargetType
+    ) async throws -> Data? {
+        let statusCode = response.response?.statusCode ?? 0
+        
+        switch statusCode {
+        case 200:
+            print("\(api) 성공")
+            return response.data
+            
+        case 400, 500:
+            let error = try await handleError(response: response.data, api: api)
+            
+            // 토큰 만료 에러인 경우 요청 재시도
+            if let errorResponse = error as? ErrorResponse,
+               errorResponse.errorCode == APIError.accessTokenExpired.rawValue {
+                if api.multipartData != nil {
+                    return try await performMultipartRequest(api: api)
+                } else {
+                    return try await performRequest(api: api)
+                }
+            }
+            throw error
+            
+        default:
+            print("\(api) 알 수 없는 에러")
             throw APIError.etc
         }
     }
