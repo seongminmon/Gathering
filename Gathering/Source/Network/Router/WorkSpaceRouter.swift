@@ -113,14 +113,49 @@ extension WorkspaceRouter: TargetType {
 
     var body: Data? {
         switch self {
-        case .createWorkspace(let body):
-            return try? JSONEncoder().encode(body)
-        case .editWorkspace(_, let body):
-            return try? JSONEncoder().encode(body)
         case .inviteMember(_, let body):
             return try? JSONEncoder().encode(body)
         case .changeWorkspaceAdmin(_, let body):
             return try? JSONEncoder().encode(body)
+        default:
+            return nil
+        }
+    }
+    
+    var multipartData: [MultipartData]? {
+        switch self {
+        case .createWorkspace(let body):
+            return [
+                MultipartData(
+                    data: body.name.data(using: .utf8) ?? Data(),
+                    name: "name"
+                ),
+                MultipartData(
+                    data: body.description?.data(using: .utf8) ?? Data(),
+                    name: "description"
+                ),
+                MultipartData(
+                    data: body.image,
+                    name: "image",
+                    fileName: "image.jpg"
+                )
+            ]
+        case .editWorkspace(_, let body):
+            return [
+                MultipartData(
+                    data: body.name?.data(using: .utf8) ?? Data(),
+                    name: "name"
+                ),
+                MultipartData(
+                    data: body.description?.data(using: .utf8) ?? Data(),
+                    name: "description"
+                ),
+                MultipartData(
+                    data: body.image ?? Data(),
+                    name: "image",
+                    fileName: "image.jpg"
+                )
+            ]
         default:
             return nil
         }

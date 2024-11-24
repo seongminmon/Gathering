@@ -136,21 +136,67 @@ extension ChannelRouter: TargetType {
     
     var body: Data? {
         switch self {
-        case .fetchMyChannelList,
-                .fetchChannelList,
-                .fetchChannel,
-                .deleteChannel,
-                .fetchChattingList,
-                .fetchUnreadCount,
-                .fetchMembers,
-                .exitChannel:
-            return nil
-        case .createChannel(_, let body), .editChannel(_, _, let body):
-            return try? JSONEncoder().encode(body)
-        case .sendChatting(_, _, let body):
-            return try? JSONEncoder().encode(body)
         case .changeOwner(_, _, let body):
             return try? JSONEncoder().encode(body)
+        default:
+            return nil
+        }
+    }
+    
+    var multipartData: [MultipartData]? {
+        switch self {
+        case .createChannel(_, let body):
+            return [
+                MultipartData(
+                    data: body.name.data(using: .utf8) ?? Data(),
+                    name: "name"
+                ),
+                MultipartData(
+                    data: body.description?.data(using: .utf8) ?? Data(),
+                    name: "description"
+                ),
+                MultipartData(
+                    data: body.image ?? Data(),
+                    name: "image",
+                    fileName: "image.jpg"
+                )
+            ]
+        case .editChannel(_, _, let body):
+            return [
+                MultipartData(
+                    data: body.name.data(using: .utf8) ?? Data(),
+                    name: "name"
+                ),
+                MultipartData(
+                    data: body.description?.data(using: .utf8) ?? Data(),
+                    name: "description"
+                ),
+                MultipartData(
+                    data: body.image ?? Data(),
+                    name: "image",
+                    fileName: "image.jpg"
+                )
+            ]
+        case .sendChatting(_, _, let body):
+            var multipartDataList = [
+                MultipartData(
+                    data: body.content?.data(using: .utf8) ?? Data(),
+                    name: "content"
+                )
+            ]
+            if let files = body.files {
+                files.enumerated().forEach { index, imageData in
+                    let multipartData = MultipartData(
+                        data: imageData,
+                        name: "image",
+                        fileName: "image\(index).jpg"
+                    )
+                    multipartDataList.append(multipartData)
+                }
+            }
+            return multipartDataList
+        default:
+            return nil
         }
     }
 }

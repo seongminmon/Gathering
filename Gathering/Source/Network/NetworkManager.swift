@@ -28,16 +28,6 @@ final class NetworkManager {
         _ = try await performRequest(api: api)
     }
     
-    // ✅ 내 프로필 이미지 수정
-    
-    // ✅ 워크스페이스 생성
-    // ✅ 워크스페이스 편집
-    
-    // 채널 생성
-    // 채널 편집
-    // 채널 채팅 보내기
-    // DM 채팅 보내기
-    
     /// MultipartFormData 요청
     private func requestWithMultipart<Router: TargetType, ModelType: Decodable>(
         api: Router
