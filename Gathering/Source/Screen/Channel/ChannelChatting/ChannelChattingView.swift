@@ -48,6 +48,7 @@ struct ChannelChattingView: View {
                 // 채팅보내는 부분
                 messageInputView()
             }
+            .task { store.send(.task) }
             .onTapGesture {
                 // 화면을 탭할 때 키보드 내리기
                 hideKeyboard()
@@ -56,7 +57,7 @@ struct ChannelChattingView: View {
                 // 뷰가 사라질 때 키보드 노티피케이션 구독 해제
                 keyboardSubscriber?.cancel()
             }
-            .customToolbar(title: "#모야모여모여랏",
+            .customToolbar(title: store.currentChannel?.name ?? "",
                            leftItem: .init(icon: .chevronLeft) {
                 // TODO: 스와이프 제스쳐 살리는법??
                 dismiss()
@@ -64,6 +65,7 @@ struct ChannelChattingView: View {
                            rightItem: .init(icon: .list) {
                 print("설정")
             })
+            .navigationBarBackButtonHidden()
         }
     }
 }
@@ -73,7 +75,7 @@ extension ChannelChattingView {
         VStack(alignment: .trailing) {
             HStack(alignment: .bottom) {
                 Spacer()
-                Text("오후 8:10")
+                Text(message.date.toString(.todayChat))
                     .font(Design.caption2)
                     .foregroundStyle(Design.darkGray)
                 VStack(alignment: .leading) {
@@ -123,7 +125,7 @@ extension ChannelChattingView {
 //                                ChattingImageView(imageNames: imageName)
 //                            }
                     }
-                    Text("오후 8:10")
+                    Text(message.date.toString(.todayChat))
                         .font(Design.caption2)
                         .foregroundStyle(Design.darkGray)
                     Spacer()

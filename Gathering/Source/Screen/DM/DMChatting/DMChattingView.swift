@@ -12,7 +12,7 @@ import Combine
 
 struct DMChattingView: View {
     
-    @Perception.Bindable var store: StoreOf<ChannelChattingFeature>
+    @Perception.Bindable var store: StoreOf<DMChattingFeature>
     
     @Environment(\.dismiss) private var dismiss
     var keyboardSubscriber: AnyCancellable?
@@ -25,9 +25,7 @@ struct DMChattingView: View {
                     ScrollView {
                         LazyVStack {
                             ForEach(store.message) { message in
-//                                ChatMessageView(message: message)
                                 messageListView(message: message)
-                                
                             }
                         }
                         .padding(.horizontal, 20)
@@ -56,14 +54,12 @@ struct DMChattingView: View {
                 // 뷰가 사라질 때 키보드 노티피케이션 구독 해제
                 keyboardSubscriber?.cancel()
             }
-            .customToolbar(title: "#모야모여모여랏",
+            .customToolbar(title: "",
                            leftItem: .init(icon: .chevronLeft) {
                 // TODO: 스와이프 제스쳐 살리는법??
                 dismiss()
-            },
-                           rightItem: .init(icon: .list) {
-                print("설정")
             })
+            .task { store.send(.task) }
         }
     }
 }
@@ -73,7 +69,7 @@ extension DMChattingView {
         VStack(alignment: .trailing) {
             HStack(alignment: .bottom) {
                 Spacer()
-                Text("오후 8:10")
+                Text(message.date.toString(.todayChat))
                     .font(Design.caption2)
                     .foregroundStyle(Design.darkGray)
                 VStack(alignment: .leading) {
@@ -123,7 +119,7 @@ extension DMChattingView {
 //                                ChattingImageView(imageNames: imageName)
 //                            }
                     }
-                    Text("오후 8:10")
+                    Text(message.date.toString(.todayChat))
                         .font(Design.caption2)
                         .foregroundStyle(Design.darkGray)
                     Spacer()

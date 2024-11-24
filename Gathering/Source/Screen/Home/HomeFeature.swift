@@ -83,7 +83,9 @@ struct HomeFeature {
                 state.destination = .inviteMember(InviteMemberFeature.State())
                 return .none
             case .channelTap:
-                state.destination = .channelChatting(ChannelChattingFeature.State())
+                state.destination = .channelChatting(ChannelChattingFeature.State(
+                    channelID: "f755a2b0-547a-4215-8f72-af1be294ce09", workspaceID: "4e31f58f-aedd-4b3a-a4cb-b7597fafe8d2"
+                ))
                 return .none
             case .dmTap:
                 state.destination = .DMChatting(DMChattingFeature.State())
