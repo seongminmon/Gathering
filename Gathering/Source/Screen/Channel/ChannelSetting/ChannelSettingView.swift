@@ -15,23 +15,25 @@ struct ChannelSettingView: View {
     // 이전 화면에서 채널에 대한 정보 전달
     
     // TODO: - 뷰
-    // 채널 이름
-    // 채널 설명
-    // 채널 멤버 리스트
+    // ✅ 채널 이름
+    // ✅ 채널 설명
+    // ✅ 채널 멤버 리스트
     
-    // 채널 관리자 여부에 따라 다른 버튼 표시
+    // ✅ 채널 관리자 여부에 따라 다른 버튼 표시
     // 아닌 경우
     // >> 채널에서 나가기
     // 관리자인 경우
     // >> 채널 편집, 채널에서 나가기, 채널 관리자 변경, 채널 삭제
     
-    // TODO: - 화면 이동
-    // (네비게이션) 멤버 셀 선택 >> 다른 유저 프로필
-    // (시트) 채널 편집 >> 채널 편집 화면
-    // (얼럿) 채널에서 나가기 >> 채널 퇴장 화면
-    // (시트) 채널 관리자 변경 >> 채널 관리자 변경 화면
-    // (얼럿) 채널 삭제 >> 채널 삭제 화면
+    // TODO: - 화면 이동 연결
+    // ✅ (네비게이션) 멤버 셀 선택 >> 다른 유저 프로필
+    // ✅ (시트) 채널 편집 >> 채널 편집 화면
+    // ✅ (얼럿) 채널에서 나가기 >> 채널 퇴장 화면
+    // ✅ (시트) 채널 관리자 변경 >> 채널 관리자 변경 화면
+    // ✅ (얼럿) 채널 삭제 >> 채널 삭제 화면
     // 뒤로가기 >> dismiss
+    
+    
     
     @Perception.Bindable var store: StoreOf<ChannelSettingFeature>
     
@@ -39,7 +41,7 @@ struct ChannelSettingView: View {
         WithPerceptionTracking {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    Text(store.currentChannel?.name ?? "채널명 없음")
+                    Text("#\(store.currentChannel?.name ?? "채널명 없음")")
                         .font(Design.title2)
                         .padding(.vertical, 16)
                     
@@ -67,11 +69,11 @@ struct ChannelSettingView: View {
             )
             // 채널 편집 화면
             .sheet(isPresented: $store.isEditChannelViewPresented) {
-                EditChannelView()
+                editChannelView()
             }
             // 관리자 변경 화면
             .sheet(isPresented: $store.isChangeAdminViewPresented) {
-                ChangeAdminView()
+                changeAdminView()
             }
             // 채널 삭제
             .customAlert(
@@ -82,14 +84,20 @@ struct ChannelSettingView: View {
             // 채널 나가기 (관리자)
             .customAlert(
                 isPresented: $store.isAdminGetOutChannelAlertPresented,
-                title: "채널 나가기 (관리자)",
-                message: ""
+                title: "채널에서 나가기",
+                message: "회원님은 채널 관리자입니다. 채널 관리자를 다른 멤버로 변경한 후 나갈 수 있습니다."
             )
             // 채널 나가기
             .customAlert(
                 isPresented: $store.isGetOutChannelAlertPresented,
-                title: "채널 나가기",
-                message: ""
+                title: "채널에서 나가기",
+                message: "나가기를 하면 채널 목록에서 삭제됩니다.",
+                primaryButton: CustomAlert.AlertButton(title: "나가기") {
+                    store.send(.getOutButtonTap)
+                },
+                secondaryButton: CustomAlert.AlertButton(title: "취소") {
+                    store.send(.getOutCancel)
+                }
             )
         }
     }
@@ -97,7 +105,6 @@ struct ChannelSettingView: View {
     private func memberGridView() -> some View {
         VStack {
             let columns = [
-                //추가 하면 할수록 화면에 보여지는 개수가 변함
                 GridItem(.flexible()),
                 GridItem(.flexible()),
                 GridItem(.flexible()),
@@ -173,16 +180,30 @@ struct ChannelSettingView: View {
             }
         }
     }
-}
-
-struct EditChannelView: View {
-    var body: some View {
-        Text("EditChannelView")
+    
+    private func editChannelView() -> some View {
+        Text("editChannelView")
+//        VStack {
+//            SheetHeaderView(title: "채널 편집")
+//                .background(Design.white)
+//            ScrollView {
+//                // TODO: - first responder 만들기
+//                TextFieldWithTitle(
+//                    title: "채널 이름",
+//                    placeholder: "채널 이름을 입력해주세요.",
+//                    text: $store.email
+//                )
+//                .padding()
+//            }
+//            .frame(maxWidth: .infinity, maxHeight: .infinity)
+//            
+//            inviteButton()
+//                .padding([.horizontal, .bottom])
+//        }
+//        .background(Design.gray)
     }
-}
-
-struct ChangeAdminView: View {
-    var body: some View {
-        Text("ChangeAdminView")
+    
+    private func changeAdminView() -> some View {
+        Text("changeAdminView")
     }
 }

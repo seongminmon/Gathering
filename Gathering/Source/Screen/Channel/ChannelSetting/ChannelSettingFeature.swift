@@ -22,8 +22,8 @@ struct ChannelSettingFeature {
             name: "test",
             description: "test  채널입니다.",
             coverImage: "/static/channelCoverImages/1731223059386.jpg",
-//            owner_id: "973d62ec-1776-446f-90ea-f35d189bb7b3",
-            owner_id: "abcabc",
+            owner_id: "973d62ec-1776-446f-90ea-f35d189bb7b3",
+//            owner_id: "abcabc",
             createdAt: "2024-11-10T07:17:39.449Z",
             channelMembers: [
                 MemberResponse(
@@ -61,6 +61,8 @@ struct ChannelSettingFeature {
         
         // 관리자 X 버튼
         case getOutChannelButtonTap
+        case getOutButtonTap
+        case getOutCancel
     }
     
     var body: some ReducerOf<Self> {
@@ -81,8 +83,16 @@ struct ChannelSettingFeature {
             case .deleteChannelButtonTap:
                 state.idDeleteChannelAlertPresented = true
                 return .none
+                
             case .getOutChannelButtonTap:
                 state.isGetOutChannelAlertPresented = true
+                return .none
+            case .getOutButtonTap:
+                // TODO: - 채널 나가기 API
+                // TODO: - 나가기 성공 시 홈 화면으로 전환
+                return .none
+            case .getOutCancel:
+                state.isGetOutChannelAlertPresented = false
                 return .none
             }
         }
