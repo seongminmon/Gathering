@@ -16,33 +16,38 @@ struct InviteMemberView: View {
     
     var body: some View {
         WithPerceptionTracking {
-            VStack(spacing: 0) {
+            VStack {
                 SheetHeaderView(title: "팀원 초대")
-                
-                Spacer()
-                VStack(alignment: .leading, spacing: 20) {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("채널 이름")
-                            .font(.title2)
-                        TextField("", text: $userEmail)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                    }
-                    Spacer()
-                    
-                    // TODO: 컴포넌트 써야함
-                    Button(action: {
-                    }) {
-                        Text("초대 보내기")
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Design.green)
-                            .cornerRadius(8)
-                    }
+                    .background(Design.white)
+                ScrollView {
+                    // TODO: - first responder 만들기
+                    TextFieldWithTitle(
+                        title: "이메일",
+                        placeholder: "초대하려는 팀원의 이메일을 입력하세요.",
+                        text: $store.email
+                    )
+                    .padding()
                 }
-                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
+                inviteButton()
+                    .padding([.horizontal, .bottom])
             }
-            .background(Design.background)
+            .background(Design.gray)
         }
     }
+        private func inviteButton() -> some View {
+            Button {
+                store.send(.inviteMemberButtonTap)
+            } label: {
+                RoundedButton(
+                    text: "초대 보내기",
+                    foregroundColor: Design.white,
+                    backgroundColor: Design.green
+                )
+            }
+            .disabled(!store.inviteButtonValid)
+        }
+    
 }
+
