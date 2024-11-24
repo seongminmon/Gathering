@@ -87,8 +87,31 @@ extension DMsRouter: TargetType {
         switch self {
         case .fetchOrCreateDM(_, let body):
             return try? JSONEncoder().encode(body)
+        default:
+            return nil
+        }
+    }
+    
+    var multipartData: [MultipartData]? {
+        switch self {
         case .sendDMMessage(_, _, let body):
-            return try? JSONEncoder().encode(body)
+            var multipartDataList = [
+                MultipartData(
+                    data: body.content?.data(using: .utf8) ?? Data(),
+                    name: "content"
+                )
+            ]
+            if let files = body.files {
+                files.enumerated().forEach { index, imageData in
+                    let multipartData = MultipartData(
+                        data: imageData,
+                        name: "image",
+                        fileName: "image\(index).jpg"
+                    )
+                    multipartDataList.append(multipartData)
+                }
+            }
+            return multipartDataList
         default:
             return nil
         }

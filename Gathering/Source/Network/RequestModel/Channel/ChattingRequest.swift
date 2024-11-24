@@ -8,6 +8,6 @@
 import Foundation
 
 struct ChattingRequest: Encodable {
-    let content: String
-    let files: [String]
+    let content: String?
+    let files: [Data]?
 }

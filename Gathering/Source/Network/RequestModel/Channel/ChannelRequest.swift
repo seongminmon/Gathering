@@ -9,6 +9,6 @@ import Foundation
 
 struct ChannelRequest: Encodable {
     let name: String
-    let description: String? = nil
-    let image: String? = nil
+    let description: String?
+    let image: Data?
 }
