@@ -14,7 +14,9 @@ struct HomeView: View {
     
     var body: some View {
         WithPerceptionTracking {
-            GatheringNavigationStack(gatheringImage: "bird2",title: "짹사모", profileImage: "bird3") {
+            GatheringNavigationStack(gatheringImage: store.currentWorkspace?.coverImage ?? "",
+                                     title: store.currentWorkspace?.name ?? "",
+                                     myprofileData: store.myProfile) {
                 ZStack(alignment: .bottomTrailing) {
                     coverLayer
                     makeFloatingButton {
@@ -28,6 +30,7 @@ struct HomeView: View {
                     )
                 )
             }
+            
         }
     }
 }
@@ -64,6 +67,7 @@ extension HomeView {
             }
             .padding(EdgeInsets(top: 5, leading: 15, bottom: 0, trailing: 0))
         }
+        .task { store.send(.task) }
     }
     
     private func channelListView() -> some View {

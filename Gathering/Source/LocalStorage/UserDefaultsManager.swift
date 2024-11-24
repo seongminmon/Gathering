@@ -67,5 +67,6 @@ enum UserDefaultsManager {
         UserDefaultsManager.accessToken = ""
         UserDefaultsManager.refreshToken = ""
         UserDefaultsManager.userID = ""
+        UserDefaultsManager.workspaceID = ""
     }
 }
