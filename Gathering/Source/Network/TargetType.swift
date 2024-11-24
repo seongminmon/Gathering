@@ -17,6 +17,7 @@ protocol TargetType: URLRequestConvertible {
     var parameters: Parameters? { get }
     var encoding: ParameterEncoding { get }
     var body: Data? { get }
+    var multipartData: [MultipartData]? { get }
 }
 
 extension TargetType {
@@ -42,5 +43,9 @@ extension TargetType {
             request.httpBody = body
         }
         return try encoding.encode(request, with: parameters)
+    }
+    
+    var multipartData: [MultipartData]? {
+        return nil
     }
 }
