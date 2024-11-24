@@ -35,9 +35,6 @@ struct ChannelSettingView: View {
     
     @Perception.Bindable var store: StoreOf<ChannelSettingFeature>
     
-//    var channelInfo = ChannelDummy.channelInfo
-    @State private var isMemeberExpand = true
-    
     var body: some View {
         WithPerceptionTracking {
             ScrollView {
@@ -51,7 +48,7 @@ struct ChannelSettingView: View {
                     
                     CustomDisclosureGroup(
                         label: "멤버 (\(store.currentChannel?.channelMembers?.count ?? 0))",
-                        isExpanded: $isMemeberExpand) {
+                        isExpanded: $store.isMemeberExpand) {
                             memberGridView()
                         }
                         .foregroundColor(Design.black)
@@ -67,6 +64,32 @@ struct ChannelSettingView: View {
                     icon: .chevronLeft,
                     action: { print("backbutton clicked") }
                 )
+            )
+            // 채널 편집 화면
+            .sheet(isPresented: $store.isEditChannelViewPresented) {
+                EditChannelView()
+            }
+            // 관리자 변경 화면
+            .sheet(isPresented: $store.isChangeAdminViewPresented) {
+                ChangeAdminView()
+            }
+            // 채널 삭제
+            .customAlert(
+                isPresented: $store.idDeleteChannelAlertPresented,
+                title: "채널 삭제",
+                message: ""
+            )
+            // 채널 나가기 (관리자)
+            .customAlert(
+                isPresented: $store.isAdminGetOutChannelAlertPresented,
+                title: "채널 나가기 (관리자)",
+                message: ""
+            )
+            // 채널 나가기
+            .customAlert(
+                isPresented: $store.isGetOutChannelAlertPresented,
+                title: "채널 나가기",
+                message: ""
             )
         }
     }
@@ -102,7 +125,7 @@ struct ChannelSettingView: View {
         VStack(spacing: 10) {
             if store.currentChannel?.owner_id == UserDefaultsManager.userID {
                 Button {
-                    //채널 편집 시트
+                    store.send(.editChannelButtonTap)
                 } label: {
                     RoundedBorderButton(
                         text: "채널 편집",
@@ -111,7 +134,7 @@ struct ChannelSettingView: View {
                     )
                 }
                 Button {
-                    //채널 편집 시트
+                    store.send(.adminGetOutChannelButtonTap)
                 } label: {
                     RoundedBorderButton(
                         text: "채널에서 나가기",
@@ -120,7 +143,7 @@ struct ChannelSettingView: View {
                     )
                 }
                 Button {
-                    //채널 편집 시트
+                    store.send(.changeAdminButtonTap)
                 } label: {
                     RoundedBorderButton(
                         text: "채널 관리자 변경",
@@ -129,7 +152,7 @@ struct ChannelSettingView: View {
                     )
                 }
                 Button {
-                    //채널 편집 시트
+                    store.send(.deleteChannelButtonTap)
                 } label: {
                     RoundedBorderButton(
                         text: "채널 삭제",
@@ -139,7 +162,7 @@ struct ChannelSettingView: View {
                 }
             } else {
                 Button {
-                    //채널 편집 시트
+                    store.send(.getOutChannelButtonTap)
                 } label: {
                     RoundedBorderButton(
                         text: "채널에서 나가기",
@@ -149,5 +172,17 @@ struct ChannelSettingView: View {
                 }
             }
         }
+    }
+}
+
+struct EditChannelView: View {
+    var body: some View {
+        Text("EditChannelView")
+    }
+}
+
+struct ChangeAdminView: View {
+    var body: some View {
+        Text("ChangeAdminView")
     }
 }
