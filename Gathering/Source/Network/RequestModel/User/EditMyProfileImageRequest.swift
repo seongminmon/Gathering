@@ -8,5 +8,5 @@
 import Foundation
 
 struct EditMyProfileImageRequest: Encodable {
-    let image: String
+    let image: Data
 }

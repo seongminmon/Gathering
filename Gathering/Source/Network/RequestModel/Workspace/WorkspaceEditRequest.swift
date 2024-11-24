@@ -11,5 +11,4 @@ struct WorkspaceEditRequest: Encodable {
     let name: String? = nil
     let description: String? = nil
     let image: Data? = nil
-    
 }
