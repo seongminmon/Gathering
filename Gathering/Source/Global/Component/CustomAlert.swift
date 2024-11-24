@@ -76,7 +76,7 @@ struct CustomAlert: View {
                             Text(secondaryButton.title)
                                 .asRoundButton(
                                     foregroundColor: Design.black,
-                                    backgroundColor: Design.white.opacity(0.9)
+                                    backgroundColor: Design.gray
                                 )
                         }
                     }
@@ -90,7 +90,8 @@ struct CustomAlert: View {
                         }
                     } label: {
                         Text(primaryButton.title)
-                            .asRoundButton(foregroundColor: Design.white, backgroundColor: Design.green)
+                            .asRoundButton(foregroundColor: Design.white,
+                                           backgroundColor: Design.green)
                     }
                     
                 }
