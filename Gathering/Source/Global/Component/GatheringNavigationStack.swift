@@ -6,43 +6,44 @@
 //
 
 import SwiftUI
+import UIKit
+
 import ComposableArchitecture
 
 struct GatheringNavigationStack<Content: View>: View {
     @State private var showProfile = false
+    @State var gatheringImage: String?
+    @State var myprofileData: MyProfileResponse?
     let content: Content
     let title: String
-    let gatheringImage: String
-    let profileImage: String
     
-    init(gatheringImage: String?,
+    init(gatheringImage: String,
          title: String,
-         profileImage: String?,
+         myprofileData: MyProfileResponse? = nil,
          content: () -> Content) {
         self.content = content()
         self.title = title
-        self.gatheringImage = gatheringImage ?? "bird"
-        self.profileImage = profileImage ?? "bird"
+        self.gatheringImage = gatheringImage
+        self.myprofileData = myprofileData
     }
     
     var body: some View {
         NavigationStack {
             content
                 .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
+                    ToolbarItem(placement: .principal) {
                         HStack {
-                            ProfileImageView(urlString: gatheringImage, size: 32)
+                            ProfileImageView(urlString: gatheringImage ?? "", size: 32)
                             Text(title)
                                 .font(Design.title1)
                         }
                     }
-                    ToolbarItem(placement: .topBarTrailing) {
+                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
                             showProfile = true
                         } label: {
-                            ProfileImageView(urlString: profileImage, size: 30)
-                                .clipShape(Circle())
-                                .overlay(Circle().stroke(.black, lineWidth: 2))
+                            ProfileImageView(urlString: myprofileData?.profileImage ?? "", size: 32)
                         }
                     }
                 }
@@ -51,13 +52,16 @@ struct GatheringNavigationStack<Content: View>: View {
                         store: Store(
                             initialState: ProfileFeature.State(
                                 profileType: .me,
-                                nickname: "2일의기적",
-                                email: "miracle@gmail.com"
+                                nickname: myprofileData?.nickname ?? "오류",
+                                email: myprofileData?.email ?? "오류"
                             )
                         ) {
                             ProfileFeature()
                         }
                     )
+                }
+                .task {
+                   print("sf")
                 }
         }
     }

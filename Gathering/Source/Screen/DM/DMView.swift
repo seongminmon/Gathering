@@ -18,9 +18,9 @@ struct DMView: View {
     var body: some View {
         WithPerceptionTracking {
             GatheringNavigationStack(
-                gatheringImage: store.currentWorkspace?.coverImage,
+                gatheringImage: store.currentWorkspace?.coverImage ?? "",
                 title: "Direct Message",
-                profileImage: store.myProfile?.profileImage
+                myprofileData: store.myProfile
             ) {
                 VStack {
                     if store.isLoading {
