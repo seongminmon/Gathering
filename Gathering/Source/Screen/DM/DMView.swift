@@ -20,7 +20,7 @@ struct DMView: View {
             GatheringNavigationStack(
                 gatheringImage: store.currentWorkspace?.coverImage ?? "",
                 title: "Direct Message",
-                myprofileData: store.myProfile
+                myProfile: store.myProfile
             ) {
                 VStack {
                     if store.isLoading {
