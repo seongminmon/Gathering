@@ -9,20 +9,18 @@ import SwiftUI
 
 struct RoundedBorderButton: View {
     var text: String
-    var textColor: Color
-    var borderColor: Color
     
     var body: some View {
         Text(text)
             .font(Design.title2)
-            .foregroundStyle(textColor)
+            .foregroundStyle(Design.black)
             .frame(maxWidth: .infinity)
             .frame(height: 44)
             .background(Design.white)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
-                    .stroke(borderColor, lineWidth: 1)
+                    .stroke(Design.black, lineWidth: 1)
             )
     }
 }

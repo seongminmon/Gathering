@@ -91,10 +91,6 @@ extension ChannelChattingView {
                                 RoundedRectangle(cornerRadius: 12)
                                     .stroke(Design.gray, lineWidth: 1) // 테두리 색과 두께 설정
                             )
-                        if !message.imageNames.isEmpty {
-                            ChattingImageView(imageNames: message.imageNames)
-                        }
-                        
                     }
                 }
             }

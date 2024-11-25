@@ -21,7 +21,6 @@ struct ChannelChattingResponse: Decodable {
 extension ChannelChattingResponse {
     func toChattingPresentModel() -> ChattingPresentModel {
         return ChattingPresentModel(
-            id: self.chat_id,
             name: self.user.nickname,
             text: self.content,
             imageNames: self.files,

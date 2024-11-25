@@ -9,7 +9,7 @@ import Foundation
 
 // 메시지 모델 정의
 struct ChattingPresentModel: Identifiable {
-    var id: String
+    var id = UUID()
     let name: String
     let text: String?
     let imageNames: [String]

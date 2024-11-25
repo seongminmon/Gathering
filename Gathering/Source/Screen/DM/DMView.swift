@@ -161,7 +161,7 @@ struct DMView: View {
             RoundedButton(
                 text: "초대 보내기",
                 foregroundColor: Design.white,
-                backgroundColor: store.inviteButtonValid ? Design.green : Design.darkGray
+                backgroundColor: Design.green
             )
         }
         .disabled(!store.inviteButtonValid)

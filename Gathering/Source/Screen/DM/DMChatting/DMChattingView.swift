@@ -54,13 +54,12 @@ struct DMChattingView: View {
                 // 뷰가 사라질 때 키보드 노티피케이션 구독 해제
                 keyboardSubscriber?.cancel()
             }
-            .customToolbar(title: store.message.first?.name ?? "",
+            .customToolbar(title: "",
                            leftItem: .init(icon: .chevronLeft) {
                 // TODO: 스와이프 제스쳐 살리는법??
                 dismiss()
             })
             .task { store.send(.task) }
-            .navigationBarBackButtonHidden()
         }
     }
 }

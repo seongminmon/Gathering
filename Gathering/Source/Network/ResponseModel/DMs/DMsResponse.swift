@@ -22,7 +22,6 @@ struct DMsResponse: Decodable {
 extension DMsResponse {
     func toChattingPresentModel() -> ChattingPresentModel {
         return ChattingPresentModel(
-            id: self.dm_id,
             name: self.user.nickname,
             text: self.content,
             imageNames: self.files,

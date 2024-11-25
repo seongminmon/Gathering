@@ -65,6 +65,8 @@ struct HomeFeature {
         case dmTap(DMUser)
         
         case task
+        
+        case myWorkspaceResponse(WorkspaceResponse?)
         case myProfileResponse(MyProfileResponse)
         //        case myWorkspaceListResponse([WorkspaceResponse])
         //        case startNewMessageTap
@@ -75,8 +77,6 @@ struct HomeFeature {
         
         Reduce { state, action in
             switch action {
-            case .binding(_):
-                return .none
                 // MARK: destination -
             case .confirmationDialog(.presented(.createChannelButtonTap)):
                 state.destination = .channelAdd(CreateChannelFeature.State())
@@ -108,9 +108,7 @@ struct HomeFeature {
                 ))
                 return .none
             case .dmTap:
-//                state.destination = .DMChattingView(
-//                    store: StoreOf<DMChattingFeature>
-//                )
+                state.destination = .DMChatting(DMChattingFeature.State())
                 return .none
             case .destination(.dismiss):
                 state.destination = nil
@@ -127,27 +125,48 @@ struct HomeFeature {
                 //                state.isLoading = true
                 return .run { send in
                     do {
+                        // 워크스페이스 리스트, 유저 정보 가져오기
                         let (workspaceResult, profileResult) = try await fetchInitialData()
-//                        await send(.myWorkspaceListResponse(workspaceResult))
+                        // ✅ 불러오기 성공
                         await send(.myProfileResponse(profileResult))
                         
-                        // 워크스페이스 ID 추출 (첫 번째 워크스페이스 ID 사용)
-                        guard let workspaceID = workspaceResult.first?.workspace_id else {
-                            Notification.postToast(title: "현재 워크 스페이스 없음")
-                            return
+                        if let filtered = workspaceResult.filter(
+                            { $0.workspace_id == UserDefaultsManager.workspaceID }
+                        ).first {
+                            // UserDefaults에 있는 워크스페이스 선택
+                            await send(.myWorkspaceResponse(filtered))
+                        } else {
+                            // UserDefaults에 없으면 첫번째 워크스페이스 선택
+                            guard let workspaceID = workspaceResult.first?.workspace_id else {
+                                Notification.postToast(title: "현재 워크 스페이스 없음")
+                                return
+                            }
+                            UserDefaultsManager.recentWorkspaceID(workspaceID)
+                            await send(.myWorkspaceResponse(workspaceResult.first))
                         }
                         
                         let (memberResult, dmRoomResult) = try await fetchWorkspaceDetails(
-                            workspaceID: workspaceID
+                            workspaceID: UserDefaultsManager.workspaceID
                         )
-                        //                        await send(.dmRoomsResponse(dmRoomResult))
-                        //                        await send(.loadingComplete)
+                        
                     } catch {
                         // 에러 처리
                     }
                 }
-            case .myProfileResponse:
+            case .myWorkspaceResponse(let workspace):
+                state.currentWorkspace = workspace
                 return .none
+            case .myProfileResponse(let result):
+                state.myProfile = result
+                return .none
+            case .binding(\.currentWorkspace):
+                return .none
+            case .binding(\.myProfile):
+                return .none
+                
+            case .binding:
+                return .none
+
             }
         }
         .ifLet(\.$destination, action: \.destination)

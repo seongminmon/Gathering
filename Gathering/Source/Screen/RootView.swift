@@ -28,7 +28,7 @@ struct RootView: View {
     private func tabView() -> some View {
         TabView(selection: $tabInfo) {
             // MARK: - 홈
-//            GatheringNavigationStack(gatheringImage: "bird2",title: "짹사모", profileImage: "bird3") {
+            //            GatheringNavigationStack(gatheringImage: "bird2",title: "짹사모", profileImage: "bird3") {
                 HomeView(store: Store(initialState: HomeFeature.State()) {
                     HomeFeature()
                 })
@@ -68,19 +68,9 @@ struct RootView: View {
             
             // MARK: - 설정
             NavigationStack {
-                DMChattingView(
-                    store: Store(initialState: DMChattingFeature.State(
-                        dmsRoomResponse: DMsRoom(id: "3b2d5ad1-4843-4a97-8740-ea725092671f",
-                                                 createdAt: "2024-11-19T07:06:42.463Z",
-                                                 user: Member(
-                                                    id: "87b8dfe8-ed7c-4927-b2dd-9daac283758a",
-                                                    email: "qqq@yes.com",
-                                                    nickname: "새싹",
-                                                    profileImage: nil))),
-                                                 reducer: {
-                    DMChattingFeature()
+                ChannelSettingView(store: Store(initialState: ChannelSettingFeature.State()) {
+                    ChannelSettingFeature()
                 })
-                )
             }
             .tabItem {
                 Image(tabInfo == .setting ? .settingActive : .settingInactive)

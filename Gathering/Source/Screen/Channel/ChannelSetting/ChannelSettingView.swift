@@ -10,45 +10,25 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ChannelSettingView: View {
-    
-    // 채널 채팅 화면에서 메뉴 버튼 클릭시 전환되는 화면
-    // 이전 화면에서 채널에 대한 정보 전달
-    
-    // TODO: - 뷰
-    // ✅ 채널 이름
-    // ✅ 채널 설명
-    // ✅ 채널 멤버 리스트
-    
-    // ✅ 채널 관리자 여부에 따라 다른 버튼 표시
-    // 아닌 경우
-    // >> 채널에서 나가기
-    // 관리자인 경우
-    // >> 채널 편집, 채널에서 나가기, 채널 관리자 변경, 채널 삭제
-    
-    // TODO: - 화면 이동 연결
-    // ✅ (네비게이션) 멤버 셀 선택 >> 다른 유저 프로필
-    // ✅ (시트) 채널 편집 >> 채널 편집 화면
-    // ✅ (얼럿) 채널에서 나가기 >> 채널 퇴장 화면
-    // ✅ (시트) 채널 관리자 변경 >> 채널 관리자 변경 화면
-    // ✅ (얼럿) 채널 삭제 >> 채널 삭제 화면
-    // 뒤로가기 >> dismiss
-    
     @Perception.Bindable var store: StoreOf<ChannelSettingFeature>
+    
+    var channelInfo = ChannelDummy.channelInfo
+    @State private var isMemeberExpand = true
     
     var body: some View {
         WithPerceptionTracking {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    Text("#\(store.currentChannel?.name ?? "채널명 없음")")
+                    Text(channelInfo.name)
                         .font(Design.title2)
                         .padding(.vertical, 16)
                     
-                    Text(store.currentChannel?.description ?? "채널 설명 없음")
+                    Text(channelInfo.description ?? "")
                         .font(Design.body)
                     
                     CustomDisclosureGroup(
-                        label: "멤버 (\(store.currentChannel?.channelMembers?.count ?? 0))",
-                        isExpanded: $store.isMemeberExpand) {
+                        label: "멤버 (\(channelInfo.channelMembers?.count ?? 0))",
+                        isExpanded: $isMemeberExpand) {
                             memberGridView()
                         }
                         .foregroundColor(Design.black)
@@ -56,166 +36,132 @@ struct ChannelSettingView: View {
                     channelSettingButtonView()
                 }
                 .padding(.horizontal, 16)
+                
             }
             .frame(maxWidth: .infinity)
-            .customToolbar(
-                title: "채널 설정",
-                leftItem: .init(
-                    icon: .chevronLeft,
-                    action: { print("backbutton clicked") }
-                )
-            )
-            // 채널 편집 화면
-            .sheet(isPresented: $store.isEditChannelViewPresented) {
-                editChannelView()
-            }
-            // 관리자 변경 화면
-            .sheet(isPresented: $store.isChangeAdminViewPresented) {
-                changeAdminView()
-            }
-            // 채널 삭제
-            .customAlert(
-                isPresented: $store.idDeleteChannelAlertPresented,
-                title: "채널 삭제",
-                message: ""
-            )
-            // 채널 나가기 (관리자)
-            .customAlert(
-                isPresented: $store.isAdminGetOutChannelAlertPresented,
-                title: "채널에서 나가기",
-                message: "회원님은 채널 관리자입니다. 채널 관리자를 다른 멤버로 변경한 후 나갈 수 있습니다."
-            )
-            // 채널 나가기
-            .customAlert(
-                isPresented: $store.isGetOutChannelAlertPresented,
-                title: "채널에서 나가기",
-                message: "나가기를 하면 채널 목록에서 삭제됩니다.",
-                primaryButton: CustomAlert.AlertButton(title: "나가기") {
-                    store.send(.getOutButtonTap)
-                },
-                secondaryButton: CustomAlert.AlertButton(title: "취소") {
-                    store.send(.getOutCancel)
-                }
-            )
+            .customToolbar(title: "채널 설정",
+                           leftItem: .init(icon: .chevronLeft, action: {
+                print("backbutton clicked")
+            }))
         }
     }
     
-    private func memberGridView() -> some View {
+    func memberGridView() -> some View {
         VStack {
             let columns = [
+                //추가 하면 할수록 화면에 보여지는 개수가 변함
                 GridItem(.flexible()),
                 GridItem(.flexible()),
                 GridItem(.flexible()),
                 GridItem(.flexible()),
                 GridItem(.flexible())
             ]
-            
             LazyVGrid(columns: columns, spacing: 10) {
-                if let members = store.currentChannel?.channelMembers {
+                if let members = channelInfo.channelMembers {
                     ForEach(members, id:  \.user_id) { member in
                         VStack(alignment: .center) {
-                            ProfileImageView(urlString: member.profileImage ?? "", size: 44)
+                            Image(member.profileImage ?? "bird")
+                                .resizable()
+                                .frame(width: 44, height: 44)
+                                .aspectRatio(contentMode: .fill)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
                             Text(member.nickname)
                                 .font(Design.body)
                                 .foregroundStyle(Design.darkGray)
                         }
                     }
                 }
+                
             }
         }
         .padding(.vertical, 16)
     }
     
-    private func channelSettingButtonView() -> some View {
+    func channelSettingButtonView() -> some View {
         VStack(spacing: 10) {
-            if store.currentChannel?.owner_id == UserDefaultsManager.userID {
+            if channelInfo.owner_id == UserDefaultsManager.userID {
                 Button {
-                    store.send(.editChannelButtonTap)
+                    //채널 편집 시트
                 } label: {
                     RoundedBorderButton(
-                        text: "채널 편집",
-                        textColor: Design.black,
-                        borderColor: Design.black
+                        text: "채널 편집"
                     )
                 }
                 Button {
-                    store.send(.adminGetOutChannelButtonTap)
+                    //채널 편집 시트
                 } label: {
                     RoundedBorderButton(
-                        text: "채널에서 나가기",
-                        textColor: Design.black,
-                        borderColor: Design.black
+                        text: "채널에서 나가기"
                     )
                 }
                 Button {
-                    store.send(.changeAdminButtonTap)
+                    //채널 편집 시트
                 } label: {
                     RoundedBorderButton(
-                        text: "채널 관리자 변경",
-                        textColor: Design.black,
-                        borderColor: Design.black
+                        text: "채널 관리자 변경"
                     )
                 }
                 Button {
-                    store.send(.deleteChannelButtonTap)
+                    //채널 편집 시트
                 } label: {
                     RoundedBorderButton(
-                        text: "채널 삭제",
-                        textColor: Design.red,
-                        borderColor: Design.red
+                        text: "채널 삭제"
                     )
+                    .foregroundColor(Design.red)
+                    
                 }
             } else {
                 Button {
-                    store.send(.getOutChannelButtonTap)
+                    //채널 편집 시트
                 } label: {
                     RoundedBorderButton(
-                        text: "채널에서 나가기",
-                        textColor: Design.black,
-                        borderColor: Design.black
+                        text: "채널에서 나가기"
                     )
                 }
             }
         }
     }
     
-    private func editChannelView() -> some View {
-        VStack {
-            SheetHeaderView(title: "채널 편집")
-                .background(Design.white)
-            ScrollView {
-                VStack(spacing: 24) {
-                    TextFieldWithTitle(
-                        title: "채널 이름",
-                        placeholder: "채널 이름을 입력해주세요",
-                        text: $store.title
-                    )
-                    TextFieldWithTitle(
-                        title: "채널 설명",
-                        placeholder: "채널 설명을 입력해주세요",
-                        text: $store.description
-                    )
-                }
-                .padding()
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            
-            Button {
-                store.send(.editConfirmButtonTap)
-            } label: {
-                RoundedButton(
-                    text: "완료",
-                    foregroundColor: Design.white,
-                    backgroundColor: store.buttonValid ? Design.green : Design.darkGray
-                )
-            }
-            .disabled(!store.buttonValid)
-            .padding([.horizontal, .bottom])
-        }
-        .background(Design.gray)
-    }
+}
+//#Preview {
+//    ChannelSettingView()
+//}
+
+struct ChannelDummy {
+    static let channelInfo = ChannelResponse(
+        channel_id: "dfa",
+        name: "#그냥 떠들고 싶을 때",
+        description: "안녕하세요 새싹 여러분? 심심하셨죠? 이 채널은 나머지 모든 것을 위한 채널이에요. 팀원들이 농담하거나 순간적인 아이디어를 공유하는 곳이죠! 마음껏 즐기세요",
+        coverImage: nil,
+        owner_id: "sungeun",
+        createdAt: "dfs",
+        channelMembers: ChannelDummy.member
+    )
     
-    private func changeAdminView() -> some View {
-        Text("changeAdminView")
-    }
+    static let member: [MemberResponse]  = [
+        MemberResponse(user_id: "sungeun", email: "dsf", nickname: "dfa", profileImage: "bird"),
+        MemberResponse(user_id: "dfad", email: "dsf", nickname: "123", profileImage: "bird"),
+        MemberResponse(user_id: "sunsfdgeun", email: "dsf", nickname: "dsf", profileImage: "bird2"),
+        MemberResponse(user_id: "ㄴㅇㄹㅁ", email: "dsf", nickname: "gre", profileImage: "bird3"),
+        MemberResponse(user_id: "ㅁㄴㅇㅎ", email: "dsf", nickname: "dfa", profileImage: "bird"),
+        MemberResponse(user_id: "ㅜㅠㅍ", email: "dsf", nickname: "123", profileImage: "bird"),
+        MemberResponse(user_id: "ㅔ", email: "dsf", nickname: "dsf", profileImage: "bird2"),
+        MemberResponse(user_id: "ㅋ", email: "dsf", nickname: "gre", profileImage: "bird3"),
+        MemberResponse(user_id: "5", email: "dsf", nickname: "dfa", profileImage: "bird"),
+        MemberResponse(user_id: "dfad", email: "dsf", nickname: "123", profileImage: "bird"),
+        MemberResponse(user_id: "ㅜ", email: "dsf", nickname: "dsf", profileImage: "bird2"),
+        MemberResponse(user_id: "ㅁ", email: "dsf", nickname: "gre", profileImage: "bird3"),
+        MemberResponse(user_id: "ㄴ", email: "dsf", nickname: "dfa", profileImage: "bird"),
+        MemberResponse(user_id: "ㅇ", email: "dsf", nickname: "123", profileImage: "bird"),
+        MemberResponse(user_id: "ㄹ", email: "dsf", nickname: "dsf", profileImage: "bird2"),
+        MemberResponse(user_id: "ㅍ", email: "dsf", nickname: "gre", profileImage: "bird3")
+    ]
+    
+    static let messages: [ChattingPresentModel] = [
+//        ChatMessage(name: "지수", text: "아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘아니! 어쩌구저쩌구 벌써 수료 ..!! 사진 좀 보내줘", images: [], imageNames: ["star"], isMine: false, profile: "bird"),
+//        ChatMessage(name: "아라", text: "그래그래 사진 보내줘~", images: [], imageNames: nil, isMine: false, profile: "bird2"),
+//        ChatMessage(name: "나야나", text: "아직 못보내~....", images: [], imageNames: nil, isMine: true, profile: "bird3"),
+//        ChatMessage(name: "성은", text: "^^>....", images: [], imageNames: nil, isMine: false, profile: "bird3")
+//        
+    ]
 }
