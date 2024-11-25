@@ -14,23 +14,26 @@ struct HomeView: View {
     
     var body: some View {
         WithPerceptionTracking {
-            GatheringNavigationStack(gatheringImage: store.currentWorkspace?.coverImage ?? "",
-                                     title: store.currentWorkspace?.name ?? "",
-                                     myprofileData: store.myProfile) {
+            GatheringNavigationStack(
+                gatheringImage: store.currentWorkspace?.coverImage ?? "",
+                title: store.currentWorkspace?.name ?? "",
+                myProfile: store.myProfile
+            ) {
                 ZStack(alignment: .bottomTrailing) {
                     coverLayer
                     makeFloatingButton {
                         store.send(.floatingButtonTap)
                     }
                 }
+                .navigationBarTitleDisplayMode(.inline)
                 .confirmationDialog(
-                    store: self.store.scope(
+                    store: store.scope(
                         state: \.$confirmationDialog,
                         action: \.confirmationDialog
                     )
                 )
             }
-            
+            .task { store.send(.task) }
         }
     }
 }
@@ -67,7 +70,7 @@ extension HomeView {
             }
             .padding(EdgeInsets(top: 5, leading: 15, bottom: 0, trailing: 0))
         }
-        .task { store.send(.task) }
+        
     }
     
     private func channelListView() -> some View {

@@ -44,10 +44,7 @@ struct ChannelExploreView: View {
             VStack(alignment: .leading, spacing: 20) {
                 ForEach(store.channels, id: \.id) { channel in
                     HStack(spacing: 12) {
-                        ProfileImageView(
-                            urlString: "hashTagthick",
-                            size: 18
-                        )
+                        Image("hashTagthick")
                         
                         Button(action: {
                             store.send(.channelTap(channel))

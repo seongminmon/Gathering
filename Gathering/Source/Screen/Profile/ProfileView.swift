@@ -16,7 +16,7 @@ struct ProfileView: View {
     var body: some View {
         WithPerceptionTracking {
             List {
-                ProfileImageView(urlString: "bird2", size: 300)
+                ProfileImageView(urlString: store.profileImage, size: 250)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .listRowBackground(Color.clear)
                 
