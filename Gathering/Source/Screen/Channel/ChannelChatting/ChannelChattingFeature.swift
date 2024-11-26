@@ -13,6 +13,7 @@ import ComposableArchitecture
 struct ChannelChattingFeature {
     
     @Dependency(\.channelClient) var channelClient
+    @Dependency(\.realmClient) var realmClient
     
     @Reducer
     enum Path {
@@ -26,11 +27,12 @@ struct ChannelChattingFeature {
         
         var channelID: String
         var workspaceID: String
+        //TODO: 어떤 모델로 데이터 넘겨 받을지
         var currentChannel: ChannelResponse?
         var message: [ChattingPresentModel] = []
         
         var messageText = ""
-        var selectedImages: [UIImage] = []
+        var selectedImages: [UIImage]? = []
         var scrollViewID = UUID()
         var keyboardHeight: CGFloat = 0
         
@@ -56,22 +58,17 @@ struct ChannelChattingFeature {
         Reduce { state, action in
             switch action {
                 
-            case .settingButtonTap:
-                state.path.append(
-                    .channelSetting(ChannelSettingFeature.State()))
-                return .none
-                
             case .path:
                 return .none
                 
             case .binding(\.messageText):
                 state.messageButtonValid = !state.messageText.isEmpty
-                || !state.selectedImages.isEmpty
+                || !(state.selectedImages?.isEmpty ?? true)
                 return .none
                 
             case .binding(\.selectedImages):
-                state.messageButtonValid = !state.selectedImages.isEmpty
-                || !state.selectedImages.isEmpty
+                state.messageButtonValid = !(state.selectedImages?.isEmpty ?? true)
+                || !(state.selectedImages?.isEmpty ?? true)
                 return .none
                 
             case .binding(_):
@@ -95,9 +92,17 @@ struct ChannelChattingFeature {
                         print("채팅 패치 실패")
                     }
                 }
+            case .settingButtonTap:
+                state.path.append(
+                    .channelSetting(ChannelSettingFeature.State()))
+                return .none
                 
             case .sendButtonTap:
                 //db
+                print("전송버튼 클릭")
+                state.messageText = ""
+                state.selectedImages = []
+                state.messageButtonValid = false
                 return .none
                 
             case .currentChannelResponse(let channel):
