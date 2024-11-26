@@ -178,13 +178,14 @@ extension ChannelChattingView {
                     // 메시지 입력 필드
 //                    DynamicHeightTextField(text: $messageText)
                     dynamicHeigtTextField()
-                    if !store.selectedImages.isEmpty {
-                        selectePhotoView(images: store.selectedImages)
+                    if let images = store.selectedImages, !images.isEmpty {
+                        selectePhotoView(images: images)
                     }
                 }
                 // 전송버튼
                 Button {
                     // 메세지 전송 로직
+                    store.send(.sendButtonTap)
                     
                 } label: {
                     Image(systemName: "paperplane.fill")
@@ -208,29 +209,31 @@ extension ChannelChattingView {
         
         LazyHGrid(rows: [GridItem(.fixed(50))], spacing: 12, content: {
             // 이미지넣기
-            ForEach(store.selectedImages, id: \.self) { image in
-                ZStack {
-                    Image(uiImage: image)
-                        .resizable()
-                        .frame(width: 44, height: 44)
-                        .aspectRatio(contentMode: .fill)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                    Button(action: {
-                        print("클릭클릭")
-                    }, label: {
-                        Image(systemName: "xmark.circle")
+            if let images = store.selectedImages {
+                ForEach(images, id: \.self) { image in
+                    ZStack {
+                        Image(uiImage: image)
                             .resizable()
-                            .frame(width: 20, height: 20)
-                            .foregroundColor(Design.black)
-                            .background(
-                                Circle().size(width: 20, height: 20)
-                                    .foregroundColor(Design.white)
-                            )
-                            .offset(x: 22, y: -22)
-                    })
+                            .frame(width: 44, height: 44)
+                            .aspectRatio(contentMode: .fill)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                        Button(action: {
+                            print("클릭클릭")
+                        }, label: {
+                            Image(systemName: "xmark.circle")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .foregroundColor(Design.black)
+                                .background(
+                                    Circle().size(width: 20, height: 20)
+                                        .foregroundColor(Design.white)
+                                )
+                                .offset(x: 22, y: -22)
+                        })
+                        
+                    }
                     
                 }
-                
             }
         })
         .frame(height: 55)

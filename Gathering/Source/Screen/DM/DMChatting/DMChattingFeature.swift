@@ -30,7 +30,7 @@ struct DMChattingFeature {
         var message: [ChattingPresentModel] = []
         
         var messageText = ""
-        var selectedImages: [UIImage] = []
+        var selectedImages: [UIImage]? = []
         var scrollViewID = UUID()
         var keyboardHeight: CGFloat = 0
         
@@ -45,6 +45,7 @@ struct DMChattingFeature {
         case sendButtonTap
         
         case dmsChattingResponse([ChattingPresentModel])
+        case sendDmMessage(DMsResponse)
     }
     
     var body: some ReducerOf<Self> {
@@ -52,20 +53,20 @@ struct DMChattingFeature {
         Reduce { state, action in
             switch action {
 
-            case .path:
-                return .none
-                
-            case .binding(_):
+            case .path(_):
                 return .none
                 
             case .binding(\.messageText):
                 state.messageButtonValid = !state.messageText.isEmpty
-                || !state.selectedImages.isEmpty
+                || ((state.selectedImages?.isEmpty) == nil)
                 return .none
                 
             case .binding(\.selectedImages):
-                state.messageButtonValid = !state.selectedImages.isEmpty
-                || !state.selectedImages.isEmpty
+                state.messageButtonValid = !state.messageText.isEmpty
+                || ((state.selectedImages?.isEmpty) == nil)
+                return .none
+                
+            case .binding(_):
                 return .none
                 
             case .task:
@@ -88,14 +89,49 @@ struct DMChattingFeature {
                             // TODO: - 파일매니저에 이미지 저장
                         }
                         // 디비 다시 불러오기?
-                        let dmUpdatedDBChats = try  realmClient.fetchDMChats(dmsRoomID).map { $0.toResponseModel().toChattingPresentModel()}
+                        let dmUpdatedDBChats = try realmClient.fetchDMChats(dmsRoomID)
+                            .map { $0.toResponseModel().toChattingPresentModel()}
                         await send(.dmsChattingResponse(dmUpdatedDBChats))
                     } catch {
                         print("채팅 패치 실패")
                     }
                 }
-                
+            // TODO: 멀티파트 업로드 수정
             case .sendButtonTap:
+                return .run { [state = state] send in
+                    do {
+                        guard let images = state.selectedImages, !images.isEmpty else {
+                            let result = try await dmsClient.sendDMMessage(
+                                UserDefaultsManager.workspaceID,
+                                state.dmsRoomResponse.id,
+                                DMRequest(content: state.messageText, files: [])
+                            )
+                            return await send(.sendDmMessage(result))
+                        }
+                        let jpegData = images.map({ value in
+                            value.jpegData(compressionQuality: 0.5)!
+                        })
+                        
+                        let result = try await dmsClient.sendDMMessage(
+                            UserDefaultsManager.workspaceID,
+                            state.dmsRoomResponse.id,
+                            DMRequest(
+                                content: state.messageText,
+                                files: jpegData
+                            )
+                        )
+                        return await send(.sendDmMessage(result))
+                        
+                    } catch {
+                        print("멀티파트 실패 ㅠㅠ ")
+                        
+                    }
+                }
+            case .sendDmMessage(let result):
+                print(result)
+                state.messageText = ""
+                state.selectedImages = []
+                state.messageButtonValid = false
                 return .none
                 
             case .dmsChattingResponse(let dmUpdatedDBChats):

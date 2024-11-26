@@ -46,6 +46,7 @@ struct DMChattingView: View {
                 // 채팅보내는 부분
                 messageInputView()
             }
+            .task { store.send(.task) }
             .onTapGesture {
                 // 화면을 탭할 때 키보드 내리기
                 hideKeyboard()
@@ -59,7 +60,6 @@ struct DMChattingView: View {
                 // TODO: 스와이프 제스쳐 살리는법??
                 dismiss()
             })
-            .task { store.send(.task) }
             .navigationBarBackButtonHidden()
         }
     }
@@ -169,13 +169,14 @@ extension DMChattingView {
                     // 메시지 입력 필드
 //                    DynamicHeightTextField(text: $messageText)
                     dynamicHeigtTextField()
-                    if !store.selectedImages.isEmpty {
-                        selectePhotoView(images: store.selectedImages)
+                    if let images = store.selectedImages, !images.isEmpty {
+                        selectePhotoView(images: images)
                     }
                 }
                 // 전송버튼
                 Button {
                     // 메세지 전송 로직
+                    store.send(.sendButtonTap)
                     
                 } label: {
                     Image(systemName: "paperplane.fill")
@@ -195,34 +196,37 @@ extension DMChattingView {
         .padding(.vertical, 14)
         .padding(.horizontal, 16)
     }
-    private func selectePhotoView(images: [UIImage]) -> some View {
+    private func selectePhotoView(images: [UIImage]?) -> some View {
         
         LazyHGrid(rows: [GridItem(.fixed(50))], spacing: 12, content: {
             // 이미지넣기
-            ForEach(store.selectedImages, id: \.self) { image in
-                ZStack {
-                    Image(uiImage: image)
-                        .resizable()
-                        .frame(width: 44, height: 44)
-                        .aspectRatio(contentMode: .fill)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                    Button(action: {
-                        print("클릭클릭")
-                    }, label: {
-                        Image(systemName: "xmark.circle")
+            if let images = store.selectedImages {
+                ForEach(images, id: \.self) { image in
+                    ZStack {
+                        Image(uiImage: image)
                             .resizable()
-                            .frame(width: 20, height: 20)
-                            .foregroundColor(Design.black)
-                            .background(
-                                Circle().size(width: 20, height: 20)
-                                    .foregroundColor(Design.white)
-                            )
-                            .offset(x: 22, y: -22)
-                    })
+                            .frame(width: 44, height: 44)
+                            .aspectRatio(contentMode: .fill)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                        Button(action: {
+                            print("클릭클릭")
+                        }, label: {
+                            Image(systemName: "xmark.circle")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .foregroundColor(Design.black)
+                                .background(
+                                    Circle().size(width: 20, height: 20)
+                                        .foregroundColor(Design.white)
+                                )
+                                .offset(x: 22, y: -22)
+                        })
+                        
+                    }
                     
                 }
-                
             }
+            
         })
         .frame(height: 55)
     }

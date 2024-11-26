@@ -11,7 +11,7 @@ struct ChattingImageView: View {
     var imageNames: [String]
     var body: some View {
         HStack {
-            Image(imageNames[0])
+            Image(imageNames.first ?? "bird")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .clipShape(RoundedRectangle(cornerRadius: 4))

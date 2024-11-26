@@ -10,15 +10,15 @@ import SwiftUI
 
 public struct ChattingPhotoPicker<Content: View>: View {
     @State private var selectedPhotos: [PhotosPickerItem]
-    @Binding private var selectedImages: [UIImage]
+    @Binding private var selectedImages: [UIImage]?
     @Binding private var isPresentedError: Bool
     
     private let maxSelectedCount: Int
     private var disabled: Bool {
-        return selectedImages.count >= maxSelectedCount
+        return selectedImages?.count ?? 0 >= maxSelectedCount
     }
     private var availableSelectedCount: Int {
-        return maxSelectedCount - selectedImages.count
+        return maxSelectedCount - (selectedImages?.count ?? 0)
     }
     private let matching: PHPickerFilter
     private let photoLibrary: PHPhotoLibrary
@@ -26,7 +26,7 @@ public struct ChattingPhotoPicker<Content: View>: View {
     
     public init(
         selectedPhotos: [PhotosPickerItem] = [],
-        selectedImages: Binding<[UIImage]>,
+        selectedImages: Binding<[UIImage]?>,
         isPresentedError: Binding<Bool> = .constant(false),
         maxSelectedCount: Int = 5,
         matching: PHPickerFilter = .images,
@@ -80,10 +80,11 @@ public struct ChattingPhotoPicker<Content: View>: View {
             newPhoto.loadTransferable(type: Data.self) { result in
                 switch result {
                 case .success(let data):
-                    if let data = data, let newImage = UIImage(data: data) {
-                        if !selectedImages.contains(where: { $0.pngData() == newImage.pngData() }) {
+                    if let data = data, let newImage = UIImage(data: data),
+                        let images =  selectedImages {
+                        if !(selectedImages?.contains(where: { $0.pngData() == newImage.pngData() }) ?? true) {
                             DispatchQueue.main.async {
-                                selectedImages.append(newImage)
+                                selectedImages?.append(newImage)
                             }
                         }
                     }
