@@ -30,13 +30,16 @@ struct ProfileFeature {
         let profileType: ProfileFeature.ProfileType
         var nickname: String
         var email: String
+        var profileImage: String
         
         init(profileType: ProfileFeature.ProfileType,
              nickname: String = "",
-             email: String = "") {
+             email: String = "",
+             profileImage: String = "") {
             self.profileType = profileType
             self.nickname = nickname
             self.email = email
+            self.profileImage = profileImage
         }
     }
     

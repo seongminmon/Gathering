@@ -33,8 +33,6 @@ struct ChannelSettingView: View {
     // ✅ (얼럿) 채널 삭제 >> 채널 삭제 화면
     // 뒤로가기 >> dismiss
     
-    
-    
     @Perception.Bindable var store: StoreOf<ChannelSettingFeature>
     
     var body: some View {
@@ -182,25 +180,39 @@ struct ChannelSettingView: View {
     }
     
     private func editChannelView() -> some View {
-        Text("editChannelView")
-//        VStack {
-//            SheetHeaderView(title: "채널 편집")
-//                .background(Design.white)
-//            ScrollView {
-//                // TODO: - first responder 만들기
-//                TextFieldWithTitle(
-//                    title: "채널 이름",
-//                    placeholder: "채널 이름을 입력해주세요.",
-//                    text: $store.email
-//                )
-//                .padding()
-//            }
-//            .frame(maxWidth: .infinity, maxHeight: .infinity)
-//            
-//            inviteButton()
-//                .padding([.horizontal, .bottom])
-//        }
-//        .background(Design.gray)
+        VStack {
+            SheetHeaderView(title: "채널 편집")
+                .background(Design.white)
+            ScrollView {
+                VStack(spacing: 24) {
+                    TextFieldWithTitle(
+                        title: "채널 이름",
+                        placeholder: "채널 이름을 입력해주세요",
+                        text: $store.title
+                    )
+                    TextFieldWithTitle(
+                        title: "채널 설명",
+                        placeholder: "채널 설명을 입력해주세요",
+                        text: $store.description
+                    )
+                }
+                .padding()
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
+            Button {
+                store.send(.editConfirmButtonTap)
+            } label: {
+                RoundedButton(
+                    text: "완료",
+                    foregroundColor: Design.white,
+                    backgroundColor: store.buttonValid ? Design.green : Design.darkGray
+                )
+            }
+            .disabled(!store.buttonValid)
+            .padding([.horizontal, .bottom])
+        }
+        .background(Design.gray)
     }
     
     private func changeAdminView() -> some View {

@@ -48,6 +48,11 @@ struct ChannelSettingFeature {
         
         // 채널 나가기
         var isGetOutChannelAlertPresented = false
+        
+        // 채널 편집 화면
+        var title = ""
+        var description = ""
+        var buttonValid = false
     }
     
     enum Action: BindableAction {
@@ -63,14 +68,26 @@ struct ChannelSettingFeature {
         case getOutChannelButtonTap
         case getOutButtonTap
         case getOutCancel
+        
+        // 채널 편집 화면
+        case editConfirmButtonTap
     }
     
     var body: some ReducerOf<Self> {
         BindingReducer()
         Reduce { state, action in
             switch action {
+            case .binding(\.title):
+                state.buttonValid = !state.title.isEmpty
+                return .none
+            case .binding(\.isEditChannelViewPresented):
+                state.title = ""
+                state.description = ""
+                state.buttonValid = !state.title.isEmpty
+                return .none
             case .binding:
                 return .none
+                
             case .editChannelButtonTap:
                 state.isEditChannelViewPresented = true
                 return .none
@@ -88,11 +105,17 @@ struct ChannelSettingFeature {
                 state.isGetOutChannelAlertPresented = true
                 return .none
             case .getOutButtonTap:
+                print("채널 나가기 완료 탭")
+                state.isGetOutChannelAlertPresented = false
                 // TODO: - 채널 나가기 API
                 // TODO: - 나가기 성공 시 홈 화면으로 전환
                 return .none
             case .getOutCancel:
                 state.isGetOutChannelAlertPresented = false
+                return .none
+            case .editConfirmButtonTap:
+                print("채널 편집 완료 버튼 탭")
+                // TODO: - 채널 편집 API
                 return .none
             }
         }
