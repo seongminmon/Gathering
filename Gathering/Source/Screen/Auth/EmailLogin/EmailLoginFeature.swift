@@ -21,8 +21,8 @@ struct EmailLoginFeature {
 //        var isButtonValid = false
         
         // MARK: - 테스트를 위해 이메일 로그인 기본값 적용
-        var emailText = "ksm1@ksm.com"
-        var passwordText = "1q2w3e4R!"
+        var emailText = "yes@yes.com"
+        var passwordText = "Ssesac1234@@"
         var isButtonValid = true
     }
     

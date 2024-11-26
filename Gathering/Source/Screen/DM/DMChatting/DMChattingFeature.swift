@@ -46,6 +46,8 @@ struct DMChattingFeature {
         
         case dmsChattingResponse([ChattingPresentModel])
         case sendDmMessage(DMsResponse)
+        case sendMessageError(Error)
+        case saveSendedDM(DMsResponse)
     }
     
     var body: some ReducerOf<Self> {
@@ -64,9 +66,6 @@ struct DMChattingFeature {
             case .binding(\.selectedImages):
                 state.messageButtonValid = !state.messageText.isEmpty
                 || ((state.selectedImages?.isEmpty) == nil)
-                return .none
-                
-            case .binding(_):
                 return .none
                 
             case .task:
@@ -120,11 +119,18 @@ struct DMChattingFeature {
                                 files: jpegData
                             )
                         )
-                        return await send(.sendDmMessage(result))
+                        do {
+                            try realmClient.create(result.toRealmModel())
+                            print("sendedDM 저장성공")
+                        } catch {
+                            print("Realm 추가 실패")
+                        }
+//                        await send(.sendDmMessage(result))
+                        await send(.saveSendedDM(result))
                         
                     } catch {
                         print("멀티파트 실패 ㅠㅠ ")
-                        
+                        await send(.sendMessageError(error))
                     }
                 }
             case .sendDmMessage(let result):
@@ -132,10 +138,32 @@ struct DMChattingFeature {
                 state.messageText = ""
                 state.selectedImages = []
                 state.messageButtonValid = false
+//                state.message.append(result.toChattingPresentModel())
                 return .none
                 
+            case .saveSendedDM(let result):
+                return .run { [state = state] send in
+                    do {
+                        let dmUpdatedDBChats = try realmClient.fetchDMChats(
+                            state.dmsRoomResponse.id
+                        )
+                            .map { $0.toResponseModel().toChattingPresentModel()}
+                        await send(.dmsChattingResponse(dmUpdatedDBChats))
+                    } catch {
+                        print("몰라..")
+                    }
+                }
+
             case .dmsChattingResponse(let dmUpdatedDBChats):
                 state.message = dmUpdatedDBChats
+                return .none
+                
+            case .sendMessageError(let error):
+                Notification.postToast(title: "메세지 전송 실패")
+                print(error)
+                return .none
+                
+            default:
                 return .none
             }
         }

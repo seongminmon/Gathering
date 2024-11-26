@@ -115,9 +115,13 @@ struct ChannelSettingView: View {
                     ForEach(members, id:  \.user_id) { member in
                         VStack(alignment: .center) {
                             ProfileImageView(urlString: member.profileImage ?? "", size: 44)
+                                
                             Text(member.nickname)
                                 .font(Design.body)
                                 .foregroundStyle(Design.darkGray)
+                        }
+                        .wrapToButton {
+                            // otehr 프로필
                         }
                     }
                 }
