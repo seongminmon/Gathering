@@ -183,14 +183,7 @@ extension HomeView {
             ) { store in
                 DMChattingView(store: store)
             }
-            .navigationDestination(
-                item: $store.scope(
-                    state: \.destination?.channelChatting,
-                    action: \.destination.channelChatting
-                )
-            ) { store in
-                ChannelChattingView(store: store)
-            }
+
     }
     
     var sheetLayer: some View {
