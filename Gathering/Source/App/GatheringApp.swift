@@ -12,7 +12,7 @@ import ComposableArchitecture
 @main
 struct GatheringApp: App {
     
-    let store = Store(initialState: AppFeature.State()) { AppFeature() }
+    @Perception.Bindable var store =  Store(initialState: AppFeature.State()) { AppFeature() }
     
     // MARK: - realm 경로 출력
     @Dependency(\.realmClient) var realmClient

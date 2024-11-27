@@ -9,8 +9,8 @@ import SwiftUI
 
 import ComposableArchitecture
 
-struct ChannelExploreView: View {
-    @Perception.Bindable var store: StoreOf<ChannelExploreFeature>
+struct ExploreChannelView: View {
+    @Perception.Bindable var store: StoreOf<ExploreChannelFeature>
     
     var body: some View {
         WithPerceptionTracking {
@@ -60,6 +60,7 @@ struct ChannelExploreView: View {
             }
             .padding(.vertical, 20)
         }
+        .task { store.send(.task) }
     }
         
 }

@@ -63,7 +63,7 @@ struct ChannelChattingView: View {
                 dismiss()
             },
                            rightItem: .init(icon: .list) {
-                print("설정")
+                store.send(.settingButtonTap)
             })
             .navigationBarBackButtonHidden()
         }

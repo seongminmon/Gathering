@@ -21,7 +21,7 @@ struct HomeFeature {
     @Reducer
     enum Destination {
         case channelAdd(CreateChannelFeature)
-        case channelExplore(ChannelExploreFeature)
+        case channelExplore(ExploreChannelFeature)
         case inviteMember(InviteMemberFeature)
         case channelChatting(ChannelChattingFeature)
         case DMChatting(DMChattingFeature)
@@ -35,16 +35,22 @@ struct HomeFeature {
         var isChannelExpanded = true
         var isDMExpanded = true
         
-        var channels: [Channel] = Dummy.channels
-        var users: [DMUser] = Dummy.users
+//        var channels: [Channel] = Dummy.channels
+//        var users: [DMUser] = Dummy.users
         
         // 워크스페이스 + 프로필 데이터
         //        var myWorkspaceList: [WorkspaceResponse] = []
         var currentWorkspace: WorkspaceResponse?
         var myProfile: MyProfileResponse?
         
-        var workspaceMembers: [Member] = []
+        var channelList: [Channel] = []
         var dmRoomList: [DMsRoom] = []
+        
+        var channelChattings = [Channel: [ChannelChattingResponse]]()
+        var channelUnreads = [Channel: UnreadChannelResponse]()  
+        var dmChattings = [DMsRoom: [DMsResponse]]()
+        var dmUnreads = [DMsRoom: UnreadDMsResponse]()
+        
     }
     
     enum Action: BindableAction {
@@ -62,10 +68,12 @@ struct HomeFeature {
         case floatingButtonTap
         
         case channelTap(Channel)
-        case dmTap(DMUser)
+        case dmTap(DMsRoom)
         
         case task
         
+        case channelListResponse([Channel])
+        case dmRoomListResponse([DMsRoom])
         case myWorkspaceResponse(WorkspaceResponse?)
         case myProfileResponse(MyProfileResponse)
         //        case myWorkspaceListResponse([WorkspaceResponse])
@@ -74,7 +82,7 @@ struct HomeFeature {
     
     var body: some ReducerOf<Self> {
         BindingReducer()
-        
+            
         Reduce { state, action in
             switch action {
                 // MARK: destination -
@@ -82,7 +90,7 @@ struct HomeFeature {
                 state.destination = .channelAdd(CreateChannelFeature.State())
                 return .none
             case .confirmationDialog(.presented(.exploreChannelButtonTap)):
-                state.destination = .channelExplore(ChannelExploreFeature.State())
+                state.destination = .channelExplore(ExploreChannelFeature.State())
                 return .none
             case .addChannelButtonTap:
                 state.confirmationDialog = ConfirmationDialogState {
@@ -102,13 +110,16 @@ struct HomeFeature {
             case .inviteMemberButtonTap:
                 state.destination = .inviteMember(InviteMemberFeature.State())
                 return .none
-            case .channelTap:
+            case .channelTap(let channel):
                 state.destination = .channelChatting(ChannelChattingFeature.State(
-                    channelID: "f755a2b0-547a-4215-8f72-af1be294ce09", workspaceID: "4e31f58f-aedd-4b3a-a4cb-b7597fafe8d2"
+                    channelID: channel.id,
+                    workspaceID: state.currentWorkspace?.workspace_id ?? ""
                 ))
                 return .none
-            case .dmTap:
-                state.destination = .DMChatting(DMChattingFeature.State(dmsRoomResponse: DMsRoom(id: "", createdAt: "", user: Member(id: "", email: "", nickname: "", profileImage: ""))))
+            case .dmTap(let dmRoom):
+                state.destination = .DMChatting(DMChattingFeature.State(
+                    dmsRoomResponse: dmRoom
+                ))
                 return .none
             case .destination(.dismiss):
                 state.destination = nil
@@ -145,20 +156,30 @@ struct HomeFeature {
                             await send(.myWorkspaceResponse(workspaceResult.first))
                         }
                         
-                        let (memberResult, dmRoomResult) = try await fetchWorkspaceDetails(
+                        let (channelResult, dmRoomResult) = try await fetchWorkspaceDetails(
                             workspaceID: UserDefaultsManager.workspaceID
                         )
+                        await send(.channelListResponse(channelResult))
+                        await send(.dmRoomListResponse(dmRoomResult))
                         
                     } catch {
-                        // 에러 처리
+                        print(error)
+                        print("error🔥")
                     }
                 }
             case .myWorkspaceResponse(let workspace):
                 state.currentWorkspace = workspace
                 return .none
-            case .myProfileResponse(let result):
-                state.myProfile = result
+            case .myProfileResponse(let myProfile):
+                state.myProfile = myProfile
                 return .none
+            case .channelListResponse(let result):
+                state.channelList = result
+                return .none
+            case .dmRoomListResponse(let result):
+                state.dmRoomList = result
+                return .none
+                
             case .binding(\.currentWorkspace):
                 return .none
             case .binding(\.myProfile):
@@ -186,12 +207,52 @@ struct HomeFeature {
     
     private func fetchWorkspaceDetails(
         workspaceID: String
-    ) async throws -> (members: [Member], dmRooms: [DMsRoom]) {
-        // 내가 속한 특정 워크스페이스 정보 조회
-        // >> 워크 스페이스 멤버 리스트 얻기
-        async let members = workspaceClient.fetchWorkspaceMembers(workspaceID)
+    ) async throws -> (channels: [Channel], dmRooms: [DMsRoom]) {
+//        async let workspaces = workspaceClient.fetchMyWorkspaceList()
+        // 채널 리스트 조회
+        async let channels = channelClient.fetchMyChannelList(workspaceID)
         // DM 방 리스트 조회
         async let dmRooms = dmsClient.fetchDMSList(workspaceID)
-        return try await (members.map { $0.toMember }, dmRooms.map { $0.toDmsRoom })
+        return try await (channels.map { $0.toChannel }, dmRooms.map { $0.toDmsRoom })
+    }
+    
+    private func fetchChannelDetails(
+        workspaceID: String,
+        channelID: String,
+        lastCreatedAt: String
+    ) async throws -> ([ChannelChattingResponse], UnreadDMsResponse) {
+        // DM 채팅 내역 리스트 조회 API
+        async let fetchChattings = channelClient.fetchChattingList(
+            workspaceID,
+            channelID,
+            lastCreatedAt
+        )
+        // unreadCount 조회 API
+        async let fetchUnreadCount = dmsClient.fetchUnreadDMCount(
+            workspaceID,
+            channelID,
+            lastCreatedAt
+        )
+        return try await (fetchChattings, fetchUnreadCount)
+    }
+    
+    private func fetchDMRoomDetails(
+        workspaceID: String,
+        roomID: String,
+        lastCreatedAt: String
+    ) async throws -> ([DMsResponse], UnreadDMsResponse) {
+        // DM 채팅 내역 리스트 조회 API
+        async let fetchChattings = dmsClient.fetchDMChatHistory(
+            workspaceID,
+            roomID,
+            lastCreatedAt
+        )
+        // unreadCount 조회 API
+        async let fetchUnreadCount = dmsClient.fetchUnreadDMCount(
+            workspaceID,
+            roomID,
+            lastCreatedAt
+        )
+        return try await (fetchChattings, fetchUnreadCount)
     }
 }

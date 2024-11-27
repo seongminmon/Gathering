@@ -11,15 +11,12 @@ struct ToolbarConfig {
     let title: String
     let leftItem: BarButton?
     let rightItem: BarButton?
-}
-
-extension ToolbarConfig {
+    
     struct BarButton {
         let icon: ImageResource
         let action: () -> Void
     }
 }
-
 // MARK: - ToolbarModifier
 struct ToolbarModifier: ViewModifier {
     let config: ToolbarConfig
