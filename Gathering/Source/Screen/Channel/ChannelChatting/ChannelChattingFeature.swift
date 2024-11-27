@@ -43,16 +43,12 @@ struct ChannelChattingFeature {
         case destination(PresentationAction<Destination.Action>)
         case binding(BindingAction<State>)
         
-        case task
         case sendButtonTap
         case settingButtonTap
         
+        case task
         case currentChannelResponse(ChannelResponse?)
-        
         case channelChattingResponse([ChattingPresentModel])
-        
-        case dismiss
-        
     }
     
     var body: some ReducerOf<Self> {
@@ -93,11 +89,6 @@ struct ChannelChattingFeature {
                         print("채팅 패치 실패")
                     }
                 }
-            case .settingButtonTap:
-                state.path.append(
-                    .channelSetting(ChannelSettingFeature.State()))
-                return .none
-                
             case .sendButtonTap:
                 //db
                 print("전송버튼 클릭")
@@ -111,10 +102,6 @@ struct ChannelChattingFeature {
             case .channelChattingResponse(let chatting):
                 state.message = chatting
                 return .none
-            case .dismiss:
-                return .run { _ in
-                    await self.dismiss()
-                }
             case .destination:
                 return .none
             case .binding:
