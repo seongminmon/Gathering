@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UnreadCountResponse: Decodable {
+struct UnreadChannelResponse: Decodable {
     let channel_id: String
     let name: String
     let count: Int

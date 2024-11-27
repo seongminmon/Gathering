@@ -8,9 +8,9 @@
 import Foundation
 
 struct Channel: Identifiable, Hashable {
-    let id = UUID()
+    let id: String
     let name: String
-    let unreadCount: Int?
+//    let unreadCount: Int?
 }
 struct DMUser: Identifiable, Hashable {
     let id = UUID()
@@ -21,11 +21,17 @@ struct DMUser: Identifiable, Hashable {
 
 struct Dummy {
     static let channels: [Channel] = [
-        Channel(name: "일반", unreadCount: nil),
-        Channel(name: "스유 뽀개기", unreadCount: nil),
-        Channel(name: "앱스토어 홍보", unreadCount: nil),
-        Channel(name: "오픈라운지", unreadCount: 99),
-        Channel(name: "TIL", unreadCount: nil)
+//        ChannelResponse(channel_id: "",
+//                        name: "d",
+//                        description: "",
+//                        coverImage: "",
+//                        owner_id: "",
+//                        createdAt: "",
+//                        channelMembers: [MemberResponse(user_id: "", email: "", nickname: "dd", profileImage: "")])
+//        Channel(name: "스유 뽀개기"),
+//        Channel(name: "앱스토어 홍보"),
+//        Channel(name: "오픈라운지"),
+//        Channel(name: "TIL")
     ]
     static let users: [DMUser] = [
         DMUser(profileImage: "bird", name: "캠퍼스지킴이", unreadCount: nil),

@@ -29,7 +29,7 @@ struct SheetHeaderView: View {
                 Spacer()
                 
                 Text(title)
-                    .font(.system(size: 17, weight: .bold))
+                    .font(Design.title2)
                 
                 Spacer()
                 

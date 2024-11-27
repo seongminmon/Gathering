@@ -16,14 +16,14 @@ struct ChannelChattingFeature {
     @Dependency(\.realmClient) var realmClient
     
     @Reducer
-    enum Path {
+    enum Destination {
         case channelSetting(ChannelSettingFeature)
         case profile(ProfileFeature)
     }
     
     @ObservableState
     struct State {
-        var path = StackState<Path.State>()
+        @Presents var destination: Destination.State?
         
         var channelID: String
         var workspaceID: String
@@ -40,7 +40,7 @@ struct ChannelChattingFeature {
     }
     
     enum Action: BindableAction {
-        case path(StackActionOf<Path>)
+        case destination(PresentationAction<Destination.Action>)
         case binding(BindingAction<State>)
         
         case task
@@ -51,15 +51,14 @@ struct ChannelChattingFeature {
         
         case channelChattingResponse([ChattingPresentModel])
         
+        case dismiss
+        
     }
     
     var body: some ReducerOf<Self> {
         BindingReducer()
         Reduce { state, action in
             switch action {
-                
-            case .path:
-                return .none
                 
             case .binding(\.messageText):
                 state.messageButtonValid = !state.messageText.isEmpty
@@ -71,9 +70,11 @@ struct ChannelChattingFeature {
                 || !(state.selectedImages?.isEmpty ?? true)
                 return .none
                 
-            case .binding(_):
+            case .settingButtonTap:
+                state.destination = .channelSetting(ChannelSettingFeature.State())
+                print("asdfasdf")
                 return .none
-                
+           
             case .task:
                 return .run { [channelID = state.channelID, workspaceID = state.workspaceID] send in
                     do {
@@ -104,16 +105,23 @@ struct ChannelChattingFeature {
                 state.selectedImages = []
                 state.messageButtonValid = false
                 return .none
-                
             case .currentChannelResponse(let channel):
                 state.currentChannel = channel
                 return .none
             case .channelChattingResponse(let chatting):
                 state.message = chatting
                 return .none
+            case .dismiss:
+                return .run { _ in
+                    await self.dismiss()
+                }
+            case .destination:
+                return .none
+            case .binding:
+                return .none
             }
         }
-        .forEach(\.path, action: \.path)
+        .ifLet(\.$destination, action: \.destination)
     }
     
     private func fetchChannel(

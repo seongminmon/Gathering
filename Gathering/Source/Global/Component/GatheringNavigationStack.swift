@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UIKit
 
 import ComposableArchitecture
 
@@ -77,3 +76,62 @@ struct GatheringNavigationStack<Content: View>: View {
         }
     }
 }
+//struct GatheringNavigationStack<Content: View>: View {
+//    @Perception.Bindable var store: StoreOf<GatheringNavigationFeature>
+//    let content: Content
+//    
+//    init(
+//        gatheringImage: String,
+//        title: String,
+//        myProfile: MyProfileResponse?,
+//        @ViewBuilder content: () -> Content
+//    ) {
+//        self.store = Store(
+//            initialState: GatheringNavigationFeature.State(
+//                gatheringImage: gatheringImage,
+//                title: title,
+//                myProfile: myProfile
+//            )
+//        ) {
+//            GatheringNavigationFeature()
+//        }
+//        self.content = content()
+//    }
+//    
+//    var body: some View {
+//        WithPerceptionTracking {
+//            NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
+//                content
+//                    .toolbar {
+//                        ToolbarItem(placement: .topBarLeading) {
+//                            HStack {
+//                                ProfileImageView(urlString: store.gatheringImage, size: 32)
+//                                Text(store.title)
+//                                    .font(Design.title1)
+//                            }
+//                        }
+//                        
+//                        ToolbarItem(placement: .topBarTrailing) {
+//                            if let _ = store.myProfile {
+//                                Button {
+//                                    store.send(.profileButtonTapped)
+//                                } label: {
+//                                    ProfileImageView(
+//                                        urlString: store.myProfile?.profileImage ?? "",
+//                                        size: 32
+//                                    )
+//                                    .clipShape(Circle())
+//                                    .overlay(Circle().stroke(.black, lineWidth: 2))
+//                                }
+//                            }
+//                        }
+//                    }
+//            } destination: { store in
+//                switch store.case {
+//                case .profile(let profileStore):
+//                    ProfileView(store: profileStore)
+//                }
+//            }
+//        }
+//    }
+//}

@@ -9,6 +9,6 @@ import Foundation
 
 struct WorkspaceCreateRequest: Encodable {
     let name: String
-    let description: String? = nil
+    let description: String? = ""
     let image: Data
 }

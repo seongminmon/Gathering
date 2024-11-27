@@ -18,7 +18,7 @@ struct ChannelClient {
     var deleteChannel: (String, String) async throws -> Void
     var fetchChattingList: (String, String, String) async throws -> [ChannelChattingResponse]
     var sendChatting: (String, String, ChattingRequest) async throws -> ChannelChattingResponse
-    var fetchUnreadCount: (String, String, String) async throws -> UnreadCountResponse
+    var fetchUnreadChannel: (String, String, String) async throws -> UnreadChannelResponse
     var fetchMembers: (String, String) async throws -> [MemberResponse]
     var changeOwner: (String, String, OwnerRequest) async throws -> ChannelResponse
     var exitChannel: (String, String) async throws -> [ChannelResponse]
@@ -78,7 +78,7 @@ extension ChannelClient: DependencyKey {
                 )
             )
         },
-        fetchUnreadCount: { channelID, workspaceID, after in
+        fetchUnreadChannel: { channelID, workspaceID, after in
             return try await NetworkManager.shared.request(
                 api: ChannelRouter.fetchUnreadCount(
                     channelID: channelID,

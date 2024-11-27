@@ -16,3 +16,12 @@ struct ChannelResponse: Decodable {
     let createdAt: String
     let channelMembers: [MemberResponse]?
 }
+
+extension ChannelResponse {
+    var toChannel: Channel {
+        return Channel(
+            id: self.channel_id,
+            name: self.name
+        )
+    }
+}
