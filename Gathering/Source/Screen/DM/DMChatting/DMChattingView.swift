@@ -209,7 +209,7 @@ extension DMChattingView {
                             .aspectRatio(contentMode: .fill)
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                         Button(action: {
-                            print("클릭클릭")
+                            store.send(.imageDeleteButtonTap(image))
                         }, label: {
                             Image(systemName: "xmark.circle")
                                 .resizable()

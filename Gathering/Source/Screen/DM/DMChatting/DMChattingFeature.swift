@@ -43,6 +43,7 @@ struct DMChattingFeature {
         
         case task
         case sendButtonTap
+        case imageDeleteButtonTap(UIImage)
         
         case dmsChattingResponse([ChattingPresentModel])
         case sendDmMessage(DMsResponse)
@@ -134,6 +135,15 @@ struct DMChattingFeature {
                         await send(.sendMessageError(error))
                     }
                 }
+                
+            case .imageDeleteButtonTap(let image):
+                guard let index = state.selectedImages?.firstIndex(of: image) else {
+                    return .none
+                }
+                let newImages = state.selectedImages?.remove(at: index)
+                print(state.selectedImages)
+                return .none
+                
             case .sendDmMessage(let result):
                 print(result)
                 state.messageText = ""
