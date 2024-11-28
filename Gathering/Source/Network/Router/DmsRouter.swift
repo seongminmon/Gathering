@@ -105,7 +105,7 @@ extension DMsRouter: TargetType {
                 files.enumerated().forEach { index, imageData in
                     let multipartData = MultipartData(
                         data: imageData,
-                        name: "image",
+                        name: "files",
                         fileName: "image\(index).jpg"
                     )
                     multipartDataList.append(multipartData)
