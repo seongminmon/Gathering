@@ -61,6 +61,14 @@ struct DMChattingView: View {
                 dismiss()
             })
             .navigationBarBackButtonHidden()
+            .navigationDestination(
+                item: $store.scope(
+                    state: \.destination?.profile,
+                    action: \.destination.profile
+                )
+            ) { store in
+                ProfileView(store: store)
+            }
         }
     }
 }
@@ -73,8 +81,8 @@ extension DMChattingView {
                 Text(message.date.toString(.todayChat))
                     .font(Design.caption2)
                     .foregroundStyle(Design.darkGray)
-                VStack(alignment: .leading) {
-                    if let text = message.text {
+                VStack(alignment: .trailing) {
+                    if let text = message.text, !text.isEmpty {
                         Text(text)
                             .font(Font.body)
                             .padding(8)
@@ -87,6 +95,9 @@ extension DMChattingView {
                                     .stroke(Design.gray, lineWidth: 1) // 테두리 색과 두께 설정
                             )
                     }
+                    if !message.imageNames.isEmpty {
+                        ChattingImageView(imageNames: message.imageNames)
+                    }
                 }
             }
             
@@ -97,7 +108,10 @@ extension DMChattingView {
     private func othersMessageView(message: ChattingPresentModel) -> some View {
         HStack(alignment: .top) {
             ProfileImageView(urlString: message.profile ?? "bird",
-                             size: 34)
+                             size: 34).wrapToButton {
+                store.send(.profileButtonTap(message.user))
+                print("다른유저 프로필..")
+            }
             VStack(alignment: .leading) {
                 Text(message.name)
                     .font(Design.caption)
@@ -116,9 +130,9 @@ extension DMChattingView {
                                         .stroke(Design.gray, lineWidth: 1) // 테두리 색과 두께 설정
                                 )
                         }
-//                            if let imageName = message.imageNames {
-//                                ChattingImageView(imageNames: imageName)
-//                            }
+                        //                            if let imageName = message.imageNames {
+                        //                                ChattingImageView(imageNames: imageName)
+                        //                            }
                     }
                     Text(message.date.toString(.todayChat))
                         .font(Design.caption2)
@@ -131,15 +145,15 @@ extension DMChattingView {
             .frame(maxWidth: .infinity)
         }
         .padding(.bottom, 5)
-
+        
     }
     
     @ViewBuilder
     private func messageListView(message: ChattingPresentModel) -> some View {
         if message.isMine {
-           myMessageView(message: message)
+            myMessageView(message: message)
         } else {
-           othersMessageView(message: message)
+            othersMessageView(message: message)
         }
     }
 }
@@ -167,7 +181,7 @@ extension DMChattingView {
                 }
                 VStack(alignment: .leading) {
                     // 메시지 입력 필드
-//                    DynamicHeightTextField(text: $messageText)
+                    //                    DynamicHeightTextField(text: $messageText)
                     dynamicHeigtTextField()
                     if let images = store.selectedImages, !images.isEmpty {
                         selectePhotoView(images: images)
@@ -209,7 +223,7 @@ extension DMChattingView {
                             .aspectRatio(contentMode: .fill)
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                         Button(action: {
-                            print("클릭클릭")
+                            store.send(.imageDeleteButtonTap(image))
                         }, label: {
                             Image(systemName: "xmark.circle")
                                 .resizable()

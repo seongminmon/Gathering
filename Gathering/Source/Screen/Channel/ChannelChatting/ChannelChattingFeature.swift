@@ -84,6 +84,7 @@ struct ChannelChattingFeature {
                             workspaceID: workspaceID,
                             cursorDate: ""
                         )
+                        print(message)
                         await send(.channelChattingResponse(message))
                     } catch {
                         print("채팅 패치 실패")

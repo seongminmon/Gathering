@@ -97,6 +97,7 @@ struct ChannelSettingView: View {
                     store.send(.getOutCancel)
                 }
             )
+//            .navigationBarBackButtonHidden()
         }
     }
     
