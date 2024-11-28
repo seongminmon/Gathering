@@ -23,6 +23,7 @@ extension DMsResponse {
     func toChattingPresentModel() -> ChattingPresentModel {
         return ChattingPresentModel(
             id: self.dm_id,
+            user: self.user.toMember,
             name: self.user.nickname,
             text: self.content,
             imageNames: self.files,

@@ -17,11 +17,17 @@ struct DMChattingFeature {
     
     @Reducer
     enum Path {
+//        case profile(ProfileFeature)
+    }
+    
+    @Reducer
+    enum Destination {
         case profile(ProfileFeature)
     }
     
     @ObservableState
     struct State {
+        @Presents var destination: Destination.State?
         var path = StackState<Path.State>()
         
 //        var opponentID: String
@@ -39,11 +45,13 @@ struct DMChattingFeature {
     
     enum Action: BindableAction {
         case path(StackActionOf<Path>)
+        case destination(PresentationAction<Destination.Action>)
         case binding(BindingAction<State>)
         
         case task
         case sendButtonTap
         case imageDeleteButtonTap(UIImage)
+        case profileButtonTap(Member)
         
         case dmsChattingResponse([ChattingPresentModel])
         case sendDmMessage(DMsResponse)
@@ -59,14 +67,24 @@ struct DMChattingFeature {
             case .path(_):
                 return .none
                 
+            case .profileButtonTap(let user):
+                state.destination = .profile(ProfileFeature.State(
+                    profileType: .otherUser,
+                    nickname: user.nickname,
+                    email: user.email,
+                    profileImage: user.profileImage ?? "bird"
+                ))
+                print("asdfasdf")
+                return .none
+                
             case .binding(\.messageText):
                 state.messageButtonValid = !state.messageText.isEmpty
-                || ((state.selectedImages?.isEmpty) == nil)
+                || !(state.selectedImages?.isEmpty ?? true)
                 return .none
                 
             case .binding(\.selectedImages):
-                state.messageButtonValid = !state.messageText.isEmpty
-                || ((state.selectedImages?.isEmpty) == nil)
+                state.messageButtonValid = !(state.selectedImages?.isEmpty ?? true)
+                || !(state.selectedImages?.isEmpty ?? true)
                 return .none
                 
             case .task:
@@ -91,6 +109,7 @@ struct DMChattingFeature {
                         // 디비 다시 불러오기?
                         let dmUpdatedDBChats = try realmClient.fetchDMChats(dmsRoomID)
                             .map { $0.toResponseModel().toChattingPresentModel()}
+                        print(dmUpdatedDBChats.last)
                         await send(.dmsChattingResponse(dmUpdatedDBChats))
                     } catch {
                         print("채팅 패치 실패")
@@ -106,6 +125,13 @@ struct DMChattingFeature {
                                 state.dmsRoomResponse.id,
                                 DMRequest(content: state.messageText, files: [])
                             )
+                            do {
+                                try realmClient.create(result.toRealmModel())
+                                print("sendedDM 저장성공")
+                                await send(.saveSendedDM(result))
+                            } catch {
+                                print("Realm 추가 실패")
+                            }
                             return await send(.sendDmMessage(result))
                         }
                         let jpegData = images.map({ value in
@@ -127,8 +153,7 @@ struct DMChattingFeature {
                         } catch {
                             print("Realm 추가 실패")
                         }
-//                        await send(.sendDmMessage(result))
-//                        await send(.saveSendedDM(result))
+                        await send(.sendDmMessage(result))
                         
                     } catch {
                         print("멀티파트 실패 ㅠㅠ ")
@@ -178,6 +203,7 @@ struct DMChattingFeature {
                 return .none
             }
         }
+        .ifLet(\.$destination, action: \.destination)
         .forEach(\.path, action: \.path)
     }
     
