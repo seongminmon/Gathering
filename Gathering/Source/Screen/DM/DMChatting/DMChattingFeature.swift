@@ -122,11 +122,12 @@ struct DMChattingFeature {
                         do {
                             try realmClient.create(result.toRealmModel())
                             print("sendedDM 저장성공")
+                            await send(.saveSendedDM(result))
                         } catch {
                             print("Realm 추가 실패")
                         }
 //                        await send(.sendDmMessage(result))
-                        await send(.saveSendedDM(result))
+//                        await send(.saveSendedDM(result))
                         
                     } catch {
                         print("멀티파트 실패 ㅠㅠ ")
