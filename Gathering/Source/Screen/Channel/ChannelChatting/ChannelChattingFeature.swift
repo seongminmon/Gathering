@@ -23,7 +23,11 @@ struct ChannelChattingFeature {
     
     @ObservableState
     struct State {
-        @Presents var destination: Destination.State?
+        @Presents var destination: Destination.State? {
+            didSet {
+                print("채널 채팅뷰 데스티네이션:", destination)
+            }
+        }
         
         var channelID: String
         var workspaceID: String
@@ -67,8 +71,9 @@ struct ChannelChattingFeature {
                 return .none
                 
             case .settingButtonTap:
-                state.destination = .channelSetting(ChannelSettingFeature.State())
-                print("asdfasdf")
+                state.destination = .channelSetting(
+                    ChannelSettingFeature.State(currentChannel: state.currentChannel)
+                )
                 return .none
            
             case .task:
