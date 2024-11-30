@@ -24,12 +24,19 @@ struct RootFeature {
     }
     
     enum Action {
+        case setTab(TabInfo)
         case home(HomeFeature.Action)
         case dm(DMFeature.Action)
-        case setTab(TabInfo)
     }
     
     var body: some ReducerOf<Self> {
+        Scope(state: \.home, action: \.home) {
+            HomeFeature()
+        }
+        Scope(state: \.dm, action: \.dm) {
+            DMFeature()
+        }
+        
         Reduce { state, action in
             switch action {
             case .setTab(let tab):
@@ -39,12 +46,6 @@ struct RootFeature {
             case .home, .dm:
                 return .none
             }
-        }
-        Scope(state: \.home, action: \.home) {
-            HomeFeature()
-        }
-        Scope(state: \.dm, action: \.dm) {
-            DMFeature()
         }
     }
 }

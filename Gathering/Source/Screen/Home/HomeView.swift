@@ -14,21 +14,33 @@ struct HomeView: View {
     
     var body: some View {
         WithPerceptionTracking {
-            
-            ZStack(alignment: .bottomTrailing) {
-                coverLayer
-                makeFloatingButton {
-                    store.send(.floatingButtonTap)
+            NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
+                ZStack(alignment: .bottomTrailing) {
+                    coverLayer
+                    makeFloatingButton {
+                        store.send(.floatingButtonTap)
+                    }
+                }
+                .navigationBarTitleDisplayMode(.inline)
+                .confirmationDialog(
+                    store: store.scope(
+                        state: \.$confirmationDialog,
+                        action: \.confirmationDialog
+                    )
+                )
+                .task { store.send(.task) }
+            } destination: { store in
+                switch store.case {
+                case .profile(let store):
+                    ProfileView(store: store)
+                case .channelChatting(let store):
+                    ChannelChattingView(store: store)
+                case .channelSetting(let store):
+                    ChannelSettingView(store: store)
+                case .DMChatting(let store):
+                    DMChattingView(store: store)
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
-            .confirmationDialog(
-                store: store.scope(
-                    state: \.$confirmationDialog,
-                    action: \.confirmationDialog
-                )
-            )
-            .task { store.send(.task) }
         }
     }
 }
@@ -167,23 +179,22 @@ extension HomeView {
 extension HomeView {
     var navigationLayer: some View {
         scrollView()
-            .navigationDestination(
-                item: $store.scope(
-                    state: \.destination?.channelChatting,
-                    action: \.destination.channelChatting
-                )
-            ) { store in
-                ChannelChattingView(store: store)
-            }
-            .navigationDestination(
-                item: $store.scope(
-                    state: \.destination?.DMChatting,
-                    action: \.destination.DMChatting
-                )
-            ) { store in
-                DMChattingView(store: store)
-            }
-
+//            .navigationDestination(
+//                item: $store.scope(
+//                    state: \.destination?.channelChatting,
+//                    action: \.destination.channelChatting
+//                )
+//            ) { store in
+//                ChannelChattingView(store: store)
+//            }
+//            .navigationDestination(
+//                item: $store.scope(
+//                    state: \.destination?.DMChatting,
+//                    action: \.destination.DMChatting
+//                )
+//            ) { store in
+//                DMChattingView(store: store)
+//            }
     }
     
     var sheetLayer: some View {

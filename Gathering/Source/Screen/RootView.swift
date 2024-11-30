@@ -25,21 +25,20 @@ struct RootView: View {
                 get: { store.selectedTab },
                 set: { store.send(.setTab($0)) }
             )) {
-                GatheringNavigationStack(
-                    gatheringImage: store.home.currentWorkspace?.coverImage ?? "",
-                    title: store.home.currentWorkspace?.name ?? "",
-                    myProfile: store.home.myProfile
-                ) {
-                    HomeView(store: store.scope(
-                        state: \.home,
-                        action: \.home
-                    ))
-                }
-                .tabItem {
-                    Image(store.selectedTab == .home ? .homeActive : .homeInactive)
-                    Text(TabInfo.home.rawValue)
-                }
-                .tag(TabInfo.home)
+//                GatheringNavigationStack(
+//                    gatheringImage: store.home.currentWorkspace?.coverImage ?? "",
+//                    title: store.home.currentWorkspace?.name ?? "",
+//                    myProfile: store.home.myProfile
+//                ) {
+//                    HomeView(store: store.scope(state: \.home, action: \.home))
+//                }
+                
+                HomeView(store: store.scope(state: \.home, action: \.home))
+                    .tabItem {
+                        Image(store.selectedTab == .home ? .homeActive : .homeInactive)
+                        Text(TabInfo.home.rawValue)
+                    }
+                    .tag(TabInfo.home)
                 
                 GatheringNavigationStack(
                     gatheringImage: store.dm.currentWorkspace?.coverImage ?? "",

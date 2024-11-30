@@ -18,17 +18,33 @@ struct HomeFeature {
     @Dependency(\.dmsClient) var dmsClient
     @Dependency(\.realmClient) var realmClient
     
+    // MARK: - 네비게이션을 통한 화면 이동
+    // 내 프로필
+    // 채널 채팅 뷰 -> 채널 세팅 뷰 -> 나가기 시 홈 뷰로 한번에 이동
+    //           -> 다른 유저 프로필
+    // DM 채팅 뷰 -> 다른 유저 프로필
+    
+    @Reducer
+    enum Path {
+        case profile(ProfileFeature)
+        case channelChatting(ChannelChattingFeature)
+        case channelSetting(ChannelSettingFeature)
+        case DMChatting(DMChattingFeature)
+    }
+    
     @Reducer
     enum Destination {
         case channelAdd(CreateChannelFeature)
         case channelExplore(ExploreChannelFeature)
         case inviteMember(InviteMemberFeature)
-        case channelChatting(ChannelChattingFeature)
-        case DMChatting(DMChattingFeature)
+//        case channelChatting(ChannelChattingFeature)
+//        case DMChatting(DMChattingFeature)
     }
     
     @ObservableState
     struct State {
+        var path = StackState<Path.State>()
+        
         @Presents var destination: Destination.State?
         @Presents var confirmationDialog: ConfirmationDialogState<Action.ConfirmationDialog>?
         
@@ -55,6 +71,7 @@ struct HomeFeature {
     
     enum Action: BindableAction {
         case binding(BindingAction<State>)
+        case path(StackActionOf<Path>)
         case destination(PresentationAction<Destination.Action>)
         case confirmationDialog(PresentationAction<ConfirmationDialog>)
         
@@ -111,15 +128,21 @@ struct HomeFeature {
                 state.destination = .inviteMember(InviteMemberFeature.State())
                 return .none
             case .channelTap(let channel):
-                state.destination = .channelChatting(ChannelChattingFeature.State(
+                print("채널 탭:", channel)
+                state.path.append(.channelChatting(ChannelChattingFeature.State(
                     channelID: channel.id,
                     workspaceID: state.currentWorkspace?.workspace_id ?? ""
-                ))
+                )))
+//                state.destination = .channelChatting(ChannelChattingFeature.State(
+//                    channelID: channel.id,
+//                    workspaceID: state.currentWorkspace?.workspace_id ?? ""
+//                ))
                 return .none
             case .dmTap(let dmRoom):
-                state.destination = .DMChatting(DMChattingFeature.State(
-                    dmsRoomResponse: dmRoom
-                ))
+                print("DM 탭:", dmRoom)
+//                state.destination = .DMChatting(DMChattingFeature.State(
+//                    dmsRoomResponse: dmRoom
+//                ))
                 return .none
             case .destination(.dismiss):
                 state.destination = nil
@@ -184,12 +207,15 @@ struct HomeFeature {
                 return .none
             case .binding(\.myProfile):
                 return .none
-                
             case .binding:
                 return .none
-
+            
+            // MARK: - 네비게이션
+            case .path:
+                return .none
             }
         }
+        .forEach(\.path, action: \.path)
         .ifLet(\.$destination, action: \.destination)
         .ifLet(\.$confirmationDialog, action: \.confirmationDialog)
     }
