@@ -13,6 +13,7 @@ struct ProfileView: View {
     
     @Perception.Bindable var store: StoreOf<ProfileFeature>
     @Environment(\.dismiss) var dismiss
+    
     var body: some View {
         WithPerceptionTracking {
             List {

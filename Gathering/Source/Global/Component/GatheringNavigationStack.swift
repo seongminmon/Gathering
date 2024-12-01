@@ -76,10 +76,11 @@ struct GatheringNavigationStack<Content: View>: View {
         }
     }
 }
+
 //struct GatheringNavigationStack<Content: View>: View {
 //    @Perception.Bindable var store: StoreOf<GatheringNavigationFeature>
 //    let content: Content
-//    
+//
 //    init(
 //        gatheringImage: String,
 //        title: String,
@@ -97,7 +98,7 @@ struct GatheringNavigationStack<Content: View>: View {
 //        }
 //        self.content = content()
 //    }
-//    
+//
 //    var body: some View {
 //        WithPerceptionTracking {
 //            NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
@@ -110,7 +111,7 @@ struct GatheringNavigationStack<Content: View>: View {
 //                                    .font(Design.title1)
 //                            }
 //                        }
-//                        
+//
 //                        ToolbarItem(placement: .topBarTrailing) {
 //                            if let _ = store.myProfile {
 //                                Button {

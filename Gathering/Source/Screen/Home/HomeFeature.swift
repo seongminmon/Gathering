@@ -29,7 +29,7 @@ struct HomeFeature {
         case profile(ProfileFeature)
         case channelChatting(ChannelChattingFeature)
         case channelSetting(ChannelSettingFeature)
-        case DMChatting(DMChattingFeature)
+        case dmChatting(DMChattingFeature)
     }
     
     @Reducer
@@ -37,8 +37,6 @@ struct HomeFeature {
         case channelAdd(CreateChannelFeature)
         case channelExplore(ExploreChannelFeature)
         case inviteMember(InviteMemberFeature)
-//        case channelChatting(ChannelChattingFeature)
-//        case DMChatting(DMChattingFeature)
     }
     
     @ObservableState
@@ -94,7 +92,7 @@ struct HomeFeature {
         case myWorkspaceResponse(WorkspaceResponse?)
         case myProfileResponse(MyProfileResponse)
         //        case myWorkspaceListResponse([WorkspaceResponse])
-        //        case startNewMessageTap
+        case startNewMessageTap
     }
     
     var body: some ReducerOf<Self> {
@@ -140,10 +138,17 @@ struct HomeFeature {
                 return .none
             case .dmTap(let dmRoom):
                 print("DM 탭:", dmRoom)
+                state.path.append(.dmChatting(
+                    DMChattingFeature.State(dmsRoomResponse: dmRoom)
+                ))
 //                state.destination = .DMChatting(DMChattingFeature.State(
 //                    dmsRoomResponse: dmRoom
 //                ))
                 return .none
+            case .startNewMessageTap:
+                print("새 메시지 버튼 탭")
+                return .none
+                
             case .destination(.dismiss):
                 state.destination = nil
                 return .none

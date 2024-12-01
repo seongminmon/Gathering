@@ -37,7 +37,7 @@ struct DMView: View {
                         // DM 채팅방
                         ScrollView {
                             LazyVStack(spacing: 20) {
-                                ForEach(store.dmRoomList, id: \.self) { dmRoom in
+                                ForEach(store.dmRoomList, id: \.id) { dmRoom in
                                     let lastChatting = store.dmChattings[dmRoom]?.last
                                     let unreadResponse = store.dmUnreads[dmRoom]
                                     dmCell(

@@ -245,4 +245,3 @@ extension DMChattingView {
         .frame(height: 55)
     }
 }
-

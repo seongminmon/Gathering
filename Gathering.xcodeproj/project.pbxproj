@@ -82,6 +82,7 @@
 		24ABE98E2CDF02E1000E7EC5 /* ChattingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE98D2CDF02E1000E7EC5 /* ChattingRequest.swift */; };
 		24ABE9902CDF0CFB000E7EC5 /* OwnerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE98F2CDF0CFB000E7EC5 /* OwnerRequest.swift */; };
 		24F7BFC32CF301D600040C09 /* MultipartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F7BFC22CF301D600040C09 /* MultipartData.swift */; };
+		24F7BFC82CFC21AA00040C09 /* GatheringNavigationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F7BFC72CFC21AA00040C09 /* GatheringNavigationModifier.swift */; };
 		843E7FC62CE202530057A426 /* AppFeaturePractice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E7FC52CE202520057A426 /* AppFeaturePractice.swift */; };
 		843E7FC82CE21B9B0057A426 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E7FC72CE21B9B0057A426 /* AppView.swift */; };
 		843E7FCA2CE21E830057A426 /* MyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E7FC92CE21E830057A426 /* MyApp.swift */; };
@@ -242,6 +243,7 @@
 		24ABE98D2CDF02E1000E7EC5 /* ChattingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingRequest.swift; sourceTree = "<group>"; };
 		24ABE98F2CDF0CFB000E7EC5 /* OwnerRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerRequest.swift; sourceTree = "<group>"; };
 		24F7BFC22CF301D600040C09 /* MultipartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartData.swift; sourceTree = "<group>"; };
+		24F7BFC72CFC21AA00040C09 /* GatheringNavigationModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatheringNavigationModifier.swift; sourceTree = "<group>"; };
 		843E7FC52CE202520057A426 /* AppFeaturePractice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeaturePractice.swift; sourceTree = "<group>"; };
 		843E7FC72CE21B9B0057A426 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		843E7FC92CE21E830057A426 /* MyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyApp.swift; sourceTree = "<group>"; };
@@ -799,6 +801,7 @@
 		24ABE95D2CDB931B000E7EC5 /* Modifier */ = {
 			isa = PBXGroup;
 			children = (
+				24F7BFC72CFC21AA00040C09 /* GatheringNavigationModifier.swift */,
 				24ABE95E2CDB93B5000E7EC5 /* RoundButtonModifier.swift */,
 				249FB0FB2CECBCDB00CA418B /* BadgeModifier.swift */,
 				847A3F9E2CDB6AC4004A9361 /* ToolbarModifier.swift */,
@@ -1066,6 +1069,7 @@
 				249FB1082CEF602300CA418B /* DMsRoom.swift in Sources */,
 				843E7FE12CE337550057A426 /* KakaoLoginRequest.swift in Sources */,
 				843E7FEF2CE349550057A426 /* ContactDetailFeature.swift in Sources */,
+				24F7BFC82CFC21AA00040C09 /* GatheringNavigationModifier.swift in Sources */,
 				84B8AD172CE3696400011D73 /* UserClient.swift in Sources */,
 				84B8AD232CE46A8E00011D73 /* CustomAlert.swift in Sources */,
 				24F7BFC32CF301D600040C09 /* MultipartData.swift in Sources */,
