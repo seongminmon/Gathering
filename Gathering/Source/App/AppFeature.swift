@@ -23,6 +23,7 @@ struct AppFeature {
         var toast: Toast?
         var loginState: LoginState = .loading
         var onboarding = OnboardingFeature.State()
+        var root = RootFeature.State()
     }
     
     enum Action {
@@ -33,11 +34,15 @@ struct AppFeature {
         case loginFail
         case updateLoginState(LoginState)
         case onboarding(OnboardingFeature.Action)
+        case root(RootFeature.Action)
     }
     
     var body: some ReducerOf<Self> {
         Scope(state: \.onboarding, action: \.onboarding) {
             OnboardingFeature()
+        }
+        Scope(state: \.root, action: \.root) {
+            RootFeature()
         }
         
         Reduce { state, action in
@@ -91,17 +96,19 @@ struct AppFeature {
                 print("자동 로그인 실패 (리프레시 토큰 만료)")
                 state.loginState = .fail
                 return .none
+                
             case .onboarding(.loginPopUp(.emailLogin(.logInResponse))):
-                print("이메일 로그인 성공!")
                 state.loginState = .success
                 return .none
                 
             case .onboarding(.loginPopUp(.signUp(.signUpResponse))):
-                print("회원가입 성공!")
                 state.loginState = .success
                 return .none
                 
             case .onboarding:
+                return .none
+                
+            case .root:
                 return .none
                 
             case let .updateLoginState(newState):

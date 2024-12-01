@@ -46,6 +46,7 @@ struct DMChattingView: View {
                 // 채팅보내는 부분
                 messageInputView()
             }
+            .navigationBarBackButtonHidden()
             .task { store.send(.task) }
             .onTapGesture {
                 // 화면을 탭할 때 키보드 내리기
@@ -55,20 +56,12 @@ struct DMChattingView: View {
                 // 뷰가 사라질 때 키보드 노티피케이션 구독 해제
                 keyboardSubscriber?.cancel()
             }
-            .customToolbar(title: store.message.first?.name ?? "",
-                           leftItem: .init(icon: .chevronLeft) {
-                // TODO: 스와이프 제스쳐 살리는법??
-                dismiss()
-            })
-            .navigationBarBackButtonHidden()
-            .navigationDestination(
-                item: $store.scope(
-                    state: \.destination?.profile,
-                    action: \.destination.profile
-                )
-            ) { store in
-                ProfileView(store: store)
-            }
+            .customToolbar(
+                title: store.message.first?.name ?? "",
+                leftItem: .init(icon: .chevronLeft) {
+                    dismiss()
+                }
+            )
         }
     }
 }
@@ -110,7 +103,6 @@ extension DMChattingView {
             ProfileImageView(urlString: message.profile ?? "bird",
                              size: 34).wrapToButton {
                 store.send(.profileButtonTap(message.user))
-                print("다른유저 프로필..")
             }
             VStack(alignment: .leading) {
                 Text(message.name)
@@ -245,4 +237,3 @@ extension DMChattingView {
         .frame(height: 55)
     }
 }
-

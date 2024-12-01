@@ -20,7 +20,6 @@ struct InviteMemberView: View {
                 SheetHeaderView(title: "팀원 초대")
                     .background(Design.white)
                 ScrollView {
-                    // TODO: - first responder 만들기
                     TextFieldWithTitle(
                         title: "이메일",
                         placeholder: "초대하려는 팀원의 이메일을 입력하세요.",
@@ -36,18 +35,17 @@ struct InviteMemberView: View {
             .background(Design.gray)
         }
     }
-        private func inviteButton() -> some View {
-            Button {
-                store.send(.inviteMemberButtonTap)
-            } label: {
-                RoundedButton(
-                    text: "초대 보내기",
-                    foregroundColor: Design.white,
-                    backgroundColor: Design.green
-                )
-            }
-            .disabled(!store.inviteButtonValid)
-        }
     
+    private func inviteButton() -> some View {
+        Button {
+            store.send(.inviteMemberButtonTap)
+        } label: {
+            RoundedButton(
+                text: "초대 보내기",
+                foregroundColor: Design.white,
+                backgroundColor: Design.green
+            )
+        }
+        .disabled(!store.inviteButtonValid)
+    }
 }
-

@@ -17,8 +17,15 @@ struct DMFeature {
     @Dependency(\.dmsClient) var dmsClient
     @Dependency(\.realmClient) var realmClient
     
+    @Reducer
+    enum Path {
+        case profile(ProfileFeature)
+        case dmChatting(DMChattingFeature)
+    }
+    
     @ObservableState
     struct State {
+        var path = StackState<Path.State>()
         var isLoading = true
         
         var currentWorkspace: WorkspaceResponse?
@@ -38,6 +45,7 @@ struct DMFeature {
     }
     
     enum Action: BindableAction {
+        case path(StackActionOf<Path>)
         case binding(BindingAction<State>)
         
         // MARK: - 유저 Action
@@ -45,6 +53,8 @@ struct DMFeature {
         case loadingComplete
         case inviteMemberSheetButtonTap
         case inviteMemberButtonTap
+        case userCellTap(Member)
+        case dmCellTap(DMsRoom)
         
         // MARK: - 내부 Action
         case myWorkspaceResponse(WorkspaceResponse?)
@@ -65,7 +75,7 @@ struct DMFeature {
         Reduce { state, action in
             switch action {
                 
-            // MARK: - Binding
+                // MARK: - Binding
             case .binding(\.email):
                 state.inviteButtonValid = !state.email.isEmpty
                 return .none
@@ -80,7 +90,7 @@ struct DMFeature {
             case .binding:
                 return .none
                 
-            // MARK: - 유저 Action
+                // MARK: - 유저 Action
             case .task:
                 state.isLoading = true
                 return .run { send in
@@ -104,7 +114,7 @@ struct DMFeature {
                         }
                         
                         let (memberResult, dmRoomResult) = try await fetchWorkspaceDetails(
-                            workspaceID: UserDefaultsManager.workspaceID 
+                            workspaceID: UserDefaultsManager.workspaceID
                         )
                         await send(.workspaceMemberResponse(memberResult))
                         await send(.dmRoomsResponse(dmRoomResult))
@@ -142,7 +152,22 @@ struct DMFeature {
                     }
                 }
                 
-            // MARK: - 내부 Action
+            case .userCellTap(let user):
+                return .run { send in
+                    let result = try await dmsClient.fetchOrCreateDM(
+                        UserDefaultsManager.workspaceID,
+                        DMOpponentRequest(opponentID: user.id)
+                    )
+                    await send(.dmCellTap(result.toDmsRoom))
+                }
+                
+            case .dmCellTap(let dmRoom):
+                state.path.append(.dmChatting(DMChattingFeature.State(
+                    dmsRoomResponse: dmRoom
+                )))
+                return .none
+                
+                // MARK: - 내부 Action
             case .loadingComplete:
                 state.isLoading = false
                 return .none
@@ -171,34 +196,33 @@ struct DMFeature {
                 
                 // DM Room List 구한 뒤 모든 DM Room에 대한 Effect를 병렬로 실행
                 return .merge(state.dmRoomList.map { dmRoom in
-                        return .run { send in
-                            do {
-                                // Realm에서 roomID 기준으로 DM 채팅 내역 가져오기
-                                let dmChats = try realmClient.fetchDMChats(dmRoom.id)
-                                let lastCreatedAt = dmChats.last?.createdAt ?? ""
-                                
-                                // realm에서 불러온 데이터들 state에 저장
-                                await send(.addDMChats(
-                                    dmRoom,
-                                    dmChats.map { $0.toResponseModel() }
-                                ))
-                                
-                                let (chats, unreadCount) = try await fetchDMRoomDetails(
-                                    workspaceID: workspaceID,
-                                    roomID: dmRoom.id,
-                                    lastCreatedAt: lastCreatedAt
-                                )
-                                
-                                await send(.dmChatsResponse(dmRoom, chats))
-                                await send(.unreadCountResponse(dmRoom, unreadCount))
-                            } catch {
-                                print("DM 채팅 조회 실패:", error)
-                            }
+                    return .run { send in
+                        do {
+                            // Realm에서 roomID 기준으로 DM 채팅 내역 가져오기
+                            let dmChats = try realmClient.fetchDMChats(dmRoom.id)
+                            let lastCreatedAt = dmChats.last?.createdAt ?? ""
+                            
+                            // realm에서 불러온 데이터들 state에 저장
+                            await send(.addDMChats(
+                                dmRoom,
+                                dmChats.map { $0.toResponseModel() }
+                            ))
+                            
+                            let (chats, unreadCount) = try await fetchDMRoomDetails(
+                                workspaceID: workspaceID,
+                                roomID: dmRoom.id,
+                                lastCreatedAt: lastCreatedAt
+                            )
+                            
+                            await send(.dmChatsResponse(dmRoom, chats))
+                            await send(.unreadCountResponse(dmRoom, unreadCount))
+                        } catch {
+                            print("DM 채팅 조회 실패:", error)
                         }
+                    }
                 })
                 
             case .addDMChats(let dmRoom, let chats):
-                print("스테이트 DMChats에 추가하기", chats)
                 state.dmChattings[dmRoom, default: []].append(contentsOf: chats)
                 return .none
                 
@@ -206,15 +230,16 @@ struct DMFeature {
                 // dm 채팅 내역 리스트 조회 결과
                 state.dmChattings[dmRoom, default: []].append(contentsOf: chats)
                 
+                // MARK: - 여기서 DB에 저장하면 모두 읽은 표시 처리됨 >> DB에는 저장하지 않기
                 // Realm에 저장하기
-                chats.forEach {
-                    do {
-                        try realmClient.create($0.toRealmModel())
-                    } catch {
-                        print("Realm 추가 실패")
-                    }
-                    // TODO: - 파일매니저에 이미지 저장
-                }
+//                chats.forEach {
+//                    do {
+//                        try realmClient.create($0.toRealmModel())
+//                    } catch {
+//                        print("Realm 추가 실패")
+//                    }
+//                    // TODO: - 파일매니저에 이미지 저장
+//                }
                 return .none
                 
             case .unreadCountResponse(let dmRoom, let unreadCount):
@@ -229,8 +254,21 @@ struct DMFeature {
                 // 시트 내리기
                 state.inviteMemberViewPresented = false
                 return .none
+                
+                // MARK: - 네비게이션
+            case .path(.element(id: _, action: .dmChatting(.profileButtonTap(let user)))):
+                state.path.append(.profile(ProfileFeature.State(
+                    profileType: .otherUser,
+                    nickname: user.nickname,
+                    email: user.email,
+                    profileImage: user.profileImage ?? "bird"
+                )))
+                return .none
+            case .path:
+                return .none
             }
         }
+        .forEach(\.path, action: \.path)
     }
     
     private func fetchInitialData() async throws -> ([WorkspaceResponse], MyProfileResponse) {

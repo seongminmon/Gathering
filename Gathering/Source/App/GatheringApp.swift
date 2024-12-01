@@ -47,7 +47,9 @@ struct GatheringApp: App {
         Group {
             switch store.loginState {
             case .success:
-                RootView()
+                RootView(
+                    store: store.scope(state: \.root, action: \.root)
+                )
             case .fail:
                 OnboardingView(
                     store: store.scope(state: \.onboarding, action: \.onboarding)

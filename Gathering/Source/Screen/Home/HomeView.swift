@@ -14,21 +14,37 @@ struct HomeView: View {
     
     var body: some View {
         WithPerceptionTracking {
-            
-            ZStack(alignment: .bottomTrailing) {
-                coverLayer
-                makeFloatingButton {
-                    store.send(.floatingButtonTap)
+            NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
+                ZStack(alignment: .bottomTrailing) {
+                    coverLayer
+                    makeFloatingButton {
+                        store.send(.floatingButtonTap)
+                    }
+                }
+                .asGatheringNavigationModifier(
+                    gatheringImage: store.currentWorkspace?.coverImage ?? "",
+                    title: store.currentWorkspace?.name ?? "",
+                    myProfile: store.myProfile
+                )
+                .confirmationDialog(
+                    store: store.scope(
+                        state: \.$confirmationDialog,
+                        action: \.confirmationDialog
+                    )
+                )
+                .task { store.send(.task) }
+            } destination: { store in
+                switch store.case {
+                case .profile(let store):
+                    ProfileView(store: store)
+                case .channelChatting(let store):
+                    ChannelChattingView(store: store)
+                case .channelSetting(let store):
+                    ChannelSettingView(store: store)
+                case .dmChatting(let store):
+                    DMChattingView(store: store)
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
-            .confirmationDialog(
-                store: store.scope(
-                    state: \.$confirmationDialog,
-                    action: \.confirmationDialog
-                )
-            )
-            .task { store.send(.task) }
         }
     }
 }
@@ -54,7 +70,7 @@ extension HomeView {
                     label: "다이렉트 메시지",
                     isExpanded: $store.isDMExpanded
                 ) {
-//                    dmListView()
+                    dmListView()
                 }
                 .padding()
             }
@@ -72,7 +88,6 @@ extension HomeView {
         VStack(alignment: .leading, spacing: 12) {
             ForEach(store.channelList, id: \.id) { channel in
                 HStack {
-//                    let lastChatting = store.channelChattings[channel]?.last
                     let unreadResponse = store.channelUnreads[channel]
                     
                     Image(unreadResponse == nil ? .thin : .hashTagthick)
@@ -98,38 +113,40 @@ extension HomeView {
         }
     }
     
-//    private func dmListView() -> some View {
-//        // TODO: unreadResponse.count 0 일때 어떻게 오는지 봐야댐
-//        VStack(alignment: .leading, spacing: 12) {
-//            ForEach(store.dmRoomList, id: \.id) { dmRoom in
-//                HStack {
-////                    let lastChatting = store.dmChattings[dmRoom]?.last
-//                    let unreadResponse = store.dmUnreads[dmRoom]
-//                    
-//                    ProfileImageView(urlString: dmRoom.user.profileImage ?? "bird", size: 30)
-//                    Button {
-//                        store.send(.dmTap(dmRoom))
-//                    } label: {
-//                        Text(dmRoom.name)
-//                            .foregroundColor(
-//                                unreadResponse.count == 0 ||
-//                                unreadResponse == nil ? Design.darkGray : Design.black
-//                            )
-//                            .font(unreadResponse.count == 0 ||
-//                                  unreadResponse.count == nil ? Design.body : Design.bodyBold)
-//                        Spacer()
-//                        if let count = unreadResponse.count {
-//                            Text("\(count)")
-//                                .badge()
-//                        }
-//                    }
-//                }
-//            }
-//            makeAddButton(text: "새 메시지 시작") {
-//                //                store.send(.startNewMessageTap)
-//            }
-//        }
-//    }
+    private func dmListView() -> some View {
+        // TODO: unreadResponse.count 0 일때 어떻게 오는지 봐야댐
+        LazyVStack(alignment: .leading, spacing: 12) {
+            ForEach(store.dmRoomList, id: \.id) { dmRoom in
+                let unreadResponse = store.dmUnreads[dmRoom]
+                HStack {
+                    ProfileImageView(urlString: dmRoom.user.profileImage ?? "", size: 30)
+                    
+                    Button {
+                        store.send(.dmTap(dmRoom))
+                    } label: {
+                        Text(dmRoom.user.nickname)
+                            .foregroundStyle(
+                                unreadResponse?.count == 0 || unreadResponse == nil ?
+                                Design.darkGray : Design.black
+                            )
+                            .font(
+                                unreadResponse?.count == 0 || unreadResponse == nil ?
+                                Design.body : Design.bodyBold
+                            )
+                        Spacer()
+                        if let count = unreadResponse?.count {
+                            Text("\(count)")
+                                .badge()
+                        }
+                    }
+                }
+            }
+            
+            makeAddButton(text: "새 메시지 시작") {
+                store.send(.startNewMessageTap)
+            }
+        }
+    }
     
     private func makeAddButton(text: String,
                                action: @escaping () -> Void) -> some View {
@@ -167,23 +184,6 @@ extension HomeView {
 extension HomeView {
     var navigationLayer: some View {
         scrollView()
-            .navigationDestination(
-                item: $store.scope(
-                    state: \.destination?.channelChatting,
-                    action: \.destination.channelChatting
-                )
-            ) { store in
-                ChannelChattingView(store: store)
-            }
-            .navigationDestination(
-                item: $store.scope(
-                    state: \.destination?.DMChatting,
-                    action: \.destination.DMChatting
-                )
-            ) { store in
-                DMChattingView(store: store)
-            }
-
     }
     
     var sheetLayer: some View {

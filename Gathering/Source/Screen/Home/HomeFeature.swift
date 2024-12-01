@@ -18,28 +18,38 @@ struct HomeFeature {
     @Dependency(\.dmsClient) var dmsClient
     @Dependency(\.realmClient) var realmClient
     
+    // MARK: - 네비게이션을 통한 화면 이동
+    // 내 프로필
+    // 채널 채팅 뷰 -> 채널 세팅 뷰 -> 나가기 시 홈 뷰로 한번에 이동
+    //           -> 다른 유저 프로필
+    // DM 채팅 뷰 -> 다른 유저 프로필
+    
+    @Reducer
+    enum Path {
+        case profile(ProfileFeature)
+        case channelChatting(ChannelChattingFeature)
+        case channelSetting(ChannelSettingFeature)
+        case dmChatting(DMChattingFeature)
+    }
+    
     @Reducer
     enum Destination {
         case channelAdd(CreateChannelFeature)
         case channelExplore(ExploreChannelFeature)
         case inviteMember(InviteMemberFeature)
-        case channelChatting(ChannelChattingFeature)
-        case DMChatting(DMChattingFeature)
     }
     
     @ObservableState
     struct State {
+        var path = StackState<Path.State>()
         @Presents var destination: Destination.State?
         @Presents var confirmationDialog: ConfirmationDialogState<Action.ConfirmationDialog>?
         
         var isChannelExpanded = true
         var isDMExpanded = true
         
-//        var channels: [Channel] = Dummy.channels
-//        var users: [DMUser] = Dummy.users
-        
         // 워크스페이스 + 프로필 데이터
-        //        var myWorkspaceList: [WorkspaceResponse] = []
+//        var myWorkspaceList: [WorkspaceResponse] = []
         var currentWorkspace: WorkspaceResponse?
         var myProfile: MyProfileResponse?
         
@@ -55,6 +65,7 @@ struct HomeFeature {
     
     enum Action: BindableAction {
         case binding(BindingAction<State>)
+        case path(StackActionOf<Path>)
         case destination(PresentationAction<Destination.Action>)
         case confirmationDialog(PresentationAction<ConfirmationDialog>)
         
@@ -62,7 +73,8 @@ struct HomeFeature {
             case createChannelButtonTap
             case exploreChannelButtonTap
         }
-        //        // View에서 발생하는 사용자 액션들
+        
+        // View에서 발생하는 사용자 액션들
         case addChannelButtonTap
         case inviteMemberButtonTap
         case floatingButtonTap
@@ -77,7 +89,7 @@ struct HomeFeature {
         case myWorkspaceResponse(WorkspaceResponse?)
         case myProfileResponse(MyProfileResponse)
         //        case myWorkspaceListResponse([WorkspaceResponse])
-        //        case startNewMessageTap
+        case startNewMessageTap
     }
     
     var body: some ReducerOf<Self> {
@@ -111,16 +123,21 @@ struct HomeFeature {
                 state.destination = .inviteMember(InviteMemberFeature.State())
                 return .none
             case .channelTap(let channel):
-                state.destination = .channelChatting(ChannelChattingFeature.State(
+                print("채널 탭:", channel)
+                state.path.append(.channelChatting(ChannelChattingFeature.State(
                     channelID: channel.id,
                     workspaceID: state.currentWorkspace?.workspace_id ?? ""
-                ))
+                )))
                 return .none
             case .dmTap(let dmRoom):
-                state.destination = .DMChatting(DMChattingFeature.State(
+                state.path.append(.dmChatting(DMChattingFeature.State(
                     dmsRoomResponse: dmRoom
-                ))
+                )))
                 return .none
+            case .startNewMessageTap:
+                print("새 메시지 버튼 탭")
+                return .none
+                
             case .destination(.dismiss):
                 state.destination = nil
                 return .none
@@ -131,9 +148,10 @@ struct HomeFeature {
                 return .none
             case .confirmationDialog(.dismiss):
                 return .none
-                // MARK: networking -
+                
+            // MARK: networking -
             case .task:
-                //                state.isLoading = true
+//                state.isLoading = true
                 return .run { send in
                     do {
                         // 워크스페이스 리스트, 유저 정보 가져오기
@@ -184,12 +202,31 @@ struct HomeFeature {
                 return .none
             case .binding(\.myProfile):
                 return .none
-                
             case .binding:
                 return .none
-
+            
+            // MARK: - 네비게이션
+            case .path(.element(id: _, action: .channelChatting(.settingButtonTap(let channel)))):
+                state.path.append(.channelSetting(ChannelSettingFeature.State(
+                    currentChannel: channel
+                )))
+                return .none
+                
+            case .path(.element(id: _, action: .dmChatting(.profileButtonTap(let user)))):
+                print("홈 뷰에서 DM 채팅 뷰 액션 감지")
+                state.path.append(.profile(ProfileFeature.State(
+                    profileType: .otherUser,
+                    nickname: user.nickname,
+                    email: user.email,
+                    profileImage: user.profileImage ?? "bird"
+                )))
+                return .none
+                
+            case .path:
+                return .none
             }
         }
+        .forEach(\.path, action: \.path)
         .ifLet(\.$destination, action: \.destination)
         .ifLet(\.$confirmationDialog, action: \.confirmationDialog)
     }

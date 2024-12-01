@@ -17,7 +17,7 @@ enum TabInfo : String, CaseIterable {
 }
 
 struct RootView: View {
-    @Perception.Bindable var store =  Store(initialState: RootFeature.State()) { RootFeature() }
+    @Perception.Bindable var store: StoreOf<RootFeature>
     
     var body: some View {
         WithPerceptionTracking {
@@ -25,46 +25,33 @@ struct RootView: View {
                 get: { store.selectedTab },
                 set: { store.send(.setTab($0)) }
             )) {
-                GatheringNavigationStack(
-                    gatheringImage: store.home.currentWorkspace?.coverImage ?? "",
-                    title: store.home.currentWorkspace?.name ?? "",
-                    myProfile: store.home.myProfile
-                ) {
-                    HomeView(store: store.scope(
-                        state: \.home,
-                        action: \.home
-                    ))
-                }
-                .tabItem {
-                    Image(store.selectedTab == .home ? .homeActive : .homeInactive)
-                    Text(TabInfo.home.rawValue)
-                }
-                .tag(TabInfo.home)
+                HomeView(store: store.scope(state: \.home, action: \.home))
+                    .tabItem {
+                        Image(store.selectedTab == .home ? .homeActive : .homeInactive)
+                        Text(TabInfo.home.rawValue)
+                    }
+                    .tag(TabInfo.home)
                 
-                GatheringNavigationStack(
-                    gatheringImage: store.dm.currentWorkspace?.coverImage ?? "",
-                    title: "Direct Message",
-                    myProfile: store.dm.myProfile
-                ) {
-                    DMView(store: store.scope(
-                        state: \.dm,
-                        action: \.dm
-                    ))
-                }
-                .tabItem {
-                    Image(store.selectedTab == .dm ? .messageActive : .messageInactive)
-                    Text(TabInfo.dm.rawValue)
-                }
-                .tag(TabInfo.dm)
+                DMView(store: store.scope(state: \.dm, action: \.dm))
+                    .tabItem {
+                        Image(store.selectedTab == .dm ? .messageActive : .messageInactive)
+                        Text(TabInfo.dm.rawValue)
+                    }
+                    .tag(TabInfo.dm)
                 
                 // MARK: - 검색
                 NavigationStack {
-                    ChannelChattingView(
-                        store: Store(initialState: ChannelChattingFeature.State(channelID: "f755a2b0-547a-4215-8f72-af1be294ce09", workspaceID: "4e31f58f-aedd-4b3a-a4cb-b7597fafe8d2"),
-                                     reducer: {
-                                         ChannelChattingFeature()
-                                     })
+                    ChannelSettingView(
+                        store: Store(initialState: ChannelSettingFeature.State()) {
+                            ChannelSettingFeature()
+                        }
                     )
+//                    ChannelChattingView(
+//                        store: Store(initialState: ChannelChattingFeature.State(channelID: "f755a2b0-547a-4215-8f72-af1be294ce09", workspaceID: "4e31f58f-aedd-4b3a-a4cb-b7597fafe8d2"),
+//                                     reducer: {
+//                                         ChannelChattingFeature()
+//                                     })
+//                    )
                 }
                 .tabItem {
                     Image(store.selectedTab == .search ? .profileActive : .profileInactive)
