@@ -164,7 +164,7 @@ struct HomeFeature {
                 )))
                 return .none
             case .startNewMessageTap:
-                print("새 메시지 버튼 탭")
+                // RootFeature에서 탭바 전환
                 return .none
                 
             case .destination(.dismiss):
@@ -174,6 +174,7 @@ struct HomeFeature {
                 return .none
                 
             case .floatingButtonTap:
+                // RootFeature에서 탭바 전환
                 return .none
             case .confirmationDialog(.dismiss):
                 return .none
