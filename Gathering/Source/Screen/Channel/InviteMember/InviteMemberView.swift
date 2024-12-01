@@ -32,7 +32,7 @@ struct InviteMemberView: View {
                 inviteButton()
                     .padding([.horizontal, .bottom])
             }
-            .background(Design.gray)
+            .background(Design.background)
         }
     }
     

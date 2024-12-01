@@ -203,7 +203,7 @@ struct ChannelSettingView: View {
             .disabled(!store.buttonValid)
             .padding([.horizontal, .bottom])
         }
-        .background(Design.gray)
+        .background(Design.background)
     }
     
     private func changeAdminView(_ members: [Member]) -> some View {
@@ -237,7 +237,7 @@ struct ChannelSettingView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .background(Design.gray)
+        .background(Design.background)
         .onAppear {
             if members.isEmpty { store.send(.channelEmpty) }
         }

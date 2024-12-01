@@ -41,25 +41,24 @@ struct CreateChannelFeature {
                 guard state.isValid else { return .none }
                 return .run { [state = state] send in
                     do {
-//                        await send(.createChannel)
                         let result = try await channelClient.createChannel(
-                            "sd", 
+                            UserDefaultsManager.workspaceID,
                             ChannelRequest(name: state.channelName,
-                                           description: "",
+                                           description: state.channelDescription,
                                            image: nil))
-                        print(result)
-                        await self.dismiss()
+                        Notification.postToast(title: "채널이 생성되었습니다")
+                        await dismiss()
                     } catch {
-                        let errorCode = (error as? ErrorResponse)?.errorCode
-                        if errorCode == "E13" {
-                            Notification.postToast(title: "이미 존재하는 채널이름 입니다")
+                        if let errorCode = (error as? ErrorResponse)?.errorCode {
+                            switch errorCode {
+                            case "E12":
+                                Notification.postToast(title: "이미 존재하는 채널 이름 입니다")
+                            default:
+                                Notification.postToast(title: "채널 생성 실패")
+                            }
                         }
                     }
-                    
                 }
-//            case .createChannel:
-//                
-//                return .none
             }
         }
     }

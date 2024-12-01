@@ -10,6 +10,8 @@ import SwiftUI
 import ComposableArchitecture
 
 struct HomeView: View {
+    // TODO: - 채널 생성 시 뷰 갱신 필요
+    
     @Perception.Bindable var store: StoreOf<HomeFeature>
     
     var body: some View {
@@ -114,7 +116,6 @@ extension HomeView {
     }
     
     private func dmListView() -> some View {
-        // TODO: unreadResponse.count 0 일때 어떻게 오는지 봐야댐
         LazyVStack(alignment: .leading, spacing: 12) {
             ForEach(store.dmRoomList, id: \.id) { dmRoom in
                 let unreadResponse = store.dmUnreads[dmRoom]

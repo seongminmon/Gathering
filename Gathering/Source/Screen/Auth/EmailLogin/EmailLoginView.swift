@@ -35,7 +35,7 @@ struct EmailLoginView: View {
                 logInButton()
                     .padding([.horizontal, .bottom])
             }
-            .background(Design.gray)
+            .background(Design.background)
         }
     }
     

@@ -166,7 +166,7 @@ struct DMView: View {
             inviteButton()
                 .padding([.horizontal, .bottom])
         }
-        .background(Design.gray)
+        .background(Design.background)
     }
     
     private func inviteButton() -> some View {

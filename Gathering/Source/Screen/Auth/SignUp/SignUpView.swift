@@ -48,7 +48,7 @@ struct SignUpView: View {
                 signUpButton()
                     .padding([.horizontal, .bottom])
             }
-            .background(Design.gray)
+            .background(Design.background)
         }
     }
     

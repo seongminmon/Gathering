@@ -14,39 +14,37 @@ struct CreateChannelView: View {
     
     var body: some View {
         WithPerceptionTracking {
-            VStack(spacing: 0) {
-                SheetHeaderView(title: "채널 생성")
-                
-                Spacer()
-                VStack(alignment: .leading, spacing: 20) {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("채널 이름")
-                            .font(.title2)
-                        TextField("", text: $store.channelName)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
+            VStack {
+                SheetHeaderView(title: "채널 편집")
+                    .background(Design.white)
+                ScrollView {
+                    VStack(spacing: 24) {
+                        TextFieldWithTitle(
+                            title: "채널 이름",
+                            placeholder: "채널 이름을 입력해주세요",
+                            text: $store.channelName
+                        )
+                        TextFieldWithTitle(
+                            title: "채널 설명",
+                            placeholder: "채널 설명을 입력해주세요",
+                            text: $store.channelDescription
+                        )
                     }
-                    
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("채널 설명")
-                            .font(.title2)
-                        TextField("", text: $store.channelDescription)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                    }
-                    Spacer()
-                    
-                    Button(action: {
-                        store.send(.saveButtonTapped)
-                    }) {
-                        Text("생성")
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(store.isValid ? Design.green : Design.darkGray)
-                            .cornerRadius(8)
-                    }
-                    .disabled(!store.isValid)
+                    .padding()
                 }
-                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
+                Button {
+                    store.send(.saveButtonTapped)
+                } label: {
+                    RoundedButton(
+                        text: "생성",
+                        foregroundColor: Design.white,
+                        backgroundColor: store.isValid ? Design.green : Design.darkGray
+                    )
+                }
+                .disabled(!store.isValid)
+                .padding([.horizontal, .bottom])
             }
             .background(Design.background)
         }
