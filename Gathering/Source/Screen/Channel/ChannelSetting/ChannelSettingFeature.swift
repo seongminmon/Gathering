@@ -18,7 +18,6 @@ struct ChannelSettingFeature {
     struct State {
         // 이전 화면에서 전달 (멤버 정보들까지 포함)
         var currentChannel: ChannelResponse?
-//        var channelMembers: [Member] = []
         
         var channelMembers: [Member] {
             return currentChannel?.channelMembers?.map { $0.toMember } ?? []
@@ -32,6 +31,7 @@ struct ChannelSettingFeature {
         var isAdminGetOutChannelAlertPresented = false
         // 채널 관리자 변경 화면
         var isChangeAdminViewPresented = false
+        var isChannelEmptyAlertPresented = false
         // 채널 삭제 화면
         var isDeleteChannelAlertPresented = false
         
@@ -49,23 +49,28 @@ struct ChannelSettingFeature {
         
         case memberCellTap(Member)
         
-        // 관리자 버튼
+        // 채널 편집
         case editChannelButtonTap
-        case adminGetOutChannelButtonTap
-        case changeAdminButtonTap
+        case editConfirmButtonTap
         
-        // 채널 삭제
+        // 채널 나가기 (관리자)
+        case adminGetOutChannelButtonTap
+        
+        // 채널 관리자 변경
+        case changeAdminButtonTap
+        case channelEmpty
+        case channelEmptyConfirmAction
+        // TODO: - 채널 관리자 변경 로직
+        
+        // 채널 삭제 버튼
         case deleteChannelButtonTap
         case deleteChannelAction
         case deleteChannelCancel
         
-        // 관리자 X 버튼
+        // 나가기 버튼 (관리자 X)
         case getOutChannelButtonTap
         case getOutChannelAction
         case getOutCancel
-        
-        // 채널 편집 화면
-        case editConfirmButtonTap
     }
     
     var body: some ReducerOf<Self> {
@@ -104,6 +109,13 @@ struct ChannelSettingFeature {
                 
             case .changeAdminButtonTap:
                 state.isChangeAdminViewPresented = true
+                return .none
+            case .channelEmpty:
+                state.isChannelEmptyAlertPresented = true
+                return .none
+            case .channelEmptyConfirmAction:
+                state.isChannelEmptyAlertPresented = false
+                state.isChangeAdminViewPresented = false
                 return .none
                 
             case .deleteChannelButtonTap:

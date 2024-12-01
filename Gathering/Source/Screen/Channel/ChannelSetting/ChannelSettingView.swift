@@ -233,5 +233,17 @@ struct ChannelSettingView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .background(Design.gray)
+        .onAppear {
+            if members.isEmpty { store.send(.channelEmpty) }
+        }
+        // 채널 관리자 변경 불가
+        .customAlert(
+            isPresented: $store.isChannelEmptyAlertPresented,
+            title: "채널 관리자 변경 불가",
+            message: "채널 멤버가 없어 관리자 변경을 할 수 없습니다.",
+            primaryButton: CustomAlert.AlertButton(title: "확인") {
+                store.send(.channelEmptyConfirmAction)
+            }
+        )
     }
 }
