@@ -50,10 +50,7 @@ struct DMChattingFeature {
         Reduce { state, action in
             switch action {
             case .profileButtonTap:
-                // TODO: - homeview와 dmView에서 path로 처리해야 함
-                // 양쪽에서 액션을 감지하고, 서로 path에 추가해버리게 되면 충돌이 생길 수 있을 것 같음
-                // ✅ HomeView
-                // dmView
+                // homeview와 dmView에서 path로 처리
                 return .none
                 
             case .binding(\.messageText):
@@ -70,7 +67,9 @@ struct DMChattingFeature {
                 return .run { [dmsRoomID = state.dmsRoomResponse.id] send in
                     do {
                         // 디비에서 불러오기
-                        let dmDBChats = try  realmClient.fetchDMChats(dmsRoomID).map { $0.toResponseModel()}
+                        let dmDBChats = try realmClient.fetchDMChats(dmsRoomID)
+                            .map { $0.toResponseModel() }
+                        
                         // 마지막 날짜로 이후 채팅 불러오기
                         let dmNewChats = try await fetchNewDMsChatting(
                             workspaceID: UserDefaultsManager.workspaceID,

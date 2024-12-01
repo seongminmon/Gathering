@@ -41,17 +41,20 @@ struct RootView: View {
                 
                 // MARK: - 검색
                 NavigationStack {
-                    ChannelSettingView(
-                        store: Store(initialState: ChannelSettingFeature.State()) {
-                            ChannelSettingFeature()
+//                    ChannelSettingView(
+//                        store: Store(initialState: ChannelSettingFeature.State()) {
+//                            ChannelSettingFeature()
+//                        }
+//                    )
+                    
+                    ChannelChattingView(
+                        store: Store(initialState: ChannelChattingFeature.State(
+                            channelID: "f755a2b0-547a-4215-8f72-af1be294ce09",
+                            workspaceID: "4e31f58f-aedd-4b3a-a4cb-b7597fafe8d2"
+                        )) {
+                            ChannelChattingFeature()
                         }
                     )
-//                    ChannelChattingView(
-//                        store: Store(initialState: ChannelChattingFeature.State(channelID: "f755a2b0-547a-4215-8f72-af1be294ce09", workspaceID: "4e31f58f-aedd-4b3a-a4cb-b7597fafe8d2"),
-//                                     reducer: {
-//                                         ChannelChattingFeature()
-//                                     })
-//                    )
                 }
                 .tabItem {
                     Image(store.selectedTab == .search ? .profileActive : .profileInactive)
