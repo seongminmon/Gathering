@@ -18,12 +18,6 @@ struct HomeFeature {
     @Dependency(\.dmsClient) var dmsClient
     @Dependency(\.realmClient) var realmClient
     
-    // MARK: - 네비게이션을 통한 화면 이동
-    // 내 프로필
-    // 채널 채팅 뷰 -> 채널 세팅 뷰 -> 나가기 시 홈 뷰로 한번에 이동
-    //           -> 다른 유저 프로필
-    // DM 채팅 뷰 -> 다른 유저 프로필
-    
     @Reducer
     enum Path {
         case profile(ProfileFeature)
@@ -41,11 +35,7 @@ struct HomeFeature {
     
     @ObservableState
     struct State {
-        var path = StackState<Path.State>() {
-            didSet {
-                print("홈뷰 StackState 변경", path.ids.count, path.ids)
-            }
-        }
+        var path = StackState<Path.State>()
         @Presents var destination: Destination.State?
         @Presents var confirmationDialog: ConfirmationDialogState<Action.ConfirmationDialog>?
         

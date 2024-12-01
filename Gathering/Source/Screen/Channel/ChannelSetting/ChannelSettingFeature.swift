@@ -16,8 +16,6 @@ struct ChannelSettingFeature {
 
     @ObservableState
     struct State {
-        // TODO: - ✅ 채널 편집이나 채널 관리자 변경 후에 갱신된 정보 필요
-        
         // 이전 화면에서 전달 (멤버 정보들까지 포함)
         var currentChannel: ChannelResponse?
         
@@ -82,6 +80,7 @@ struct ChannelSettingFeature {
         // 내부 Action
         case exitChannelResponse([ChannelResponse])
         case editChannelResponse(ChannelResponse)
+        case changeAdminResponse(ChannelResponse)
         case deleteChannelResponse
         case updateChannelResponse(ChannelResponse)
     }
@@ -90,6 +89,8 @@ struct ChannelSettingFeature {
         BindingReducer()
         Reduce { state, action in
             switch action {
+                
+                // MARK: - Binding
             case .binding(\.title):
                 state.buttonValid = !state.title.isEmpty
                 return .none
@@ -146,10 +147,19 @@ struct ChannelSettingFeature {
                 state.changeAdminTarget = member
                 return .none
             case .changeAdminAction(let member):
-                print("채널 관리자 변경", member ?? "멤버 없음")
-                // TODO: - 채널 관리자 변경 API
                 state.isChangeAdminAlertPresented = false
-                return .none
+                return .run { [state = state] send in
+                    do {
+                        let result = try await channelClient.changeOwner(
+                            state.currentChannel?.channel_id ?? "",
+                            UserDefaultsManager.workspaceID,
+                            OwnerRequest(ownerID: member?.id ?? "")
+                        )
+                        await send(.changeAdminResponse(result))
+                    } catch {
+                        Notification.postToast(title: "채널 관리자 변경 실패")
+                    }
+                }
             case .changeAdminCancel:
                 state.isChangeAdminAlertPresented = false
                 return .none
@@ -191,6 +201,7 @@ struct ChannelSettingFeature {
                 state.isGetOutChannelAlertPresented = true
                 return .none
             case .getOutChannelAction:
+                state.isGetOutChannelAlertPresented = false
                 return .run { [state = state] send in
                     do {
                         let result = try await channelClient.exitChannel(
@@ -227,15 +238,26 @@ struct ChannelSettingFeature {
                         await send(.updateChannelResponse(result))
                     } catch {}
                 }
+            case .changeAdminResponse(let result):
+                state.isChangeAdminViewPresented = false
+                Notification.postToast(title: "채널 관리자가 변경되었습니다")
+                // 채널 정보 갱신
+                return .run { send in
+                    do {
+                        let result = try await channelClient.fetchChannel(
+                            result.channel_id,
+                            UserDefaultsManager.workspaceID
+                        )
+                        await send(.updateChannelResponse(result))
+                    } catch {}
+                }
             case .deleteChannelResponse:
                 // 홈 뷰에서 path로 관리
                 state.isDeleteChannelAlertPresented = false
                 return .none
             case .exitChannelResponse:
                 // 홈 뷰에서 path로 관리
-                state.isGetOutChannelAlertPresented = false
                 return .none
-                
             case .updateChannelResponse(let result):
                 state.currentChannel = result
                 return .none
