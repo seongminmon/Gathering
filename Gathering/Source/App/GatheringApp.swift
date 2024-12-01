@@ -10,13 +10,13 @@ import SwiftUI
 import ComposableArchitecture
 
 // MARK: - 버그 수정
-// TODO: - 채널 채팅 뷰 -> 채널 세팅 뷰 이동이 안 되는 문제
-// TODO: - 홈 뷰에 DMListView 안 뜨는 문제
+// ✅ TODO: - 채널 채팅 뷰 -> 채널 세팅 뷰 이동이 안 되는 문제
+// ✅ TODO: - 홈 뷰에 DMListView 안 뜨는 문제
 // ✅ TODO: - 멀티파트 통신 해결하기 -> 테스트는 DM 채팅(설정 탭)에서
 
 // MARK: - 기능 추가
 // TODO: - 채널 탐색 뷰, 팀원 초대 뷰 네트워크 기능 연결
-// TODO: - 채널 세팅 뷰 기능 추가
+// ✅ TODO: - 채널 세팅 뷰 기능 추가
 // TODO: - 채널 채팅, DM 채팅 뷰 로직 (포토 x자 누르면 삭제하기)
 
 @main

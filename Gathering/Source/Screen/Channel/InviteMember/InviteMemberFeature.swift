@@ -40,13 +40,24 @@ struct InviteMemberFeature {
                 return .run { [email = state.email] send in
                     do {
                         let workspaceID = UserDefaultsManager.workspaceID
-                        let result = try await workspaceClient.inviteMember(
+                        _ = try await workspaceClient.inviteMember(
                             workspaceID,
                             InviteMemberRequest(email: email)
                         )
+                        Notification.postToast(title: "멤버를 성공적으로 초대했습니다")
                         await dismiss()
                     } catch {
-                        Notification.postToast(title: "초대에 실패했습니다")
+                        if let error = error as? ErrorResponse {
+                            print(error.errorCode)
+                            switch error.errorCode {
+                            case "E12":
+                                Notification.postToast(title: "이미 소속된 멤버입니다")
+                            case "E14":
+                                Notification.postToast(title: "초대 권한이 없습니다")
+                            default:
+                                Notification.postToast(title: "회원 정보를 찾을 수 없습니다")
+                            }
+                        }
                     }
                 }
             }
