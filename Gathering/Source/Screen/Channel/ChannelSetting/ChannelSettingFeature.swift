@@ -16,6 +16,8 @@ struct ChannelSettingFeature {
 
     @ObservableState
     struct State {
+        // TODO: - 채널 편집이나 채널 관리자 변경 후에 갱신된 정보 필요
+        
         // 이전 화면에서 전달 (멤버 정보들까지 포함)
         var currentChannel: ChannelResponse?
         
@@ -79,13 +81,12 @@ struct ChannelSettingFeature {
         
         // 내부 Action
         case exitChannelResponse([ChannelResponse])
+        case editChannelResponse(ChannelResponse)
     }
     
     var body: some ReducerOf<Self> {
         BindingReducer()
-        Reduce {
-            state,
-            action in
+        Reduce { state, action in
             switch action {
             case .binding(\.title):
                 state.buttonValid = !state.title.isEmpty
@@ -100,7 +101,6 @@ struct ChannelSettingFeature {
                 
             case .memberCellTap:
                 // 홈 뷰에서 path를 통해 화면 이동
-                print("멤버셀 탭")
                 return .none
                 
             case .editChannelButtonTap:
@@ -108,10 +108,29 @@ struct ChannelSettingFeature {
                 return .none
                 
             case .editConfirmButtonTap:
-                print("채널 편집 완료 버튼 탭")
-                state.isEditChannelViewPresented = false
-                // TODO: - 채널 편집 API
-                return .none
+                return .run { [state = state] send in
+                    do {
+                        let result = try await channelClient.editChannel(
+                            state.currentChannel?.channel_id ?? "",
+                            UserDefaultsManager.workspaceID,
+                            ChannelRequest(
+                                name: state.title,
+                                description: state.description,
+                                image: nil
+                            )
+                        )
+                        await send(.editChannelResponse(result))
+                    } catch {
+                        if let error = error as? ErrorResponse {
+                            switch error.errorCode {
+                            case "E12":
+                                Notification.postToast(title: "이미 있는 채널 이름입니다.\n다른 이름을 입력해주세요.")
+                            default:
+                                Notification.postToast(title: "채널 편집 실패")
+                            }
+                        }
+                    }
+                }
                 
             case .adminGetOutChannelButtonTap:
                 state.isAdminGetOutChannelAlertPresented = true
@@ -125,7 +144,7 @@ struct ChannelSettingFeature {
                 state.changeAdminTarget = member
                 return .none
             case .changeAdminAction(let member):
-                print("채널 관리자 변경", member)
+                print("채널 관리자 변경", member ?? "멤버 없음")
                 // TODO: - 채널 관리자 변경 API
                 state.isChangeAdminAlertPresented = false
                 return .none
@@ -169,7 +188,7 @@ struct ChannelSettingFeature {
                         if let error = error as? ErrorResponse {
                             switch error.errorCode {
                             case "E11":
-                                Notification.postToast(title: "기본 채널은 퇴장이 불가능합니다.")
+                                Notification.postToast(title: "기본 채널은 퇴장이 불가능합니다")
                             default:
                                 Notification.postToast(title: "채널 나가기 실패")
                             }
@@ -181,6 +200,10 @@ struct ChannelSettingFeature {
                 return .none
                 
                 // MARK: - 네트워킹
+            case .editChannelResponse:
+                state.isEditChannelViewPresented = false
+                Notification.postToast(title: "채널이 편집되었습니다")
+                return .none
             case .exitChannelResponse:
                 // 홈 뷰에서 path로 관리
                 return .none
