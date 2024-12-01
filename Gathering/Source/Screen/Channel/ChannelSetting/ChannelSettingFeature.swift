@@ -13,30 +13,16 @@ import ComposableArchitecture
 struct ChannelSettingFeature {
     
     @Dependency(\.dismiss) var dismiss
-    
+
     @ObservableState
     struct State {
         // 이전 화면에서 전달 (멤버 정보들까지 포함)
         var currentChannel: ChannelResponse?
+//        var channelMembers: [Member] = []
         
-        // 더미 데이터
-//        var currentChannel: ChannelResponse? = ChannelResponse(
-//            channel_id: "c4cf80b2-ab7e-4d72-9d92-263c6d960cb1",
-//            name: "test",
-//            description: "test  채널입니다.",
-//            coverImage: "/static/channelCoverImages/1731223059386.jpg",
-//            owner_id: "973d62ec-1776-446f-90ea-f35d189bb7b3",
-////            owner_id: "abcabc",
-//            createdAt: "2024-11-10T07:17:39.449Z",
-//            channelMembers: [
-//                MemberResponse(
-//                    user_id: "973d62ec-1776-446f-90ea-f35d189bb7b3",
-//                    email: "ksm1@ksm.com",
-//                    nickname: "ksm1",
-//                    profileImage: "/static/profiles/1732090604584.jpg"
-//                )
-//            ]
-//        )
+        var channelMembers: [Member] {
+            return currentChannel?.channelMembers?.map { $0.toMember } ?? []
+        }
         
         var isMemeberExpand = true
         
@@ -47,7 +33,7 @@ struct ChannelSettingFeature {
         // 채널 관리자 변경 화면
         var isChangeAdminViewPresented = false
         // 채널 삭제 화면
-        var idDeleteChannelAlertPresented = false
+        var isDeleteChannelAlertPresented = false
         
         // 채널 나가기
         var isGetOutChannelAlertPresented = false
@@ -61,15 +47,21 @@ struct ChannelSettingFeature {
     enum Action: BindableAction {
         case binding(BindingAction<State>)
         
+        case memberCellTap(Member)
+        
         // 관리자 버튼
         case editChannelButtonTap
         case adminGetOutChannelButtonTap
         case changeAdminButtonTap
+        
+        // 채널 삭제
         case deleteChannelButtonTap
+        case deleteChannelAction
+        case deleteChannelCancel
         
         // 관리자 X 버튼
         case getOutChannelButtonTap
-        case getOutButtonTap
+        case getOutChannelAction
         case getOutCancel
         
         // 채널 편집 화면
@@ -91,24 +83,47 @@ struct ChannelSettingFeature {
             case .binding:
                 return .none
                 
+            case .memberCellTap:
+                // 홈 뷰에서 path를 통해 화면 이동
+                print("멤버셀 탭")
+                return .none
+                
             case .editChannelButtonTap:
                 state.isEditChannelViewPresented = true
                 return .none
+                
+            case .editConfirmButtonTap:
+                print("채널 편집 완료 버튼 탭")
+                state.isEditChannelViewPresented = false
+                // TODO: - 채널 편집 API
+                return .none
+                
             case .adminGetOutChannelButtonTap:
                 state.isAdminGetOutChannelAlertPresented = true
                 return .none
+                
             case .changeAdminButtonTap:
                 state.isChangeAdminViewPresented = true
                 return .none
+                
             case .deleteChannelButtonTap:
-                state.idDeleteChannelAlertPresented = true
+                state.isDeleteChannelAlertPresented = true
+                return .none
+            case .deleteChannelAction:
+                // TODO: - 채널 삭제 API
+                // TODO: - 삭제 성공 시 홈 화면으로 전환
+                print("채널 삭제 액션")
+                state.isDeleteChannelAlertPresented = false
+                return .none
+            case .deleteChannelCancel:
+                state.isDeleteChannelAlertPresented = false
                 return .none
                 
             case .getOutChannelButtonTap:
                 state.isGetOutChannelAlertPresented = true
                 return .none
-            case .getOutButtonTap:
-                print("채널 나가기 완료 탭")
+            case .getOutChannelAction:
+                print("채널 나가기 액션")
                 state.isGetOutChannelAlertPresented = false
                 // TODO: - 채널 나가기 API
                 // TODO: - 나가기 성공 시 홈 화면으로 전환
@@ -116,12 +131,7 @@ struct ChannelSettingFeature {
             case .getOutCancel:
                 state.isGetOutChannelAlertPresented = false
                 return .none
-            case .editConfirmButtonTap:
-                print("채널 편집 완료 버튼 탭")
-                // TODO: - 채널 편집 API
-                return .none
             }
         }
     }
-    
 }

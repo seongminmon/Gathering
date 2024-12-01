@@ -49,7 +49,7 @@ struct HomeFeature {
         var isDMExpanded = true
         
         // 워크스페이스 + 프로필 데이터
-//        var myWorkspaceList: [WorkspaceResponse] = []
+        //        var myWorkspaceList: [WorkspaceResponse] = []
         var currentWorkspace: WorkspaceResponse?
         var myProfile: MyProfileResponse?
         
@@ -57,10 +57,9 @@ struct HomeFeature {
         var dmRoomList: [DMsRoom] = []
         
         var channelChattings = [Channel: [ChannelChattingResponse]]()
-        var channelUnreads = [Channel: UnreadChannelResponse]()  
+        var channelUnreads = [Channel: UnreadChannelResponse]()
         var dmChattings = [DMsRoom: [DMsResponse]]()
         var dmUnreads = [DMsRoom: UnreadDMsResponse]()
-        
     }
     
     enum Action: BindableAction {
@@ -94,9 +93,37 @@ struct HomeFeature {
     
     var body: some ReducerOf<Self> {
         BindingReducer()
-            
+        
         Reduce { state, action in
             switch action {
+                // MARK: - 네비게이션
+            case .path(.element(id: _, action: .channelChatting(.settingButtonTap(let channel)))):
+                state.path.append(.channelSetting(ChannelSettingFeature.State(
+                    currentChannel: channel
+                )))
+                return .none
+                
+            case .path(.element(id: _, action: .dmChatting(.profileButtonTap(let user)))):
+                state.path.append(.profile(ProfileFeature.State(
+                    profileType: .otherUser,
+                    nickname: user.nickname,
+                    email: user.email,
+                    profileImage: user.profileImage ?? "bird"
+                )))
+                return .none
+                
+            case .path(.element(id: _, action: .channelSetting(.memberCellTap(let user)))):
+                state.path.append(.profile(ProfileFeature.State(
+                    profileType: .otherUser,
+                    nickname: user.nickname,
+                    email: user.email,
+                    profileImage: user.profileImage ?? "bird"
+                )))
+                return .none
+                
+            case .path:
+                return .none
+                
                 // MARK: destination -
             case .confirmationDialog(.presented(.createChannelButtonTap)):
                 state.destination = .channelAdd(CreateChannelFeature.State())
@@ -149,7 +176,7 @@ struct HomeFeature {
             case .confirmationDialog(.dismiss):
                 return .none
                 
-            // MARK: networking -
+                // MARK: networking -
             case .task:
 //                state.isLoading = true
                 return .run { send in
@@ -203,26 +230,6 @@ struct HomeFeature {
             case .binding(\.myProfile):
                 return .none
             case .binding:
-                return .none
-            
-            // MARK: - 네비게이션
-            case .path(.element(id: _, action: .channelChatting(.settingButtonTap(let channel)))):
-                state.path.append(.channelSetting(ChannelSettingFeature.State(
-                    currentChannel: channel
-                )))
-                return .none
-                
-            case .path(.element(id: _, action: .dmChatting(.profileButtonTap(let user)))):
-                print("홈 뷰에서 DM 채팅 뷰 액션 감지")
-                state.path.append(.profile(ProfileFeature.State(
-                    profileType: .otherUser,
-                    nickname: user.nickname,
-                    email: user.email,
-                    profileImage: user.profileImage ?? "bird"
-                )))
-                return .none
-                
-            case .path:
                 return .none
             }
         }
