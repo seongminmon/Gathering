@@ -32,16 +32,6 @@ struct RootView: View {
                     }
                     .tag(TabInfo.home)
                 
-//                GatheringNavigationStack(
-//                    gatheringImage: store.dm.currentWorkspace?.coverImage ?? "",
-//                    title: "Direct Message",
-//                    myProfile: store.dm.myProfile
-//                ) {
-//                    DMView(store: store.scope(
-//                        state: \.dm,
-//                        action: \.dm
-//                    ))
-//                }
                 DMView(store: store.scope(state: \.dm, action: \.dm))
                     .tabItem {
                         Image(store.selectedTab == .dm ? .messageActive : .messageInactive)

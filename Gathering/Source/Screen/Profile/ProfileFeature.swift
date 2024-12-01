@@ -19,13 +19,13 @@ struct ProfileFeature {
     
     @Reducer
     enum Path {
-        //        case editContact
-        //        case editNickname
+//        case editContact
+//        case editNickname
     }
     
     @ObservableState
     struct State {
-        //        var path = StackState<Path.State>()
+//        var path = StackState<Path.State>()
         var showAlert = false
         let profileType: ProfileFeature.ProfileType
         var nickname: String
@@ -44,9 +44,9 @@ struct ProfileFeature {
     }
     
     enum Action: BindableAction {
-        //        case path(StackAction<Path.State, Path.Action>)
-        //        case contactTap
-        //        case nicknameTap
+//        case path(StackAction<Path.State, Path.Action>)
+//        case contactTap
+//        case nicknameTap
         case binding(BindingAction<State>)
         case logoutButtonTap
         case logoutConfirm
@@ -66,6 +66,7 @@ struct ProfileFeature {
                 state.showAlert = false
                 Notification.changeRoot(.fail)
                 UserDefaultsManager.removeAll()
+                // TODO: - DB와 파일 매니저도 모두 지우기
                 return .none
             case .logoutCancel:
                 state.showAlert = false
@@ -76,6 +77,6 @@ struct ProfileFeature {
 //                }
             }
         }
-        //        .forEach(\.path, action: \.path)
+//        .forEach(\.path, action: \.path)
     }
 }

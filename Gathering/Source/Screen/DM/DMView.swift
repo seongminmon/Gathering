@@ -10,7 +10,6 @@ import SwiftUI
 import ComposableArchitecture
 
 struct DMView: View {
-    // TODO: - 네비게이션 화면 연결
     
     @Perception.Bindable var store: StoreOf<DMFeature>
     
@@ -52,6 +51,11 @@ struct DMView: View {
                         Spacer()
                     }
                 }
+                .asGatheringNavigationModifier(
+                    gatheringImage: store.currentWorkspace?.coverImage ?? "",
+                    title: "Direct Message",
+                    myProfile: store.myProfile
+                )
                 .task { store.send(.task) }
                 .sheet(isPresented: $store.inviteMemberViewPresented) {
                     inviteMemberView()
@@ -87,13 +91,18 @@ struct DMView: View {
     }
     
     private func userCell(user: Member) -> some View {
-        VStack(spacing: 4) {
-            ProfileImageView(urlString: user.profileImage ?? "", size: 44)
-            Text(user.nickname)
-                .font(Design.body)
-                .frame(width: 44)
-                .lineLimit(1)
+        Button {
+            store.send(.userCellTap(user))
+        } label: {
+            VStack(spacing: 4) {
+                ProfileImageView(urlString: user.profileImage ?? "", size: 44)
+                Text(user.nickname)
+                    .font(Design.body)
+                    .frame(width: 44)
+                    .lineLimit(1)
+            }
         }
+        .buttonStyle(.plain)
     }
     
     private func dmCell(
@@ -145,7 +154,6 @@ struct DMView: View {
             SheetHeaderView(title: "팀원 초대")
                 .background(Design.white)
             ScrollView {
-                // TODO: - first responder 만들기
                 TextFieldWithTitle(
                     title: "이메일",
                     placeholder: "초대하려는 팀원의 이메일을 입력하세요.",

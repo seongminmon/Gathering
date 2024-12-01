@@ -53,6 +53,7 @@ struct DMFeature {
         case loadingComplete
         case inviteMemberSheetButtonTap
         case inviteMemberButtonTap
+        case userCellTap(Member)
         case dmCellTap(DMsRoom)
         
         // MARK: - 내부 Action
@@ -151,6 +152,15 @@ struct DMFeature {
                     }
                 }
                 
+            case .userCellTap(let user):
+                return .run { send in
+                    let result = try await dmsClient.fetchOrCreateDM(
+                        UserDefaultsManager.workspaceID,
+                        DMOpponentRequest(opponentID: user.id)
+                    )
+                    await send(.dmCellTap(result.toDmsRoom))
+                }
+                
             case .dmCellTap(let dmRoom):
                 state.path.append(.dmChatting(DMChattingFeature.State(
                     dmsRoomResponse: dmRoom
@@ -213,7 +223,6 @@ struct DMFeature {
                 })
                 
             case .addDMChats(let dmRoom, let chats):
-                print("스테이트 DMChats에 추가하기", chats)
                 state.dmChattings[dmRoom, default: []].append(contentsOf: chats)
                 return .none
                 
@@ -221,15 +230,16 @@ struct DMFeature {
                 // dm 채팅 내역 리스트 조회 결과
                 state.dmChattings[dmRoom, default: []].append(contentsOf: chats)
                 
+                // MARK: - 여기서 DB에 저장하면 모두 읽은 표시 처리됨 >> DB에는 저장하지 않기
                 // Realm에 저장하기
-                chats.forEach {
-                    do {
-                        try realmClient.create($0.toRealmModel())
-                    } catch {
-                        print("Realm 추가 실패")
-                    }
-                    // TODO: - 파일매니저에 이미지 저장
-                }
+//                chats.forEach {
+//                    do {
+//                        try realmClient.create($0.toRealmModel())
+//                    } catch {
+//                        print("Realm 추가 실패")
+//                    }
+//                    // TODO: - 파일매니저에 이미지 저장
+//                }
                 return .none
                 
             case .unreadCountResponse(let dmRoom, let unreadCount):
@@ -246,6 +256,14 @@ struct DMFeature {
                 return .none
                 
                 // MARK: - 네비게이션
+            case .path(.element(id: _, action: .dmChatting(.profileButtonTap(let user)))):
+                state.path.append(.profile(ProfileFeature.State(
+                    profileType: .otherUser,
+                    nickname: user.nickname,
+                    email: user.email,
+                    profileImage: user.profileImage ?? "bird"
+                )))
+                return .none
             case .path:
                 return .none
             }

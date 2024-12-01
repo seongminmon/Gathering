@@ -23,11 +23,7 @@ struct ChannelChattingFeature {
     
     @ObservableState
     struct State {
-        @Presents var destination: Destination.State? {
-            didSet {
-                print("채널 채팅뷰 데스티네이션:", destination)
-            }
-        }
+        @Presents var destination: Destination.State?
         
         var channelID: String
         var workspaceID: String
