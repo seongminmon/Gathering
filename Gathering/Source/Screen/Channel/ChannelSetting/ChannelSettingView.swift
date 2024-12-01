@@ -213,17 +213,22 @@ struct ChannelSettingView: View {
             ScrollView {
                 LazyVStack {
                     ForEach(members, id: \.id) { member in
-                        HStack(spacing: 8) {
-                            ProfileImageView(urlString: member.profileImage ?? "", size: 44)
-                            VStack(alignment: .leading) {
-                                Text(member.nickname)
-                                    .font(Design.bodyBold)
-                                Text(member.email)
-                                    .font(Design.body)
-                                    .foregroundStyle(Design.darkGray)
+                        Button {
+                            store.send(.changeAdminCellTap(member))
+                        } label: {
+                            HStack(spacing: 8) {
+                                ProfileImageView(urlString: member.profileImage ?? "", size: 44)
+                                VStack(alignment: .leading) {
+                                    Text(member.nickname)
+                                        .font(Design.bodyBold)
+                                    Text(member.email)
+                                        .font(Design.body)
+                                        .foregroundStyle(Design.darkGray)
+                                }
+                                Spacer()
                             }
-                            Spacer()
                         }
+                        .buttonStyle(.plain)
                         .frame(maxWidth: .infinity)
                         .frame(height: 60)
                     }
@@ -236,6 +241,23 @@ struct ChannelSettingView: View {
         .onAppear {
             if members.isEmpty { store.send(.channelEmpty) }
         }
+        // 채널 관리자 변경
+        .customAlert(
+            isPresented: $store.isChangeAdminAlertPresented,
+            title: "\(store.changeAdminTarget?.nickname ?? "선택한 유저 없음") 님을 관리자로 지정하시겠습니까?",
+            message: """
+            채널 관리자는 다음과 같은 권한이 있습니다.
+            
+            - 채널 이름 또는 설명 변경
+            - 채널 삭제
+            """,
+            primaryButton: CustomAlert.AlertButton(title: "확인") {
+                store.send(.changeAdminAction(store.changeAdminTarget))
+            },
+            secondaryButton: CustomAlert.AlertButton(title: "취소") {
+                store.send(.changeAdminCancel)
+            }
+        )
         // 채널 관리자 변경 불가
         .customAlert(
             isPresented: $store.isChannelEmptyAlertPresented,

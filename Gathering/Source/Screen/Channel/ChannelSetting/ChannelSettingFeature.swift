@@ -32,6 +32,9 @@ struct ChannelSettingFeature {
         // 채널 관리자 변경 화면
         var isChangeAdminViewPresented = false
         var isChannelEmptyAlertPresented = false
+        var isChangeAdminAlertPresented = false
+        var changeAdminTarget: Member?
+        
         // 채널 삭제 화면
         var isDeleteChannelAlertPresented = false
         
@@ -61,6 +64,9 @@ struct ChannelSettingFeature {
         case channelEmpty
         case channelEmptyConfirmAction
         // TODO: - 채널 관리자 변경 로직
+        case changeAdminCellTap(Member)
+        case changeAdminAction(Member?)
+        case changeAdminCancel
         
         // 채널 삭제 버튼
         case deleteChannelButtonTap
@@ -109,6 +115,18 @@ struct ChannelSettingFeature {
                 
             case .changeAdminButtonTap:
                 state.isChangeAdminViewPresented = true
+                return .none
+            case .changeAdminCellTap(let member):
+                state.isChangeAdminAlertPresented = true
+                state.changeAdminTarget = member
+                return .none
+            case .changeAdminAction(let member):
+                print("채널 관리자 변경", member)
+                // TODO: - 채널 관리자 변경 API
+                state.isChangeAdminAlertPresented = false
+                return .none
+            case .changeAdminCancel:
+                state.isChangeAdminAlertPresented = false
                 return .none
             case .channelEmpty:
                 state.isChannelEmptyAlertPresented = true
