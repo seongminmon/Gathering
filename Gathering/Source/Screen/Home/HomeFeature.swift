@@ -41,7 +41,11 @@ struct HomeFeature {
     
     @ObservableState
     struct State {
-        var path = StackState<Path.State>()
+        var path = StackState<Path.State>() {
+            didSet {
+                print("홈뷰 StackState 변경", path.ids.count, path.ids)
+            }
+        }
         @Presents var destination: Destination.State?
         @Presents var confirmationDialog: ConfirmationDialogState<Action.ConfirmationDialog>?
         
@@ -119,6 +123,10 @@ struct HomeFeature {
                     email: user.email,
                     profileImage: user.profileImage ?? "bird"
                 )))
+                return .none
+                
+            case .path(.element(id: _, action: .channelSetting(.exitChannelResponse))):
+                state.path.removeAll()
                 return .none
                 
             case .path:

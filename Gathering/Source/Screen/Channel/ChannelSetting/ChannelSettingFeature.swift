@@ -12,7 +12,7 @@ import ComposableArchitecture
 @Reducer
 struct ChannelSettingFeature {
     
-    @Dependency(\.dismiss) var dismiss
+    @Dependency(\.channelClient) var channelClient
 
     @ObservableState
     struct State {
@@ -63,7 +63,6 @@ struct ChannelSettingFeature {
         case changeAdminButtonTap
         case channelEmpty
         case channelEmptyConfirmAction
-        // TODO: - 채널 관리자 변경 로직
         case changeAdminCellTap(Member)
         case changeAdminAction(Member?)
         case changeAdminCancel
@@ -77,11 +76,16 @@ struct ChannelSettingFeature {
         case getOutChannelButtonTap
         case getOutChannelAction
         case getOutCancel
+        
+        // 내부 Action
+        case exitChannelResponse([ChannelResponse])
     }
     
     var body: some ReducerOf<Self> {
         BindingReducer()
-        Reduce { state, action in
+        Reduce {
+            state,
+            action in
             switch action {
             case .binding(\.title):
                 state.buttonValid = !state.title.isEmpty
@@ -153,13 +157,32 @@ struct ChannelSettingFeature {
                 state.isGetOutChannelAlertPresented = true
                 return .none
             case .getOutChannelAction:
-                print("채널 나가기 액션")
                 state.isGetOutChannelAlertPresented = false
-                // TODO: - 채널 나가기 API
-                // TODO: - 나가기 성공 시 홈 화면으로 전환
-                return .none
+                return .run { [state = state] send in
+                    do {
+                        let result = try await channelClient.exitChannel(
+                            state.currentChannel?.channel_id ?? "",
+                            UserDefaultsManager.workspaceID
+                        )
+                        await send(.exitChannelResponse(result))
+                    } catch {
+                        if let error = error as? ErrorResponse {
+                            switch error.errorCode {
+                            case "E11":
+                                Notification.postToast(title: "기본 채널은 퇴장이 불가능합니다.")
+                            default:
+                                Notification.postToast(title: "채널 나가기 실패")
+                            }
+                        }
+                    }
+                }
             case .getOutCancel:
                 state.isGetOutChannelAlertPresented = false
+                return .none
+                
+                // MARK: - 네트워킹
+            case .exitChannelResponse:
+                // 홈 뷰에서 path로 관리
                 return .none
             }
         }
