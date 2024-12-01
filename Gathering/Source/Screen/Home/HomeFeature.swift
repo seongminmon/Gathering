@@ -129,6 +129,10 @@ struct HomeFeature {
                 state.path.removeAll()
                 return .none
                 
+            case .path(.element(id: _, action: .channelSetting(.deleteChannelResponse))):
+                state.path.removeAll()
+                return .none
+                
             case .path:
                 return .none
                 
