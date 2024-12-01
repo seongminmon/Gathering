@@ -658,9 +658,9 @@
 		249FB0F22CECB12000CA418B /* DM */ = {
 			isa = PBXGroup;
 			children = (
-				84E8A8192CEF162300589171 /* DMChatting */,
 				24ABE9512CD8B65E000E7EC5 /* DMView.swift */,
 				2447AB882CE8C46B00399C4D /* DMFeature.swift */,
+				84E8A8192CEF162300589171 /* DMChatting */,
 			);
 			path = DM;
 			sourceTree = "<group>";

@@ -25,14 +25,6 @@ struct RootView: View {
                 get: { store.selectedTab },
                 set: { store.send(.setTab($0)) }
             )) {
-//                GatheringNavigationStack(
-//                    gatheringImage: store.home.currentWorkspace?.coverImage ?? "",
-//                    title: store.home.currentWorkspace?.name ?? "",
-//                    myProfile: store.home.myProfile
-//                ) {
-//                    HomeView(store: store.scope(state: \.home, action: \.home))
-//                }
-                
                 HomeView(store: store.scope(state: \.home, action: \.home))
                     .tabItem {
                         Image(store.selectedTab == .home ? .homeActive : .homeInactive)
@@ -40,21 +32,22 @@ struct RootView: View {
                     }
                     .tag(TabInfo.home)
                 
-                GatheringNavigationStack(
-                    gatheringImage: store.dm.currentWorkspace?.coverImage ?? "",
-                    title: "Direct Message",
-                    myProfile: store.dm.myProfile
-                ) {
-                    DMView(store: store.scope(
-                        state: \.dm,
-                        action: \.dm
-                    ))
-                }
-                .tabItem {
-                    Image(store.selectedTab == .dm ? .messageActive : .messageInactive)
-                    Text(TabInfo.dm.rawValue)
-                }
-                .tag(TabInfo.dm)
+//                GatheringNavigationStack(
+//                    gatheringImage: store.dm.currentWorkspace?.coverImage ?? "",
+//                    title: "Direct Message",
+//                    myProfile: store.dm.myProfile
+//                ) {
+//                    DMView(store: store.scope(
+//                        state: \.dm,
+//                        action: \.dm
+//                    ))
+//                }
+                DMView(store: store.scope(state: \.dm, action: \.dm))
+                    .tabItem {
+                        Image(store.selectedTab == .dm ? .messageActive : .messageInactive)
+                        Text(TabInfo.dm.rawValue)
+                    }
+                    .tag(TabInfo.dm)
                 
                 // MARK: - 검색
                 NavigationStack {

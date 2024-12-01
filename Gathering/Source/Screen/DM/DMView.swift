@@ -10,13 +10,13 @@ import SwiftUI
 import ComposableArchitecture
 
 struct DMView: View {
-    // TODO: - 간헐적으로 통신은 완료 되었는데 Loading 뷰가 사라지지 않는 현상 ✅
     // TODO: - 네비게이션 화면 연결
     
     @Perception.Bindable var store: StoreOf<DMFeature>
     
     var body: some View {
         WithPerceptionTracking {
+            NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
                 VStack {
                     if store.isLoading {
                         ProgressView()
@@ -52,9 +52,17 @@ struct DMView: View {
                         Spacer()
                     }
                 }
-            .task { store.send(.task) }
-            .sheet(isPresented: $store.inviteMemberViewPresented) {
-                inviteMemberView()
+                .task { store.send(.task) }
+                .sheet(isPresented: $store.inviteMemberViewPresented) {
+                    inviteMemberView()
+                }
+            } destination: { store in
+                switch store.case {
+                case .profile(let store):
+                    ProfileView(store: store)
+                case .dmChatting(let store):
+                    DMChattingView(store: store)
+                }
             }
         }
     }
@@ -93,38 +101,43 @@ struct DMView: View {
         lastChatting: DMsResponse?,
         unreadCount: UnreadDMsResponse?
     ) -> some View {
-        HStack(alignment: .top, spacing: 4) {
-            ProfileImageView(urlString: dm.user.profileImage ?? "", size: 34)
-            
-            // 닉네임, 최근 DM 내용
-            VStack(alignment: .leading, spacing: 4) {
-                Text(dm.user.nickname)
-                    .font(Design.body)
+        Button {
+            store.send(.dmCellTap(dm))
+        } label: {
+            HStack(alignment: .top, spacing: 4) {
+                ProfileImageView(urlString: dm.user.profileImage ?? "", size: 34)
                 
-                Text(lastChatting?.content ?? "내용 없음")
-                    .font(Design.body)
-                    .foregroundStyle(Design.darkGray)
+                // 닉네임, 최근 DM 내용
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(dm.user.nickname)
+                        .font(Design.body)
+                    
+                    Text(lastChatting?.content ?? "내용 없음")
+                        .font(Design.body)
+                        .foregroundStyle(Design.darkGray)
+                }
+                
+                Spacer()
+                
+                // 최신 DM 날짜, 시간, 안 읽은 개수
+                VStack(alignment: .trailing, spacing: 4) {
+                    let date = lastChatting?.createdAt.createdAtToDate()
+                    let dateString = date?.isToday ?? true ?
+                    date?.toString(.todayChat) :
+                    date?.toString(.pastChatUntilDay)
+                    
+                    Text(dateString ?? "날짜 없음")
+                        .font(Design.body)
+                        .foregroundStyle(Design.darkGray)
+                    
+                    Text("\(unreadCount?.count ?? 0)")
+                        .badge()
+                        .opacity(unreadCount?.count ?? 0 <= 0 ? 0 : 1)
+                }
             }
-            
-            Spacer()
-            
-            // 최신 DM 날짜, 시간, 안 읽은 개수
-            VStack(alignment: .trailing, spacing: 4) {
-                let date = lastChatting?.createdAt.createdAtToDate()
-                let dateString = date?.isToday ?? true ?
-                date?.toString(.todayChat) :
-                date?.toString(.pastChatUntilDay)
-                
-                Text(dateString ?? "날짜 없음")
-                    .font(Design.body)
-                    .foregroundStyle(Design.darkGray)
-                
-                Text("\(unreadCount?.count ?? 0)")
-                    .badge()
-                    .opacity(unreadCount?.count ?? 0 <= 0 ? 0 : 1)
-            }
+            .padding(.horizontal, 16)
         }
-        .padding(.horizontal, 16)
+        .buttonStyle(.plain)
     }
     
     private func inviteMemberView() -> some View {
