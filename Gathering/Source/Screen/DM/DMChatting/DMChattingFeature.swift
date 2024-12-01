@@ -15,23 +15,11 @@ struct DMChattingFeature {
     @Dependency(\.dmsClient) var dmsClient
     @Dependency(\.realmClient) var realmClient
     
-    @Reducer
-    enum Path {
-//        case profile(ProfileFeature)
-    }
-    
-    @Reducer
-    enum Destination {
-        case profile(ProfileFeature)
-    }
-    
     @ObservableState
     struct State {
-        @Presents var destination: Destination.State?
-        var path = StackState<Path.State>()
-        
 //        var opponentID: String
 //        var workspaceID: String
+        
         var dmsRoomResponse: DMsRoom
         var message: [ChattingPresentModel] = []
         
@@ -44,8 +32,6 @@ struct DMChattingFeature {
     }
     
     enum Action: BindableAction {
-        case path(StackActionOf<Path>)
-        case destination(PresentationAction<Destination.Action>)
         case binding(BindingAction<State>)
         
         case task
@@ -63,18 +49,11 @@ struct DMChattingFeature {
         BindingReducer()
         Reduce { state, action in
             switch action {
-
-            case .path(_):
-                return .none
-                
-            case .profileButtonTap(let user):
-                state.destination = .profile(ProfileFeature.State(
-                    profileType: .otherUser,
-                    nickname: user.nickname,
-                    email: user.email,
-                    profileImage: user.profileImage ?? "bird"
-                ))
-                print("asdfasdf")
+            case .profileButtonTap:
+                // TODO: - homeview와 dmView에서 path로 처리해야 함
+                // 양쪽에서 액션을 감지하고, 서로 path에 추가해버리게 되면 충돌이 생길 수 있을 것 같음
+                // ✅ HomeView
+                // dmView
                 return .none
                 
             case .binding(\.messageText):
@@ -203,8 +182,6 @@ struct DMChattingFeature {
                 return .none
             }
         }
-        .ifLet(\.$destination, action: \.destination)
-        .forEach(\.path, action: \.path)
     }
     
     private func fetchNewDMsChatting(
@@ -218,5 +195,4 @@ struct DMChattingFeature {
             cursorDate ?? "")
         return try await newChats
     }
-    
 }

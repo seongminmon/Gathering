@@ -48,7 +48,7 @@ struct ChannelChattingFeature {
         case binding(BindingAction<State>)
         
         case sendButtonTap
-        case settingButtonTap
+        case settingButtonTap(ChannelResponse?)
         
         case task
         case currentChannelResponse(ChannelResponse?)
@@ -71,9 +71,7 @@ struct ChannelChattingFeature {
                 return .none
                 
             case .settingButtonTap:
-                state.destination = .channelSetting(
-                    ChannelSettingFeature.State(currentChannel: state.currentChannel)
-                )
+                // 홈뷰에서 path 처리
                 return .none
            
             case .task:

@@ -20,22 +20,6 @@ struct ChannelChattingView: View {
     var body: some View {
         WithPerceptionTracking {
             mainContent
-                .navigationDestination(
-                    item: $store.scope(
-                        state: \.destination?.channelSetting,
-                        action: \.destination.channelSetting
-                    )
-                ) { store in
-                    ChannelSettingView(store: store)
-                }
-                .navigationDestination(
-                    item: $store.scope(
-                        state: \.destination?.profile,
-                        action: \.destination.profile
-                    )
-                ) { store in
-                    ProfileView(store: store)
-                }
         }
     }
     
@@ -46,6 +30,7 @@ struct ChannelChattingView: View {
             // 채팅보내는 부분
             messageInputView
         }
+        .navigationBarBackButtonHidden()
         .task { store.send(.task) }
         .onTapGesture {
             // 화면을 탭할 때 키보드 내리기
@@ -58,15 +43,12 @@ struct ChannelChattingView: View {
         .customToolbar(
             title: store.currentChannel?.name ?? "",
             leftItem: .init(icon: .chevronLeft) {
-                // TODO: 스와이프 제스쳐 살리는법??
                 dismiss()
             },
             rightItem: .init(icon: .list) {
-                store.send(.settingButtonTap)
+                store.send(.settingButtonTap(store.currentChannel))
             }
         )
-        .navigationBarBackButtonHidden()
-        
     }
     
     private var chatListView: some View {

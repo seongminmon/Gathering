@@ -17,7 +17,7 @@
 		2447AB662CE329AB00399C4D /* ToastWindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB652CE329AB00399C4D /* ToastWindowManager.swift */; };
 		2447AB682CE329BB00399C4D /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB672CE329BB00399C4D /* Toast.swift */; };
 		2447AB6A2CE32B6800399C4D /* ToastModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB692CE32B6800399C4D /* ToastModifier.swift */; };
-		2447AB6D2CE32ED300399C4D /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB6C2CE32ED300399C4D /* Notification.swift */; };
+		2447AB6D2CE32ED300399C4D /* Notification+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB6C2CE32ED300399C4D /* Notification+.swift */; };
 		2447AB6F2CE3326D00399C4D /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB6E2CE3326D00399C4D /* OnboardingView.swift */; };
 		2447AB712CE3789600399C4D /* LoginPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB702CE3789600399C4D /* LoginPopUpView.swift */; };
 		2447AB732CE378B600399C4D /* OnboardingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB722CE378B600399C4D /* OnboardingFeature.swift */; };
@@ -83,6 +83,7 @@
 		24ABE9902CDF0CFB000E7EC5 /* OwnerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABE98F2CDF0CFB000E7EC5 /* OwnerRequest.swift */; };
 		24F7BFC32CF301D600040C09 /* MultipartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F7BFC22CF301D600040C09 /* MultipartData.swift */; };
 		24F7BFC82CFC21AA00040C09 /* GatheringNavigationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F7BFC72CFC21AA00040C09 /* GatheringNavigationModifier.swift */; };
+		24F7BFCA2CFC2C5200040C09 /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F7BFC92CFC2C5200040C09 /* UINavigationController+.swift */; };
 		843E7FC62CE202530057A426 /* AppFeaturePractice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E7FC52CE202520057A426 /* AppFeaturePractice.swift */; };
 		843E7FC82CE21B9B0057A426 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E7FC72CE21B9B0057A426 /* AppView.swift */; };
 		843E7FCA2CE21E830057A426 /* MyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E7FC92CE21E830057A426 /* MyApp.swift */; };
@@ -181,7 +182,7 @@
 		2447AB652CE329AB00399C4D /* ToastWindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastWindowManager.swift; sourceTree = "<group>"; };
 		2447AB672CE329BB00399C4D /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		2447AB692CE32B6800399C4D /* ToastModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastModifier.swift; sourceTree = "<group>"; };
-		2447AB6C2CE32ED300399C4D /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		2447AB6C2CE32ED300399C4D /* Notification+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+.swift"; sourceTree = "<group>"; };
 		2447AB6E2CE3326D00399C4D /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		2447AB702CE3789600399C4D /* LoginPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPopUpView.swift; sourceTree = "<group>"; };
 		2447AB722CE378B600399C4D /* OnboardingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFeature.swift; sourceTree = "<group>"; };
@@ -244,6 +245,7 @@
 		24ABE98F2CDF0CFB000E7EC5 /* OwnerRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerRequest.swift; sourceTree = "<group>"; };
 		24F7BFC22CF301D600040C09 /* MultipartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartData.swift; sourceTree = "<group>"; };
 		24F7BFC72CFC21AA00040C09 /* GatheringNavigationModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatheringNavigationModifier.swift; sourceTree = "<group>"; };
+		24F7BFC92CFC2C5200040C09 /* UINavigationController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
 		843E7FC52CE202520057A426 /* AppFeaturePractice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeaturePractice.swift; sourceTree = "<group>"; };
 		843E7FC72CE21B9B0057A426 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		843E7FC92CE21E830057A426 /* MyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyApp.swift; sourceTree = "<group>"; };
@@ -361,7 +363,8 @@
 		2447AB6B2CE32EC900399C4D /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				2447AB6C2CE32ED300399C4D /* Notification.swift */,
+				24F7BFC92CFC2C5200040C09 /* UINavigationController+.swift */,
+				2447AB6C2CE32ED300399C4D /* Notification+.swift */,
 				249FB0FD2CEDA92000CA418B /* ImageCache.swift */,
 				249FB1092CEF619900CA418B /* Date+.swift */,
 				A0CA54D12CF27E4700E9A284 /* View+.swift */,
@@ -1131,6 +1134,7 @@
 				843E7FDB2CE3283E0057A426 /* JoinLoginResponse.swift in Sources */,
 				24ABE95A2CDB86F3000E7EC5 /* Color+.swift in Sources */,
 				847A3F9F2CDB6AC4004A9361 /* ToolbarModifier.swift in Sources */,
+				24F7BFCA2CFC2C5200040C09 /* UINavigationController+.swift in Sources */,
 				847A3F882CD9C032004A9361 /* ProfileImageView.swift in Sources */,
 				2447AB7D2CE734ED00399C4D /* SignUpFeature.swift in Sources */,
 				843E7FD02CE221590057A426 /* AddContactFeature.swift in Sources */,
@@ -1192,7 +1196,7 @@
 				249FB1062CEF5FFD00CA418B /* Member.swift in Sources */,
 				847A3FA52CDE1183004A9361 /* ExploreChannelView.swift in Sources */,
 				249FB0C52CEC70EA00CA418B /* DMChattingRealmModel.swift in Sources */,
-				2447AB6D2CE32ED300399C4D /* Notification.swift in Sources */,
+				2447AB6D2CE32ED300399C4D /* Notification+.swift in Sources */,
 				847A3FA32CDE111A004A9361 /* InviteMemberView.swift in Sources */,
 				2447AB582CE1E16200399C4D /* ErrorResponse.swift in Sources */,
 				2447AB5E2CE2371C00399C4D /* UnreadCountResponse.swift in Sources */,

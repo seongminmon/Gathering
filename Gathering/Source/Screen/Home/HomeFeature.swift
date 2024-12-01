@@ -42,18 +42,14 @@ struct HomeFeature {
     @ObservableState
     struct State {
         var path = StackState<Path.State>()
-        
         @Presents var destination: Destination.State?
         @Presents var confirmationDialog: ConfirmationDialogState<Action.ConfirmationDialog>?
         
         var isChannelExpanded = true
         var isDMExpanded = true
         
-//        var channels: [Channel] = Dummy.channels
-//        var users: [DMUser] = Dummy.users
-        
         // 워크스페이스 + 프로필 데이터
-        //        var myWorkspaceList: [WorkspaceResponse] = []
+//        var myWorkspaceList: [WorkspaceResponse] = []
         var currentWorkspace: WorkspaceResponse?
         var myProfile: MyProfileResponse?
         
@@ -77,7 +73,8 @@ struct HomeFeature {
             case createChannelButtonTap
             case exploreChannelButtonTap
         }
-        //        // View에서 발생하는 사용자 액션들
+        
+        // View에서 발생하는 사용자 액션들
         case addChannelButtonTap
         case inviteMemberButtonTap
         case floatingButtonTap
@@ -131,19 +128,11 @@ struct HomeFeature {
                     channelID: channel.id,
                     workspaceID: state.currentWorkspace?.workspace_id ?? ""
                 )))
-//                state.destination = .channelChatting(ChannelChattingFeature.State(
-//                    channelID: channel.id,
-//                    workspaceID: state.currentWorkspace?.workspace_id ?? ""
-//                ))
                 return .none
             case .dmTap(let dmRoom):
-                print("DM 탭:", dmRoom)
-                state.path.append(.dmChatting(
-                    DMChattingFeature.State(dmsRoomResponse: dmRoom)
-                ))
-//                state.destination = .DMChatting(DMChattingFeature.State(
-//                    dmsRoomResponse: dmRoom
-//                ))
+                state.path.append(.dmChatting(DMChattingFeature.State(
+                    dmsRoomResponse: dmRoom
+                )))
                 return .none
             case .startNewMessageTap:
                 print("새 메시지 버튼 탭")
@@ -159,9 +148,10 @@ struct HomeFeature {
                 return .none
             case .confirmationDialog(.dismiss):
                 return .none
-                // MARK: networking -
+                
+            // MARK: networking -
             case .task:
-                //                state.isLoading = true
+//                state.isLoading = true
                 return .run { send in
                     do {
                         // 워크스페이스 리스트, 유저 정보 가져오기
@@ -216,6 +206,22 @@ struct HomeFeature {
                 return .none
             
             // MARK: - 네비게이션
+            case .path(.element(id: _, action: .channelChatting(.settingButtonTap(let channel)))):
+                state.path.append(.channelSetting(ChannelSettingFeature.State(
+                    currentChannel: channel
+                )))
+                return .none
+                
+            case .path(.element(id: _, action: .dmChatting(.profileButtonTap(let user)))):
+                print("홈 뷰에서 DM 채팅 뷰 액션 감지")
+                state.path.append(.profile(ProfileFeature.State(
+                    profileType: .otherUser,
+                    nickname: user.nickname,
+                    email: user.email,
+                    profileImage: user.profileImage ?? "bird"
+                )))
+                return .none
+                
             case .path:
                 return .none
             }

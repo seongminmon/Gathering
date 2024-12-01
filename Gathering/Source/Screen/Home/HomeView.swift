@@ -26,7 +26,6 @@ struct HomeView: View {
                     title: store.currentWorkspace?.name ?? "",
                     myProfile: store.myProfile
                 )
-                .navigationBarTitleDisplayMode(.inline)
                 .confirmationDialog(
                     store: store.scope(
                         state: \.$confirmationDialog,

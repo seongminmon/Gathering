@@ -31,9 +31,10 @@ struct ChannelSettingView: View {
     // ✅ (얼럿) 채널에서 나가기 >> 채널 퇴장 화면 >> *** changeRoot하기 ***
     // ✅ (시트) 채널 관리자 변경 >> 채널 관리자 변경 화면
     // ✅ (얼럿) 채널 삭제 >> 채널 삭제 화면
-    // 뒤로가기 >> dismiss
+    // ✅ 뒤로가기 >> dismiss
     
     @Perception.Bindable var store: StoreOf<ChannelSettingFeature>
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         WithPerceptionTracking {
@@ -57,13 +58,13 @@ struct ChannelSettingView: View {
                 }
                 .padding(.horizontal, 16)
             }
+            .navigationBarBackButtonHidden()
             .frame(maxWidth: .infinity)
             .customToolbar(
                 title: "채널 설정",
-                leftItem: .init(
-                    icon: .chevronLeft,
-                    action: { print("backbutton clicked") }
-                )
+                leftItem: .init(icon: .chevronLeft) {
+                    dismiss()
+                }
             )
             // 채널 편집 화면
             .sheet(isPresented: $store.isEditChannelViewPresented) {

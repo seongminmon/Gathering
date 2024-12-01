@@ -17,6 +17,7 @@ struct GatheringNavigationModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     HStack {
@@ -25,7 +26,6 @@ struct GatheringNavigationModifier: ViewModifier {
                             .font(Design.title1)
                     }
                 }
-                
                 ToolbarItem(placement: .topBarTrailing) {
                     if let profile = myProfile {
                         Button {
