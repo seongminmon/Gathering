@@ -31,12 +31,12 @@
 		2447AB892CE8C46B00399C4D /* DMFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB882CE8C46B00399C4D /* DMFeature.swift */; };
 		2447AB8B2CE9E58700399C4D /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB8A2CE9E58700399C4D /* AppFeature.swift */; };
 		249FB0C02CEC643800CA418B /* ImageFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0BF2CEC643800CA418B /* ImageFileManager.swift */; };
-		249FB0C52CEC70EA00CA418B /* DMChattingRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0C42CEC70EA00CA418B /* DMChattingRealmModel.swift */; };
-		249FB0C72CEC70F700CA418B /* ChannelChattingRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0C62CEC70F700CA418B /* ChannelChattingRealmModel.swift */; };
-		249FB0C92CEC711800CA418B /* MemberRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0C82CEC711800CA418B /* MemberRealmModel.swift */; };
+		249FB0C52CEC70EA00CA418B /* DMChattingDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0C42CEC70EA00CA418B /* DMChattingDBModel.swift */; };
+		249FB0C72CEC70F700CA418B /* ChannelChattingDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0C62CEC70F700CA418B /* ChannelChattingDBModel.swift */; };
+		249FB0C92CEC711800CA418B /* MemberDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0C82CEC711800CA418B /* MemberDBModel.swift */; };
 		249FB0CC2CEC9F4400CA418B /* ImageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0CB2CEC9F4400CA418B /* ImageRouter.swift */; };
 		249FB0CE2CEC9F5B00CA418B /* ImageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0CD2CEC9F5B00CA418B /* ImageClient.swift */; };
-		249FB0D22CECA8EE00CA418B /* RealmClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0D12CECA8EE00CA418B /* RealmClient.swift */; };
+		249FB0D22CECA8EE00CA418B /* DBClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0D12CECA8EE00CA418B /* DBClient.swift */; };
 		249FB0DB2CECAB3B00CA418B /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0DA2CECAB3B00CA418B /* Token.swift */; };
 		249FB0FC2CECBCDB00CA418B /* BadgeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0FB2CECBCDB00CA418B /* BadgeModifier.swift */; };
 		249FB0FE2CEDA92000CA418B /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0FD2CEDA92000CA418B /* ImageCache.swift */; };
@@ -84,6 +84,8 @@
 		24F7BFC32CF301D600040C09 /* MultipartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F7BFC22CF301D600040C09 /* MultipartData.swift */; };
 		24F7BFC82CFC21AA00040C09 /* GatheringNavigationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F7BFC72CFC21AA00040C09 /* GatheringNavigationModifier.swift */; };
 		24F7BFCA2CFC2C5200040C09 /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F7BFC92CFC2C5200040C09 /* UINavigationController+.swift */; };
+		24F7BFCF2CFDDF6E00040C09 /* ChannelDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F7BFCE2CFDDF6E00040C09 /* ChannelDBModel.swift */; };
+		24F7BFD12CFDE05000040C09 /* DMRoomDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F7BFD02CFDE05000040C09 /* DMRoomDBModel.swift */; };
 		843E7FC62CE202530057A426 /* AppFeaturePractice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E7FC52CE202520057A426 /* AppFeaturePractice.swift */; };
 		843E7FC82CE21B9B0057A426 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E7FC72CE21B9B0057A426 /* AppView.swift */; };
 		843E7FCA2CE21E830057A426 /* MyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E7FC92CE21E830057A426 /* MyApp.swift */; };
@@ -196,12 +198,12 @@
 		2447AB882CE8C46B00399C4D /* DMFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMFeature.swift; sourceTree = "<group>"; };
 		2447AB8A2CE9E58700399C4D /* AppFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
 		249FB0BF2CEC643800CA418B /* ImageFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFileManager.swift; sourceTree = "<group>"; };
-		249FB0C42CEC70EA00CA418B /* DMChattingRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChattingRealmModel.swift; sourceTree = "<group>"; };
-		249FB0C62CEC70F700CA418B /* ChannelChattingRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChattingRealmModel.swift; sourceTree = "<group>"; };
-		249FB0C82CEC711800CA418B /* MemberRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberRealmModel.swift; sourceTree = "<group>"; };
+		249FB0C42CEC70EA00CA418B /* DMChattingDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChattingDBModel.swift; sourceTree = "<group>"; };
+		249FB0C62CEC70F700CA418B /* ChannelChattingDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChattingDBModel.swift; sourceTree = "<group>"; };
+		249FB0C82CEC711800CA418B /* MemberDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDBModel.swift; sourceTree = "<group>"; };
 		249FB0CB2CEC9F4400CA418B /* ImageRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRouter.swift; sourceTree = "<group>"; };
 		249FB0CD2CEC9F5B00CA418B /* ImageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageClient.swift; sourceTree = "<group>"; };
-		249FB0D12CECA8EE00CA418B /* RealmClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmClient.swift; sourceTree = "<group>"; };
+		249FB0D12CECA8EE00CA418B /* DBClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBClient.swift; sourceTree = "<group>"; };
 		249FB0DA2CECAB3B00CA418B /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		249FB0FB2CECBCDB00CA418B /* BadgeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeModifier.swift; sourceTree = "<group>"; };
 		249FB0FD2CEDA92000CA418B /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
@@ -246,6 +248,8 @@
 		24F7BFC22CF301D600040C09 /* MultipartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartData.swift; sourceTree = "<group>"; };
 		24F7BFC72CFC21AA00040C09 /* GatheringNavigationModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatheringNavigationModifier.swift; sourceTree = "<group>"; };
 		24F7BFC92CFC2C5200040C09 /* UINavigationController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
+		24F7BFCE2CFDDF6E00040C09 /* ChannelDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelDBModel.swift; sourceTree = "<group>"; };
+		24F7BFD02CFDE05000040C09 /* DMRoomDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMRoomDBModel.swift; sourceTree = "<group>"; };
 		843E7FC52CE202520057A426 /* AppFeaturePractice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeaturePractice.swift; sourceTree = "<group>"; };
 		843E7FC72CE21B9B0057A426 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		843E7FC92CE21E830057A426 /* MyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyApp.swift; sourceTree = "<group>"; };
@@ -375,7 +379,7 @@
 		249FB0C12CEC65FF00CA418B /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				249FB0D12CECA8EE00CA418B /* RealmClient.swift */,
+				249FB0D12CECA8EE00CA418B /* DBClient.swift */,
 				249FB0C32CEC70E000CA418B /* Model */,
 			);
 			path = Database;
@@ -393,9 +397,9 @@
 		249FB0C32CEC70E000CA418B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				249FB0C42CEC70EA00CA418B /* DMChattingRealmModel.swift */,
-				249FB0C62CEC70F700CA418B /* ChannelChattingRealmModel.swift */,
-				249FB0C82CEC711800CA418B /* MemberRealmModel.swift */,
+				24F7BFD22CFDE2A400040C09 /* Channel */,
+				24F7BFD32CFDE2AC00040C09 /* DM */,
+				249FB0C82CEC711800CA418B /* MemberDBModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -839,6 +843,24 @@
 			path = Router;
 			sourceTree = "<group>";
 		};
+		24F7BFD22CFDE2A400040C09 /* Channel */ = {
+			isa = PBXGroup;
+			children = (
+				24F7BFCE2CFDDF6E00040C09 /* ChannelDBModel.swift */,
+				249FB0C62CEC70F700CA418B /* ChannelChattingDBModel.swift */,
+			);
+			path = Channel;
+			sourceTree = "<group>";
+		};
+		24F7BFD32CFDE2AC00040C09 /* DM */ = {
+			isa = PBXGroup;
+			children = (
+				24F7BFD02CFDE05000040C09 /* DMRoomDBModel.swift */,
+				249FB0C42CEC70EA00CA418B /* DMChattingDBModel.swift */,
+			);
+			path = DM;
+			sourceTree = "<group>";
+		};
 		847A3F7F2CD8FFD4004A9361 /* TCAPractice */ = {
 			isa = PBXGroup;
 			children = (
@@ -1087,13 +1109,13 @@
 				2447AB812CE87A3A00399C4D /* EmailLoginView.swift in Sources */,
 				24ABE95C2CDB8701000E7EC5 /* Design.swift in Sources */,
 				249FB0FE2CEDA92000CA418B /* ImageCache.swift in Sources */,
-				249FB0C92CEC711800CA418B /* MemberRealmModel.swift in Sources */,
+				249FB0C92CEC711800CA418B /* MemberDBModel.swift in Sources */,
 				84E8A8152CEE01B000589171 /* SettingView.swift in Sources */,
 				2447AB562CE1D0EC00399C4D /* StoreClient.swift in Sources */,
 				2447AB6A2CE32B6800399C4D /* ToastModifier.swift in Sources */,
 				24ABE9702CDCEDB2000E7EC5 /* UserDefaultsManager.swift in Sources */,
 				A0E444EB2CE2C7E20024AE71 /* DMsResponse.swift in Sources */,
-				249FB0C72CEC70F700CA418B /* ChannelChattingRealmModel.swift in Sources */,
+				249FB0C72CEC70F700CA418B /* ChannelChattingDBModel.swift in Sources */,
 				84E8A81D2CEF1B1300589171 /* DMChattingView.swift in Sources */,
 				A0E444E12CE2B37D0024AE71 /* WorkspaceInfoResponse.swift in Sources */,
 				2447AB892CE8C46B00399C4D /* DMFeature.swift in Sources */,
@@ -1112,7 +1134,7 @@
 				24ABE95F2CDB93B5000E7EC5 /* RoundButtonModifier.swift in Sources */,
 				84E8A81F2CEF1B3E00589171 /* ChannelChattingView.swift in Sources */,
 				24ABE9822CDE0FE9000E7EC5 /* ChannelRouter.swift in Sources */,
-				249FB0D22CECA8EE00CA418B /* RealmClient.swift in Sources */,
+				249FB0D22CECA8EE00CA418B /* DBClient.swift in Sources */,
 				24ABE9902CDF0CFB000E7EC5 /* OwnerRequest.swift in Sources */,
 				24ABE96A2CDB9AB8000E7EC5 /* KakaoLoginButton.swift in Sources */,
 				A0E444E92CE2C3D80024AE71 /* DMOpponentRequest.swift in Sources */,
@@ -1126,6 +1148,7 @@
 				2447AB792CE7329000399C4D /* SignUpView.swift in Sources */,
 				A0E444C52CDD0A5C0024AE71 /* ChattingPresentModel.swift in Sources */,
 				843E7FDD2CE337330057A426 /* EmailValidationRequest.swift in Sources */,
+				24F7BFD12CFDE05000040C09 /* DMRoomDBModel.swift in Sources */,
 				2447AB7B2CE732C400399C4D /* TextFieldWithTitle.swift in Sources */,
 				2447AB642CE327C800399C4D /* ToastView.swift in Sources */,
 				249FB10A2CEF619A00CA418B /* Date+.swift in Sources */,
@@ -1169,6 +1192,7 @@
 				24ABE9522CD8B65E000E7EC5 /* DMView.swift in Sources */,
 				843E7FE72CE337E70057A426 /* EditMyProfileRequest.swift in Sources */,
 				24ABE9732CDCEF9D000E7EC5 /* StoreRouter.swift in Sources */,
+				24F7BFCF2CFDDF6E00040C09 /* ChannelDBModel.swift in Sources */,
 				84B8AD2D2CE6788400011D73 /* CreateChannelFeature.swift in Sources */,
 				A0CA54D22CF27E4700E9A284 /* View+.swift in Sources */,
 				24ABE91D2CD4AEDB000E7EC5 /* GatheringApp.swift in Sources */,
@@ -1195,7 +1219,7 @@
 				843E7FD72CE30DC30057A426 /* UserRouter.swift in Sources */,
 				249FB1062CEF5FFD00CA418B /* Member.swift in Sources */,
 				847A3FA52CDE1183004A9361 /* ExploreChannelView.swift in Sources */,
-				249FB0C52CEC70EA00CA418B /* DMChattingRealmModel.swift in Sources */,
+				249FB0C52CEC70EA00CA418B /* DMChattingDBModel.swift in Sources */,
 				2447AB6D2CE32ED300399C4D /* Notification+.swift in Sources */,
 				847A3FA32CDE111A004A9361 /* InviteMemberView.swift in Sources */,
 				2447AB582CE1E16200399C4D /* ErrorResponse.swift in Sources */,

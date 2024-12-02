@@ -15,7 +15,7 @@ import ComposableArchitecture
 // ✅ TODO: - 멀티파트 통신 해결하기 -> 테스트는 DM 채팅(설정 탭)에서
 
 // MARK: - 기능 추가
-// TODO: - 채널 탐색 뷰, 팀원 초대 뷰 네트워크 기능 연결
+// ✅ TODO: - 채널 탐색 뷰, 팀원 초대 뷰 네트워크 기능 연결
 // ✅ TODO: - 채널 세팅 뷰 기능 추가
 // TODO: - 채널 채팅, DM 채팅 뷰 로직 (포토 x자 누르면 삭제하기)
 
@@ -25,7 +25,7 @@ struct GatheringApp: App {
     @Perception.Bindable var store =  Store(initialState: AppFeature.State()) { AppFeature() }
     
     // MARK: - realm 경로 출력
-    @Dependency(\.realmClient) var realmClient
+    @Dependency(\.dbClient) var dbClient
     
     var body: some Scene {
         WindowGroup {
@@ -33,13 +33,12 @@ struct GatheringApp: App {
                 rootView()
                     .onAppear {
                         // realm 경로 출력
-                        realmClient.printRealm()
+                        dbClient.printRealm()
                         store.send(.onAppear)
                     }
                     .task { store.send(.task) }
             }
         }
-        
     }
     
     @ViewBuilder

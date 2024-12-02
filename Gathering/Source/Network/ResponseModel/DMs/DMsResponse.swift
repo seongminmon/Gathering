@@ -32,14 +32,15 @@ extension DMsResponse {
         )
     }
     
-    func toRealmModel() -> DMChattingRealmModel {
-        let user = self.user.toRealmModel()
-        return DMChattingRealmModel(
+    func toDBModel() -> DMChattingDBModel {
+        let user = self.user.toDBModel()
+        return DMChattingDBModel(
             dmID: self.dm_id,
             roomID: self.room_id,
             content: self.content,
             createdAt: self.createdAt,
-            filesCount: self.files.count,
+            files: self.files,
+            // TODO: - 새로 인스턴스 만들어서 넣는게 아니라 기존 채널 채팅방의 멤버들에서 찾아서 넣기
             user: user
         )
     }

@@ -15,7 +15,7 @@ struct DMFeature {
     @Dependency(\.workspaceClient) var workspaceClient
     @Dependency(\.userClient) var userClient
     @Dependency(\.dmsClient) var dmsClient
-    @Dependency(\.realmClient) var realmClient
+    @Dependency(\.dbClient) var dbClient
     
     @Reducer
     enum Path {
@@ -195,11 +195,13 @@ struct DMFeature {
                 }
                 
                 // DM Room List 구한 뒤 모든 DM Room에 대한 Effect를 병렬로 실행
+                return .none
+                /*
                 return .merge(state.dmRoomList.map { dmRoom in
                     return .run { send in
                         do {
                             // Realm에서 roomID 기준으로 DM 채팅 내역 가져오기
-                            let dmChats = try realmClient.fetchDMChats(dmRoom.id)
+                            let dmChats = try dbClient.fetchDMChats(dmRoom.id)
                             let lastCreatedAt = dmChats.last?.createdAt ?? ""
                             
                             // realm에서 불러온 데이터들 state에 저장
@@ -221,6 +223,7 @@ struct DMFeature {
                         }
                     }
                 })
+                */
                 
             case .addDMChats(let dmRoom, let chats):
                 state.dmChattings[dmRoom, default: []].append(contentsOf: chats)
@@ -231,15 +234,6 @@ struct DMFeature {
                 state.dmChattings[dmRoom, default: []].append(contentsOf: chats)
                 
                 // MARK: - 여기서 DB에 저장하면 모두 읽은 표시 처리됨 >> DB에는 저장하지 않기
-                // Realm에 저장하기
-//                chats.forEach {
-//                    do {
-//                        try realmClient.create($0.toRealmModel())
-//                    } catch {
-//                        print("Realm 추가 실패")
-//                    }
-//                    // TODO: - 파일매니저에 이미지 저장
-//                }
                 return .none
                 
             case .unreadCountResponse(let dmRoom, let unreadCount):

@@ -16,7 +16,7 @@ struct HomeFeature {
     @Dependency(\.userClient) var userClient
     @Dependency(\.channelClient) var channelClient
     @Dependency(\.dmsClient) var dmsClient
-    @Dependency(\.realmClient) var realmClient
+    @Dependency(\.dbClient) var dbClient
     
     @Reducer
     enum Path {

@@ -24,11 +24,12 @@ extension MemberResponse {
         )
     }
     
-    func toRealmModel() -> MemberRealmModel {
-        return MemberRealmModel(
+    func toDBModel() -> MemberDBModel {
+        return MemberDBModel(
             userID: self.user_id,
             email: self.email,
-            nickname: self.nickname
+            nickname: self.nickname, 
+            profileImage: self.profileImage
         )
     }
 }

@@ -13,7 +13,7 @@ import ComposableArchitecture
 struct ChannelChattingFeature {
     
     @Dependency(\.channelClient) var channelClient
-    @Dependency(\.realmClient) var realmClient
+    @Dependency(\.dbClient) var dbClient
     
     @Reducer
     enum Destination {
