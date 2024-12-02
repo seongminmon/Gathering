@@ -26,7 +26,7 @@ struct ExploreChannelView: View {
                     primaryButton: .init(
                         title: "확인",
                         action: {
-                            store.send(.confirmJoinChannel)
+                            store.send(.confirmJoinChannel(store.selectedChannel))
                         }
                     ),
                     secondaryButton: .init(

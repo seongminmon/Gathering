@@ -29,7 +29,7 @@ struct ExploreChannelFeature {
         case moveToChannelChattingView(Channel)
         
         case channelTap(Channel)
-        case confirmJoinChannel
+        case confirmJoinChannel(Channel?)
         case cancelJoinChannel
         case applyInitialData([Channel], [Channel])
         
@@ -45,7 +45,6 @@ struct ExploreChannelFeature {
                 return .none
                 
             case let .channelTap(channel):
-                // TODO: - 이미 참여한 채널이라면 dismiss + 채널 채팅 뷰로 이동
                 if state.myChannels.contains(channel) {
                     return .send(.moveToChannelChattingView(channel))
                 } else {
@@ -58,10 +57,24 @@ struct ExploreChannelFeature {
                 // 홈 뷰에서 destination으로 처리
                 return .none
                 
-            case .confirmJoinChannel:
-                // TODO: - 채널 참여 로직 추가
+            case let .confirmJoinChannel(channel):
+                // TODO: - 채널 채팅 내역 리스트 조회를 통해 채널 참여
+                guard let channel else { return .none }
+                
                 state.showAlert = false
-                return .none
+                return .run { send in
+                    do {
+                        let result = try await channelClient.fetchChattingList(
+                            channel.id,
+                            UserDefaultsManager.workspaceID,
+                            ""
+                        )
+                        await send(.moveToChannelChattingView(channel))
+                        
+                    } catch {
+                        print("채널 참여 실패")
+                    }
+                }
                 
             case .cancelJoinChannel:
                 state.showAlert = false
@@ -73,9 +86,7 @@ struct ExploreChannelFeature {
                     do {
                         let (allChannels, myChannels) = try await fetchInitialData()
                         await send(.applyInitialData(allChannels, myChannels))
-                    } catch {
-                        
-                    }
+                    } catch {}
                 }
                 
             case .applyInitialData(let allChannels, let myChannels):
