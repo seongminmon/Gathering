@@ -29,7 +29,7 @@ struct DMView: View {
                                     userCell(user: item)
                                 }
                             }
-                            .frame(width: 80, height: 100)
+                            .frame(height: 100)
                             .padding(.horizontal, 16)
                         }
                         
@@ -166,7 +166,7 @@ struct DMView: View {
             inviteButton()
                 .padding([.horizontal, .bottom])
         }
-        .background(Design.gray)
+        .background(Design.background)
     }
     
     private func inviteButton() -> some View {

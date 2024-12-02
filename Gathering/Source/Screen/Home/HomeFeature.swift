@@ -71,6 +71,7 @@ struct HomeFeature {
         case addChannelButtonTap
         case inviteMemberButtonTap
         case floatingButtonTap
+        case startNewMessageTap
         
         case channelTap(Channel)
         case dmTap(DMsRoom)
@@ -82,7 +83,6 @@ struct HomeFeature {
         case myWorkspaceResponse(WorkspaceResponse?)
         case myProfileResponse(MyProfileResponse)
         //        case myWorkspaceListResponse([WorkspaceResponse])
-        case startNewMessageTap
     }
     
     var body: some ReducerOf<Self> {
@@ -152,7 +152,6 @@ struct HomeFeature {
                 state.destination = .inviteMember(InviteMemberFeature.State())
                 return .none
             case .channelTap(let channel):
-                print("채널 탭:", channel)
                 state.path.append(.channelChatting(ChannelChattingFeature.State(
                     channelID: channel.id,
                     workspaceID: state.currentWorkspace?.workspace_id ?? ""
@@ -164,17 +163,25 @@ struct HomeFeature {
                 )))
                 return .none
             case .startNewMessageTap:
-                print("새 메시지 버튼 탭")
+                // RootFeature에서 탭바 전환
+                return .none
+            case .floatingButtonTap:
+                // RootFeature에서 탭바 전환
                 return .none
                 
+            case .destination(.presented(.channelExplore(.moveToChannelChattingView(let channel)))):
+                state.destination = nil
+                state.path.append(.channelChatting(ChannelChattingFeature.State(
+                    channelID: channel.id,
+                    workspaceID: state.currentWorkspace?.workspace_id ?? ""
+                )))
+                return .none
             case .destination(.dismiss):
                 state.destination = nil
                 return .none
             case .destination:
                 return .none
                 
-            case .floatingButtonTap:
-                return .none
             case .confirmationDialog(.dismiss):
                 return .none
                 

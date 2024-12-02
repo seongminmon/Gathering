@@ -32,7 +32,7 @@ struct InviteMemberView: View {
                 inviteButton()
                     .padding([.horizontal, .bottom])
             }
-            .background(Design.gray)
+            .background(Design.background)
         }
     }
     
@@ -43,7 +43,7 @@ struct InviteMemberView: View {
             RoundedButton(
                 text: "초대 보내기",
                 foregroundColor: Design.white,
-                backgroundColor: Design.green
+                backgroundColor: store.inviteButtonValid ? Design.green : Design.darkGray
             )
         }
         .disabled(!store.inviteButtonValid)

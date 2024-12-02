@@ -13,20 +13,25 @@ import ComposableArchitecture
 struct ExploreChannelFeature {
     
     @Dependency(\.channelClient) var channelClient
+    @Dependency(\.dismiss) var dismiss
     
     @ObservableState
     struct State {
-        var channels: [Channel] = []
+        var allChannels: [Channel] = []
+        var myChannels: [Channel] = []
         var selectedChannel: Channel?
         var showAlert = false
     }
     
     enum Action: BindableAction {
         case binding(BindingAction<State>)
+        
+        case moveToChannelChattingView(Channel)
+        
         case channelTap(Channel)
-        case confirmJoinChannel
+        case confirmJoinChannel(Channel?)
         case cancelJoinChannel
-        case applyInitialData([Channel])
+        case applyInitialData([Channel], [Channel])
         
         case task
     }
@@ -40,42 +45,63 @@ struct ExploreChannelFeature {
                 return .none
                 
             case let .channelTap(channel):
-                state.selectedChannel = channel
-                state.showAlert = true
+                if state.myChannels.contains(channel) {
+                    return .send(.moveToChannelChattingView(channel))
+                } else {
+                    state.selectedChannel = channel
+                    state.showAlert = true
+                    return .none
+                }
+                
+            case let .moveToChannelChattingView(channel):
+                // 홈 뷰에서 destination으로 처리
                 return .none
                 
-            case .confirmJoinChannel:
-                // 여기에 채널 참여 로직 추가
+            case let .confirmJoinChannel(channel):
+                // TODO: - 채널 채팅 내역 리스트 조회를 통해 채널 참여
+                guard let channel else { return .none }
+                
                 state.showAlert = false
-                return .none
+                return .run { send in
+                    do {
+                        let result = try await channelClient.fetchChattingList(
+                            channel.id,
+                            UserDefaultsManager.workspaceID,
+                            ""
+                        )
+                        await send(.moveToChannelChattingView(channel))
+                        
+                    } catch {
+                        print("채널 참여 실패")
+                    }
+                }
                 
             case .cancelJoinChannel:
                 state.showAlert = false
                 state.selectedChannel = nil
                 return .none
+                
             case .task:
                 return .run { send in
                     do {
-                        async let channelList = try await fetchInitialData()
-                        try await send(.applyInitialData(channelList))
-                    } catch {
-                        
-                    }
+                        let (allChannels, myChannels) = try await fetchInitialData()
+                        await send(.applyInitialData(allChannels, myChannels))
+                    } catch {}
                 }
                 
-            case .applyInitialData(let channelList):
-                state.channels = channelList
+            case .applyInitialData(let allChannels, let myChannels):
+                state.allChannels = allChannels
+                state.myChannels = myChannels
                 return .none
             }
             
         }
     }
     
-    private func fetchInitialData() async throws -> [Channel] {
-        // 내가 속한 워크스페이스 리스트 조회
+    private func fetchInitialData() async throws -> ([Channel], [Channel]) {
         let workspaceID = UserDefaultsManager.workspaceID
-        async let channels = channelClient.fetchChannelList(workspaceID)
-        
-        return try await channels.map { $0.toChannel }
+        async let allChannels = channelClient.fetchChannelList(workspaceID)
+        async let myChannels = channelClient.fetchMyChannelList(workspaceID)
+        return try await (allChannels.map { $0.toChannel }, myChannels.map { $0.toChannel })
     }
 }

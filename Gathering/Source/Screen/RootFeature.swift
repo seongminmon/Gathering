@@ -43,6 +43,12 @@ struct RootFeature {
                 state.selectedTab = tab
                 return .none
                 
+            case .home(.startNewMessageTap):
+                state.selectedTab = .dm
+                return .none
+            case .home(.floatingButtonTap):
+                state.selectedTab = .dm
+                return .none
             case .home, .dm:
                 return .none
             }
