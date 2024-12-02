@@ -42,18 +42,17 @@ struct ExploreChannelView: View {
     private func makeScrollView() -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                ForEach(store.channels, id: \.id) { channel in
-                    HStack(spacing: 12) {
-                        Image("hashTagthick")
-                        
-                        Button(action: {
-                            store.send(.channelTap(channel))
-                        }) {
+                ForEach(store.allChannels, id: \.id) { channel in
+                    Button {
+                        store.send(.channelTap(channel))
+                    } label: {
+                        HStack(spacing: 12) {
+                            Image(.hashTagthick)
                             Text(channel.name)
                                 .font(Design.title2)
                                 .tint(Design.black)
+                            Spacer()
                         }
-                        Spacer()
                     }
                     .padding(.horizontal, 16)
                 }
@@ -62,5 +61,4 @@ struct ExploreChannelView: View {
         }
         .task { store.send(.task) }
     }
-        
 }
