@@ -108,7 +108,9 @@ struct DMChattingFeature {
                                 DMRequest(content: state.messageText, files: [])
                             )
                             do {
-                                try dbClient.create(result.toDBModel())
+                                // MARK: - 멤버 잘 찾아서 넣기
+                                let member = MemberDBModel()
+                                try dbClient.create(result.toDBModel(member))
                                 print("sendedDM 저장성공")
                                 await send(.saveSendedDM(result))
                             } catch {
@@ -129,7 +131,9 @@ struct DMChattingFeature {
                             )
                         )
                         do {
-                            try dbClient.create(result.toDBModel())
+                            // MARK: - 멤버 잘 찾아서 넣기
+                            let member = MemberDBModel()
+                            try dbClient.create(result.toDBModel(member))
                             print("sendedDM 저장성공")
                             await send(.saveSendedDM(result))
                         } catch {

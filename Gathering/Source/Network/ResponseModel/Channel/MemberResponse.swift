@@ -15,20 +15,20 @@ struct MemberResponse: Decodable {
 }
 
 extension MemberResponse {
-    var toMember: Member {
-        return Member(
-            id: self.user_id,
+    func toDBModel() -> MemberDBModel {
+        return MemberDBModel(
+            userID: self.user_id,
             email: self.email,
             nickname: self.nickname,
             profileImage: self.profileImage
         )
     }
     
-    func toDBModel() -> MemberDBModel {
-        return MemberDBModel(
-            userID: self.user_id,
+    func toPresentModel() -> Member {
+        return Member(
+            id: self.user_id,
             email: self.email,
-            nickname: self.nickname, 
+            nickname: self.nickname,
             profileImage: self.profileImage
         )
     }

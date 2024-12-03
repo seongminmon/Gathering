@@ -18,14 +18,13 @@ class ChannelDBModel: Object {
     convenience init(
         channelID: String,
         channelName: String,
-        // MARK: 안되면 []로 바꾸기
-        members: List<MemberDBModel>,
-        chattings: List<ChannelChattingDBModel>
+        members: [MemberDBModel],
+        chattings: [ChannelChattingDBModel]
     ) {
         self.init()
         self.channelID = channelID
         self.channelName = channelName
-        self.members = members
-        self.chattings = chattings
+        self.members.append(objectsIn: members)
+        self.chattings.append(objectsIn: chattings)
     }
 }

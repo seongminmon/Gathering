@@ -16,13 +16,12 @@ class DMRoomDBModel: Object {
     
     convenience init(
         roomID: String,
-        // MARK: 안되면 []로 바꾸기
-        members: List<MemberDBModel>,
-        chattings: List<DMChattingDBModel>
+        members: [MemberDBModel],
+        chattings: [DMChattingDBModel]
     ) {
         self.init()
         self.roomID = roomID
-        self.members = members
-        self.chattings = chattings
+        self.members.append(objectsIn: members)
+        self.chattings.append(objectsIn: chattings)
     }
 }

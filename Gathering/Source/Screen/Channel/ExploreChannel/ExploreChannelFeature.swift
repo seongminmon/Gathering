@@ -102,6 +102,9 @@ struct ExploreChannelFeature {
         let workspaceID = UserDefaultsManager.workspaceID
         async let allChannels = channelClient.fetchChannelList(workspaceID)
         async let myChannels = channelClient.fetchMyChannelList(workspaceID)
-        return try await (allChannels.map { $0toPresentModel }, myChannels.map { $0toPresentModel })
+        return try await (
+            allChannels.map { $0.toPresentModel() },
+            myChannels.map { $0.toPresentModel() }
+        )
     }
 }

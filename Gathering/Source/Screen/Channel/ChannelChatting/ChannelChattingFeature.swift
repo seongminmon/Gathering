@@ -131,6 +131,6 @@ struct ChannelChattingFeature {
             workspaceID,
             cursorDate
         )
-        return try await chattingList.map { $0.toChattingPresentModel() }
+        return try await chattingList.map { $0.toPresentModel() }
     }
 }

@@ -28,15 +28,3 @@ class MemberDBModel: Object {
         self.profileImage = profileImage
     }
 }
-
-// MARK: 어디서 필요할까 ~~
-//extension MemberRealmModel: Identifiable {
-//    func toResponseModel() -> MemberResponse {
-//        return MemberResponse(
-//            user_id: self.userID,
-//            email: self.email,
-//            nickname: self.nickname,
-//            profileImage: self.profileImage // TODO: - 변경 필요
-//        )
-//    }
-//}

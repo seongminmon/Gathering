@@ -146,7 +146,7 @@ struct DMFeature {
                             workspaceID,
                             InviteMemberRequest(email: email)
                         )
-                        await send(.inviteMemberResponse(result.toMember))
+                        await send(.inviteMemberResponse(result.toPresentModel()))
                     } catch {
                         Notification.postToast(title: "초대에 실패했습니다")
                     }
@@ -158,7 +158,7 @@ struct DMFeature {
                         UserDefaultsManager.workspaceID,
                         DMOpponentRequest(opponentID: user.id)
                     )
-                    await send(.dmCellTap(result.toDmsRoom))
+                    await send(.dmCellTap(result.toPresentModel()))
                 }
                 
             case .dmCellTap(let dmRoom):
@@ -280,7 +280,7 @@ struct DMFeature {
         async let members = workspaceClient.fetchWorkspaceMembers(workspaceID)
         // DM 방 리스트 조회
         async let dmRooms = dmsClient.fetchDMSList(workspaceID)
-        return try await (members.map { $0.toMember }, dmRooms.map { $0.toDmsRoom })
+        return try await (members.map { $0.toPresentModel() }, dmRooms.map { $0.toPresentModel() })
     }
     
     private func fetchDMRoomDetails(

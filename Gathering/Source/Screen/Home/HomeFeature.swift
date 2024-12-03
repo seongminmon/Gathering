@@ -266,7 +266,7 @@ struct HomeFeature {
         async let channels = channelClient.fetchMyChannelList(workspaceID)
         // DM 방 리스트 조회
         async let dmRooms = dmsClient.fetchDMSList(workspaceID)
-        return try await (channels.map { $0toPresentModel }, dmRooms.map { $0.toDmsRoom })
+        return try await (channels.map { $0.toPresentModel() }, dmRooms.map { $0.toPresentModel() })
     }
     
     private func fetchChannelDetails(

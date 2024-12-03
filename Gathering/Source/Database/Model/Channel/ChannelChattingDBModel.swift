@@ -31,5 +31,3 @@ class ChannelChattingDBModel: Object {
         self.user = user
     }
 }
-
-extension ChannelChattingDBModel: Identifiable {}

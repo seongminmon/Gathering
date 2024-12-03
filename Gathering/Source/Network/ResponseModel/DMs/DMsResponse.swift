@@ -20,28 +20,25 @@ struct DMsResponse: Decodable {
 }
 
 extension DMsResponse {
-    func toChattingPresentModel() -> ChattingPresentModel {
+    func toDBModel(_ user: MemberDBModel) -> DMChattingDBModel {
+        return DMChattingDBModel(
+            dmID: self.dm_id,
+            content: self.content,
+            createdAt: self.createdAt,
+            files: self.files,
+            user: user
+        )
+    }
+    
+    func toPresentModel() -> ChattingPresentModel {
         return ChattingPresentModel(
             id: self.dm_id,
-            user: self.user.toMember,
+            user: self.user.toPresentModel(),
             name: self.user.nickname,
             text: self.content,
             imageNames: self.files,
             isMine: user.user_id == UserDefaultsManager.userID ? true : false,
             profile: user.profileImage
-        )
-    }
-    
-    func toDBModel() -> DMChattingDBModel {
-        let user = self.user.toDBModel()
-        return DMChattingDBModel(
-            dmID: self.dm_id,
-            roomID: self.room_id,
-            content: self.content,
-            createdAt: self.createdAt,
-            files: self.files,
-            // TODO: - 새로 인스턴스 만들어서 넣는게 아니라 기존 채널 채팅방의 멤버들에서 찾아서 넣기
-            user: user
         )
     }
 }

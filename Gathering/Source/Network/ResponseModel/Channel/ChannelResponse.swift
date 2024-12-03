@@ -18,7 +18,16 @@ struct ChannelResponse: Decodable {
 }
 
 extension ChannelResponse {
-    var toChannel: Channel {
+    func toDBModel(_ members: [MemberDBModel]) -> ChannelDBModel {
+        return ChannelDBModel(
+            channelID: self.channel_id,
+            channelName: self.name,
+            members: members,
+            chattings: []
+        )
+    }
+    
+    func toPresentModel() -> Channel {
         return Channel(
             id: self.channel_id,
             name: self.name
