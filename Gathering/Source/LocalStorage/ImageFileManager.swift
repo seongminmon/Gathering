@@ -7,8 +7,6 @@
 
 import UIKit
 
-import Kingfisher
-
 final class ImageFileManager {
     static let shared = ImageFileManager()
     private init() {}
@@ -19,22 +17,26 @@ final class ImageFileManager {
         in: .userDomainMask
     ).first
     
-    func saveImageFile(image: UIImage, filename: String) {
+    func saveImageFile(filename: String) async {
         guard let documentDirectory else { return }
-        let fileURL = documentDirectory.appendingPathComponent("\(filename).jpg")
-        guard let data = image.jpegData(compressionQuality: 0.5) else { return }
-        
+        let fileURL = documentDirectory.appendingPathComponent(filename)
         do {
-            print("이미지 파일 저장 성공")
-            try data.write(to: fileURL)
-        } catch {
-            print("이미지 파일 저장 실패", error)
-        }
+            let image = try await NetworkManager.shared.requestImage(
+                ImageRouter.fetchImage(path: filename)
+            )
+            guard let data = image.jpegData(compressionQuality: 0.5) else { return }
+            do {
+                print("이미지 파일 저장 성공")
+                try data.write(to: fileURL)
+            } catch {
+                print("이미지 파일 저장 실패", error)
+            }
+        } catch {}
     }
     
     func loadImageFile(filename: String) -> UIImage? {
         guard let documentDirectory else { return nil }
-        let fileURL = documentDirectory.appendingPathComponent("\(filename).jpg")
+        let fileURL = documentDirectory.appendingPathComponent(filename)
         if FileManager.default.fileExists(atPath: fileURL.path) {
             return UIImage(contentsOfFile: fileURL.path)
         } else {
@@ -44,7 +46,7 @@ final class ImageFileManager {
 
     func deleteImageFile(filename: String) {
         guard let documentDirectory else { return }
-        let fileURL = documentDirectory.appendingPathComponent("\(filename).jpg")
+        let fileURL = documentDirectory.appendingPathComponent(filename)
         if FileManager.default.fileExists(atPath: fileURL.path) {
             do {
                 print("이미지 파일 삭제 성공")

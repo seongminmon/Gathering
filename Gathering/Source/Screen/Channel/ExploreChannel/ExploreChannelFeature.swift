@@ -53,7 +53,7 @@ struct ExploreChannelFeature {
                     return .none
                 }
                 
-            case let .moveToChannelChattingView(channel):
+            case .moveToChannelChattingView:
                 // 홈 뷰에서 destination으로 처리
                 return .none
                 
@@ -102,6 +102,9 @@ struct ExploreChannelFeature {
         let workspaceID = UserDefaultsManager.workspaceID
         async let allChannels = channelClient.fetchChannelList(workspaceID)
         async let myChannels = channelClient.fetchMyChannelList(workspaceID)
-        return try await (allChannels.map { $0.toChannel }, myChannels.map { $0.toChannel })
+        return try await (
+            allChannels.map { $0.toPresentModel() },
+            myChannels.map { $0.toPresentModel() }
+        )
     }
 }

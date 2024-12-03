@@ -13,7 +13,7 @@ import ComposableArchitecture
 struct DMChattingFeature {
     
     @Dependency(\.dmsClient) var dmsClient
-    @Dependency(\.realmClient) var realmClient
+    @Dependency(\.dbClient) var dbClient
     
     @ObservableState
     struct State {
@@ -64,10 +64,12 @@ struct DMChattingFeature {
                 return .none
                 
             case .task:
+                return .none
+                /*
                 return .run { [dmsRoomID = state.dmsRoomResponse.id] send in
                     do {
                         // 디비에서 불러오기
-                        let dmDBChats = try realmClient.fetchDMChats(dmsRoomID)
+                        let dmDBChats = try dbClient.fetchDMChats(dmsRoomID)
                             .map { $0.toResponseModel() }
                         
                         // 마지막 날짜로 이후 채팅 불러오기
@@ -78,21 +80,23 @@ struct DMChattingFeature {
                         // 불러온 채팅 디비에 저장하기
                         dmNewChats.forEach {
                             do {
-                                try realmClient.create($0.toRealmModel())
+                                // MARK: - create에서 update로 변경
+                                try dbClient.update($0.toDBModel())
                             } catch {
                                 print("Realm 추가 실패")
                             }
                             // TODO: - 파일매니저에 이미지 저장
                         }
                         // 디비 다시 불러오기?
-                        let dmUpdatedDBChats = try realmClient.fetchDMChats(dmsRoomID)
+                        let dmUpdatedDBChats = try dbClient.fetchDMChats(dmsRoomID)
                             .map { $0.toResponseModel().toChattingPresentModel()}
-                        print(dmUpdatedDBChats.last)
+//                        print(dmUpdatedDBChats.last)
                         await send(.dmsChattingResponse(dmUpdatedDBChats))
                     } catch {
                         print("채팅 패치 실패")
                     }
                 }
+                 */
             // TODO: 멀티파트 업로드 수정
             case .sendButtonTap:
                 return .run { [state = state] send in
@@ -104,7 +108,9 @@ struct DMChattingFeature {
                                 DMRequest(content: state.messageText, files: [])
                             )
                             do {
-                                try realmClient.create(result.toRealmModel())
+                                // MARK: - 멤버 잘 찾아서 넣기
+                                let member = MemberDBModel()
+                                try dbClient.update(result.toDBModel(member))
                                 print("sendedDM 저장성공")
                                 await send(.saveSendedDM(result))
                             } catch {
@@ -125,7 +131,9 @@ struct DMChattingFeature {
                             )
                         )
                         do {
-                            try realmClient.create(result.toRealmModel())
+                            // MARK: - 멤버 잘 찾아서 넣기
+                            let member = MemberDBModel()
+                            try dbClient.update(result.toDBModel(member))
                             print("sendedDM 저장성공")
                             await send(.saveSendedDM(result))
                         } catch {
@@ -156,9 +164,11 @@ struct DMChattingFeature {
                 return .none
                 
             case .saveSendedDM(let result):
+                return .none
+                /*
                 return .run { [state = state] send in
                     do {
-                        let dmUpdatedDBChats = try realmClient.fetchDMChats(
+                        let dmUpdatedDBChats = try dbClient.fetchDMChats(
                             state.dmsRoomResponse.id
                         )
                             .map { $0.toResponseModel().toChattingPresentModel()}
@@ -167,6 +177,7 @@ struct DMChattingFeature {
                         print("몰라..")
                     }
                 }
+                 */
 
             case .dmsChattingResponse(let dmUpdatedDBChats):
                 state.message = dmUpdatedDBChats

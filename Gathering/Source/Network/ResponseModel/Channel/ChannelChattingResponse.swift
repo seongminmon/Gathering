@@ -19,10 +19,20 @@ struct ChannelChattingResponse: Decodable {
 }
 
 extension ChannelChattingResponse {
-    func toChattingPresentModel() -> ChattingPresentModel {
+    func toDBModel(_ user: MemberDBModel) -> ChannelChattingDBModel {
+        return ChannelChattingDBModel(
+            chatID: self.chat_id,
+            content: self.content,
+            createdAt: self.createdAt,
+            files: self.files,
+            user: user
+        )
+    }
+    
+    func toPresentModel() -> ChattingPresentModel {
         return ChattingPresentModel(
             id: self.chat_id, 
-            user: self.user.toMember,
+            user: self.user.toPresentModel(),
             name: self.user.nickname,
             text: self.content,
             imageNames: self.files,

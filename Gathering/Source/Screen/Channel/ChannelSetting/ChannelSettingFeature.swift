@@ -20,7 +20,7 @@ struct ChannelSettingFeature {
         var currentChannel: ChannelResponse?
         
         var channelMembers: [Member] {
-            return currentChannel?.channelMembers?.map { $0.toMember } ?? []
+            return currentChannel?.channelMembers?.map { $0.toPresentModel() } ?? []
         }
         
         var isMemeberExpand = true

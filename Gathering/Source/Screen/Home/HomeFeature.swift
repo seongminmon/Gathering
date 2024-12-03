@@ -16,7 +16,7 @@ struct HomeFeature {
     @Dependency(\.userClient) var userClient
     @Dependency(\.channelClient) var channelClient
     @Dependency(\.dmsClient) var dmsClient
-    @Dependency(\.realmClient) var realmClient
+    @Dependency(\.dbClient) var dbClient
     
     @Reducer
     enum Path {
@@ -152,9 +152,9 @@ struct HomeFeature {
                 state.destination = .inviteMember(InviteMemberFeature.State())
                 return .none
             case .channelTap(let channel):
+                print("홈뷰 채널 탭", channel.id)
                 state.path.append(.channelChatting(ChannelChattingFeature.State(
-                    channelID: channel.id,
-                    workspaceID: state.currentWorkspace?.workspace_id ?? ""
+                    channelID: channel.id
                 )))
                 return .none
             case .dmTap(let dmRoom):
@@ -172,8 +172,7 @@ struct HomeFeature {
             case .destination(.presented(.channelExplore(.moveToChannelChattingView(let channel)))):
                 state.destination = nil
                 state.path.append(.channelChatting(ChannelChattingFeature.State(
-                    channelID: channel.id,
-                    workspaceID: state.currentWorkspace?.workspace_id ?? ""
+                    channelID: channel.id
                 )))
                 return .none
             case .destination(.dismiss):
@@ -266,7 +265,7 @@ struct HomeFeature {
         async let channels = channelClient.fetchMyChannelList(workspaceID)
         // DM 방 리스트 조회
         async let dmRooms = dmsClient.fetchDMSList(workspaceID)
-        return try await (channels.map { $0.toChannel }, dmRooms.map { $0.toDmsRoom })
+        return try await (channels.map { $0.toPresentModel() }, dmRooms.map { $0.toPresentModel() })
     }
     
     private func fetchChannelDetails(
