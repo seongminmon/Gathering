@@ -22,9 +22,9 @@ struct DBClient {
     
     // TODO: - 쓰레드 문제 생기면 @Sendable 붙이기
     // var create: @Sendable (Object) throws -> Void
-    var create: (Object) throws -> Void
+//    var create: (Object) throws -> Void
     var update: (Object) throws -> Void
-    var delete: (Object) throws -> Void
+//    var delete: (Object) throws -> Void
     
     var createChannelChatting: (String, ChannelChattingDBModel) throws -> Void
 //    var addChannelMember: (String, MemberDBModel) throws -> Void
@@ -41,6 +41,8 @@ struct DBClient {
     
     // 멤버 관련
     var fetchMember: (String) throws -> MemberDBModel?
+    
+    var removeAll: () throws -> Void
 }
 
 extension DBClient: DependencyKey {
@@ -49,24 +51,25 @@ extension DBClient: DependencyKey {
         printRealm: {
             print(Realm.Configuration.defaultConfiguration.fileURL ?? "realm 경로 없음")
         },
-        create: { object in
-            let realm = try Realm()
-            try realm.write {
-                realm.add(object)
-            }
-        },
+//        create: { object in
+//            let realm = try Realm()
+//            try realm.write {
+//                realm.add(object)
+//            }
+//        },
+        // MARK: - 일단 전부 update로 해보기
         update: { object in
             let realm = try Realm()
             try realm.write {
                 realm.add(object, update: .modified)
             }
         },
-        delete: { object in
-            let realm = try Realm()
-            try realm.write {
-                realm.delete(object)
-            }
-        },
+//        delete: { object in
+//            let realm = try Realm()
+//            try realm.write {
+//                realm.delete(object)
+//            }
+//        },
         createChannelChatting: { channelID, object in
             let realm = try Realm()
             guard let channel = realm.object(
@@ -79,6 +82,7 @@ extension DBClient: DependencyKey {
             try realm.write {
                 channel.chattings.append(object)
             }
+            
         },
         createDMChatting: { roomID, object in
             let realm = try Realm()
@@ -112,6 +116,12 @@ extension DBClient: DependencyKey {
         fetchMember: { userID in
             let realm = try Realm()
             return realm.object(ofType: MemberDBModel.self, forPrimaryKey: userID)
+        }, removeAll: {
+            print("DB 전체 삭제")
+            let realm = try Realm()
+            try realm.write {
+                realm.deleteAll()
+            }
         }
     )
 }

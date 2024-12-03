@@ -110,7 +110,7 @@ struct DMChattingFeature {
                             do {
                                 // MARK: - 멤버 잘 찾아서 넣기
                                 let member = MemberDBModel()
-                                try dbClient.create(result.toDBModel(member))
+                                try dbClient.update(result.toDBModel(member))
                                 print("sendedDM 저장성공")
                                 await send(.saveSendedDM(result))
                             } catch {
@@ -133,7 +133,7 @@ struct DMChattingFeature {
                         do {
                             // MARK: - 멤버 잘 찾아서 넣기
                             let member = MemberDBModel()
-                            try dbClient.create(result.toDBModel(member))
+                            try dbClient.update(result.toDBModel(member))
                             print("sendedDM 저장성공")
                             await send(.saveSendedDM(result))
                         } catch {

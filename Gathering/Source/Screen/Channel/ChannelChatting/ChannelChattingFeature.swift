@@ -12,6 +12,8 @@ import ComposableArchitecture
 @Reducer
 struct ChannelChattingFeature {
     
+    // TODO: - 진입 시 채널 DB 저장(or 갱신)하기
+    // TODO: - 채널 채팅 DB 저장
     @Dependency(\.channelClient) var channelClient
     @Dependency(\.dbClient) var dbClient
     
@@ -25,10 +27,12 @@ struct ChannelChattingFeature {
     struct State {
         @Presents var destination: Destination.State?
         
+        // 이전 화면에서 전달
         var channelID: String
-        var workspaceID: String
-        //TODO: 어떤 모델로 데이터 넘겨 받을지
+        
+        // 특정 채널 조회 결과값 (멤버 포함)
         var currentChannel: ChannelResponse?
+        
         var message: [ChattingPresentModel] = []
         
         var messageText = ""
@@ -71,7 +75,8 @@ struct ChannelChattingFeature {
                 return .none
            
             case .task:
-                return .run { [channelID = state.channelID, workspaceID = state.workspaceID] send in
+                return .run { [channelID = state.channelID] send in
+                    let workspaceID = UserDefaultsManager.workspaceID
                     do {
                         let channel = try await fetchChannel(
                             channelID: channelID,
@@ -90,14 +95,24 @@ struct ChannelChattingFeature {
                     }
                 }
             case .sendButtonTap:
-                //db
                 print("전송버튼 클릭")
                 state.messageText = ""
                 state.selectedImages = []
                 state.messageButtonValid = false
                 return .none
+                
             case .currentChannelResponse(let channel):
                 state.currentChannel = channel
+                // DB 저장
+                guard let channel else { return .none }
+                
+                let members: [MemberDBModel] = channel.channelMembers?.map { $0.toDBModel() } ?? []
+                let dbChannel = channel.toDBModel(members)
+                do {
+                    try dbClient.update(dbChannel)
+                } catch {
+                    print("DB 채널 저장 실패")
+                }
                 return .none
             case .channelChattingResponse(let chatting):
                 state.message = chatting
@@ -125,7 +140,6 @@ struct ChannelChattingFeature {
         workspaceID: String,
         cursorDate: String) async throws
     -> [ChattingPresentModel] {
-        
         async let chattingList = channelClient.fetchChattingList(
             channelID,
             workspaceID,

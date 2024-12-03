@@ -53,7 +53,7 @@ struct ExploreChannelFeature {
                     return .none
                 }
                 
-            case let .moveToChannelChattingView(channel):
+            case .moveToChannelChattingView:
                 // 홈 뷰에서 destination으로 처리
                 return .none
                 

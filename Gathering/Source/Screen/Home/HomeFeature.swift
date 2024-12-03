@@ -152,9 +152,9 @@ struct HomeFeature {
                 state.destination = .inviteMember(InviteMemberFeature.State())
                 return .none
             case .channelTap(let channel):
+                print("홈뷰 채널 탭", channel.id)
                 state.path.append(.channelChatting(ChannelChattingFeature.State(
-                    channelID: channel.id,
-                    workspaceID: state.currentWorkspace?.workspace_id ?? ""
+                    channelID: channel.id
                 )))
                 return .none
             case .dmTap(let dmRoom):
@@ -172,8 +172,7 @@ struct HomeFeature {
             case .destination(.presented(.channelExplore(.moveToChannelChattingView(let channel)))):
                 state.destination = nil
                 state.path.append(.channelChatting(ChannelChattingFeature.State(
-                    channelID: channel.id,
-                    workspaceID: state.currentWorkspace?.workspace_id ?? ""
+                    channelID: channel.id
                 )))
                 return .none
             case .destination(.dismiss):
