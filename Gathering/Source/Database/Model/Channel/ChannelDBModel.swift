@@ -29,5 +29,3 @@ class ChannelDBModel: Object {
         self.chattings = chattings
     }
 }
-
-

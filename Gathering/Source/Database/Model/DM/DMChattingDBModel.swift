@@ -14,7 +14,6 @@ class DMChattingDBModel: Object {
     @Persisted var roomID: String
     @Persisted var content: String?
     @Persisted var createdAt: String
-    // 파일매니저에 저장된 채팅에 있는 사진 수
     @Persisted var files: List<String>
     @Persisted var user: MemberDBModel?
     

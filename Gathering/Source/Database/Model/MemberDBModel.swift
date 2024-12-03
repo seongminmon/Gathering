@@ -10,12 +10,10 @@ import Foundation
 import RealmSwift
 
 class MemberDBModel: Object {
-//    @Persisted(primaryKey: true) var id: ObjectId
     @Persisted(primaryKey: true) var userID: String
     @Persisted var email: String
     @Persisted var nickname: String
     @Persisted var profileImage: String?
-    // 프로필 이미지 (파일매니저에 저장)
     
     convenience init(
         userID: String,
