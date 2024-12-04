@@ -131,7 +131,7 @@
 //    
 //    private func othersMessageView(message: ChattingPresentModel) -> some View {
 //        HStack(alignment: .top) {
-//            ProfileImageView(urlString: message.profile ?? "bird",
+//            LoadedImageView(urlString: message.profile ?? "bird",
 //                             size: 34)
 //            VStack(alignment: .leading) {
 //                Text(message.name)
@@ -300,7 +300,7 @@
 //            .frame(maxWidth: .infinity)
 //        } else {
 //            HStack(alignment: .top) {
-//                ProfileImageView(urlString: message.profile ?? "bird",
+//                LoadedImageView(urlString: message.profile ?? "bird",
 //                                 size: 34)
 //                VStack(alignment: .leading) {
 //                    Text(message.name)

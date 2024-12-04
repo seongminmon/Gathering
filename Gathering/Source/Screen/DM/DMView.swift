@@ -95,7 +95,7 @@ struct DMView: View {
             store.send(.userCellTap(user))
         } label: {
             VStack(spacing: 4) {
-                ProfileImageView(urlString: user.profileImage ?? "", size: 44)
+                LoadedImageView(urlString: user.profileImage ?? "", size: 44)
                 Text(user.nickname)
                     .font(Design.body)
                     .frame(width: 44)
@@ -114,7 +114,7 @@ struct DMView: View {
             store.send(.dmCellTap(dm))
         } label: {
             HStack(alignment: .top, spacing: 4) {
-                ProfileImageView(urlString: dm.user.profileImage ?? "", size: 34)
+                LoadedImageView(urlString: dm.user.profileImage ?? "", size: 34)
                 
                 // 닉네임, 최근 DM 내용
                 VStack(alignment: .leading, spacing: 4) {

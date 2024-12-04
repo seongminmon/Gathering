@@ -21,7 +21,7 @@ struct GatheringNavigationModifier: ViewModifier {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     HStack {
-                        ProfileImageView(urlString: gatheringImage, size: 32)
+                        LoadedImageView(urlString: gatheringImage, size: 32)
                         Text(title)
                             .font(Design.title1)
                     }
@@ -31,7 +31,7 @@ struct GatheringNavigationModifier: ViewModifier {
                         Button {
                             showProfile = true
                         } label: {
-                            ProfileImageView(
+                            LoadedImageView(
                                 urlString: profile.profileImage ?? "",
                                 size: 32
                             )

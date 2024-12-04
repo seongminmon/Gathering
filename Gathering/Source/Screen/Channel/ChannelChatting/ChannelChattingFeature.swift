@@ -99,21 +99,47 @@ struct ChannelChattingFeature {
                 state.messageText = ""
                 state.selectedImages = []
                 state.messageButtonValid = false
+                
                 return .none
                 
             case .currentChannelResponse(let channel):
                 state.currentChannel = channel
-                // DB 저장
-                guard let channel else { return .none }
+                
+                guard let channel else {
+                    print("채널 없음 ㅇㅅㅇ")
+                    return .none
+                }
                 
                 let members: [MemberDBModel] = channel.channelMembers?.map { $0.toDBModel() } ?? []
-                let dbChannel = channel.toDBModel(members)
+                
+                // DB에 ChannelID있는지 탐색
                 do {
-                    try dbClient.update(dbChannel)
+                    guard let dbChannel = try dbClient.fetchChannel(channel.channel_id) else {
+                        return .none
+                    }
+                    print(channel)
+                    // 있으면 DB 채팅 빼고 업데이트
+                    do {
+                        try dbClient.updateChannel(dbChannel, channel.name, members)
+                        print("DB 채널 업데이트 성공")
+                    } catch {
+                        print("DB 채널 업데이트 실패")
+                    }
                 } catch {
-                    print("DB 채널 저장 실패")
+                    // 없으면 DB 저장
+                    let dbChannel = channel.toDBModel(members)
+                    do {
+                        try dbClient.update(dbChannel)
+                        print("DB 채널 저장 성공")
+                    } catch {
+                        print("DB 채널 저장 실패")
+                    }
                 }
+                
+                // 채팅들 추가하기
+                
                 return .none
+                
             case .channelChattingResponse(let chatting):
                 state.message = chatting
                 return .none
