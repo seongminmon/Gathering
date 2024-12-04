@@ -83,6 +83,7 @@ struct ChannelChattingFeature {
                             workspaceID: workspaceID)
                         await send(.currentChannelResponse(channel))
                         
+                        
                         let message = try await fetchChannelChatting(
                             channelID: channelID,
                             workspaceID: workspaceID,
@@ -137,6 +138,32 @@ struct ChannelChattingFeature {
                 }
                 
                 // 채팅들 추가하기
+                // 디비에서 불러오기 -> 마지막 날짜 이후 채팅 불러오기 -> 불러온 채팅 디비에 저장하기 -> 전체채팅디비 다시불러오기
+                do {
+                    let dbChannel = try dbClient.fetchChannel(channel.channel_id)
+                    // 디비에서 불러오기
+                    let channelDbChats = Array(dbChannel.chattings)
+                    
+                    // 마지막 날짜 이후 채팅 불러오기
+                    let channelNewChats = try await fetchNewChannelChatting(
+                        channelID: channel.channel_id,
+                        workspaceID: UserDefaultsManager.workspaceID,
+                        cursorDate: String?
+                        ////////////s너무졸려너ㅜ졸려.......
+                    )
+                    
+                    // 불러온 채팅 디비에 저장하기
+                    channelNewchats.forEach { chat in
+                        do {
+                            try dbClient.createChannelChatting(channel.channel_id, )
+                        }
+                    }
+                    
+                    
+                } catch {
+                    print("DB 채널채팅 불러오기 실패")
+                }
+              
                 
                 return .none
                 
@@ -161,11 +188,11 @@ struct ChannelChattingFeature {
         return try await chennal
     }
     
-    private func fetchChannelChatting(
+    private func fetchNewChannelChatting(
         channelID: String,
         workspaceID: String,
-        cursorDate: String) async throws
-    -> [ChattingPresentModel] {
+        cursorDate: String?) async throws
+    -> [ChannelChattingResponse] {
         async let chattingList = channelClient.fetchChattingList(
             channelID,
             workspaceID,

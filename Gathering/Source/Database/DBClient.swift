@@ -35,6 +35,7 @@ struct DBClient {
     var updateChannel: (ChannelDBModel, String, [MemberDBModel]) throws -> Void
     var fetchChannel: (String) throws -> ChannelDBModel?
     var fetchAllChannel: () throws -> [ChannelDBModel]
+    var fetchChannelChatting: () throws -> [ChannelChattingDBModel]
     
     // DM 관련
     var fetchDMRoom: (String) throws -> DMRoomDBModel?
