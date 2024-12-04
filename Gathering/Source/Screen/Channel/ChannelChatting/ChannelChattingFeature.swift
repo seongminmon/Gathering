@@ -106,14 +106,10 @@ struct ChannelChattingFeature {
             case .currentChannelResponse(let channel):
                 state.currentChannel = channel
                 
-                guard let channel else {
-                    print("채널 없음 ㅇㅅㅇ")
-                    return .none
-                }
-                
+                guard let channel else { return .none }
                 let members: [MemberDBModel] = channel.channelMembers?.map { $0.toDBModel() } ?? []
                 
-                // DB에 ChannelID있는지 탐색
+                // DB에 채널 있는지 탐색
                 do {
                     guard let dbChannel = try dbClient.fetchChannel(channel.channel_id) else {
                         return .none
@@ -126,6 +122,7 @@ struct ChannelChattingFeature {
                     } catch {
                         print("DB 채널 업데이트 실패")
                     }
+                    
                 } catch {
                     // 없으면 DB 저장
                     let dbChannel = channel.toDBModel(members)
@@ -164,6 +161,10 @@ struct ChannelChattingFeature {
                     print("DB 채널채팅 불러오기 실패")
                 }
               
+                // TODO: - 채팅들 추가하기
+                // 기존 DB 있을 때 - 채팅 마지막 날짜 기준으로 api 불러오고 DB 추가
+                // 기존 DB 없을 때 - 빈날짜로 api 불러오고 DB 추가
+                // + 파일매니저
                 
                 return .none
                 

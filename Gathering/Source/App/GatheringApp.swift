@@ -9,15 +9,20 @@ import SwiftUI
 
 import ComposableArchitecture
 
-// MARK: - 버그 수정
-// ✅ TODO: - 채널 채팅 뷰 -> 채널 세팅 뷰 이동이 안 되는 문제
-// ✅ TODO: - 홈 뷰에 DMListView 안 뜨는 문제
-// ✅ TODO: - 멀티파트 통신 해결하기 -> 테스트는 DM 채팅(설정 탭)에서
+// TODO: -
+// 채널 채팅 로직
+// DM 채팅 로직
 
-// MARK: - 기능 추가
-// ✅ TODO: - 채널 탐색 뷰, 팀원 초대 뷰 네트워크 기능 연결
-// ✅ TODO: - 채널 세팅 뷰 기능 추가
-// TODO: - 채널 채팅, DM 채팅 뷰 로직 (포토 x자 누르면 삭제하기)
+// 소켓 통신 매니저
+
+// 홈 뷰 DB 관련 로직
+// DM 뷰 DB 관련 로직
+
+// 채팅 이미지 뷰 1~5개 표시
+// 채널 채팅, DM 채팅 뷰 로직 (포토 x자 누르면 삭제하기)
+
+// 채널 삭제, 채널 나가기 시 DB 삭제 >> 채널 세팅
+// 로그아웃 시 UserDefaults, DB, 파일매니저 싹 다 지우기
 
 @main
 struct GatheringApp: App {
