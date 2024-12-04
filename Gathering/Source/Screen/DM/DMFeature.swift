@@ -15,6 +15,8 @@ struct DMFeature {
     @Dependency(\.workspaceClient) var workspaceClient
     @Dependency(\.userClient) var userClient
     @Dependency(\.dmsClient) var dmsClient
+    
+    // Unread + 마지막 채팅 정보 보여줄 때 DB 정보 불러오기 필요
     @Dependency(\.dbClient) var dbClient
     
     @Reducer

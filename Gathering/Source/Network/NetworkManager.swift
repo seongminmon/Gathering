@@ -36,7 +36,7 @@ final class NetworkManager {
         return try handleResponse(data: data, api: api)
     }
     
-    /// 이미지 URL 통신 (메모리 캐시 적용)
+    /// 이미지 URL 통신 (캐시 적용)
     func requestImage(_ api: ImageRouter) async throws -> UIImage {
         let request = try api.asURLRequest()
         
