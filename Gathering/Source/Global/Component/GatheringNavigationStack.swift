@@ -35,7 +35,7 @@ struct GatheringNavigationStack<Content: View>: View {
                     .toolbar {
                         ToolbarItem(placement: .topBarLeading) {
                             HStack {
-                                ProfileImageView(urlString: gatheringImage, size: 32)
+                                LoadedImageView(urlString: gatheringImage, size: 32)
                                 Text(title)
                                     .font(Design.title1)
                             }
@@ -46,7 +46,7 @@ struct GatheringNavigationStack<Content: View>: View {
                                 Button {
                                     showProfile = true
                                 } label: {
-                                    ProfileImageView(
+                                    LoadedImageView(
                                         urlString: profile.profileImage ?? "",
                                         size: 32
                                     )
@@ -106,7 +106,7 @@ struct GatheringNavigationStack<Content: View>: View {
 //                    .toolbar {
 //                        ToolbarItem(placement: .topBarLeading) {
 //                            HStack {
-//                                ProfileImageView(urlString: store.gatheringImage, size: 32)
+//                                LoadedImageView(urlString: store.gatheringImage, size: 32)
 //                                Text(store.title)
 //                                    .font(Design.title1)
 //                            }
@@ -117,7 +117,7 @@ struct GatheringNavigationStack<Content: View>: View {
 //                                Button {
 //                                    store.send(.profileButtonTapped)
 //                                } label: {
-//                                    ProfileImageView(
+//                                    LoadedImageView(
 //                                        urlString: store.myProfile?.profileImage ?? "",
 //                                        size: 32
 //                                    )

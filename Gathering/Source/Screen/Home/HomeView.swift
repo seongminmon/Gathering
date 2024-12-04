@@ -120,7 +120,7 @@ extension HomeView {
             ForEach(store.dmRoomList, id: \.id) { dmRoom in
                 let unreadResponse = store.dmUnreads[dmRoom]
                 HStack {
-                    ProfileImageView(urlString: dmRoom.user.profileImage ?? "", size: 30)
+                    LoadedImageView(urlString: dmRoom.user.profileImage ?? "", size: 30)
                     
                     Button {
                         store.send(.dmTap(dmRoom))

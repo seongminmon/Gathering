@@ -109,7 +109,7 @@
 		843E7FF12CE349C90057A426 /* ContactDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E7FF02CE349C90057A426 /* ContactDetailView.swift */; };
 		847A3F812CD8FFEF004A9361 /* CounterFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F802CD8FFEF004A9361 /* CounterFeature.swift */; };
 		847A3F842CD9000F004A9361 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F832CD9000F004A9361 /* HomeView.swift */; };
-		847A3F882CD9C032004A9361 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F872CD9C032004A9361 /* ProfileImageView.swift */; };
+		847A3F882CD9C032004A9361 /* LoadedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F872CD9C032004A9361 /* LoadedImageView.swift */; };
 		847A3F8B2CD9EA54004A9361 /* TempModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F8A2CD9EA54004A9361 /* TempModel.swift */; };
 		847A3F902CDA440F004A9361 /* CustomDisclosureGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F8F2CDA440F004A9361 /* CustomDisclosureGroup.swift */; };
 		847A3F922CDA9FC0004A9361 /* GatheringNavigationStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F912CDA9FC0004A9361 /* GatheringNavigationStack.swift */; };
@@ -273,7 +273,7 @@
 		843E7FF02CE349C90057A426 /* ContactDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailView.swift; sourceTree = "<group>"; };
 		847A3F802CD8FFEF004A9361 /* CounterFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterFeature.swift; sourceTree = "<group>"; };
 		847A3F832CD9000F004A9361 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		847A3F872CD9C032004A9361 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
+		847A3F872CD9C032004A9361 /* LoadedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedImageView.swift; sourceTree = "<group>"; };
 		847A3F8A2CD9EA54004A9361 /* TempModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempModel.swift; sourceTree = "<group>"; };
 		847A3F8F2CDA440F004A9361 /* CustomDisclosureGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDisclosureGroup.swift; sourceTree = "<group>"; };
 		847A3F912CDA9FC0004A9361 /* GatheringNavigationStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatheringNavigationStack.swift; sourceTree = "<group>"; };
@@ -701,7 +701,7 @@
 		249FB0F62CECB44C00CA418B /* ImageView */ = {
 			isa = PBXGroup;
 			children = (
-				847A3F872CD9C032004A9361 /* ProfileImageView.swift */,
+				847A3F872CD9C032004A9361 /* LoadedImageView.swift */,
 				A0E444CB2CDE010D0024AE71 /* ChattingImageView.swift */,
 			);
 			path = ImageView;
@@ -1158,7 +1158,7 @@
 				24ABE95A2CDB86F3000E7EC5 /* Color+.swift in Sources */,
 				847A3F9F2CDB6AC4004A9361 /* ToolbarModifier.swift in Sources */,
 				24F7BFCA2CFC2C5200040C09 /* UINavigationController+.swift in Sources */,
-				847A3F882CD9C032004A9361 /* ProfileImageView.swift in Sources */,
+				847A3F882CD9C032004A9361 /* LoadedImageView.swift in Sources */,
 				2447AB7D2CE734ED00399C4D /* SignUpFeature.swift in Sources */,
 				843E7FD02CE221590057A426 /* AddContactFeature.swift in Sources */,
 				24ABE9882CDE172F000E7EC5 /* ChannelRequest.swift in Sources */,

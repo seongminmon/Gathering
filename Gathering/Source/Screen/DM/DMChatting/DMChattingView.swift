@@ -100,7 +100,7 @@ extension DMChattingView {
     
     private func othersMessageView(message: ChattingPresentModel) -> some View {
         HStack(alignment: .top) {
-            ProfileImageView(urlString: message.profile ?? "bird",
+            LoadedImageView(urlString: message.profile ?? "bird",
                              size: 34).wrapToButton {
                 store.send(.profileButtonTap(message.user))
             }

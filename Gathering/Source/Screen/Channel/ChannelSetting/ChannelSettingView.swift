@@ -103,7 +103,7 @@ struct ChannelSettingView: View {
         return LazyVGrid(columns: columns, spacing: 10) {
             ForEach(store.channelMembers, id: \.id) { member in
                 VStack(alignment: .center) {
-                    ProfileImageView(urlString: member.profileImage ?? "", size: 44)
+                    LoadedImageView(urlString: member.profileImage ?? "", size: 44)
                     
                     Text(member.nickname)
                         .font(Design.body)
@@ -217,7 +217,7 @@ struct ChannelSettingView: View {
                             store.send(.changeAdminCellTap(member))
                         } label: {
                             HStack(spacing: 8) {
-                                ProfileImageView(urlString: member.profileImage ?? "", size: 44)
+                                LoadedImageView(urlString: member.profileImage ?? "", size: 44)
                                 VStack(alignment: .leading) {
                                     Text(member.nickname)
                                         .font(Design.bodyBold)

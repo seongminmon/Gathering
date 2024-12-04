@@ -44,12 +44,19 @@ final class NetworkManager {
             throw APIError.etc
         }
         
-        // 캐시 확인
+        // 1. 메모리 캐시 확인
         if let cachedImage = ImageCache.shared.object(forKey: url as NSURL) {
-            print("이미지 캐시 히트 성공")
+            print("이미지 메모리 캐시 히트 성공")
             return cachedImage
         }
         
+        // 2. 디스크 캐시 확인
+        if let cachedImage = ImageFileManager.shared.loadImageFile(filename: api.path) {
+            print("이미지 디스크 캐시 히트 성공")
+            return cachedImage
+        }
+        
+        // 3. 네트워크 통신
         guard let data = try await performRequest(api: api) else {
             throw APIError.etc
         }

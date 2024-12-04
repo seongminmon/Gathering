@@ -1,5 +1,5 @@
 //
-//  ProfileImageView.swift
+//  LoadedImageView.swift
 //  Gathering
 //
 //  Created by dopamint on 11/5/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ProfileImageView: View {
+struct LoadedImageView: View {
     var urlString: String
     var size: CGFloat
     
@@ -15,9 +15,7 @@ struct ProfileImageView: View {
     
     var body: some View {
         imageView()
-            // TODO: - 파일 매니저 먼저 찾고, 없으면 네트워크 통신하기
             .onChange(of: urlString) { newValue in
-                // URL이 변경될 때마다 이미지를 새로 로드
                 Task {
                     do {
                         let result = try await NetworkManager.shared.requestImage(

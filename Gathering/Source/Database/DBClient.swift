@@ -102,8 +102,6 @@ extension DBClient: DependencyKey {
             let realm = try Realm()
             try realm.write {
                 channel.channelName = channelName
-                //                channel.members.removeAll() // 기존 멤버 제거
-                //                channel.members.append(objectsIn: members) // 새로운 멤버 추가
                 
                 for newMember in members {
                     // 멤버를 Realm에 추가 (존재하면 업데이트, 없으면 추가)

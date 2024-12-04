@@ -200,7 +200,7 @@ struct ChannelChattingView: View {
     
     private func othersMessageView(message: ChattingPresentModel) -> some View {
         HStack(alignment: .top) {
-            ProfileImageView(urlString: message.profile ?? "bird", size: 34)
+            LoadedImageView(urlString: message.profile ?? "bird", size: 34)
             VStack(alignment: .leading) {
                 Text(message.name)
                     .font(Design.caption)
