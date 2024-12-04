@@ -16,6 +16,8 @@ struct HomeFeature {
     @Dependency(\.userClient) var userClient
     @Dependency(\.channelClient) var channelClient
     @Dependency(\.dmsClient) var dmsClient
+    
+    // Unread할 때 DB 정보 불러오기 필요
     @Dependency(\.dbClient) var dbClient
     
     @Reducer
