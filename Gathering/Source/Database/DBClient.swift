@@ -121,7 +121,10 @@ extension DBClient: DependencyKey {
             try realm.write {
                 channel.channelName = channelName
                 for newMember in members {
-                    if let existingMember = realm.object(ofType: MemberDBModel.self, forPrimaryKey: newMember.userID) {
+                    if let existingMember = realm.object(
+                        ofType: MemberDBModel.self,
+                        forPrimaryKey: newMember.userID
+                    ) {
                         // 이미 존재하면 필요한 필드만 업데이트
                         existingMember.nickname = newMember.nickname
                         existingMember.profileImage = newMember.profileImage

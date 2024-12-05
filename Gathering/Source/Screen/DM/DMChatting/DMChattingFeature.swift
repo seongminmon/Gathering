@@ -109,6 +109,7 @@ struct DMChattingFeature {
                             )
                             do {
                                 // MARK: - 멤버 잘 찾아서 넣기
+                                
                                 let member = MemberDBModel()
                                 try dbClient.update(result.toDBModel(member))
                                 print("sendedDM 저장성공")
