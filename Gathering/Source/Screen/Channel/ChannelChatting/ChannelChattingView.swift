@@ -152,7 +152,7 @@ struct ChannelChattingView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 8))
             
             Button {
-                print("클릭클릭")
+                store.send(.imageDeleteButtonTap(image))
             } label: {
                 Image(systemName: "xmark.circle")
                     .resizable()
@@ -163,7 +163,7 @@ struct ChannelChattingView: View {
                             .size(width: 20, height: 20)
                             .foregroundColor(Design.white)
                     )
-                    .offset(x: 22, y: -22)
+                    .offset(x: 20, y: -20)
             }
         }
     }
@@ -175,8 +175,8 @@ struct ChannelChattingView: View {
                 Text(message.date.toString(.todayChat))
                     .font(Design.caption2)
                     .foregroundStyle(Design.darkGray)
-                VStack(alignment: .leading) {
-                    if let text = message.text {
+                VStack(alignment: .trailing) {
+                    if let text = message.text, !text.isEmpty {
                         Text(text)
                             .font(Font.body)
                             .padding(8)
@@ -188,9 +188,9 @@ struct ChannelChattingView: View {
                                 RoundedRectangle(cornerRadius: 12)
                                     .stroke(Design.gray, lineWidth: 1)
                             )
-                        if !message.imageNames.isEmpty {
-                            ChattingImageView(imageNames: message.imageNames)
-                        }
+                    }
+                    if !message.imageNames.isEmpty {
+                        ChattingImageView(imageNames: message.imageNames)
                     }
                 }
             }
@@ -201,12 +201,15 @@ struct ChannelChattingView: View {
     private func othersMessageView(message: ChattingPresentModel) -> some View {
         HStack(alignment: .top) {
             LoadedImageView(urlString: message.profile ?? "bird", size: 34)
+                .wrapToButton {
+                    store.send(.profileButtonTap(message.user))
+                }
             VStack(alignment: .leading) {
                 Text(message.name)
                     .font(Design.caption)
                 HStack(alignment: .bottom) {
                     VStack(alignment: .leading) {
-                        if let text = message.text {
+                        if let text = message.text, !text.isEmpty {
                             Text(text)
                                 .font(Font.body)
                                 .padding(8)
@@ -219,6 +222,10 @@ struct ChannelChattingView: View {
                                         .stroke(Design.gray, lineWidth: 1)
                                 )
                         }
+                        if !message.imageNames.isEmpty {
+                            ChattingImageView(imageNames: message.imageNames)
+                        }
+
                     }
                     Text(message.date.toString(.todayChat))
                         .font(Design.caption2)

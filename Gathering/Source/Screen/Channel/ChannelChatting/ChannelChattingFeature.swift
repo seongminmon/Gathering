@@ -49,6 +49,8 @@ struct ChannelChattingFeature {
         
         case sendButtonTap
         case settingButtonTap(ChannelResponse?)
+        case imageDeleteButtonTap(UIImage)
+        case profileButtonTap(Member)
         
         case task
         case currentChannelResponse(ChannelResponse?)
@@ -74,6 +76,17 @@ struct ChannelChattingFeature {
                 
             case .settingButtonTap:
                 // 홈뷰에서 path 처리
+                return .none
+                
+            case .profileButtonTap(let user):
+                return .none
+                
+            case .imageDeleteButtonTap(let image):
+                guard let index = state.selectedImages?.firstIndex(of: image) else {
+                    return .none
+                }
+                let newImages = state.selectedImages?.remove(at: index)
+                print(state.selectedImages)
                 return .none
                 
             case .task:
@@ -292,6 +305,10 @@ struct ChannelChattingFeature {
                 
             case .savedDBChattingResponse(let messages):
                 state.message = messages
+                return .none
+           
+                
+            default:
                 return .none
             }
         }
