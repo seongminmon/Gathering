@@ -27,6 +27,8 @@ struct ChannelChattingFeature {
     struct State {
         @Presents var destination: Destination.State?
         
+        var socket: SocketIOManager<ChannelChattingResponse>?
+        
         // 이전 화면에서 전달
         var channelID: String
         
@@ -75,6 +77,15 @@ struct ChannelChattingFeature {
                 return .none
            
             case .task:
+                // 소켓 연결 테스트
+                state.socket = SocketIOManager(
+                    id: state.channelID,
+                    socketInfo: .channel
+                ) { data in
+                    print("채팅 방 소켓 연결", data)
+                }
+                state.socket?.connect()
+                
                 return .run { [channelID = state.channelID] send in
                     let workspaceID = UserDefaultsManager.workspaceID
                     do {
