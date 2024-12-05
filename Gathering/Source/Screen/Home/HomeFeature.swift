@@ -108,6 +108,15 @@ struct HomeFeature {
                 )))
                 return .none
                 
+            case .path(.element(id: _, action: .channelChatting(.profileButtonTap(let user)))):
+                state.path.append(.profile(ProfileFeature.State(
+                    profileType: .otherUser,
+                    nickname: user.nickname,
+                    email: user.email,
+                    profileImage: user.profileImage ?? "bird"
+                )))
+                return .none
+                
             case .path(.element(id: _, action: .channelSetting(.memberCellTap(let user)))):
                 state.path.append(.profile(ProfileFeature.State(
                     profileType: .otherUser,

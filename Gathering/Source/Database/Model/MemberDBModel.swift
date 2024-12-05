@@ -28,3 +28,14 @@ class MemberDBModel: Object {
         self.profileImage = profileImage
     }
 }
+
+extension MemberDBModel {
+    func toPresentModel() -> Member {
+        return Member(
+            id: self.userID,
+            email: self.email,
+            nickname: self.nickname,
+            profileImage: self.profileImage
+        )
+    }
+}
