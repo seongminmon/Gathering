@@ -8,4 +8,18 @@
 import Foundation
 
 import ComposableArchitecture
-import SocketIO
+
+struct SocketClient {
+    //
+}
+
+extension SocketClient: DependencyKey {
+    static let liveValue = SocketClient()
+}
+
+extension DependencyValues {
+    var socketClient: SocketClient {
+        get { self[SocketClient.self] }
+        set { self[SocketClient.self] = newValue }
+    }
+}

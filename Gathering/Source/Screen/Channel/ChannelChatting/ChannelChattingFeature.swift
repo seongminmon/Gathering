@@ -27,10 +27,10 @@ struct ChannelChattingFeature {
     struct State {
         @Presents var destination: Destination.State?
         
-        var socket: SocketIOManager<ChannelChattingResponse>?
-        
         // 이전 화면에서 전달
         var channelID: String
+        
+        var socket: SocketIOManager<ChannelChattingResponse>?
         
         // 특정 채널 조회 결과값 (멤버 포함)
         var currentChannel: ChannelResponse?
@@ -75,16 +75,20 @@ struct ChannelChattingFeature {
             case .settingButtonTap:
                 // 홈뷰에서 path 처리
                 return .none
-           
+                
             case .task:
-                // 소켓 연결 테스트
+                // MARK: - 소켓 테스트
                 state.socket = SocketIOManager(
                     id: state.channelID,
                     socketInfo: .channel
-                ) { data in
-                    print("채팅 방 소켓 연결", data)
+                ) { result in
+                    switch result {
+                    case .success(let data):
+                        print("소켓 Data", data)
+                    case .failure(let error):
+                        print(error)
+                    }
                 }
-                state.socket?.connect()
                 
                 return .run { [channelID = state.channelID] send in
                     let workspaceID = UserDefaultsManager.workspaceID

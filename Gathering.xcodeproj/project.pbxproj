@@ -894,7 +894,6 @@
 			children = (
 				24ABE93F2CD4B6D1000E7EC5 /* APIAuth.swift */,
 				24ABE96D2CDCE2A3000E7EC5 /* NetworkManager.swift */,
-				24F7BFDB2D0054FE00040C09 /* Socket */,
 				847A3F9A2CDAFF04004A9361 /* Header.swift */,
 				847A3F962CDAFB19004A9361 /* TargetType.swift */,
 				249FB0E52CECAD0A00CA418B /* Error */,
@@ -902,6 +901,7 @@
 				249FB0D42CECA98500CA418B /* ResponseModel */,
 				24ABE9742CDCEFB4000E7EC5 /* Router */,
 				2447AB542CE1D0D400399C4D /* Client */,
+				24F7BFDB2D0054FE00040C09 /* Socket */,
 			);
 			path = Network;
 			sourceTree = "<group>";

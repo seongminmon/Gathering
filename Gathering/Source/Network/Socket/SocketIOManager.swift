@@ -10,31 +10,47 @@ import Combine
 
 import SocketIO
 
-enum SocketInfo {
+enum SocketInfo<ModelType: Decodable>: String {
     case channel
     case dm
+    
+    var namespace: String {
+        switch self {
+        case .channel: 
+            return "/ws-channel"
+        case .dm: 
+            return "/ws-dm"
+        }
+    }
 }
 
-final class SocketIOManager<Model: Decodable> {
+final class SocketIOManager<ModelType: Decodable> {
     
     private var id: String
-    private var socketInfo: SocketInfo
+    private var socketInfo: SocketInfo<ModelType>
     private var socketManager: SocketManager?
     private var socket: SocketIOClient?
     
-    init(id: String, socketInfo: SocketInfo, completionHandler: @escaping (Model) -> Void) {
+    init(
+        id: String,
+        socketInfo: SocketInfo<ModelType>,
+        completionHandler: @escaping (Result<ModelType, Error>) -> Void
+    ) {
         self.id = id
         self.socketInfo = socketInfo
         
-        createSocket()
-        setSocket(completionHandler)
+        configureSocket()
+        configureConnectionEvents()
+        configureSocketEvents(completionHandler)
+        connect()
     }
     
     deinit {
         print("소켓 매니저 Deinit")
+        disconnect()
     }
     
-    private func createSocket() {
+    private func configureSocket() {
         guard let baseURL = URL(string: String(APIAuth.baseURL.dropLast())) else {
             print("baseURL 없음")
             return
@@ -44,98 +60,61 @@ final class SocketIOManager<Model: Decodable> {
             socketURL: baseURL,
             config: [.log(true), .compress]
         )
+        socket = socketManager?.socket(forNamespace: "\(socketInfo.namespace)-\(id)")
+    }
+    
+    private func configureConnectionEvents() {
+        guard let socket = socket else { return }
         
-        socket = switch socketInfo {
-        case .channel:
-            socketManager?.socket(forNamespace: "/ws-channel-\(id)")
-        case .dm:
-            socketManager?.socket(forNamespace: "/ws-dm-\(id)")
+        socket.on(clientEvent: .connect) { _, _ in
+            print("소켓 연결 감지")
+        }
+        
+        socket.on(clientEvent: .disconnect) { _, _ in
+            print("소켓 연결 해제 감지")
+        }
+        
+        socket.on(clientEvent: .reconnect) { _, _ in
+            print("소켓 재연결 감지")
         }
     }
     
-    private func setSocket<T: Decodable>(_ completionHandler: @escaping (T) -> Void) {
-        switch socketInfo {
-        case .channel:
-            // 소켓 연결 메서드
-            socket?.on(clientEvent: .connect) { data, ack in
-                print("채널 소켓 연결", data, ack)
+    private func configureSocketEvents(
+        _ completionHandler: @escaping (Result<ModelType, Error>) -> Void
+    ) {
+        guard let socket = socket else { return }
+        
+        socket.on(socketInfo.rawValue) { dataArray, _ in
+            print("소켓 데이터 이벤트 감지")
+            
+            guard let data = dataArray.first else {
+                print("소켓 데이터 없음")
+                return
             }
             
-            // 소켓이 연결된 이후에는 “channel” Event 를 통해 채팅을 수신
-            socket?.on("channel") { dataArray, ack in
-                print("채널 소켓 데이터 전달", dataArray, ack)
-                do {
-                    let data = dataArray[0]
-                    let jsonData = try JSONSerialization.data(withJSONObject: data)
-                    let decodedData = try JSONDecoder().decode(
-                        T.self,
-                        from: jsonData
-                    )
-                    print("디코딩된 데이터", decodedData)
-                    completionHandler(decodedData)
-                } catch {
-                    print("채널 데이터 변환 실패", error)
-                }
-            }
-            
-            // 소켓 해제 메서드
-            socket?.on(clientEvent: .disconnect) { data, ack in
-                print("채널 소켓 연결 해제", data, ack)
-            }
-            
-            // 소켓 재연결 메서드
-            socket?.on(clientEvent: .reconnect) { data, ack in
-                print("채널 소켓 재연결", data, ack)
-            }
-        case .dm:
-            // 소켓 연결 메서드
-            socket?.on(clientEvent: .connect) { data, ack in
-                print("DM 소켓 연결", data, ack)
-            }
-            
-            // 소켓이 연결된 이후에는 “dm” Event 를 통해 채팅을 수신
-            socket?.on("dm") { dataArray, ack in
-                print("DM 소켓 데이터 전달", dataArray, ack)
-                do {
-                    let data = dataArray[0]
-                    let jsonData = try JSONSerialization.data(withJSONObject: data)
-                    let decodedData = try JSONDecoder().decode(T.self, from: jsonData)
-                    print("디코딩된 데이터", decodedData)
-                    completionHandler(decodedData)
-                } catch {
-                    print("DM 데이터 변환 실패", error)
-                }
-            }
-            
-            // 소켓 해제 메서드
-            socket?.on(clientEvent: .disconnect) { data, ack in
-                print("DM 소켓 연결 해제", data, ack)
-            }
-            
-            // 소켓 재연결 메서드
-            socket?.on(clientEvent: .reconnect) { data, ack in
-                print("DM 소켓 재연결", data, ack)
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: data)
+                let decodedData = try JSONDecoder().decode(ModelType.self, from: jsonData)
+                completionHandler(.success(decodedData))
+            } catch {
+                print("소켓 데이터 디코딩 실패")
+                completionHandler(.failure(error))
             }
         }
     }
     
-    func connect() {
-        print("소켓 연결", socket == nil)
+    private func connect() {
+        print("소켓 연결")
         socket?.connect()
     }
     
-    func disconnect() {
+    private func disconnect() {
         print("소켓 연결 끊기")
         socket?.disconnect()
         socket?.off(clientEvent: .connect)
         socket?.off(clientEvent: .disconnect)
         socket?.off(clientEvent: .reconnect)
-        switch socketInfo {
-        case .channel:
-            socket?.off("channel")
-        case .dm:
-            socket?.off("dm")
-        }
+        socket?.off(socketInfo.rawValue)
         socket = nil
         socketManager = nil
     }
