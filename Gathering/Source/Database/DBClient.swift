@@ -85,6 +85,10 @@ extension DBClient: DependencyKey {
             if let user = object.user {
                 if let existingUser = realm.object(ofType: MemberDBModel.self, forPrimaryKey: user.userID) {
                     // 이미 저장된 `MemberDBModel` 객체를 사용
+                    try realm.write {
+                        existingUser.profileImage = user.profileImage
+                        existingUser.nickname = user.nickname
+                    }
                     object.user = existingUser
                 } else {
                     // 새로운 유저를 저장
@@ -93,15 +97,10 @@ extension DBClient: DependencyKey {
                     }
                 }
             }
-            
             // 채팅 추가
             try realm.write {
                 channel.chattings.append(object)
             }
-            //            try realm.write {
-            //                channel.chattings.append(object)
-            //            }
-            
         },
         createDMChatting: { roomID, object in
             let realm = try Realm()
@@ -112,10 +111,25 @@ extension DBClient: DependencyKey {
                 print("DM룸을 찾을 수 없습니다.")
                 return
             }
+            // `object.user`가 중복되는지 확인하고 처리
+            if let user = object.user {
+                if let existingUser = realm.object(ofType: MemberDBModel.self, forPrimaryKey: user.userID) {
+                    // 이미 저장된 `MemberDBModel` 객체를 사용
+                    existingUser.profileImage = user.profileImage
+                    existingUser.nickname = user.nickname
+                    realm.add(existingUser, update: .modified)
+                    object.user = existingUser
+                } else {
+                    // 새로운 유저를 저장
+                    try realm.write {
+                        realm.add(user)
+                    }
+                }
+            }
+            // 채팅 추가
             try realm.write {
                 dmRoom.chattings.append(object)
-            }
-        },
+            }        },
         updateChannel: { channel, channelName, members in
             let realm = try Realm()
             try realm.write {
@@ -138,26 +152,6 @@ extension DBClient: DependencyKey {
                         channel.members.append(newMember)
                     }
                 }
-                
-                //                for newMember in members {
-                //                    //기존 방법
-                ////                    // 멤버를 Realm에 추가 (존재하면 업데이트, 없으면 추가)
-                ////                    realm.add(newMember, update: .modified)
-                ////                    
-                ////                    // 채널 멤버 리스트에 추가 (중복 방지)
-                ////                    if !channel.members.contains(where: { $0.userID == newMember.userID }) {
-                ////                        channel.members.append(newMember)
-                ////                    }
-                //                    // 2안)
-                //                    // 새로운 쓰레드 로컬 객체로 변환
-                //                            let newMemberLocal = MemberDBModel(value: newMember)
-                //                            
-                //                            if !channel.members.contains(where: { $0.userID == newMemberLocal.userID }) {
-                //                                channel.members.append(newMemberLocal)
-                //                            }
-                //                            
-                //                            realm.add(newMemberLocal, update: .modified)
-                //                }
             }
         },
         fetchChannel: { channelID in

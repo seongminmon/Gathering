@@ -33,7 +33,6 @@ struct ChannelChattingView: View {
         .navigationBarBackButtonHidden()
         .task { store.send(.task) }
         .onTapGesture {
-            // 화면을 탭할 때 키보드 내리기
             hideKeyboard()
         }
         .onDisappear {
@@ -50,6 +49,14 @@ struct ChannelChattingView: View {
             }
         )
     }
+
+    private func scrollToBottom(proxy: ScrollViewProxy) {
+        withAnimation {
+            proxy.scrollTo(store.scrollViewID, anchor: .bottom)
+        }
+    }
+}
+extension ChannelChattingView {
     
     private var chatListView: some View {
         ScrollViewReader { proxy in
@@ -68,27 +75,91 @@ struct ChannelChattingView: View {
             }
             .frame(maxWidth: .infinity)
             .onAppear {
-                proxy
-                    .scrollTo(store.scrollViewID, anchor: .bottom)
-                // TODO: 이걸로 바꿀 수 있을까요?
-//                scrollToBottom(proxy: proxy)
+//                proxy
+//                    .scrollTo(store.scrollViewID, anchor: .bottom)
+                scrollToBottom(proxy: proxy)
             }
             // 메시지 추가 시 자동 스크롤
             .onChange(of: store.message.count) { _ in
-                withAnimation {
-                    proxy.scrollTo(store.scrollViewID, anchor: .bottom)
-                }
-//                scrollToBottom(proxy: proxy)
+//                withAnimation {
+//                    proxy.scrollTo(store.scrollViewID, anchor: .bottom)
+//                }
+                scrollToBottom(proxy: proxy)
             }
         }
     }
-    
-    private func scrollToBottom(proxy: ScrollViewProxy) {
-        withAnimation {
-            proxy.scrollTo(store.scrollViewID, anchor: .bottom)
+    private func myMessageView(message: ChattingPresentModel) -> some View {
+        VStack(alignment: .trailing) {
+            HStack(alignment: .bottom) {
+                Spacer()
+                Text(message.date.toString(.todayChat))
+                    .font(Design.caption2)
+                    .foregroundStyle(Design.darkGray)
+                VStack(alignment: .trailing) {
+                    if let text = message.text, !text.isEmpty {
+                        Text(text)
+                            .font(Font.body)
+                            .padding(8)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Design.white)
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(Design.gray, lineWidth: 1)
+                            )
+                    }
+                    if !message.imageNames.isEmpty {
+                        ChattingImageView(imageNames: message.imageNames)
+                    }
+                }
+            }
         }
+        .frame(maxWidth: .infinity)
     }
     
+    private func othersMessageView(message: ChattingPresentModel) -> some View {
+        HStack(alignment: .top) {
+            LoadedImageView(urlString: message.profile ?? "bird", size: 34)
+                .wrapToButton {
+                    store.send(.profileButtonTap(message.user))
+                }
+            VStack(alignment: .leading) {
+                Text(message.name)
+                    .font(Design.caption)
+                HStack(alignment: .bottom) {
+                    VStack(alignment: .leading) {
+                        if let text = message.text, !text.isEmpty {
+                            Text(text)
+                                .font(Font.body)
+                                .padding(8)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(Design.white)
+                                )
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(Design.gray, lineWidth: 1)
+                                )
+                        }
+                        if !message.imageNames.isEmpty {
+                            ChattingImageView(imageNames: message.imageNames)
+                        }
+
+                    }
+                    Text(message.date.toString(.todayChat))
+                        .font(Design.caption2)
+                        .foregroundStyle(Design.darkGray)
+                    Spacer()
+                }
+            }
+            .frame(maxWidth: .infinity)
+        }
+        .padding(.bottom, 5)
+    }
+}
+
+extension ChannelChattingView {
     private var messageInputView: some View {
         HStack {
             HStack(alignment: .bottom) {
@@ -167,74 +238,5 @@ struct ChannelChattingView: View {
             }
         }
     }
-    
-    private func myMessageView(message: ChattingPresentModel) -> some View {
-        VStack(alignment: .trailing) {
-            HStack(alignment: .bottom) {
-                Spacer()
-                Text(message.date.toString(.todayChat))
-                    .font(Design.caption2)
-                    .foregroundStyle(Design.darkGray)
-                VStack(alignment: .trailing) {
-                    if let text = message.text, !text.isEmpty {
-                        Text(text)
-                            .font(Font.body)
-                            .padding(8)
-                            .background(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(Design.white)
-                            )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .stroke(Design.gray, lineWidth: 1)
-                            )
-                    }
-                    if !message.imageNames.isEmpty {
-                        ChattingImageView(imageNames: message.imageNames)
-                    }
-                }
-            }
-        }
-        .frame(maxWidth: .infinity)
-    }
-    
-    private func othersMessageView(message: ChattingPresentModel) -> some View {
-        HStack(alignment: .top) {
-            LoadedImageView(urlString: message.profile ?? "bird", size: 34)
-                .wrapToButton {
-                    store.send(.profileButtonTap(message.user))
-                }
-            VStack(alignment: .leading) {
-                Text(message.name)
-                    .font(Design.caption)
-                HStack(alignment: .bottom) {
-                    VStack(alignment: .leading) {
-                        if let text = message.text, !text.isEmpty {
-                            Text(text)
-                                .font(Font.body)
-                                .padding(8)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .fill(Design.white)
-                                )
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .stroke(Design.gray, lineWidth: 1)
-                                )
-                        }
-                        if !message.imageNames.isEmpty {
-                            ChattingImageView(imageNames: message.imageNames)
-                        }
 
-                    }
-                    Text(message.date.toString(.todayChat))
-                        .font(Design.caption2)
-                        .foregroundStyle(Design.darkGray)
-                    Spacer()
-                }
-            }
-            .frame(maxWidth: .infinity)
-        }
-        .padding(.bottom, 5)
-    }
 }

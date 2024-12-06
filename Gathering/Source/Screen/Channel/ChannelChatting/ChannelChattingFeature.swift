@@ -47,12 +47,12 @@ struct ChannelChattingFeature {
         case destination(PresentationAction<Destination.Action>)
         case binding(BindingAction<State>)
         
+        case task
         case sendButtonTap
         case settingButtonTap(ChannelResponse?)
         case imageDeleteButtonTap(UIImage)
         case profileButtonTap(Member)
         
-        case task
         case currentChannelResponse(ChannelResponse?)
         case channelChattingResponse([ChattingPresentModel])
         case fetchDBChatting(ChannelResponse?)
@@ -218,7 +218,7 @@ struct ChannelChattingFeature {
                     
                     // DB에 채널 있는지 탐색
                     do {
-                        if let dbChannel = try dbClient.fetchChannel(channel.channel_id){
+                        if let dbChannel = try dbClient.fetchChannel(channel.channel_id) {
                             do {
                                 try dbClient.updateChannel(dbChannel, channel.name, members)
                                 print("DB 채널 업데이트 성공")

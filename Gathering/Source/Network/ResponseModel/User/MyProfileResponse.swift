@@ -28,3 +28,14 @@ struct MyProfileResponse: Decodable {
         case createdAt
     }
 }
+
+extension MyProfileResponse {
+    func toDBModel() -> MemberDBModel {
+        return MemberDBModel(
+            userID: self.userID,
+            email: self.email,
+            nickname: self.nickname,
+            profileImage: self.profileImage
+        )
+    }
+}
