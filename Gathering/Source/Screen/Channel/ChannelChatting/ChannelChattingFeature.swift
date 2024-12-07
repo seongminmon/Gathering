@@ -16,6 +16,7 @@ struct ChannelChattingFeature {
     // TODO: - 채널 채팅 DB 저장
     @Dependency(\.channelClient) var channelClient
     @Dependency(\.dbClient) var dbClient
+    @Dependency(\.dismiss) var dismiss
     
     @Reducer
     enum Destination {
@@ -29,6 +30,8 @@ struct ChannelChattingFeature {
         
         // 이전 화면에서 전달
         var channelID: String
+        
+        var socket: SocketIOManager<ChannelChattingResponse>?
         
         // 특정 채널 조회 결과값 (멤버 포함)
         var currentChannel: ChannelResponse?
@@ -46,13 +49,14 @@ struct ChannelChattingFeature {
     enum Action: BindableAction {
         case destination(PresentationAction<Destination.Action>)
         case binding(BindingAction<State>)
-        
-        case task
+  
         case sendButtonTap
         case settingButtonTap(ChannelResponse?)
         case imageDeleteButtonTap(UIImage)
         case profileButtonTap(Member)
+        case backButtonTap
         
+        case task
         case currentChannelResponse(ChannelResponse?)
         case channelChattingResponse([ChattingPresentModel])
         case fetchDBChatting(ChannelResponse?)
@@ -90,6 +94,19 @@ struct ChannelChattingFeature {
                 return .none
                 
             case .task:
+                // MARK: - 소켓 테스트
+                state.socket = SocketIOManager(
+                    id: state.channelID,
+                    socketInfo: .channel
+                ) { result in
+                    switch result {
+                    case .success(let data):
+                        print("소켓 Data", data)
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
+                
                 return .run { [channelID = state.channelID] send in
                     let workspaceID = UserDefaultsManager.workspaceID
                     do {
@@ -104,6 +121,19 @@ struct ChannelChattingFeature {
                         print("채팅 패치 실패")
                     }
                 }
+                
+                // TODO: - 네비게이션 백 제스처 때도 소켓 Deinit 하도록 만들기
+            case .backButtonTap:
+                state.socket = nil
+                return .run { send in
+                    await dismiss()
+                }
+                
+//            case .onDisappear:
+//                print("채널 채팅 리듀서 - onDisappear")
+//                state.socket = nil
+//                return .none
+                
             case .sendButtonTap:
                 return .run { [state = state] send in
                     do {
@@ -322,17 +352,4 @@ struct ChannelChattingFeature {
         async let chennal = channelClient.fetchChannel(channelID, workspaceID)
         return try await chennal
     }
-    
-    //    private func fetchNewChannelChatting(
-    //        channelID: String,
-    //        workspaceID: String,
-    //        cursorDate: String?) async throws
-    //    -> [ChannelChattingResponse] {
-    //        async let chattingList = channelClient.fetchChattingList(
-    //            channelID,
-    //            workspaceID,
-    //            cursorDate ?? ""
-    //        )
-    //        return try await chattingList
-    //    }
 }

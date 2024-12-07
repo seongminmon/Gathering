@@ -46,13 +46,11 @@ final class NetworkManager {
         
         // 1. 메모리 캐시 확인
         if let cachedImage = ImageCache.shared.object(forKey: url as NSURL) {
-            print("이미지 메모리 캐시 히트 성공")
             return cachedImage
         }
         
         // 2. 디스크 캐시 확인
         if let cachedImage = ImageFileManager.shared.loadImageFile(filename: api.path) {
-            print("이미지 디스크 캐시 히트 성공")
             return cachedImage
         }
         
@@ -117,7 +115,8 @@ final class NetworkManager {
             return errorData
         } catch {
             print("토큰 갱신 에러")
-            // TODO: - 온보딩 화면 이동
+            // 온보딩 화면 이동
+            Notification.changeRoot(.fail)
             return error
         }
     }

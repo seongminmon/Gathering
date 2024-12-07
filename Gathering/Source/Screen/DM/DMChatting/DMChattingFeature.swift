@@ -16,11 +16,14 @@ struct DMChattingFeature {
     @Dependency(\.dmsClient) var dmsClient
     @Dependency(\.dbClient) var dbClient
     @Dependency(\.userClient) var userClient
+    @Dependency(\.dismiss) var dismiss
     
     @ObservableState
     struct State {
         //        var opponentID: String
         //        var workspaceID: String
+        
+        var socket: SocketIOManager<DMsResponse>?
         
         var dmsRoomResponse: DMsRoom
         var message: [ChattingPresentModel] = []
@@ -37,6 +40,8 @@ struct DMChattingFeature {
         case binding(BindingAction<State>)
         
         case task
+        case backButtonTap
+//        case onDisappear
         case sendButtonTap
         case imageDeleteButtonTap(UIImage)
         case profileButtonTap(Member)
@@ -149,17 +154,42 @@ struct DMChattingFeature {
                             $0.toPresentModel()
                         }
                         await send(.savedDBChattingResponse(updatedChats))
+
+                        // MARK: - 소켓 테스트
+                state.socket = SocketIOManager(
+                    id: state.dmsRoomResponse.id,
+                    socketInfo: .dm
+                ) { result in
+                    switch result {
+                    case .success(let data):
+                        print("DM 소켓 데이터", data)
+                    case .failure(let error):
+                        print("DM 소켓 error", error)
+                    }
+                }
                         
                     } catch {
                         print("채팅 불러오기, 저장 실패")
                     }
                 }
+
+                // TODO: - 네비게이션 백 제스처 때도 소켓 Deinit 하도록 만들기
+            case .backButtonTap:
+                state.socket = nil
+                return .run { send in
+                    await dismiss()
+                }
+                
+//            case .onDisappear:
+//                print("DM 채팅 리듀서 - onDisapper")
+//                state.socket = nil
+//                return .none
                 
             case .sendButtonTap:
                 return .run { [state = state] send in
                     do {
-                        guard let images = state.selectedImages, !images.isEmpty else {
-                            // 이미지 없는 경우
+                        guard let images = state.selectedImages,
+                              !images.isEmpty else {
                             let result = try await dmsClient.sendDMMessage(
                                 UserDefaultsManager.workspaceID,
                                 state.dmsRoomResponse.id,
