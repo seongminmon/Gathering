@@ -115,7 +115,8 @@ final class NetworkManager {
             return errorData
         } catch {
             print("토큰 갱신 에러")
-            // TODO: - 온보딩 화면 이동
+            // 온보딩 화면 이동
+            Notification.changeRoot(.fail)
             return error
         }
     }
