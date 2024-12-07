@@ -156,17 +156,17 @@ struct DMChattingFeature {
                         await send(.savedDBChattingResponse(updatedChats))
 
                         // MARK: - 소켓 테스트
-                state.socket = SocketIOManager(
-                    id: state.dmsRoomResponse.id,
-                    socketInfo: .dm
-                ) { result in
-                    switch result {
-                    case .success(let data):
-                        print("DM 소켓 데이터", data)
-                    case .failure(let error):
-                        print("DM 소켓 error", error)
-                    }
-                }
+//                state.socket = SocketIOManager(
+//                    id: state.dmsRoomResponse.id,
+//                    socketInfo: .dm
+//                ) { result in
+//                    switch result {
+//                    case .success(let data):
+//                        print("DM 소켓 데이터", data)
+//                    case .failure(let error):
+//                        print("DM 소켓 error", error)
+//                    }
+//                }
                         
                     } catch {
                         print("채팅 불러오기, 저장 실패")

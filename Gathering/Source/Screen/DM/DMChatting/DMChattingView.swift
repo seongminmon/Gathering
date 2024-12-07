@@ -84,8 +84,10 @@ extension DMChattingView {
     private func messageListView(message: ChattingPresentModel) -> some View {
         if message.isMine {
             myMessageView(message: message)
+                .padding(.top, 5)
         } else {
             othersMessageView(message: message)
+                .padding(.top, 5)
         }
     }
     
@@ -158,7 +160,6 @@ extension DMChattingView {
             }
             .frame(maxWidth: .infinity)
         }
-        .padding(.bottom, 5)
         
     }
 

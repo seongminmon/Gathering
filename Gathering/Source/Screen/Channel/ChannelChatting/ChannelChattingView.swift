@@ -115,6 +115,7 @@ extension ChannelChattingView {
                 }
             }
         }
+        .padding(.top, 5)
         .frame(maxWidth: .infinity)
     }
     
@@ -155,7 +156,7 @@ extension ChannelChattingView {
             }
             .frame(maxWidth: .infinity)
         }
-        .padding(.bottom, 5)
+        .padding(.top, 5)
     }
 }
 
