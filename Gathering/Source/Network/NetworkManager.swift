@@ -46,13 +46,11 @@ final class NetworkManager {
         
         // 1. 메모리 캐시 확인
         if let cachedImage = ImageCache.shared.object(forKey: url as NSURL) {
-            print("이미지 메모리 캐시 히트 성공")
             return cachedImage
         }
         
         // 2. 디스크 캐시 확인
         if let cachedImage = ImageFileManager.shared.loadImageFile(filename: api.path) {
-            print("이미지 디스크 캐시 히트 성공")
             return cachedImage
         }
         

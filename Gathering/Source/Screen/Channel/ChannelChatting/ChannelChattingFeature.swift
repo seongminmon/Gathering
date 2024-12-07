@@ -16,6 +16,7 @@ struct ChannelChattingFeature {
     // TODO: - 채널 채팅 DB 저장
     @Dependency(\.channelClient) var channelClient
     @Dependency(\.dbClient) var dbClient
+    @Dependency(\.dismiss) var dismiss
     
     @Reducer
     enum Destination {
@@ -53,8 +54,10 @@ struct ChannelChattingFeature {
         case settingButtonTap(ChannelResponse?)
         case imageDeleteButtonTap(UIImage)
         case profileButtonTap(Member)
+        case backButtonTap
         
         case task
+//        case onDisappear
         case currentChannelResponse(ChannelResponse?)
         case channelChattingResponse([ChattingPresentModel])
         case fetchDBChatting(ChannelResponse?)
@@ -119,6 +122,19 @@ struct ChannelChattingFeature {
                         print("채팅 패치 실패")
                     }
                 }
+                
+                // TODO: - 네비게이션 백 제스처 때도 소켓 Deinit 하도록 만들기
+            case .backButtonTap:
+                state.socket = nil
+                return .run { send in
+                    await dismiss()
+                }
+                
+//            case .onDisappear:
+//                print("채널 채팅 리듀서 - onDisappear")
+//                state.socket = nil
+//                return .none
+                
             case .sendButtonTap:
                 return .run { [state = state] send in
                     do {
