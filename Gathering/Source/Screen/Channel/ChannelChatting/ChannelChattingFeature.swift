@@ -49,7 +49,7 @@ struct ChannelChattingFeature {
     enum Action: BindableAction {
         case destination(PresentationAction<Destination.Action>)
         case binding(BindingAction<State>)
-        
+  
         case sendButtonTap
         case settingButtonTap(ChannelResponse?)
         case imageDeleteButtonTap(UIImage)
@@ -57,7 +57,6 @@ struct ChannelChattingFeature {
         case backButtonTap
         
         case task
-//        case onDisappear
         case currentChannelResponse(ChannelResponse?)
         case channelChattingResponse([ChattingPresentModel])
         case fetchDBChatting(ChannelResponse?)
@@ -249,7 +248,7 @@ struct ChannelChattingFeature {
                     
                     // DB에 채널 있는지 탐색
                     do {
-                        if let dbChannel = try dbClient.fetchChannel(channel.channel_id){
+                        if let dbChannel = try dbClient.fetchChannel(channel.channel_id) {
                             do {
                                 try dbClient.updateChannel(dbChannel, channel.name, members)
                                 print("DB 채널 업데이트 성공")
@@ -338,7 +337,6 @@ struct ChannelChattingFeature {
                 state.message = messages
                 return .none
            
-                
             default:
                 return .none
             }
@@ -354,17 +352,4 @@ struct ChannelChattingFeature {
         async let chennal = channelClient.fetchChannel(channelID, workspaceID)
         return try await chennal
     }
-    
-    //    private func fetchNewChannelChatting(
-    //        channelID: String,
-    //        workspaceID: String,
-    //        cursorDate: String?) async throws
-    //    -> [ChannelChattingResponse] {
-    //        async let chattingList = channelClient.fetchChattingList(
-    //            channelID,
-    //            workspaceID,
-    //            cursorDate ?? ""
-    //        )
-    //        return try await chattingList
-    //    }
 }

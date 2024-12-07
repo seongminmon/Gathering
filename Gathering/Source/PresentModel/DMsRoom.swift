@@ -12,3 +12,13 @@ struct DMsRoom: Hashable, Identifiable {
     let createdAt: String
     let user: Member
 }
+
+extension DMsRoom {
+    func toDBModel(_ members: [MemberDBModel]) -> DMRoomDBModel {
+        return DMRoomDBModel(
+            roomID: self.id,
+            members: members,
+            chattings: []
+        )
+    }
+}
