@@ -14,7 +14,6 @@ struct DMChattingView: View {
     
     @Perception.Bindable var store: StoreOf<DMChattingFeature>
     
-    @Environment(\.dismiss) private var dismiss
     var keyboardSubscriber: AnyCancellable?
     
     var body: some View {
@@ -38,17 +37,19 @@ extension DMChattingView {
             hideKeyboard()
         }
         .onDisappear {
+//            print("DM 채팅 뷰 - onDisappear")
+//            store.send(.onDisappear)
+            
             // 뷰가 사라질 때 키보드 노티피케이션 구독 해제
             keyboardSubscriber?.cancel()
         }
         .customToolbar(
             title: store.message.first?.name ?? "",
             leftItem: .init(icon: .chevronLeft) {
-                dismiss()
+                store.send(.backButtonTap)
             }
         )
     }
-    
 }
 
 extension DMChattingView {

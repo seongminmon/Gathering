@@ -14,11 +14,14 @@ struct DMChattingFeature {
     
     @Dependency(\.dmsClient) var dmsClient
     @Dependency(\.dbClient) var dbClient
+    @Dependency(\.dismiss) var dismiss
     
     @ObservableState
     struct State {
 //        var opponentID: String
 //        var workspaceID: String
+        
+        var socket: SocketIOManager<DMsResponse>?
         
         var dmsRoomResponse: DMsRoom
         var message: [ChattingPresentModel] = []
@@ -35,6 +38,8 @@ struct DMChattingFeature {
         case binding(BindingAction<State>)
         
         case task
+        case backButtonTap
+//        case onDisappear
         case sendButtonTap
         case imageDeleteButtonTap(UIImage)
         case profileButtonTap(Member)
@@ -64,44 +69,70 @@ struct DMChattingFeature {
                 return .none
                 
             case .task:
-                return .none
-                /*
-                return .run { [dmsRoomID = state.dmsRoomResponse.id] send in
-                    do {
-                        // 디비에서 불러오기
-                        let dmDBChats = try dbClient.fetchDMChats(dmsRoomID)
-                            .map { $0.toResponseModel() }
-                        
-                        // 마지막 날짜로 이후 채팅 불러오기
-                        let dmNewChats = try await fetchNewDMsChatting(
-                            workspaceID: UserDefaultsManager.workspaceID,
-                            roomID: dmsRoomID,
-                            cursorDate: dmDBChats.last?.createdAt)
-                        // 불러온 채팅 디비에 저장하기
-                        dmNewChats.forEach {
-                            do {
-                                // MARK: - create에서 update로 변경
-                                try dbClient.update($0.toDBModel())
-                            } catch {
-                                print("Realm 추가 실패")
-                            }
-                            // TODO: - 파일매니저에 이미지 저장
-                        }
-                        // 디비 다시 불러오기?
-                        let dmUpdatedDBChats = try dbClient.fetchDMChats(dmsRoomID)
-                            .map { $0.toResponseModel().toChattingPresentModel()}
-//                        print(dmUpdatedDBChats.last)
-                        await send(.dmsChattingResponse(dmUpdatedDBChats))
-                    } catch {
-                        print("채팅 패치 실패")
+                // MARK: - 소켓 테스트
+                state.socket = SocketIOManager(
+                    id: state.dmsRoomResponse.id,
+                    socketInfo: .dm
+                ) { result in
+                    switch result {
+                    case .success(let data):
+                        print("DM 소켓 데이터", data)
+                    case .failure(let error):
+                        print("DM 소켓 error", error)
                     }
                 }
+                return .none
+                /*
+                 return .run { [dmsRoomID = state.dmsRoomResponse.id] send in
+                 do {
+                 // 디비에서 불러오기
+                 let dmDBChats = try dbClient.fetchDMChats(dmsRoomID)
+                 .map { $0.toResponseModel() }
+                 
+                 // 마지막 날짜로 이후 채팅 불러오기
+                 let dmNewChats = try await fetchNewDMsChatting(
+                 workspaceID: UserDefaultsManager.workspaceID,
+                 roomID: dmsRoomID,
+                 cursorDate: dmDBChats.last?.createdAt)
+                 // 불러온 채팅 디비에 저장하기
+                 dmNewChats.forEach {
+                 do {
+                 // MARK: - create에서 update로 변경
+                 try dbClient.update($0.toDBModel())
+                 } catch {
+                 print("Realm 추가 실패")
+                 }
+                 // TODO: - 파일매니저에 이미지 저장
+                 }
+                 // 디비 다시 불러오기?
+                 let dmUpdatedDBChats = try dbClient.fetchDMChats(dmsRoomID)
+                 .map { $0.toResponseModel().toChattingPresentModel()}
+                 //                        print(dmUpdatedDBChats.last)
+                 await send(.dmsChattingResponse(dmUpdatedDBChats))
+                 } catch {
+                 print("채팅 패치 실패")
+                 }
+                 }
                  */
-            // TODO: 멀티파트 업로드 수정
+                // TODO: 멀티파트 업로드 수정
+                
+                // TODO: - 네비게이션 백 제스처 때도 소켓 Deinit 하도록 만들기
+            case .backButtonTap:
+                state.socket = nil
+                return .run { send in
+                    await dismiss()
+                }
+                
+//            case .onDisappear:
+//                print("DM 채팅 리듀서 - onDisapper")
+//                state.socket = nil
+//                return .none
+                
             case .sendButtonTap:
                 return .run { [state = state] send in
                     do {
-                        guard let images = state.selectedImages, !images.isEmpty else {
+                        guard let images = state.selectedImages,
+                              !images.isEmpty else {
                             let result = try await dmsClient.sendDMMessage(
                                 UserDefaultsManager.workspaceID,
                                 state.dmsRoomResponse.id,

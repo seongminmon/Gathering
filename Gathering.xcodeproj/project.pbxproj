@@ -86,6 +86,10 @@
 		24F7BFCA2CFC2C5200040C09 /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F7BFC92CFC2C5200040C09 /* UINavigationController+.swift */; };
 		24F7BFCF2CFDDF6E00040C09 /* ChannelDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F7BFCE2CFDDF6E00040C09 /* ChannelDBModel.swift */; };
 		24F7BFD12CFDE05000040C09 /* DMRoomDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F7BFD02CFDE05000040C09 /* DMRoomDBModel.swift */; };
+		24F7BFDA2D00532100040C09 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 24F7BFD92D00532100040C09 /* SocketIO */; };
+		24F7BFDD2D00550900040C09 /* SocketError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F7BFDC2D00550900040C09 /* SocketError.swift */; };
+		24F7BFDF2D00552200040C09 /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F7BFDE2D00552200040C09 /* SocketIOManager.swift */; };
+		24F7BFE52D0062FE00040C09 /* SocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F7BFE42D0062FE00040C09 /* SocketClient.swift */; };
 		843E7FC62CE202530057A426 /* AppFeaturePractice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E7FC52CE202520057A426 /* AppFeaturePractice.swift */; };
 		843E7FC82CE21B9B0057A426 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E7FC72CE21B9B0057A426 /* AppView.swift */; };
 		843E7FCA2CE21E830057A426 /* MyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E7FC92CE21E830057A426 /* MyApp.swift */; };
@@ -250,6 +254,9 @@
 		24F7BFC92CFC2C5200040C09 /* UINavigationController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
 		24F7BFCE2CFDDF6E00040C09 /* ChannelDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelDBModel.swift; sourceTree = "<group>"; };
 		24F7BFD02CFDE05000040C09 /* DMRoomDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMRoomDBModel.swift; sourceTree = "<group>"; };
+		24F7BFDC2D00550900040C09 /* SocketError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketError.swift; sourceTree = "<group>"; };
+		24F7BFDE2D00552200040C09 /* SocketIOManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
+		24F7BFE42D0062FE00040C09 /* SocketClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketClient.swift; sourceTree = "<group>"; };
 		843E7FC52CE202520057A426 /* AppFeaturePractice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeaturePractice.swift; sourceTree = "<group>"; };
 		843E7FC72CE21B9B0057A426 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		843E7FC92CE21E830057A426 /* MyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyApp.swift; sourceTree = "<group>"; };
@@ -332,6 +339,7 @@
 				24ABE9352CD4AF81000E7EC5 /* RealmSwift in Frameworks */,
 				24ABE9322CD4AF3D000E7EC5 /* Kingfisher in Frameworks */,
 				24ABE92C2CD4AEF2000E7EC5 /* ComposableArchitecture in Frameworks */,
+				24F7BFDA2D00532100040C09 /* SocketIO in Frameworks */,
 				24ABE92F2CD4AF24000E7EC5 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -861,6 +869,16 @@
 			path = DM;
 			sourceTree = "<group>";
 		};
+		24F7BFDB2D0054FE00040C09 /* Socket */ = {
+			isa = PBXGroup;
+			children = (
+				24F7BFDC2D00550900040C09 /* SocketError.swift */,
+				24F7BFDE2D00552200040C09 /* SocketIOManager.swift */,
+				24F7BFE42D0062FE00040C09 /* SocketClient.swift */,
+			);
+			path = Socket;
+			sourceTree = "<group>";
+		};
 		847A3F7F2CD8FFD4004A9361 /* TCAPractice */ = {
 			isa = PBXGroup;
 			children = (
@@ -883,6 +901,7 @@
 				249FB0D42CECA98500CA418B /* ResponseModel */,
 				24ABE9742CDCEFB4000E7EC5 /* Router */,
 				2447AB542CE1D0D400399C4D /* Client */,
+				24F7BFDB2D0054FE00040C09 /* Socket */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1020,6 +1039,7 @@
 				24ABE92E2CD4AF24000E7EC5 /* Alamofire */,
 				24ABE9312CD4AF3D000E7EC5 /* Kingfisher */,
 				24ABE9342CD4AF81000E7EC5 /* RealmSwift */,
+				24F7BFD92D00532100040C09 /* SocketIO */,
 			);
 			productName = Gathering;
 			productReference = 24ABE9192CD4AEDB000E7EC5 /* Gathering.app */;
@@ -1055,6 +1075,7 @@
 				24ABE9302CD4AF3D000E7EC5 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				24ABE9332CD4AF81000E7EC5 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				24ABE9362CD4B006000E7EC5 /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				24F7BFD82D00532100040C09 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
 			);
 			productRefGroup = 24ABE91A2CD4AEDB000E7EC5 /* Products */;
 			projectDirPath = "";
@@ -1172,6 +1193,7 @@
 				24ABE9662CDB99D0000E7EC5 /* RoundedButton.swift in Sources */,
 				2447AB7F2CE878AA00399C4D /* LoginPopUpFeature.swift in Sources */,
 				249FB0CC2CEC9F4400CA418B /* ImageRouter.swift in Sources */,
+				24F7BFDF2D00552200040C09 /* SocketIOManager.swift in Sources */,
 				847A3F922CDA9FC0004A9361 /* GatheringNavigationStack.swift in Sources */,
 				847A3F812CD8FFEF004A9361 /* CounterFeature.swift in Sources */,
 				A0E444D92CE2A90C0024AE71 /* WorkspaceCreateRequest.swift in Sources */,
@@ -1186,6 +1208,7 @@
 				84B8AD1C2CE3859400011D73 /* AuthClient.swift in Sources */,
 				24ABE9642CDB99C8000E7EC5 /* ContinueEmailButton.swift in Sources */,
 				843E7FF12CE349C90057A426 /* ContactDetailView.swift in Sources */,
+				24F7BFDD2D00550900040C09 /* SocketError.swift in Sources */,
 				843E7FC62CE202530057A426 /* AppFeaturePractice.swift in Sources */,
 				249FB1022CEF5E0600CA418B /* WorkspaceView.swift in Sources */,
 				24ABE98A2CDF004D000E7EC5 /* ChannelChattingResponse.swift in Sources */,
@@ -1209,6 +1232,7 @@
 				843E7FEB2CE3382F0057A426 /* MyProfileResponse.swift in Sources */,
 				A0E444D12CE29A850024AE71 /* WorkSpaceRouter.swift in Sources */,
 				24ABE9432CD4B7CC000E7EC5 /* CounterView.swift in Sources */,
+				24F7BFE52D0062FE00040C09 /* SocketClient.swift in Sources */,
 				84E8A8232CEF241C00589171 /* ChannelSettingFeature.swift in Sources */,
 				24ABE98E2CDF02E1000E7EC5 /* ChattingRequest.swift in Sources */,
 				24ABE98C2CDF005F000E7EC5 /* MemberResponse.swift in Sources */,
@@ -1499,6 +1523,14 @@
 				minimumVersion = 0.57.0;
 			};
 		};
+		24F7BFD82D00532100040C09 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 16.1.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1526,6 +1558,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 24ABE9362CD4B006000E7EC5 /* XCRemoteSwiftPackageReference "SwiftLint" */;
 			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+		24F7BFD92D00532100040C09 /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24F7BFD82D00532100040C09 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */;
+			productName = SocketIO;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
