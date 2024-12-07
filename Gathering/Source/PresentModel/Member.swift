@@ -13,3 +13,14 @@ struct Member: Hashable, Identifiable {
     let nickname: String
     let profileImage: String?
 }
+
+extension Member {
+    func toDBModel() -> MemberDBModel {
+        return MemberDBModel(
+            userID: self.id,
+            email: self.email,
+            nickname: self.nickname,
+            profileImage: self.profileImage
+        )
+    }
+}

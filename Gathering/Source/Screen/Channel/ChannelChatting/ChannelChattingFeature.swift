@@ -307,7 +307,6 @@ struct ChannelChattingFeature {
                 state.message = messages
                 return .none
            
-                
             default:
                 return .none
             }

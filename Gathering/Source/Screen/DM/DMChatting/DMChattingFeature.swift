@@ -8,6 +8,7 @@
 import SwiftUI
 
 import ComposableArchitecture
+import RealmSwift
 
 @Reducer
 struct DMChattingFeature {
@@ -18,8 +19,8 @@ struct DMChattingFeature {
     
     @ObservableState
     struct State {
-//        var opponentID: String
-//        var workspaceID: String
+        //        var opponentID: String
+        //        var workspaceID: String
         
         var dmsRoomResponse: DMsRoom
         var message: [ChattingPresentModel] = []
@@ -66,71 +67,144 @@ struct DMChattingFeature {
                 
             case .task:
                 return .run { [state = state] send in
+                    // DMRoom 확인, 저장/업데이트
                     do {
-                        if let dbDMsRoom = try dbClient.fetchDMRoom(
-                            state.dmsRoomResponse.id
-                        ) {
-                            
+                        let opponentInfo = state.dmsRoomResponse.user.toDBModel()
+                        let myInfo = try await userClient.fetchMyProfile().toDBModel()
+                        let members: [MemberDBModel] = [opponentInfo, myInfo]
+                        
+                        if let dbDMsRoom = try dbClient.fetchDMRoom(state.dmsRoomResponse.id) {
+                            do {
+                                try dbClient.updateDMRoom(dbDMsRoom, members)
+                                print("DB DMRoom 업데이트 성공")
+                            } catch {
+                                print("DB DMRoom 업데이트 실패")
+                            }
                         } else {
                             print("DB에 DMsRoom없음")
+                            do {
+                                let dmsRoom = state.dmsRoomResponse.toDBModel(members)
+                                try dbClient.update(dmsRoom)
+                                print("DB DMsRoom 저장 성공")
+                            } catch {
+                                print("DB DMsRoom 저장 실패")
+                            }
                             
                         }
-                    }
-                }
-                /*
-                return .run { [dmsRoomID = state.dmsRoomResponse.id] send in
-                    do {
-                        // 디비에서 불러오기
-                        let dmDBChats = try dbClient.fetchDMChats(dmsRoomID)
-                            .map { $0.toResponseModel() }
-                        
-                        // 마지막 날짜로 이후 채팅 불러오기
-                        let dmNewChats = try await fetchNewDMsChatting(
-                            workspaceID: UserDefaultsManager.workspaceID,
-                            roomID: dmsRoomID,
-                            cursorDate: dmDBChats.last?.createdAt)
-                        // 불러온 채팅 디비에 저장하기
-                        dmNewChats.forEach {
-                            do {
-                                // MARK: - create에서 update로 변경
-                                try dbClient.update($0.toDBModel())
-                            } catch {
-                                print("Realm 추가 실패")
-                            }
-                            // TODO: - 파일매니저에 이미지 저장
-                        }
-                        // 디비 다시 불러오기?
-                        let dmUpdatedDBChats = try dbClient.fetchDMChats(dmsRoomID)
-                            .map { $0.toResponseModel().toChattingPresentModel()}
-//                        print(dmUpdatedDBChats.last)
-                        await send(.dmsChattingResponse(dmUpdatedDBChats))
                     } catch {
-                        print("채팅 패치 실패")
+                        print("DB DmRoom 저장/업데이트 실패")
+                    }
+                    
+                   // 채팅 추가하기
+                    do {
+                        // 채널 불러오기
+                        guard let dbDMsRoom = try dbClient.fetchDMRoom(
+                            state.dmsRoomResponse.id
+                        ) else { return }
+                        
+                        // 디비에서 기존 채팅 불러오기
+                        let dbDMsChats = Array(dbDMsRoom.chattings
+                            .sorted(byKeyPath: "createdAt", ascending: true))
+                        print("기존채팅", dbDMsChats)
+                        
+                        // 마지막 날짜 이후 채팅 불러오기
+                        let newDMsChats = try await dmsClient.fetchDMChatHistory(
+                            UserDefaultsManager.workspaceID,
+                            dbDMsRoom.roomID,
+                            dbDMsChats.last?.createdAt ?? ""
+                        )
+                       
+                        print("신규채팅", newDMsChats)
+                        
+                        // 불러온 채팅 디비에 저장하기
+                        await withTaskGroup(of: Void.self) { group in
+                            for chat in newDMsChats {
+                                // 채팅 저장 작업
+                                group.addTask {
+                                    do {
+                                        try dbClient.createDMChatting(
+                                            state.dmsRoomResponse.id,
+                                            chat.toDBModel(chat.user.toDBModel())
+                                        )
+                                        print("DB 신규채팅 추가 성공")
+                                    } catch {
+                                        print("DB 신규채팅 추가 실패")
+                                    }
+                                }
+                                
+                                // 파일 저장 작업
+                                for file in chat.files {
+                                    group.addTask {
+                                        await ImageFileManager.shared
+                                            .saveImageFile(filename: file)
+                                    }
+                                }
+                            }
+                        }
+                        
+                        guard let updatedDbDmsRoom = try dbClient
+                            .fetchDMRoom(state.dmsRoomResponse.id) else { return }
+                        
+                        let updatedChats = Array(updatedDbDmsRoom.chattings).map {
+                            $0.toPresentModel()
+                        }
+                        await send(.savedDBChattingResponse(updatedChats))
+                        
+                    } catch {
+                        print("채팅 불러오기, 저장 실패")
                     }
                 }
-                 */
-            // TODO: 멀티파트 업로드 수정
+                
             case .sendButtonTap:
                 return .run { [state = state] send in
                     do {
                         guard let images = state.selectedImages, !images.isEmpty else {
+                            // 이미지 없는 경우
                             let result = try await dmsClient.sendDMMessage(
                                 UserDefaultsManager.workspaceID,
                                 state.dmsRoomResponse.id,
                                 DMRequest(content: state.messageText, files: [])
                             )
-                            do {
-                                // MARK: - 멤버 잘 찾아서 넣기
-                                
-                                let member = MemberDBModel()
-                                try dbClient.update(result.toDBModel(member))
-                                print("sendedDM 저장성공")
-//                                await send(.saveSendedDM(result))
-                            } catch {
-                                print("Realm 추가 실패")
+                            await withTaskGroup(of: Void.self) { group in
+                                // 채팅 저장 작업
+                                group.addTask {
+                                    do {
+                                        try dbClient.createDMChatting(
+                                            state.dmsRoomResponse.id,
+                                            result.toDBModel(result.user.toDBModel())
+                                        )
+                                        print("sendedChat 저장성공")
+                                    } catch {
+                                        print("sendedChat DB에 추가 실패")
+                                    }
+                                }
+                                // 파일 저장 작업
+                                for file in result.files {
+                                    group.addTask {
+                                        await ImageFileManager.shared
+                                            .saveImageFile(filename: file)
+                                    }
+                                }
                             }
+                            do {
+                                // 채널 불러오기
+                                guard let dbDMsRoom = try dbClient.fetchDMRoom(
+                                    state.dmsRoomResponse.id
+                                ) else { return }
+                                // 디비에서 기존 채팅 불러오기
+                                let newDbDMsChats = Array(dbDMsRoom.chattings
+                                    .sorted(byKeyPath: "createdAt", ascending: true))
+                                    .map { $0.toPresentModel() }
+                                print("저장후 다시 불러온 채팅", newDbDMsChats)
+                                await send(.savedDBChattingResponse(newDbDMsChats))
+                            } catch {
+                                print("저장 후 채팅 불러오기 실패")
+                            }
+                            await send(.sendDmMessage)
                             return
                         }
+                        // 이미지 있는 경우
+                        // TODO: data로 변환방법 생각해보기
                         let jpegData = images.map({ value in
                             value.jpegData(compressionQuality: 0.5)!
                         })
@@ -138,25 +212,36 @@ struct DMChattingFeature {
                         let result = try await dmsClient.sendDMMessage(
                             UserDefaultsManager.workspaceID,
                             state.dmsRoomResponse.id,
-                            DMRequest(
-                                content: state.messageText,
-                                files: jpegData
-                            )
+                            DMRequest(content: state.messageText, files: jpegData)
                         )
                         do {
-                            // MARK: - 멤버 잘 찾아서 넣기
-                            let member = MemberDBModel()
-                            try dbClient.update(result.toDBModel(member))
-                            print("sendedDM 저장성공")
-//                            await send(.saveSendedDM(result))
+                            try dbClient.createDMChatting(
+                                state.dmsRoomResponse.id,
+                                result.toDBModel(result.user.toDBModel())
+                                )
+                            print("sendedDM DB 저장성공")
                         } catch {
-                            print("Realm 추가 실패")
+                            print("DB 추가 실패")
                         }
                         
-                        
+                        do {
+                            // 채널 불러오기
+                            guard let dbDMsRoom = try dbClient.fetchDMRoom(
+                                state.dmsRoomResponse.id
+                            ) else { return }
+                            // 디비에서 기존 채팅 불러오기
+                            let newDbDMsChats = Array(dbDMsRoom.chattings
+                                .sorted(byKeyPath: "createdAt", ascending: true))
+                                .map { $0.toPresentModel() }
+                            print("저장후 다시 불러온 채팅", newDbDMsChats)
+                            await send(.savedDBChattingResponse(newDbDMsChats))
+                        } catch {
+                            print("저장 후 채팅 불러오기 실패")
+                        }
+                        await send(.sendDmMessage)
                     } catch {
                         print("멀티파트 실패 ㅠㅠ ")
-                        await send(.sendMessageError(error))
+                        Notification.postToast(title: "메세지 전송을 실패했습니다.")
                     }
                 }
                 
@@ -173,7 +258,7 @@ struct DMChattingFeature {
                 state.selectedImages = []
                 state.messageButtonValid = false
                 return .none
-
+                
             case .savedDBChattingResponse(let updatedDBChats):
                 state.message = updatedDBChats
                 return .none
@@ -187,17 +272,5 @@ struct DMChattingFeature {
                 return .none
             }
         }
-    }
-    
-    private func fetchNewDMsChatting(
-        workspaceID: String,
-        roomID: String,
-        cursorDate: String?
-    ) async throws -> [DMsResponse] {
-        async let newChats = dmsClient.fetchDMChatHistory(
-            workspaceID,
-            roomID,
-            cursorDate ?? "")
-        return try await newChats
     }
 }

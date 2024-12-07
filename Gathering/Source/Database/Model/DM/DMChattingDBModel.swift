@@ -31,3 +31,17 @@ class DMChattingDBModel: Object {
         self.user = user
     }
 }
+
+extension DMChattingDBModel {
+    func toPresentModel() -> ChattingPresentModel {
+        return ChattingPresentModel(
+            id: self.dmID,
+            user: self.user?.toPresentModel() ?? Member(id: "", email: "", nickname: "", profileImage: ""),
+            name: self.user?.nickname ?? "",
+            text: self.content,
+            imageNames: Array(self.files),
+            isMine: self.user?.userID == UserDefaultsManager.userID ? true : false,
+            profile: self.user?.profileImage
+        )
+    }
+}

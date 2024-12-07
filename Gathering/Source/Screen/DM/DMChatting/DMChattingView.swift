@@ -42,7 +42,7 @@ extension DMChattingView {
             keyboardSubscriber?.cancel()
         }
         .customToolbar(
-            title: store.message.first?.name ?? "",
+            title: store.dmsRoomResponse.user.nickname,
             leftItem: .init(icon: .chevronLeft) {
                 dismiss()
             }
