@@ -25,7 +25,7 @@ struct DBClient {
     
     //    var create: (Object) throws -> Void
     var update: (Object) throws -> Void
-    //    var delete: (Object) throws -> Void
+    var delete: (Object) throws -> Void
     
     var createChannelChatting: (String, ChannelChattingDBModel) throws -> Void
     //    var addChannelMember: (String, MemberDBModel) throws -> Void
@@ -66,12 +66,12 @@ extension DBClient: DependencyKey {
                 realm.add(object, update: .modified)
             }
         },
-        //        delete: { object in
-        //            let realm = try Realm()
-        //            try realm.write {
-        //                realm.delete(object)
-        //            }
-        //        },
+        delete: { object in
+            let realm = try Realm()
+            try realm.write {
+                realm.delete(object)
+            }
+        },
         createChannelChatting: { channelID, object in
             let realm = try Realm()
             guard let channel = realm.object(

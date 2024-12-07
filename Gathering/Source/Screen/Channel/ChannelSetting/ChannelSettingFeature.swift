@@ -13,6 +13,7 @@ import ComposableArchitecture
 struct ChannelSettingFeature {
     
     @Dependency(\.channelClient) var channelClient
+    @Dependency(\.dbClient) var dbClient
 
     @ObservableState
     struct State {
@@ -86,7 +87,7 @@ struct ChannelSettingFeature {
     }
     
     var body: some ReducerOf<Self> {
-        BindingReducer()
+//        BindingReducer()
         Reduce { state, action in
             switch action {
                 
@@ -254,14 +255,35 @@ struct ChannelSettingFeature {
             case .deleteChannelResponse:
                 // 홈 뷰에서 path로 관리
                 state.isDeleteChannelAlertPresented = false
+                removeDBChannel(state.currentChannel?.channel_id)
                 return .none
             case .exitChannelResponse:
                 // 홈 뷰에서 path로 관리
+                removeDBChannel(state.currentChannel?.channel_id)
                 return .none
             case .updateChannelResponse(let result):
                 state.currentChannel = result
                 return .none
             }
         }
+    }
+    
+    private func removeDBChannel(_ channelID: String?) {
+        guard let channelID else {
+            print("DB 삭제할 채널 ID 없음")
+            return
+        }
+        do {
+            if let dbChannel = try dbClient.fetchChannel(channelID) {
+                // 파일 매니저 삭제
+                for item in dbChannel.chattings {
+                    for fileName in item.files {
+                        ImageFileManager.shared.deleteImageFile(filename: fileName)
+                    }
+                }
+                try dbClient.delete(dbChannel)
+                print("DB 채널 삭제 완료!")
+            }
+        } catch {}
     }
 }
