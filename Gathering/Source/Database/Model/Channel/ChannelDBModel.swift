@@ -29,4 +29,3 @@ class ChannelDBModel: Object {
         self.chattings.append(objectsIn: chattings)
     }
 }
-

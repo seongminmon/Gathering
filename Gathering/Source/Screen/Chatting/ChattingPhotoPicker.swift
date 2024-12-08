@@ -80,9 +80,10 @@ public struct ChattingPhotoPicker<Content: View>: View {
             newPhoto.loadTransferable(type: Data.self) { result in
                 switch result {
                 case .success(let data):
-                    if let data = data, let newImage = UIImage(data: data),
-                        let images =  selectedImages {
-                        if !(selectedImages?.contains(where: { $0.pngData() == newImage.pngData() }) ?? true) {
+                    if let data = data, let newImage = UIImage(data: data) {
+                        if !(selectedImages?.contains(
+                            where: { $0.pngData() == newImage.pngData() }) ?? true
+                        ) {
                             DispatchQueue.main.async {
                                 selectedImages?.append(newImage)
                             }

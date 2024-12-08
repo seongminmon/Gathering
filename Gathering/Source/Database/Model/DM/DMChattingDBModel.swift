@@ -34,9 +34,12 @@ class DMChattingDBModel: Object {
 
 extension DMChattingDBModel {
     func toPresentModel() -> ChattingPresentModel {
+        let user = self.user?.toPresentModel() 
+        ?? Member(id: "", email: "", nickname: "", profileImage: "")
+        
         return ChattingPresentModel(
             id: self.dmID,
-            user: self.user?.toPresentModel() ?? Member(id: "", email: "", nickname: "", profileImage: ""),
+            user: user,
             name: self.user?.nickname ?? "",
             text: self.content,
             imageNames: Array(self.files),

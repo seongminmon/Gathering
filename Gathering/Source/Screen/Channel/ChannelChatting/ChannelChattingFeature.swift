@@ -336,9 +336,6 @@ struct ChannelChattingFeature {
             case .savedDBChattingResponse(let messages):
                 state.message = messages
                 return .none
-           
-            default:
-                return .none
             }
         }
         .ifLet(\.$destination, action: \.destination)

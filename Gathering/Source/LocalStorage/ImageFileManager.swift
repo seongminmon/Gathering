@@ -34,7 +34,11 @@ final class ImageFileManager {
             print("CachedImages 폴더가 이미 존재합니다.")
         } else {
             do {
-                try FileManager.default.createDirectory(at: imageDirectory, withIntermediateDirectories: true, attributes: nil)
+                try FileManager.default.createDirectory(
+                    at: imageDirectory,
+                    withIntermediateDirectories: true,
+                    attributes: nil
+                )
                 print("CachedImages 폴더 생성 완료")
             } catch {
                 print("CachedImages 폴더 생성 실패:", error)
