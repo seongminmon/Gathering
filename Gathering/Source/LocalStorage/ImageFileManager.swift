@@ -84,7 +84,7 @@ final class ImageFileManager {
     }
     
     /// 이미지로 저장
-    func saveImageFile(filename: String, image: UIImage) async {
+    func saveImageFile(filename: String, image: UIImage) {
         print(#function)
         guard !filename.isEmpty else { return }
         guard let documentDirectory else {
