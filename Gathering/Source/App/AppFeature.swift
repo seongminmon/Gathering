@@ -18,6 +18,8 @@ struct AppFeature {
         case loading
     }
     
+    @Dependency(\.dbClient) var dbClient
+    
     @ObservableState
     struct State {
         var toast: Toast?
@@ -95,6 +97,12 @@ struct AppFeature {
             case .loginFail:
                 print("자동 로그인 실패 (리프레시 토큰 만료)")
                 state.loginState = .fail
+                Notification.changeRoot(.fail)
+                UserDefaultsManager.removeAll()
+                do {
+                    try dbClient.removeAll()
+                } catch {}
+                ImageFileManager.shared.deleteAllImages()
                 return .none
                 
             case .onboarding(.loginPopUp(.emailLogin(.logInResponse))):

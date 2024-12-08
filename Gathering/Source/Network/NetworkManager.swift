@@ -8,8 +8,11 @@
 import UIKit
 
 import Alamofire
+import ComposableArchitecture
 
 final class NetworkManager {
+    @Dependency(\.dbClient) var dbClient
+    
     static let shared = NetworkManager()
     private init() {}
     
@@ -117,6 +120,9 @@ final class NetworkManager {
             print("토큰 갱신 에러")
             // 온보딩 화면 이동
             Notification.changeRoot(.fail)
+            UserDefaultsManager.removeAll()
+            try dbClient.removeAll()
+            ImageFileManager.shared.deleteAllImages()
             return error
         }
     }

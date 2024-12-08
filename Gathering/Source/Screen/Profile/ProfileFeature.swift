@@ -23,6 +23,8 @@ struct ProfileFeature {
 //        case editNickname
     }
     
+    @Dependency(\.dbClient) var dbClient
+    
     @ObservableState
     struct State {
 //        var path = StackState<Path.State>()
@@ -66,7 +68,10 @@ struct ProfileFeature {
                 state.showAlert = false
                 Notification.changeRoot(.fail)
                 UserDefaultsManager.removeAll()
-                // TODO: - DB와 파일 매니저도 모두 지우기
+                do {
+                    try dbClient.removeAll()
+                } catch {}
+                ImageFileManager.shared.deleteAllImages()
                 return .none
             case .logoutCancel:
                 state.showAlert = false
