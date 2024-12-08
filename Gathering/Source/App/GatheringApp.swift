@@ -24,7 +24,7 @@ import ComposableArchitecture
 // ✅ 채널 채팅, DM 채팅 뷰 로직 (포토 x자 누르면 삭제하기)
 
 // ✅ 채널 삭제, 채널 나가기 시 DB 삭제 >> 채널 세팅
-// 로그아웃 시 UserDefaults, DB, 파일매니저 싹 다 지우기
+// ✅ 로그아웃, 자동 로그인 실패, 토큰 갱신 실패 시 UserDefaults, DB, 파일매니저 지우기
 
 @main
 struct GatheringApp: App {
@@ -33,6 +33,10 @@ struct GatheringApp: App {
     
     // MARK: - realm 경로 출력
     @Dependency(\.dbClient) var dbClient
+    
+    init() {
+        ImageFileManager.shared.createImageDirectory()
+    }
     
     var body: some Scene {
         WindowGroup {

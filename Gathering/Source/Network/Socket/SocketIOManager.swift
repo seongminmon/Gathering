@@ -58,7 +58,7 @@ final class SocketIOManager<ModelType: Decodable> {
         
         socketManager = SocketManager(
             socketURL: baseURL,
-            config: [.log(true), .compress]
+            config: [.log(false), .compress]
         )
         socket = socketManager?.socket(forNamespace: "\(socketInfo.namespace)-\(id)")
     }
