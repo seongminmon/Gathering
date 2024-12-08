@@ -78,13 +78,20 @@ struct ChannelChattingFeature {
                 state.socket = SocketIOManager(
                     id: state.channelID,
                     socketInfo: .channel
-                ) { result in
+                ) { [channelID = state.channelID] result in
                     switch result {
                     case .success(let data):
+                        print("소켓 data:", data)
                         // TODO: - DB 추가 + fetch
-                        print("소켓 Data", data)
+//                        // DB 저장 및 파일 처리
+//                        await saveMessageToDB(channelID: channelID, chattingResponse: data)
+//                        // 업데이트된 채팅 불러오기
+//                        let updatedChats = fetchChannelChats(channelID: channelID)
+//                            .map { $0.toPresentModel() }
+//                        await send(.updateChannelChattings(updatedChats))
+                        
                     case .failure(let error):
-                        print(error)
+                        print("소켓 데이터 받기 실패")
                     }
                 }
                 
@@ -137,12 +144,12 @@ struct ChannelChattingFeature {
                         
                         // TODO: - DB 저장 + 업데이트된 채팅 불러오기는 소켓 데이터에서 처리하기
                         // DB 저장 및 파일 처리
-                        await saveMessageToDB(channelID: channelID, result: result)
+                        await saveMessageToDB(channelID: channelID, chattingResponse: result)
                         
                         // 업데이트된 채팅 불러오기
-                        if let updatedChats = fetchUpdatedChannelChats(channelID: channelID) {
-                            await send(.updateChannelChattings(updatedChats))
-                        }
+                        let updatedChats = fetchChannelChats(channelID: channelID)
+                            .map { $0.toPresentModel() }
+                        await send(.updateChannelChattings(updatedChats))
                     } catch {
                         print("메세지 전송 실패")
                         Notification.postToast(title: "메세지 전송을 실패했습니다.")
@@ -196,6 +203,38 @@ struct ChannelChattingFeature {
 
 extension ChannelChattingFeature {
     
+    /// DB에서 채널 채팅 가져와서 정렬 하는 메서드
+    private func fetchChannelChats(channelID: String) -> [ChannelChattingDBModel] {
+        do {
+            let updatedDBChats = try dbClient.fetchChannel(channelID)
+            return Array(updatedDBChats?.chattings.sorted { $0.createdAt < $1.createdAt } ?? [])
+        } catch {
+            print("DB 채팅 불러오기 실패")
+            return []
+        }
+    }
+    
+    /// 채팅을 DB + 파일매니저에 추가하는 메서드
+    private func saveMessageToDB(
+        channelID: String,
+        chattingResponse: ChannelChattingResponse
+    ) async {
+        // 채팅 저장
+        do {
+            try dbClient.createChannelChatting(
+                channelID,
+                chattingResponse.toDBModel(chattingResponse.user.toDBModel())
+            )
+            print("채널 채팅 DB에 추가 성공")
+        } catch {
+            print("채널 채팅 DB에 추가 실패")
+        }
+        // 파일 저장
+        for file in chattingResponse.files {
+            await ImageFileManager.shared.saveImageFile(filename: file)
+        }
+    }
+    
     private func saveOrUpdateChannel(channel: ChannelResponse) {
         guard let channelMembers = channel.channelMembers else { return }
         let members: [MemberDBModel] = channelMembers.map { $0.toDBModel() }
@@ -221,105 +260,32 @@ extension ChannelChattingFeature {
     private func fetchAndSaveNewChats(
         channel: ChannelResponse
     ) async throws -> [ChattingPresentModel] {
-        guard let dbChannel = try dbClient.fetchChannel(channel.channel_id) else {
-            return []
-        }
-        
         // 기존 채팅 불러오기 (날짜 순 정렬)
-        let dbChannelChats = Array(dbChannel.chattings.sorted { $0.createdAt < $1.createdAt })
+        let dbChannelChats = fetchChannelChats(channelID: channel.channel_id)
         print("기존채팅", dbChannelChats)
         
-        // 마지막 날짜 이후 채팅 불러오기
+        // 마지막 날짜 이후 채팅 API를 통해 불러오기
         let newChannelChats = try await channelClient.fetchChattingList(
-            dbChannel.channelID,
+            channel.channel_id,
             UserDefaultsManager.workspaceID,
             dbChannelChats.last?.createdAt ?? ""
         )
         print("신규채팅", newChannelChats)
         
-        // 불러온 채팅 비동기로 DB에 저장
-        await withTaskGroup(of: Void.self) { group in
-            for chat in newChannelChats {
-                // 채팅 저장 작업
-                group.addTask {
-                    do {
-                        try dbClient.createChannelChatting(
-                            channel.channel_id,
-                            chat.toDBModel(chat.user.toDBModel())
-                        )
-                        print("DB 신규채팅 추가 성공")
-                    } catch {
-                        print("DB 신규채팅 추가 실패: \(error)")
-                    }
-                }
-                
-                // 파일 저장 작업
-                for file in chat.files {
-                    group.addTask {
-                        await ImageFileManager.shared.saveImageFile(filename: file)
-                    }
-                }
-            }
+        // TODO: - 비교 필요
+        // (1) 불러온 채팅 DB에 저장
+        for chat in newChannelChats {
+            await saveMessageToDB(channelID: chat.channel_id, chattingResponse: chat)
         }
         
+        // (2) 불러온 채팅 비동기로 DB에 저장
+//        await withTaskGroup(of: Void.self) { group in
+//            for chat in newChannelChats {
+//                await saveMessageToDB(channelID: chat.channel_id, chattingResponse: chat)
+//            }
+//        }
+        
         // 업데이트된 채팅 다시 불러오기
-        guard let updatedDBChats = try dbClient.fetchChannel(channel.channel_id) else {
-            return []
-        }
-        return Array(updatedDBChats.chattings.sorted { $0.createdAt < $1.createdAt })
-            .map { $0.toPresentModel() }
-    }
-    
-    @discardableResult
-    private func saveMessageToDB(
-        channelID: String,
-        result: ChannelChattingResponse
-    ) async -> TaskGroup<Void> {
-        return await withTaskGroup(of: Void.self) { group in
-            // 채팅 저장 작업
-            group.addTask {
-                do {
-                    try dbClient.createChannelChatting(
-                        channelID,
-                        result.toDBModel(result.user.toDBModel())
-                    )
-                    print("sendedChat 저장성공")
-                } catch {
-                    print("sendedChat DB에 추가 실패")
-                }
-            }
-            
-            // 파일 저장 작업
-            for file in result.files {
-                group.addTask {
-                    await ImageFileManager.shared
-                        .saveImageFile(filename: file)
-                }
-            }
-            
-            return group
-        }
-    }
-    
-    private func fetchUpdatedChannelChats(
-        channelID: String
-    ) -> [ChattingPresentModel]? {
-        do {
-            // 채널 불러오기
-            guard let dbChannel = try dbClient.fetchChannel(channelID) else {
-                return nil
-            }
-            
-            // 디비에서 기존 채팅 불러오기
-            let newDbChannelChats = Array(dbChannel.chattings
-                .sorted(byKeyPath: "createdAt", ascending: true))
-                .map { $0.toPresentModel() }
-            
-            print("저장후 다시 불러온 채팅", newDbChannelChats)
-            return newDbChannelChats
-        } catch {
-            print("저장 후 채팅 불러오기 실패")
-            return nil
-        }
+        return fetchChannelChats(channelID: channel.channel_id).map { $0.toPresentModel() }
     }
 }
