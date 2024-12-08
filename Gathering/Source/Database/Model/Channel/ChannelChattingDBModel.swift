@@ -34,9 +34,12 @@ class ChannelChattingDBModel: Object {
 
 extension ChannelChattingDBModel {
     func toPresentModel() -> ChattingPresentModel {
+        let user = self.user?.toPresentModel() 
+        ?? Member(id: "", email: "", nickname: "", profileImage: "")
+        
         return ChattingPresentModel(
             id: self.chatID,
-            user: self.user?.toPresentModel() ?? Member(id: "", email: "", nickname: "", profileImage: ""),
+            user: user,
             name: self.user?.nickname ?? "",
             text: self.content,
             imageNames: Array(self.files),

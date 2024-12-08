@@ -20,10 +20,22 @@ final class ImageFileManager {
     ).first
     
     private var imageDirectory: URL? {
-        return documentDirectory?.appendingPathComponent("CachedImages")
+        return documentDirectory?.appendingPathComponent("static")
     }
     
-    /// 이미지 폴더 생성
+    private var profilesDirectory: URL? {
+        return imageDirectory?.appendingPathComponent("profiles")
+    }
+
+    private var channelChatsDirectory: URL? {
+        return imageDirectory?.appendingPathComponent("channelChats")
+    }
+
+    private var dmChatsDirectory: URL? {
+        return imageDirectory?.appendingPathComponent("dmChats")
+    }
+    
+    /// 이미지 폴더 및 하위 폴더 생성
     func createImageDirectory() {
         guard let imageDirectory else {
             print("이미지 폴더 경로를 생성할 수 없음")
@@ -31,13 +43,42 @@ final class ImageFileManager {
         }
         
         if FileManager.default.fileExists(atPath: imageDirectory.path) {
-            print("CachedImages 폴더가 이미 존재합니다.")
+            print("이미지 폴더가 이미 존재합니다.")
         } else {
             do {
-                try FileManager.default.createDirectory(at: imageDirectory, withIntermediateDirectories: true, attributes: nil)
-                print("CachedImages 폴더 생성 완료")
+                try FileManager.default.createDirectory(
+                    at: imageDirectory,
+                    withIntermediateDirectories: true,
+                    attributes: nil
+                )
+                print("이미지 폴더 생성 완료")
             } catch {
-                print("CachedImages 폴더 생성 실패:", error)
+                print("이미지 폴더 생성 실패:", error)
+            }
+        }
+        
+        // profiles, channelChats, dmChats 디렉토리 생성
+        createSubDirectory(at: profilesDirectory)
+        createSubDirectory(at: channelChatsDirectory)
+        createSubDirectory(at: dmChatsDirectory)
+    }
+    
+    /// 하위 디렉토리 생성 함수
+    private func createSubDirectory(at directory: URL?) {
+        guard let directory = directory else { return }
+        
+        if FileManager.default.fileExists(atPath: directory.path) {
+            print("\(directory.lastPathComponent) 폴더가 이미 존재합니다.")
+        } else {
+            do {
+                try FileManager.default.createDirectory(
+                    at: directory,
+                    withIntermediateDirectories: true,
+                    attributes: nil
+                )
+                print("\(directory.lastPathComponent) 폴더 생성 완료")
+            } catch {
+                print("\(directory.lastPathComponent) 폴더 생성 실패:", error)
             }
         }
     }
@@ -45,13 +86,13 @@ final class ImageFileManager {
     /// 이미지로 저장
     func saveImageFile(filename: String, image: UIImage) async {
         print(#function)
-        
-        guard let imageDirectory else {
+        guard !filename.isEmpty else { return }
+        guard let documentDirectory else {
             print("이미지 폴더 없음")
             return
         }
         
-        let fileURL = imageDirectory.appendingPathComponent(filename)
+        let fileURL = documentDirectory.appendingPathComponent(filename)
         guard let data = image.jpegData(compressionQuality: 0.5) else { return }
         do {
             try data.write(to: fileURL)
@@ -64,13 +105,13 @@ final class ImageFileManager {
     /// 파일 이름으로 저장 (내부에서 통신)
     func saveImageFile(filename: String) async {
         print(#function)
-        
-        guard let imageDirectory else {
+        guard !filename.isEmpty else { return }
+        guard let documentDirectory else {
             print("이미지 폴더 없음")
             return
         }
         
-        let fileURL = imageDirectory.appendingPathComponent(filename)
+        let fileURL = documentDirectory.appendingPathComponent(filename)
         do {
             let image = try await NetworkManager.shared.requestImage(
                 ImageRouter.fetchImage(path: filename)
@@ -88,11 +129,13 @@ final class ImageFileManager {
     }
     
     func loadImageFile(filename: String) -> UIImage? {
-        guard let imageDirectory else {
+        guard !filename.isEmpty else { return nil }
+        guard let documentDirectory else {
             print("이미지 폴더 없음")
             return nil
         }
-        let fileURL = imageDirectory.appendingPathComponent(filename)
+        
+        let fileURL = documentDirectory.appendingPathComponent(filename)
         if FileManager.default.fileExists(atPath: fileURL.path) {
             return UIImage(contentsOfFile: fileURL.path)
         } else {
@@ -101,11 +144,13 @@ final class ImageFileManager {
     }
     
     func deleteImageFile(filename: String) {
-        guard let imageDirectory else {
+        guard !filename.isEmpty else { return }
+        guard let documentDirectory else {
             print("이미지 폴더 없음")
             return
         }
-        let fileURL = imageDirectory.appendingPathComponent(filename)
+        
+        let fileURL = documentDirectory.appendingPathComponent(filename)
         if FileManager.default.fileExists(atPath: fileURL.path) {
             do {
                 try FileManager.default.removeItem(atPath: fileURL.path)
@@ -120,23 +165,21 @@ final class ImageFileManager {
     
     /// 이미지 폴더 내부 파일 모두 삭제
     func deleteAllImages() {
-        guard let imageDirectory else {
-            print("이미지 폴더 없음")
-            return
-        }
-        
-        do {
-            let fileURLs = try FileManager.default.contentsOfDirectory(
-                at: imageDirectory,
-                includingPropertiesForKeys: nil,
-                options: []
-            )
-            for fileURL in fileURLs {
-                try FileManager.default.removeItem(at: fileURL)
+        guard let profilesDirectory, let channelChatsDirectory, let dmChatsDirectory else { return }
+        [profilesDirectory, channelChatsDirectory, dmChatsDirectory].forEach { directory in
+            do {
+                let fileURLs = try FileManager.default.contentsOfDirectory(
+                    at: directory,
+                    includingPropertiesForKeys: nil,
+                    options: []
+                )
+                for fileURL in fileURLs {
+                    try FileManager.default.removeItem(at: fileURL)
+                }
+                print("이미지 폴더 내부 파일 삭제 완료")
+            } catch {
+                print("이미지 폴더 내부 파일 삭제 실패:", error)
             }
-            print("이미지 폴더 내부 파일 삭제 완료")
-        } catch {
-            print("이미지 폴더 내부 파일 삭제 실패:", error)
         }
     }
 }
