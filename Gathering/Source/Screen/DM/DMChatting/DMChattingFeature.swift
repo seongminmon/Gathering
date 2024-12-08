@@ -172,14 +172,14 @@ struct DMChattingFeature {
                         print("채팅 불러오기, 저장 실패")
                     }
                 }
-
-                // TODO: - 네비게이션 백 제스처 때도 소켓 Deinit 하도록 만들기
+                
             case .backButtonTap:
                 state.socket = nil
                 return .run { send in
                     await dismiss()
                 }
                 
+                // TODO: - onDisappear 시점에 소켓 Deinit 하도록 만들기
 //            case .onDisappear:
 //                print("DM 채팅 리듀서 - onDisapper")
 //                state.socket = nil
