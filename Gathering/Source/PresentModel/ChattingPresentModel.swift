@@ -14,7 +14,7 @@ struct ChattingPresentModel: Identifiable {
     let name: String
     let text: String?
     let imageNames: [String]
-    let date = Date()
+    let date: String
     let isMine: Bool
     let profile: String?
 }

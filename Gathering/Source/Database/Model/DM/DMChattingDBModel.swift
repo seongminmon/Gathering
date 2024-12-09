@@ -43,7 +43,8 @@ extension DMChattingDBModel {
             name: self.user?.nickname ?? "",
             text: self.content,
             imageNames: Array(self.files),
-            isMine: self.user?.userID == UserDefaultsManager.userID ? true : false,
+            date: self.createdAt,
+            isMine: self.user?.userID == UserDefaultsManager.userID,
             profile: self.user?.profileImage
         )
     }

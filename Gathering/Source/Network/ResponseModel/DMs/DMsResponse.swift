@@ -37,7 +37,8 @@ extension DMsResponse {
             name: self.user.nickname,
             text: self.content,
             imageNames: self.files,
-            isMine: user.user_id == UserDefaultsManager.userID ? true : false,
+            date: self.createdAt,
+            isMine: user.user_id == UserDefaultsManager.userID,
             profile: user.profileImage
         )
     }

@@ -133,7 +133,7 @@ struct DMView: View {
                     let date = lastChatting?.createdAt.createdAtToDate()
                     let dateString = date?.isToday ?? true ?
                     date?.toString(.todayChat) :
-                    date?.toString(.pastChatUntilDay)
+                    date?.toString(.pastChat)
                     
                     Text(dateString ?? "날짜 없음")
                         .font(Design.body)
