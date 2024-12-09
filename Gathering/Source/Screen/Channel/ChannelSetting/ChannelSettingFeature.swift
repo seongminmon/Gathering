@@ -87,7 +87,7 @@ struct ChannelSettingFeature {
     }
     
     var body: some ReducerOf<Self> {
-//        BindingReducer()
+        BindingReducer()
         Reduce { state, action in
             switch action {
                 

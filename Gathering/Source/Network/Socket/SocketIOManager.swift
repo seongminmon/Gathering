@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Combine
 
 import SocketIO
 
@@ -16,38 +15,50 @@ enum SocketInfo<ModelType: Decodable>: String {
     
     var namespace: String {
         switch self {
-        case .channel: 
+        case .channel:
             return "/ws-channel"
-        case .dm: 
+        case .dm:
             return "/ws-dm"
         }
     }
 }
 
-final class SocketIOManager<ModelType: Decodable> {
+final class SocketIOManager<ModelType: Decodable>: AsyncSequence {
     
     private var id: String
     private var socketInfo: SocketInfo<ModelType>
     private var socketManager: SocketManager?
     private var socket: SocketIOClient?
     
+    typealias Element = Result<ModelType, SocketError>
+    typealias AsyncIterator = AsyncStream<Element>.AsyncIterator
+    
+    private var stream: AsyncStream<Element>
+    private var continuation: AsyncStream<Element>.Continuation
+    
     init(
         id: String,
-        socketInfo: SocketInfo<ModelType>,
-        completionHandler: @escaping (Result<ModelType, Error>) -> Void
+        socketInfo: SocketInfo<ModelType>
     ) {
+        var continuation: AsyncStream<Element>.Continuation!
+        self.stream = AsyncStream<Element> { continuation = $0 }
+        self.continuation = continuation
+        
         self.id = id
         self.socketInfo = socketInfo
-        
         configureSocket()
         configureConnectionEvents()
-        configureSocketEvents(completionHandler)
+        configureSocketEvents()
         connect()
     }
     
     deinit {
         print("소켓 매니저 Deinit")
         disconnect()
+    }
+    
+    func makeAsyncIterator() -> AsyncIterator {
+        return stream.makeAsyncIterator()
     }
     
     private func configureSocket() {
@@ -79,15 +90,11 @@ final class SocketIOManager<ModelType: Decodable> {
         }
     }
     
-    private func configureSocketEvents(
-        _ completionHandler: @escaping (Result<ModelType, Error>) -> Void
-    ) {
-        guard let socket = socket else { return }
+    private func configureSocketEvents() {
+        guard let socket else { return }
         
-        socket.on(socketInfo.rawValue) { dataArray, _ in
-            print("소켓 데이터 이벤트 감지")
-            
-            guard let data = dataArray.first else {
+        socket.on(socketInfo.rawValue) { [weak self] dataArray, _ in
+            guard let self = self, let data = dataArray.first else {
                 print("소켓 데이터 없음")
                 return
             }
@@ -95,10 +102,11 @@ final class SocketIOManager<ModelType: Decodable> {
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: data)
                 let decodedData = try JSONDecoder().decode(ModelType.self, from: jsonData)
-                completionHandler(.success(decodedData))
+                continuation.yield(.success(decodedData))
+                print("소켓 데이터 보내기 성공")
             } catch {
                 print("소켓 데이터 디코딩 실패")
-                completionHandler(.failure(error))
+                continuation.yield(.failure(.messageSendFailed))
             }
         }
     }
@@ -117,5 +125,7 @@ final class SocketIOManager<ModelType: Decodable> {
         socket?.off(socketInfo.rawValue)
         socket = nil
         socketManager = nil
+        // 비동기 스트림 종료
+        continuation.finish()
     }
 }
