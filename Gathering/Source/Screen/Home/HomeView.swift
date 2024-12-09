@@ -105,7 +105,7 @@ extension HomeView {
                             )
                             .font(unreadResponse == nil ? Design.body : Design.bodyBold)
                         Spacer()
-                        if let count = unreadResponse?.count {
+                        if let count = unreadResponse {
                             Text("\(count)")
                                 .badge()
                         }
@@ -127,15 +127,15 @@ extension HomeView {
                     } label: {
                         Text(dmRoom.user.nickname)
                             .foregroundStyle(
-                                unreadResponse?.count == 0 || unreadResponse == nil ?
+                                unreadResponse == 0 || unreadResponse == nil ?
                                 Design.darkGray : Design.black
                             )
                             .font(
-                                unreadResponse?.count == 0 || unreadResponse == nil ?
+                                unreadResponse == 0 || unreadResponse == nil ?
                                 Design.body : Design.bodyBold
                             )
                         Spacer()
-                        if let count = unreadResponse?.count {
+                        if let count = unreadResponse {
                             Text("\(count)")
                                 .badge()
                         }
