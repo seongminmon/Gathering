@@ -21,7 +21,7 @@ struct ChannelChattingFeature {
         // 이전 화면에서 전달
         var channelID: String
         
-        var socket: SocketIOManager<ChannelChattingResponse>?
+        var socketManager: SocketIOManager<ChannelChattingResponse>?
         
         // 특정 채널 조회 결과값 (멤버 포함)
         var currentChannel: ChannelResponse?
@@ -48,6 +48,8 @@ struct ChannelChattingFeature {
         case backButtonTap
         
         // MARK: - 내부 액션
+        case connectSocket
+        case updateSocketManager(SocketIOManager<ChannelChattingResponse>?)
         case currentChannelResponse(ChannelResponse?)
         case updateChannelChattings([ChattingPresentModel])
         case fetchDBChatting(ChannelResponse?)
@@ -74,32 +76,16 @@ struct ChannelChattingFeature {
                 
                 // MARK: - 유저 액션
             case .task:
-                // 소켓 연결
-                state.socket = SocketIOManager(
-                    id: state.channelID,
-                    socketInfo: .channel
-                ) { [channelID = state.channelID] result in
-                    switch result {
-                    case .success(let data):
-                        print("소켓 data:", data)
-                        // TODO: - DB 추가 + fetch
-//                        // DB 저장 및 파일 처리
-//                        await saveMessageToDB(channelID: channelID, chattingResponse: data)
-//                        // 업데이트된 채팅 불러오기
-//                        let updatedChats = fetchChannelChats(channelID: channelID)
-//                            .map { $0.toPresentModel() }
-//                        await send(.updateChannelChattings(updatedChats))
-                        
-                    case .failure(let error):
-                        print("소켓 데이터 받기 실패")
+                return .run { [state = state] send in
+                    // 소켓 연결
+                    if state.socketManager == nil {
+                        await send(.connectSocket)
                     }
-                }
-                
-                // 내가 속한 특정 채널 정보 조회
-                return .run { [channelID = state.channelID] send in
+                    
+                    // 내가 속한 특정 채널 정보 조회
                     do {
                         let channel = try await channelClient.fetchChannel(
-                            channelID,
+                            state.channelID,
                             UserDefaultsManager.workspaceID
                         )
                         await send(.currentChannelResponse(channel))
@@ -134,22 +120,13 @@ struct ChannelChattingFeature {
                         let dataList = state.selectedImages?.compactMap {
                             $0.jpegData(compressionQuality: 0.5)
                         }
-                        let result = try await channelClient.sendChatting(
+                        _ = try await channelClient.sendChatting(
                             channelID,
                             UserDefaultsManager.workspaceID,
                             ChattingRequest(content: state.messageText, files: dataList ?? [])
                         )
                         // 메시지 전송 후 초기화
                         await send(.sendChannelChattingMessage)
-                        
-                        // TODO: - DB 저장 + 업데이트된 채팅 불러오기는 소켓 데이터에서 처리하기
-                        // DB 저장 및 파일 처리
-                        await saveMessageToDB(channelID: channelID, chattingResponse: result)
-                        
-                        // 업데이트된 채팅 불러오기
-                        let updatedChats = fetchChannelChats(channelID: channelID)
-                            .map { $0.toPresentModel() }
-                        await send(.updateChannelChattings(updatedChats))
                     } catch {
                         print("메세지 전송 실패")
                         Notification.postToast(title: "메세지 전송을 실패했습니다.")
@@ -157,15 +134,13 @@ struct ChannelChattingFeature {
                 }
                 
             case .backButtonTap:
-                state.socket = nil
                 return .run { send in
+                    await send(.updateSocketManager(nil))
                     await dismiss()
                 }
                 
-                // TODO: - onDisappear 시점에 소켓 Deinit 하도록 만들기
 //            case .onDisappear:
-//                print("채널 채팅 리듀서 - onDisappear")
-//                state.socket = nil
+                // TODO: - onDisappear 시점에 소켓 Deinit 하도록 만들기
 //                return .none
                 
                 // MARK: - 내부 액션
@@ -186,6 +161,39 @@ struct ChannelChattingFeature {
                         print("채팅 불러오기, 저장 실패: \(error)")
                     }
                 }
+                
+            case .connectSocket:
+                return .run { [channelID = state.channelID] send in
+                    // 소켓 연결
+                    let socketManager = SocketIOManager<ChannelChattingResponse>(
+                        id: channelID,
+                        socketInfo: .channel
+                    )
+                    
+                    // 상태에 소켓 매니저 할당
+                    await send(.updateSocketManager(socketManager))
+                    
+                    // 소켓 이벤트를 비동기적으로 처리
+                    for try await result in socketManager {
+                        switch result {
+                        case .success(let data):
+                            // DB 저장
+                            await saveMessageToDB(channelID: channelID, chattingResponse: data)
+                            // 업데이트된 채팅 불러오기
+                            let updatedChats = fetchChannelChats(channelID: channelID)
+                                .map { $0.toPresentModel() }
+                            // 상태 업데이트 액션 전송
+                            await send(.updateChannelChattings(updatedChats))
+                        case .failure(let error):
+                            print("소켓 데이터 받기 실패: \(error)")
+                            Notification.postToast(title: "소켓 데이터 받기 실패")
+                        }
+                    }
+                }
+                
+            case .updateSocketManager(let socketManager):
+                state.socketManager = socketManager
+                return .none
                 
             case .updateChannelChattings(let chatting):
                 state.message = chatting
