@@ -13,6 +13,7 @@ class DMRoomDBModel: Object {
     @Persisted(primaryKey: true) var roomID: String
     @Persisted var members: List<MemberDBModel>
     @Persisted var chattings: List<DMChattingDBModel>
+//    @Persisted var lastReadDate: String?
     
     convenience init(
         roomID: String,
@@ -23,5 +24,6 @@ class DMRoomDBModel: Object {
         self.roomID = roomID
         self.members.append(objectsIn: members)
         self.chattings.append(objectsIn: chattings)
+//        self.lastReadDate = chattings.last?.createdAt
     }
 }
