@@ -117,6 +117,8 @@ struct HomeFeature {
                         email: user.email,
                         profileImage: user.profileImage ?? "bird"
                     )))
+//                case .onDisappear:
+//                    print("채널 채팅 뷰 - onDisappear (부모 리듀서)")
                 default:
                     break
                 }

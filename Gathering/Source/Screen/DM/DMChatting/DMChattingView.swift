@@ -95,7 +95,11 @@ extension DMChattingView {
         VStack(alignment: .trailing) {
             HStack(alignment: .bottom) {
                 Spacer()
-                Text(message.date.toString(.todayChat))
+                let date = message.date.createdAtToDate() ?? Date()
+                let dateString = date.isToday
+                ? date.toString(.todayChat)
+                : date.toString(.pastChat)
+                Text(dateString)
                     .font(Design.caption2)
                     .foregroundStyle(Design.darkGray)
                 VStack(alignment: .trailing) {
@@ -150,19 +154,19 @@ extension DMChattingView {
                         //                                ChattingImageView(imageNames: imageName)
                         //                            }
                     }
-                    Text(message.date.toString(.todayChat))
+                    let date = message.date.createdAtToDate() ?? Date()
+                    let dateString = date.isToday
+                    ? date.toString(.todayChat)
+                    : date.toString(.pastChat)
+                    Text(dateString)
                         .font(Design.caption2)
                         .foregroundStyle(Design.darkGray)
                     Spacer()
-                    
                 }
-                
             }
             .frame(maxWidth: .infinity)
         }
-        
     }
-
 }
 extension DMChattingView {
     
@@ -216,6 +220,7 @@ extension DMChattingView {
         .padding(.vertical, 14)
         .padding(.horizontal, 16)
     }
+    
     private func selectePhotoView(images: [UIImage]?) -> some View {
         
         LazyHGrid(rows: [GridItem(.fixed(50))], spacing: 12, content: {

@@ -42,8 +42,9 @@ extension ChannelChattingDBModel {
             user: user,
             name: self.user?.nickname ?? "",
             text: self.content,
-            imageNames: Array(self.files),
-            isMine: self.user?.userID == UserDefaultsManager.userID ? true : false,
+            imageNames: Array(self.files), 
+            date: self.createdAt,
+            isMine: self.user?.userID == UserDefaultsManager.userID,
             profile: self.user?.profileImage
         )
     }

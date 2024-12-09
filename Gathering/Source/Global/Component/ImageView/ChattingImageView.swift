@@ -47,7 +47,7 @@ struct ChattingImageView: View {
         )
     }
     private func twoImages(_ imageStr: [String]) -> some View {
-        HStack {
+        HStack(spacing: 1) {
             CustomizableImageView(
                 urlString: imageStr[0],
                 width: 121,
@@ -64,7 +64,7 @@ struct ChattingImageView: View {
     }
     
     private func threeImages(_ imageStr: [String]) -> some View {
-        HStack {
+        HStack(spacing: 1) {
             CustomizableImageView(
                 urlString: imageStr[0],
                 width: 80,
@@ -89,7 +89,7 @@ struct ChattingImageView: View {
     private func fourImages(_ imageStr: [String]) -> some View {
         let firstPart = Array(imageStr.prefix(2))
         let secondPart = Array(imageStr.suffix(imageStr.count - 2))
-        return VStack {
+        return VStack(spacing: 1) {
             twoImages(firstPart)
             twoImages(secondPart)
         }
@@ -98,7 +98,7 @@ struct ChattingImageView: View {
     private func fiveImages(_ imageStr: [String]) -> some View {
         let firstPart = Array(imageStr.prefix(2))
         let secondPart = Array(imageStr.suffix(imageStr.count - 2))
-        return VStack {
+        return VStack(spacing: 1) {
             twoImages(firstPart)
             threeImages(secondPart)
         }

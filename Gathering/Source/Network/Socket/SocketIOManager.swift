@@ -118,6 +118,8 @@ final class SocketIOManager<ModelType: Decodable>: AsyncSequence {
     
     private func disconnect() {
         print("소켓 연결 끊기")
+        // 비동기 스트림 종료
+        continuation.finish()
         socket?.disconnect()
         socket?.off(clientEvent: .connect)
         socket?.off(clientEvent: .disconnect)
@@ -125,7 +127,5 @@ final class SocketIOManager<ModelType: Decodable>: AsyncSequence {
         socket?.off(socketInfo.rawValue)
         socket = nil
         socketManager = nil
-        // 비동기 스트림 종료
-        continuation.finish()
     }
 }

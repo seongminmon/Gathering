@@ -12,6 +12,9 @@ import Combine
 
 struct ChannelChattingView: View {
     
+    // TODO: - 키보드 올라올 때 채팅창 스크롤 내리기
+    // TODO: - 채팅 날짜 표시
+    
     @Perception.Bindable var store: StoreOf<ChannelChattingFeature>
     var keyboardSubscriber: AnyCancellable?
     
@@ -92,9 +95,16 @@ extension ChannelChattingView {
         VStack(alignment: .trailing) {
             HStack(alignment: .bottom) {
                 Spacer()
-                Text(message.date.toString(.todayChat))
+                
+                let date = message.date.createdAtToDate() ?? Date()
+                let dateString = date.isToday ? 
+                date.toString(.todayChat) :
+                date.toString(.pastChat)
+                
+                Text(dateString)
                     .font(Design.caption2)
                     .foregroundStyle(Design.darkGray)
+                
                 VStack(alignment: .trailing) {
                     if let text = message.text, !text.isEmpty {
                         Text(text)
@@ -148,7 +158,12 @@ extension ChannelChattingView {
                         }
 
                     }
-                    Text(message.date.toString(.todayChat))
+                    let date = message.date.createdAtToDate() ?? Date()
+                    let dateString = date.isToday 
+                    ? date.toString(.todayChat)
+                    : date.toString(.pastChat)
+                    
+                    Text(dateString)
                         .font(Design.caption2)
                         .foregroundStyle(Design.darkGray)
                     Spacer()
@@ -216,16 +231,16 @@ extension ChannelChattingView {
     }
     
     private func photoItem(image: UIImage) -> some View {
-        ZStack {
-            Image(uiImage: image)
-                .resizable()
-                .frame(width: 44, height: 44)
-                .aspectRatio(contentMode: .fill)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-            
-            Button {
-                store.send(.imageDeleteButtonTap(image))
-            } label: {
+        Button {
+            store.send(.imageDeleteButtonTap(image))
+        } label: {
+            ZStack {
+                Image(uiImage: image)
+                    .resizable()
+                    .frame(width: 44, height: 44)
+                    .aspectRatio(contentMode: .fill)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                
                 Image(systemName: "xmark.circle")
                     .resizable()
                     .frame(width: 20, height: 20)
@@ -239,5 +254,4 @@ extension ChannelChattingView {
             }
         }
     }
-
 }
