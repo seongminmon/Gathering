@@ -41,6 +41,7 @@ struct ChannelChattingFeature {
         
         // MARK: - 유저 액션
         case task
+//        case onDisappear
         case sendButtonTap
         case imageDeleteButtonTap(UIImage)
         case settingButtonTap(ChannelResponse?)
@@ -140,7 +141,9 @@ struct ChannelChattingFeature {
                 }
                 
 //            case .onDisappear:
-                // TODO: - onDisappear 시점에 소켓 Deinit 하도록 만들기
+//                // TODO: - onDisappear 시점에 소켓 Deinit 하도록 만들기
+//                print("채널 채팅 리듀서 - onDisappear")
+//                state.socketManager = nil
 //                return .none
                 
                 // MARK: - 내부 액션
