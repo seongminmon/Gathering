@@ -15,6 +15,7 @@ class ChannelDBModel: Object {
     @Persisted var channelName: String
     @Persisted var members: List<MemberDBModel>
     @Persisted var chattings: List<ChannelChattingDBModel>
+//    @Persisted var lastReadDate: String?
     
     convenience init(
         channelID: String,
@@ -27,5 +28,6 @@ class ChannelDBModel: Object {
         self.channelName = channelName
         self.members.append(objectsIn: members)
         self.chattings.append(objectsIn: chattings)
+//        self.lastReadDate = chattings.last?.createdAt
     }
 }
