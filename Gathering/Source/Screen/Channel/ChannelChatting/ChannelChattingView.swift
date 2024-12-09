@@ -75,16 +75,16 @@ extension ChannelChattingView {
             }
             .frame(maxWidth: .infinity)
             .onAppear {
-//                proxy
-//                    .scrollTo(store.scrollViewID, anchor: .bottom)
-                scrollToBottom(proxy: proxy)
+                proxy
+                    .scrollTo(store.scrollViewID, anchor: .bottom)
+//                scrollToBottom(proxy: proxy)
             }
             // 메시지 추가 시 자동 스크롤
             .onChange(of: store.message.count) { _ in
-//                withAnimation {
-//                    proxy.scrollTo(store.scrollViewID, anchor: .bottom)
-//                }
-                scrollToBottom(proxy: proxy)
+                withAnimation {
+                    proxy.scrollTo(store.scrollViewID, anchor: .bottom)
+                }
+//                scrollToBottom(proxy: proxy)
             }
         }
     }
