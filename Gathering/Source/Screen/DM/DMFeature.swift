@@ -198,34 +198,34 @@ struct DMFeature {
                 
                 // DM Room List 구한 뒤 모든 DM Room에 대한 Effect를 병렬로 실행
                 return .none
-                /*
-                return .merge(state.dmRoomList.map { dmRoom in
-                    return .run { send in
-                        do {
-                            // Realm에서 roomID 기준으로 DM 채팅 내역 가져오기
-                            let dmChats = try dbClient.fetchDMChats(dmRoom.id)
-                            let lastCreatedAt = dmChats.last?.createdAt ?? ""
-                            
-                            // realm에서 불러온 데이터들 state에 저장
-                            await send(.addDMChats(
-                                dmRoom,
-                                dmChats.map { $0.toResponseModel() }
-                            ))
-                            
-                            let (chats, unreadCount) = try await fetchDMRoomDetails(
-                                workspaceID: workspaceID,
-                                roomID: dmRoom.id,
-                                lastCreatedAt: lastCreatedAt
-                            )
-                            
-                            await send(.dmChatsResponse(dmRoom, chats))
-                            await send(.unreadCountResponse(dmRoom, unreadCount))
-                        } catch {
-                            print("DM 채팅 조회 실패:", error)
-                        }
-                    }
-                })
-                */
+                
+//                return .merge(state.dmRoomList.map { dmRoom in
+//                    return .run { send in
+//                        do {
+//                            // Realm에서 roomID 기준으로 DM 채팅 내역 가져오기
+//                            let dmChats = try dbClient.fetchDMChats(dmRoom.id)
+//                            let lastCreatedAt = dmChats.last?.createdAt ?? ""
+//                            
+//                            // realm에서 불러온 데이터들 state에 저장
+//                            await send(.addDMChats(
+//                                dmRoom,
+//                                dmChats.map { $0.toResponseModel() }
+//                            ))
+//                            
+//                            let (chats, unreadCount) = try await fetchDMRoomDetails(
+//                                workspaceID: workspaceID,
+//                                roomID: dmRoom.id,
+//                                lastCreatedAt: lastCreatedAt
+//                            )
+//                            
+//                            await send(.dmChatsResponse(dmRoom, chats))
+//                            await send(.unreadCountResponse(dmRoom, unreadCount))
+//                        } catch {
+//                            print("DM 채팅 조회 실패:", error)
+//                        }
+//                    }
+//                })
+                
                 
             case .addDMChats(let dmRoom, let chats):
                 state.dmChattings[dmRoom, default: []].append(contentsOf: chats)
