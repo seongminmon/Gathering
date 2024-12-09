@@ -216,16 +216,16 @@ extension ChannelChattingView {
     }
     
     private func photoItem(image: UIImage) -> some View {
-        ZStack {
-            Image(uiImage: image)
-                .resizable()
-                .frame(width: 44, height: 44)
-                .aspectRatio(contentMode: .fill)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-            
-            Button {
-                store.send(.imageDeleteButtonTap(image))
-            } label: {
+        Button {
+            store.send(.imageDeleteButtonTap(image))
+        } label: {
+            ZStack {
+                Image(uiImage: image)
+                    .resizable()
+                    .frame(width: 44, height: 44)
+                    .aspectRatio(contentMode: .fill)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                
                 Image(systemName: "xmark.circle")
                     .resizable()
                     .frame(width: 20, height: 20)
@@ -239,5 +239,4 @@ extension ChannelChattingView {
             }
         }
     }
-
 }
