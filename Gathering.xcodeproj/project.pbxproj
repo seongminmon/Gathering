@@ -103,7 +103,7 @@
 		843E7FED2CE338420057A426 /* EditMyProfileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E7FEC2CE338420057A426 /* EditMyProfileResponse.swift */; };
 		847A3F842CD9000F004A9361 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F832CD9000F004A9361 /* HomeView.swift */; };
 		847A3F882CD9C032004A9361 /* LoadedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F872CD9C032004A9361 /* LoadedImageView.swift */; };
-		847A3F8B2CD9EA54004A9361 /* TempModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F8A2CD9EA54004A9361 /* TempModel.swift */; };
+		847A3F8B2CD9EA54004A9361 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F8A2CD9EA54004A9361 /* Channel.swift */; };
 		847A3F902CDA440F004A9361 /* CustomDisclosureGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F8F2CDA440F004A9361 /* CustomDisclosureGroup.swift */; };
 		847A3F922CDA9FC0004A9361 /* GatheringNavigationStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F912CDA9FC0004A9361 /* GatheringNavigationStack.swift */; };
 		847A3F972CDAFB19004A9361 /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F962CDAFB19004A9361 /* TargetType.swift */; };
@@ -260,7 +260,7 @@
 		843E7FEC2CE338420057A426 /* EditMyProfileResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMyProfileResponse.swift; sourceTree = "<group>"; };
 		847A3F832CD9000F004A9361 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		847A3F872CD9C032004A9361 /* LoadedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedImageView.swift; sourceTree = "<group>"; };
-		847A3F8A2CD9EA54004A9361 /* TempModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempModel.swift; sourceTree = "<group>"; };
+		847A3F8A2CD9EA54004A9361 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		847A3F8F2CDA440F004A9361 /* CustomDisclosureGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDisclosureGroup.swift; sourceTree = "<group>"; };
 		847A3F912CDA9FC0004A9361 /* GatheringNavigationStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatheringNavigationStack.swift; sourceTree = "<group>"; };
 		847A3F962CDAFB19004A9361 /* TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
@@ -718,7 +718,7 @@
 			isa = PBXGroup;
 			children = (
 				A0E444C42CDD0A5C0024AE71 /* ChattingPresentModel.swift */,
-				847A3F8A2CD9EA54004A9361 /* TempModel.swift */,
+				847A3F8A2CD9EA54004A9361 /* Channel.swift */,
 				249FB1052CEF5FFD00CA418B /* Member.swift */,
 				249FB1072CEF602300CA418B /* DMsRoom.swift */,
 			);
@@ -1081,7 +1081,7 @@
 				24ABE96A2CDB9AB8000E7EC5 /* KakaoLoginButton.swift in Sources */,
 				A0E444E92CE2C3D80024AE71 /* DMOpponentRequest.swift in Sources */,
 				847A3FA12CDCB96E004A9361 /* SheetHeaderView.swift in Sources */,
-				847A3F8B2CD9EA54004A9361 /* TempModel.swift in Sources */,
+				847A3F8B2CD9EA54004A9361 /* Channel.swift in Sources */,
 				24ABE9622CDB99B1000E7EC5 /* RoundedBorderButton.swift in Sources */,
 				843E7FE92CE337F80057A426 /* EditMyProfileImageRequest.swift in Sources */,
 				24ABE96E2CDCE2A3000E7EC5 /* NetworkManager.swift in Sources */,

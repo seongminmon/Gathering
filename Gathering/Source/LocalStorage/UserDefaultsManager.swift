@@ -59,7 +59,7 @@ enum UserDefaultsManager {
         UserDefaultsManager.userID = id
     }
     
-    static func recentWorkspaceID(_ workspaceID: String) {
+    static func saveWorkspaceID(_ workspaceID: String) {
         UserDefaultsManager.workspaceID = workspaceID
     }
     
