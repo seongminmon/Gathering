@@ -90,7 +90,6 @@ extension DBClient: DependencyKey {
                 ) {
                     // 이미 저장된 `MemberDBModel` 객체를 사용
                     try realm.write {
-                        existingUser.profileImage = user.profileImage
                         existingUser.nickname = user.nickname
                     }
                     object.user = existingUser
