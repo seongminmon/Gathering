@@ -196,7 +196,6 @@ struct DMFeature {
                                 $0.createdAt < $1.createdAt
                             }
                             let lastCreatedAt = dbChattings?.last?.createdAt ?? Date.firstDate
-                            print("마지막 날짜는??", lastCreatedAt)
                             
                             // DB의 마지막 날짜 기준으로 DM 채팅 + Unread API 통신
                             let (dmChats, unreadCount) = try await fetchDMRoomDetails(
