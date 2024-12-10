@@ -10,7 +10,6 @@ import SwiftUI
 import ComposableArchitecture
 
 struct HomeView: View {
-    // TODO: - 채널 생성 시 뷰 갱신 필요
     
     @Perception.Bindable var store: StoreOf<HomeFeature>
     
@@ -101,13 +100,16 @@ extension HomeView {
                     } label: {
                         Text(channel.name)
                             .foregroundColor(
-                                unreadResponse == nil ? Design.darkGray : Design.black
+                                unreadResponse == 0 || unreadResponse == nil ?
+                                Design.darkGray : Design.black
                             )
-                            .font(unreadResponse == nil ? Design.body : Design.bodyBold)
+                            .font(unreadResponse == 0 || unreadResponse == nil ?
+                                  Design.body : Design.bodyBold)
                         Spacer()
                         if let count = unreadResponse {
                             Text("\(count)")
                                 .badge()
+                                .opacity(count ?? 0 <= 0 ? 0 : 1)
                         }
                     }
                 }
@@ -138,6 +140,7 @@ extension HomeView {
                         if let count = unreadResponse {
                             Text("\(count)")
                                 .badge()
+                                .opacity(count ?? 0 <= 0 ? 0 : 1)
                         }
                     }
                 }

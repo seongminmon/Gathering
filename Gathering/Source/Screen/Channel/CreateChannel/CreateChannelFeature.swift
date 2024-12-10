@@ -13,6 +13,9 @@ import ComposableArchitecture
 struct CreateChannelFeature {
     
     @Dependency(\.channelClient) var channelClient
+    @Dependency(\.userClient) var userClient
+    @Dependency(\.dbClient) var dbClient
+    @Dependency(\.dismiss) var dismiss
     
     @ObservableState
     struct State {
@@ -26,10 +29,9 @@ struct CreateChannelFeature {
     enum Action: BindableAction {
         case binding(BindingAction<State>)
         case saveButtonTapped
+        case channelCreated
     }
-    
-    @Dependency(\.dismiss) var dismiss
-    
+
     var body: some ReducerOf<Self> {
         BindingReducer()
         Reduce { state, action in
@@ -46,7 +48,17 @@ struct CreateChannelFeature {
                             ChannelRequest(name: state.channelName,
                                            description: state.channelDescription,
                                            image: nil))
+                        
+                        // 나를 포함해서 채널 생성
+                        let myData = try await userClient.fetchUserProfile(UserDefaultsManager.userID)
+                        let dbChannels = result.toDBModel([myData.toDBModel()])
+                        try dbClient.update(dbChannels)
+                        
                         Notification.postToast(title: "채널이 생성되었습니다")
+                        
+                        // 뷰 갱신을 위한 액션
+                        await send(.channelCreated)
+                        
                         await dismiss()
                     } catch {
                         if let errorCode = (error as? ErrorResponse)?.errorCode {
@@ -59,6 +71,8 @@ struct CreateChannelFeature {
                         }
                     }
                 }
+            case .channelCreated:
+                return .none
             }
         }
     }

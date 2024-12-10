@@ -107,7 +107,7 @@ struct DMFeature {
                                 Notification.postToast(title: "현재 워크 스페이스 없음")
                                 return
                             }
-                            UserDefaultsManager.recentWorkspaceID(workspaceID)
+                            UserDefaultsManager.saveWorkspaceID(workspaceID)
                             await send(.myWorkspaceResponse(workspaceResult.first))
                         }
                         
