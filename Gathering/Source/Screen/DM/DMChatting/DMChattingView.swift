@@ -150,9 +150,9 @@ extension DMChattingView {
                                         .stroke(Design.gray, lineWidth: 1) // 테두리 색과 두께 설정
                                 )
                         }
-                        //                            if let imageName = message.imageNames {
-                        //                                ChattingImageView(imageNames: imageName)
-                        //                            }
+                        if !message.imageNames.isEmpty {
+                            ChattingImageView(imageNames: message.imageNames)
+                        }
                     }
                     let date = message.date.createdAtToDate() ?? Date()
                     let dateString = date.isToday

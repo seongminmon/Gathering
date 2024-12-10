@@ -118,7 +118,8 @@ struct DMChattingFeature {
                         let dataList = state.selectedImages?.compactMap {
                             $0.jpegData(compressionQuality: 0.5)
                         }
-                        _ = try await dmsClient.sendDMMessage(
+                       
+                        let result = try await dmsClient.sendDMMessage(
                             UserDefaultsManager.workspaceID,
                             state.dmsRoomResponse.id,
                             DMRequest(
@@ -126,6 +127,7 @@ struct DMChattingFeature {
                                 files: dataList ?? []
                             )
                         )
+                        print(result)
                         await send(.sendDmMessage)
                     } catch {
                         print("멀티파트 실패 ㅠㅠ ")
@@ -192,7 +194,10 @@ struct DMChattingFeature {
                 state.socketManager = socketManager
                 return .none
                 
-            default:
+            case .binding(_):
+                return .none
+                
+            case .fetchDBChatting(_):
                 return .none
             }
         }
@@ -277,10 +282,10 @@ extension DMChattingFeature {
         
         // 파일 저장 작업
         for file in chat.files {
-            
             await ImageFileManager.shared
                 .saveImageFile(filename: file)
         }
+        
     }
     
     // DB에 저장된 채팅의 마지막 날짜로 API불러서 신규 채팅 DB에 저장하고 패치하기
