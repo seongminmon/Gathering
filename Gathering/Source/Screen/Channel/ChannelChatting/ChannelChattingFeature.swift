@@ -14,6 +14,7 @@ struct ChannelChattingFeature {
     
     @Dependency(\.channelClient) var channelClient
     @Dependency(\.dbClient) var dbClient
+    @Dependency(\.userClient) var userClient
     @Dependency(\.dismiss) var dismiss
     
     @ObservableState
@@ -155,7 +156,7 @@ struct ChannelChattingFeature {
                 return .run { send in
                     guard let channel else { return }
                     // 채널 저장 또는 업데이트
-                    saveOrUpdateChannel(channel: channel)
+                    await saveOrUpdateChannel(channel: channel)
                     // 새 채팅 불러오기 및 저장
                     do {
                         let updatedChats = try await fetchAndSaveNewChats(channel: channel)
@@ -245,12 +246,46 @@ extension ChannelChattingFeature {
             await ImageFileManager.shared.saveImageFile(filename: file)
         }
     }
-    
-    private func saveOrUpdateChannel(channel: ChannelResponse) {
+    private func checkUpdatedMemeberProfile(userID: String) async {
+        do {
+            let dbProfile = try dbClient.fetchMember(userID)?.profileImage
+            let currentProfile = try await userClient.fetchUserProfile(userID)
+            
+            guard let dbProfileImage = dbProfile else {
+                guard let currentProfileImage = currentProfile.profileImage else {
+                    return
+                }
+                // 프로필이미지 저장
+                await ImageFileManager.shared
+                    .saveImageFile(filename: currentProfileImage)
+                return
+            }
+            
+            if dbProfileImage != currentProfile.profileImage {
+               ImageFileManager.shared.deleteImageFile(filename: dbProfileImage)
+                guard let currentProfileImage = currentProfile.profileImage else {
+                    return
+                }
+                // 프로필이미지 저장
+                await ImageFileManager.shared
+                    .saveImageFile(filename: currentProfileImage)
+                 
+                try dbClient.update(currentProfile.toDBModel())
+            }
+         
+        } catch {
+            print("프로필불러오기 실패")
+        }
+    }
+
+    private func saveOrUpdateChannel(channel: ChannelResponse) async {
         guard let channelMembers = channel.channelMembers else { return }
         let members: [MemberDBModel] = channelMembers.map { $0.toDBModel() }
         
         // TODO: - 멤버 profile 사진 파일 업데이트 (저장 + 삭제)
+        for member in members {
+            await checkUpdatedMemeberProfile(userID: member.userID)
+        }
         
         do {
             if let existingDBChannel = try dbClient.fetchChannel(channel.channel_id) {
