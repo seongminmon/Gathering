@@ -63,7 +63,7 @@ struct DMFeature {
         case workspaceMemberResponse([Member])
         case dmRoomsResponse([DMsRoom])
         
-        case dmChatsResponse(DMsRoom, [DMsResponse])
+        case dmChatsResponse(DMsRoom, ChattingPresentModel)
         case unreadCountResponse(DMsRoom, UnreadDMsResponse)
         
         case inviteMemberResponse(Member)
@@ -196,6 +196,7 @@ struct DMFeature {
                                 $0.createdAt < $1.createdAt
                             }
                             let lastCreatedAt = dbChattings?.last?.createdAt ?? Date.firstDate
+                            let lastChat = dbChattings?.last?.toPresentModel()
                             
                             // DB의 마지막 날짜 기준으로 DM 채팅 + Unread API 통신
                             let (dmChats, unreadCount) = try await fetchDMRoomDetails(
@@ -203,7 +204,14 @@ struct DMFeature {
                                 roomID: dmRoom.id,
                                 lastCreatedAt: lastCreatedAt
                             )
-                            await send(.dmChatsResponse(dmRoom, dmChats))
+                            
+                            if let lastChat = dmChats.last?.toPresentModel() {
+                                await send(.dmChatsResponse(dmRoom, lastChat))
+                            } else {
+                                if let lastChat {
+                                    await send(.dmChatsResponse(dmRoom, lastChat))
+                                }
+                            }
                             await send(.unreadCountResponse(dmRoom, unreadCount))
                         } catch {
                             print("DM 채팅 조회 실패:", error)
@@ -211,10 +219,8 @@ struct DMFeature {
                     }
                 })
                 
-            case .dmChatsResponse(let dmRoom, let chats):
-                if let lastChat = chats.last?.toPresentModel() {
-                    state.dmLastChattings[dmRoom] = lastChat
-                }
+            case .dmChatsResponse(let dmRoom, let lastChat):
+                state.dmLastChattings[dmRoom] = lastChat
                 return .none
                 
             case .unreadCountResponse(let dmRoom, let unreadCount):

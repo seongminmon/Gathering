@@ -124,6 +124,7 @@ struct DMView: View {
                     Text(lastChatting?.text ?? "대화를 시작해보세요")
                         .font(Design.body)
                         .foregroundStyle(Design.darkGray)
+                        .lineLimit(2)
                 }
                 
                 Spacer()

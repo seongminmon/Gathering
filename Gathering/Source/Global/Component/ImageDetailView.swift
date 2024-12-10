@@ -41,7 +41,6 @@ struct ImageDetailView: View {
             pageIndicator
         }
         .navigationBarHidden(true)
-//        .toolbar(.hidden, for: .tabBar)
     }
     
     // 이미지 콘텐츠 뷰
