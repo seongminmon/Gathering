@@ -7,13 +7,12 @@
 
 import SwiftUI
 
-import ComposableArchitecture
 import Combine
+import ComposableArchitecture
 
 struct ChannelChattingView: View {
     
     // TODO: - 키보드 올라올 때 채팅창 스크롤 내리기
-    // TODO: - 채팅 날짜 표시
     
     @Perception.Bindable var store: StoreOf<ChannelChattingFeature>
     var keyboardSubscriber: AnyCancellable?
@@ -32,6 +31,7 @@ struct ChannelChattingView: View {
             messageInputView
         }
         .navigationBarBackButtonHidden()
+        .toolbar(.hidden, for: .tabBar)
         .task { store.send(.task) }
         .onTapGesture {
             hideKeyboard()
@@ -120,7 +120,11 @@ extension ChannelChattingView {
                             )
                     }
                     if !message.imageNames.isEmpty {
-                        ChattingImageView(imageNames: message.imageNames)
+                        NavigationLink {
+                            ImageDetailView(imageNames: message.imageNames)
+                        } label: {
+                            ChattingImageView(imageNames: message.imageNames)
+                        }
                     }
                 }
             }
@@ -154,15 +158,18 @@ extension ChannelChattingView {
                                 )
                         }
                         if !message.imageNames.isEmpty {
-                            ChattingImageView(imageNames: message.imageNames)
+                            NavigationLink {
+                                ImageDetailView(imageNames: message.imageNames)
+                            } label: {
+                                ChattingImageView(imageNames: message.imageNames)
+                            }
                         }
-
                     }
+                    
                     let date = message.date.createdAtToDate() ?? Date()
                     let dateString = date.isToday 
                     ? date.toString(.todayChat)
                     : date.toString(.pastChat)
-                    
                     Text(dateString)
                         .font(Design.caption2)
                         .foregroundStyle(Design.darkGray)

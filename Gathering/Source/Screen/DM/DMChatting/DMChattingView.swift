@@ -31,6 +31,7 @@ extension DMChattingView {
             messageInputView()
         }
         .navigationBarBackButtonHidden()
+        .toolbar(.hidden, for: .tabBar)
         .task { store.send(.task) }
         .onTapGesture {
             // 화면을 탭할 때 키보드 내리기
@@ -39,7 +40,6 @@ extension DMChattingView {
         .onDisappear {
 //            print("DM 채팅 뷰 - onDisappear")
 //            store.send(.onDisappear)
-            
             // 뷰가 사라질 때 키보드 노티피케이션 구독 해제
             keyboardSubscriber?.cancel()
         }
@@ -117,7 +117,11 @@ extension DMChattingView {
                             )
                     }
                     if !message.imageNames.isEmpty {
-                        ChattingImageView(imageNames: message.imageNames)
+                        NavigationLink {
+                            ImageDetailView(imageNames: message.imageNames)
+                        } label: {
+                            ChattingImageView(imageNames: message.imageNames)
+                        }
                     }
                 }
             }
@@ -151,7 +155,11 @@ extension DMChattingView {
                                 )
                         }
                         if !message.imageNames.isEmpty {
-                            ChattingImageView(imageNames: message.imageNames)
+                            NavigationLink {
+                                ImageDetailView(imageNames: message.imageNames)
+                            } label: {
+                                ChattingImageView(imageNames: message.imageNames)
+                            }
                         }
                     }
                     let date = message.date.createdAtToDate() ?? Date()
