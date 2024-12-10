@@ -86,19 +86,6 @@ struct DMChattingFeature {
                             dmsRoomInfo: state.dmsRoomResponse
                         )
                         await send(.savedDBChattingResponse(updatedChats))
-
-                        // MARK: - 소켓 테스트
-//                state.socket = SocketIOManager(
-//                    id: state.dmsRoomResponse.id,
-//                    socketInfo: .dm
-//                ) { result in
-//                    switch result {
-//                    case .success(let data):
-//                        print("DM 소켓 데이터", data)
-//                    case .failure(let error):
-//                        print("DM 소켓 error", error)
-//                    }
-//                }
                     } catch {
                         print("채팅 불러오기, 저장 실패: \(error)")
                     }
@@ -209,7 +196,11 @@ extension DMChattingFeature {
     private func fetchDmsMember(dmsRoomInfo: DMsRoom)
     async -> [MemberDBModel] {
         do {
-            let opponentInfo = dmsRoomInfo.user.toDBModel()
+//            let opponentInfo = dmsRoomInfo.user.toDBModel()
+            let opponentInfo = try await userClient.fetchUserProfile(
+                dmsRoomInfo.user.id
+            ).toDBModel()
+            print("opponentInfo 프로필..\(opponentInfo.profileImage)")
             let myInfo = try await userClient.fetchMyProfile().toDBModel()
             let members: [MemberDBModel] = [opponentInfo, myInfo]
             return members
@@ -217,12 +208,46 @@ extension DMChattingFeature {
             print("내프로필 패치 실패")
             return []
         }
+        
+    }
+    private func checkUpdatedMemeberProfile(userID: String) async {
+        do {
+            let dbProfile = try dbClient.fetchMember(userID)?.profileImage
+            let currentProfile = try await userClient.fetchUserProfile(userID)
+            
+            guard let dbProfileImage = dbProfile else {
+                guard let currentProfileImage = currentProfile.profileImage else {
+                    return
+                }
+                // 프로필이미지 저장
+                await ImageFileManager.shared
+                    .saveImageFile(filename: currentProfileImage)
+                return
+            }
+            
+            if dbProfileImage != currentProfile.profileImage {
+               ImageFileManager.shared.deleteImageFile(filename: dbProfileImage)
+                guard let currentProfileImage = currentProfile.profileImage else {
+                    return
+                }
+                // 프로필이미지 저장
+                await ImageFileManager.shared
+                    .saveImageFile(filename: currentProfileImage)
+                 
+                try dbClient.update(currentProfile.toDBModel())
+            }
+         
+        } catch {
+            print("프로필불러오기 실패")
+        }
     }
     
     // DmsRoom DB에 존재여부에 따라 저장 or 업데이트
     private func saveOrUpdateDmsRoom(dmsRoomInfo: DMsRoom) async {
         do {
             let members = await fetchDmsMember(dmsRoomInfo: dmsRoomInfo)
+            
+            await checkUpdatedMemeberProfile(userID: dmsRoomInfo.user.id)
             
             if let dbDMsRoom = try dbClient.fetchDMRoom(dmsRoomInfo.id) {
                 do {
