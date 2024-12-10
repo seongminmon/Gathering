@@ -31,6 +31,10 @@ struct EmailLoginFeature {
         case logInButtonTap
         case logInResponse(JoinLoginResponse)
         case logInError(Error)
+        
+        case test1ButtonTap
+        case test2ButtonTap
+        case test3ButtonTap
     }
     
     var body: some ReducerOf<Self> {
@@ -84,6 +88,21 @@ struct EmailLoginFeature {
                 // 통신 실패 시 토스트 메시지
                 print(error)
                 Notification.postToast(title: "로그인 통신 실패")
+                return .none
+                
+            case .test1ButtonTap:
+                state.emailText = "yes@yes.com"
+                state.passwordText = "Ssesac1234@@"
+                return .none
+                
+            case .test2ButtonTap:
+                state.emailText = "ksm1@ksm.com"
+                state.passwordText = "1q2w3e4R!"
+                return .none
+                
+            case .test3ButtonTap:
+                state.emailText = "yyyy@asdf.com"
+                state.passwordText = "!Qwer1234"
                 return .none
             }
         }
