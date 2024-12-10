@@ -15,8 +15,6 @@ struct DMFeature {
     @Dependency(\.workspaceClient) var workspaceClient
     @Dependency(\.userClient) var userClient
     @Dependency(\.dmsClient) var dmsClient
-    
-    // Unread + 마지막 채팅 정보 보여줄 때 DB 정보 불러오기 필요
     @Dependency(\.dbClient) var dbClient
     
     @Reducer
@@ -36,8 +34,8 @@ struct DMFeature {
         var workspaceMembers: [Member] = []
         var dmRoomList: [DMsRoom] = []
         
-        // DMRoom 별로 채팅들 + UnRead Count 가져야 함
-        var dmChattings = [DMsRoom: [DMsResponse]]()
+        // DMRoom 별로 마지막 채팅 + UnReadCount
+        var dmLastChattings = [DMsRoom: ChattingPresentModel]()
         var dmUnreads = [DMsRoom: UnreadDMsResponse]()
         
         // 멤버 초대
@@ -65,7 +63,6 @@ struct DMFeature {
         case workspaceMemberResponse([Member])
         case dmRoomsResponse([DMsRoom])
         
-        case addDMChats(DMsRoom, [DMsResponse])
         case dmChatsResponse(DMsRoom, [DMsResponse])
         case unreadCountResponse(DMsRoom, UnreadDMsResponse)
         
@@ -76,7 +73,6 @@ struct DMFeature {
         BindingReducer()
         Reduce { state, action in
             switch action {
-                
                 // MARK: - Binding
             case .binding(\.email):
                 state.inviteButtonValid = !state.email.isEmpty
@@ -191,55 +187,38 @@ struct DMFeature {
             case .dmRoomsResponse(let dmRooms):
                 state.dmRoomList = dmRooms
                 
-                guard let workspaceID = state.currentWorkspace?.workspace_id else {
-                    Notification.postToast(title: "현재 워크 스페이스 없음")
-                    return .none
-                }
-                
                 // DM Room List 구한 뒤 모든 DM Room에 대한 Effect를 병렬로 실행
-                return .none
-                
-//                return .merge(state.dmRoomList.map { dmRoom in
-//                    return .run { send in
-//                        do {
-//                            // Realm에서 roomID 기준으로 DM 채팅 내역 가져오기
-//                            let dmChats = try dbClient.fetchDMChats(dmRoom.id)
-//                            let lastCreatedAt = dmChats.last?.createdAt ?? ""
-//                            
-//                            // realm에서 불러온 데이터들 state에 저장
-//                            await send(.addDMChats(
-//                                dmRoom,
-//                                dmChats.map { $0.toResponseModel() }
-//                            ))
-//                            
-//                            let (chats, unreadCount) = try await fetchDMRoomDetails(
-//                                workspaceID: workspaceID,
-//                                roomID: dmRoom.id,
-//                                lastCreatedAt: lastCreatedAt
-//                            )
-//                            
-//                            await send(.dmChatsResponse(dmRoom, chats))
-//                            await send(.unreadCountResponse(dmRoom, unreadCount))
-//                        } catch {
-//                            print("DM 채팅 조회 실패:", error)
-//                        }
-//                    }
-//                })
-                
-                
-            case .addDMChats(let dmRoom, let chats):
-                state.dmChattings[dmRoom, default: []].append(contentsOf: chats)
-                return .none
+                return .merge(dmRooms.map { dmRoom in
+                    return .run { send in
+                        do {
+                            let dbDMRoom = try dbClient.fetchDMRoom(dmRoom.id)
+                            let dbChattings = dbDMRoom?.chattings.sorted {
+                                $0.createdAt < $1.createdAt
+                            }
+                            let lastCreatedAt = dbChattings?.last?.createdAt ?? Date.firstDate
+                            print("마지막 날짜는??", lastCreatedAt)
+                            
+                            // DB의 마지막 날짜 기준으로 DM 채팅 + Unread API 통신
+                            let (dmChats, unreadCount) = try await fetchDMRoomDetails(
+                                workspaceID: UserDefaultsManager.workspaceID,
+                                roomID: dmRoom.id,
+                                lastCreatedAt: lastCreatedAt
+                            )
+                            await send(.dmChatsResponse(dmRoom, dmChats))
+                            await send(.unreadCountResponse(dmRoom, unreadCount))
+                        } catch {
+                            print("DM 채팅 조회 실패:", error)
+                        }
+                    }
+                })
                 
             case .dmChatsResponse(let dmRoom, let chats):
-                // dm 채팅 내역 리스트 조회 결과
-                state.dmChattings[dmRoom, default: []].append(contentsOf: chats)
-                
-                // MARK: - 여기서 DB에 저장하면 모두 읽은 표시 처리됨 >> DB에는 저장하지 않기
+                if let lastChat = chats.last?.toPresentModel() {
+                    state.dmLastChattings[dmRoom] = lastChat
+                }
                 return .none
                 
             case .unreadCountResponse(let dmRoom, let unreadCount):
-                // dm 안 읽은 개수 조회 결과
                 state.dmUnreads[dmRoom] = unreadCount
                 return .none
                 
@@ -266,6 +245,9 @@ struct DMFeature {
         }
         .forEach(\.path, action: \.path)
     }
+}
+
+extension DMFeature {
     
     private func fetchInitialData() async throws -> ([WorkspaceResponse], MyProfileResponse) {
         // 내가 속한 워크스페이스 리스트 조회
