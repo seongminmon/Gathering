@@ -18,6 +18,8 @@ enum DateFormat: String {
 }
 
 extension Date {
+    static let firstDate = "2024-01-01T00:00:00.000Z"
+    
     static let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko-KR")

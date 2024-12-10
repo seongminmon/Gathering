@@ -37,7 +37,7 @@ struct DMView: View {
                         ScrollView {
                             LazyVStack(spacing: 20) {
                                 ForEach(store.dmRoomList, id: \.id) { dmRoom in
-                                    let lastChatting = store.dmChattings[dmRoom]?.last
+                                    let lastChatting = store.dmLastChattings[dmRoom]
                                     let unreadResponse = store.dmUnreads[dmRoom]
                                     dmCell(
                                         dm: dmRoom,
@@ -107,7 +107,7 @@ struct DMView: View {
     
     private func dmCell(
         dm: DMsRoom,
-        lastChatting: DMsResponse?,
+        lastChatting: ChattingPresentModel?,
         unreadCount: UnreadDMsResponse?
     ) -> some View {
         Button {
@@ -121,7 +121,7 @@ struct DMView: View {
                     Text(dm.user.nickname)
                         .font(Design.body)
                     
-                    Text(lastChatting?.content ?? "내용 없음")
+                    Text(lastChatting?.text ?? "대화를 시작해보세요")
                         .font(Design.body)
                         .foregroundStyle(Design.darkGray)
                 }
@@ -130,12 +130,12 @@ struct DMView: View {
                 
                 // 최신 DM 날짜, 시간, 안 읽은 개수
                 VStack(alignment: .trailing, spacing: 4) {
-                    let date = lastChatting?.createdAt.createdAtToDate()
+                    let date = lastChatting?.date.createdAtToDate()
                     let dateString = date?.isToday ?? true ?
                     date?.toString(.todayChat) :
                     date?.toString(.pastChat)
                     
-                    Text(dateString ?? "날짜 없음")
+                    Text(dateString ?? "")
                         .font(Design.body)
                         .foregroundStyle(Design.darkGray)
                     
