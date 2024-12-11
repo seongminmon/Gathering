@@ -83,7 +83,7 @@ struct DMView: View {
                 RoundedButton(
                     text: "팀원 초대하기",
                     foregroundColor: Design.white,
-                    backgroundColor: Design.green
+                    backgroundColor: Design.mainSkyblue
                 )
             }
             .padding()
@@ -177,7 +177,7 @@ struct DMView: View {
             RoundedButton(
                 text: "초대 보내기",
                 foregroundColor: Design.white,
-                backgroundColor: store.inviteButtonValid ? Design.green : Design.darkGray
+                backgroundColor: store.inviteButtonValid ? Design.mainSkyblue : Design.darkGray
             )
         }
         .disabled(!store.inviteButtonValid)

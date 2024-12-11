@@ -38,7 +38,7 @@ struct LoginPopUpView: View {
                         Text("또는")
                             .foregroundStyle(Design.black)
                         Text("새롭게 회원가입 하기")
-                            .foregroundStyle(Design.green)
+                            .foregroundStyle(Design.mainSkyblue)
                     }
                     .font(Design.title2)
                 }

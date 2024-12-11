@@ -59,7 +59,7 @@ struct EmailLoginView: View {
             } label: {
                 RoundedButton(text: "로그인",
                               foregroundColor: Design.white,
-                              backgroundColor: Design.green)
+                              backgroundColor: Design.mainSkyblue)
             }
         } else {
             RoundedButton(text: "로그인",

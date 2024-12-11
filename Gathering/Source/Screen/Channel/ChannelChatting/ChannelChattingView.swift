@@ -206,7 +206,7 @@ extension ChannelChattingView {
                     Image(systemName: "paperplane.fill")
                         .font(.system(size: 20))
                         .foregroundColor(store.messageButtonValid
-                                       ? Design.green : Design.darkGray)
+                                       ? Design.mainSkyblue : Design.darkGray)
                 }
                 .disabled(!store.messageButtonValid)
             }

@@ -40,7 +40,7 @@ struct CreateChannelView: View {
                     RoundedButton(
                         text: "생성",
                         foregroundColor: Design.white,
-                        backgroundColor: store.isValid ? Design.green : Design.darkGray
+                        backgroundColor: store.isValid ? Design.mainSkyblue : Design.darkGray
                     )
                 }
                 .disabled(!store.isValid)

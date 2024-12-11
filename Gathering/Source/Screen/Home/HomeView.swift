@@ -175,7 +175,7 @@ extension HomeView {
                     .foregroundColor(Design.white)
                     .font(.system(size: 25))
                     .frame(width: 60, height: 60)
-                    .background(Design.green)
+                    .background(Design.mainSkyblue)
                     .clipShape(Circle())
                     .shadow(radius: 4)
             }

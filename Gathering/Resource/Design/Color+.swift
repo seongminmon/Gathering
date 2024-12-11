@@ -16,5 +16,6 @@ extension Design {
     static let textGray = Color(.textSecondary)
     static let white = Color(.appWhite)
     static let skyblue = Color(.appSkyblue)
+    static let mainSkyblue = Color(.appMainSkyblue)
     static let background = Color(.background)
 }

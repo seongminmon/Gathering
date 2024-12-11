@@ -206,7 +206,7 @@ extension DMChattingView {
                     Image(systemName: "paperplane.fill")
                         .font(.system(size: 20))
                         .foregroundColor(store.messageButtonValid
-                                         ? Design.green : Design.darkGray)
+                                         ? Design.skyblue : Design.darkGray)
                 }
                 .disabled(!store.messageButtonValid)
             }
