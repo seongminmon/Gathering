@@ -60,7 +60,7 @@ struct SignUpView: View {
             } label: {
                 RoundedButton(text: "가입하기",
                               foregroundColor: Design.white,
-                              backgroundColor: Design.green)
+                              backgroundColor: Design.mainSkyblue)
             }
         } else {
             RoundedButton(text: "가입하기",

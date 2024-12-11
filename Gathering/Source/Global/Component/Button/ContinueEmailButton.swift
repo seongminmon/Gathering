@@ -15,6 +15,6 @@ struct ContinueEmailButton: View {
                 .frame(width: 20, height: 20)
             Text("이메일로 계속하기")
         }
-        .asRoundButton(foregroundColor: Design.white, backgroundColor: Design.green)
+        .asRoundButton(foregroundColor: Design.white, backgroundColor: Design.mainSkyblue)
     }
 }

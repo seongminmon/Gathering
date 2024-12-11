@@ -32,7 +32,7 @@ struct OnboardingView: View {
                 } label: {
                     RoundedButton(text: "시작하기", 
                                   foregroundColor: Design.white,
-                                  backgroundColor: Design.green)
+                                  backgroundColor: Design.mainSkyblue)
                 }
             }
             .padding(20)

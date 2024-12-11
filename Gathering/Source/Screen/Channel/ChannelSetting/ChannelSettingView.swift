@@ -197,7 +197,7 @@ struct ChannelSettingView: View {
                 RoundedButton(
                     text: "완료",
                     foregroundColor: Design.white,
-                    backgroundColor: store.buttonValid ? Design.green : Design.darkGray
+                    backgroundColor: store.buttonValid ? Design.mainSkyblue : Design.darkGray
                 )
             }
             .disabled(!store.buttonValid)

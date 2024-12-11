@@ -91,7 +91,7 @@ struct CustomAlert: View {
                     } label: {
                         Text(primaryButton.title)
                             .asRoundButton(foregroundColor: Design.white,
-                                           backgroundColor: Design.green)
+                                           backgroundColor: Design.mainSkyblue)
                     }
                     
                 }

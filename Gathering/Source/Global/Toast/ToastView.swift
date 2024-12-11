@@ -15,7 +15,7 @@ struct ToastView: View {
             .font(Design.body)
             .padding(8)
             .foregroundStyle(Design.white)
-            .background(Design.green)
+            .background(Design.mainSkyblue)
             .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }

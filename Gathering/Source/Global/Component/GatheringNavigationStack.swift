@@ -51,7 +51,7 @@ struct GatheringNavigationStack<Content: View>: View {
                                         size: 32
                                     )
                                     .clipShape(Circle())
-                                    .overlay(Circle().stroke(.black, lineWidth: 2))
+                                    .overlay(Circle().stroke(Design.mainSkyblue, lineWidth: 2))
                                 }
                             }
                         }

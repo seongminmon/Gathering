@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension View {
-    func badge(backgroundColor: Color = Design.green,
+    func badge(backgroundColor: Color = Design.mainSkyblue,
                textColor: Color = Design.white
     ) -> some View {
         self

@@ -108,16 +108,16 @@ extension ChannelChattingView {
                 VStack(alignment: .trailing) {
                     if let text = message.text, !text.isEmpty {
                         Text(text)
-                            .font(Font.body)
-                            .padding(8)
+                            .font(Design.body)
+                            .padding(9)
                             .background(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(Design.white)
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Design.skyblue)
                             )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .stroke(Design.gray, lineWidth: 1)
-                            )
+//                            .overlay(
+//                                RoundedRectangle(cornerRadius: 12)
+//                                    .stroke(.clear, lineWidth: 1)
+//                            )
                     }
                     if !message.imageNames.isEmpty {
                         NavigationLink {
@@ -146,16 +146,16 @@ extension ChannelChattingView {
                     VStack(alignment: .leading) {
                         if let text = message.text, !text.isEmpty {
                             Text(text)
-                                .font(Font.body)
-                                .padding(8)
+                                .font(Design.body)
+                                .padding(9)
                                 .background(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .fill(Design.white)
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .fill(Design.background)
                                 )
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .stroke(Design.gray, lineWidth: 1)
-                                )
+//                                .overlay(
+//                                    RoundedRectangle(cornerRadius: 12)
+//                                        .stroke(.clear, lineWidth: 1)
+//                                )
                         }
                         if !message.imageNames.isEmpty {
                             NavigationLink {
@@ -206,7 +206,7 @@ extension ChannelChattingView {
                     Image(systemName: "paperplane.fill")
                         .font(.system(size: 20))
                         .foregroundColor(store.messageButtonValid
-                                       ? Design.green : Design.darkGray)
+                                       ? Design.mainSkyblue : Design.darkGray)
                 }
                 .disabled(!store.messageButtonValid)
             }
