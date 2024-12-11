@@ -105,15 +105,11 @@ extension DMChattingView {
                 VStack(alignment: .trailing) {
                     if let text = message.text, !text.isEmpty {
                         Text(text)
-                            .font(Font.body)
-                            .padding(8)
+                            .font(Design.body)
+                            .padding(9)
                             .background(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(Design.white)
-                            )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .stroke(Design.gray, lineWidth: 1)
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Design.skyblue)
                             )
                     }
                     if !message.imageNames.isEmpty {
@@ -143,15 +139,11 @@ extension DMChattingView {
                     VStack(alignment: .leading) {
                         if let text = message.text, !text.isEmpty {
                             Text(text)
-                                .font(Font.body)
-                                .padding(8)
+                                .font(Design.body)
+                                .padding(9)
                                 .background(
-                                    RoundedRectangle(cornerRadius: 12) // 둥근 모서리
-                                        .fill(Design.white) // 배경색 설정
-                                )
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .stroke(Design.gray, lineWidth: 1) // 테두리 색과 두께 설정
+                                    RoundedRectangle(cornerRadius: 8) // 둥근 모서리
+                                        .fill(Design.background) // 배경색 설정
                                 )
                         }
                         if !message.imageNames.isEmpty {
