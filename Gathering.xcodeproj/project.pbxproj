@@ -31,6 +31,7 @@
 		2447AB892CE8C46B00399C4D /* DMFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB882CE8C46B00399C4D /* DMFeature.swift */; };
 		2447AB8B2CE9E58700399C4D /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB8A2CE9E58700399C4D /* AppFeature.swift */; };
 		2459BDAF2D083A470040BC6E /* ImageDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2459BDAE2D083A470040BC6E /* ImageDetailView.swift */; };
+		2459BDB12D0AF8B20040BC6E /* ExploreFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2459BDB02D0AF8B20040BC6E /* ExploreFeature.swift */; };
 		249FB0C02CEC643800CA418B /* ImageFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0BF2CEC643800CA418B /* ImageFileManager.swift */; };
 		249FB0C52CEC70EA00CA418B /* DMChattingDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0C42CEC70EA00CA418B /* DMChattingDBModel.swift */; };
 		249FB0C72CEC70F700CA418B /* ChannelChattingDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0C62CEC70F700CA418B /* ChannelChattingDBModel.swift */; };
@@ -122,7 +123,7 @@
 		84B8AD2D2CE6788400011D73 /* CreateChannelFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B8AD2C2CE6788400011D73 /* CreateChannelFeature.swift */; };
 		84B8AD2F2CE6795100011D73 /* ExploreChannelFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B8AD2E2CE6795100011D73 /* ExploreChannelFeature.swift */; };
 		84B8AD312CE6797C00011D73 /* InviteMemberFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B8AD302CE6797C00011D73 /* InviteMemberFeature.swift */; };
-		84E8A8152CEE01B000589171 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A8142CEE01B000589171 /* SettingView.swift */; };
+		84E8A8152CEE01B000589171 /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A8142CEE01B000589171 /* ExploreView.swift */; };
 		84E8A8182CEF0D8100589171 /* ChannelChattingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A8172CEF0D8100589171 /* ChannelChattingFeature.swift */; };
 		84E8A81B2CEF171C00589171 /* DMChattingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A81A2CEF171C00589171 /* DMChattingFeature.swift */; };
 		84E8A81D2CEF1B1300589171 /* DMChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8A81C2CEF1B1300589171 /* DMChattingView.swift */; };
@@ -193,6 +194,7 @@
 		2447AB882CE8C46B00399C4D /* DMFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMFeature.swift; sourceTree = "<group>"; };
 		2447AB8A2CE9E58700399C4D /* AppFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
 		2459BDAE2D083A470040BC6E /* ImageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailView.swift; sourceTree = "<group>"; };
+		2459BDB02D0AF8B20040BC6E /* ExploreFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreFeature.swift; sourceTree = "<group>"; };
 		249FB0BF2CEC643800CA418B /* ImageFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFileManager.swift; sourceTree = "<group>"; };
 		249FB0C42CEC70EA00CA418B /* DMChattingDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChattingDBModel.swift; sourceTree = "<group>"; };
 		249FB0C62CEC70F700CA418B /* ChannelChattingDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChattingDBModel.swift; sourceTree = "<group>"; };
@@ -281,7 +283,7 @@
 		84B8AD2E2CE6795100011D73 /* ExploreChannelFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreChannelFeature.swift; sourceTree = "<group>"; };
 		84B8AD302CE6797C00011D73 /* InviteMemberFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteMemberFeature.swift; sourceTree = "<group>"; };
 		84E8A8122CEDA53600589171 /* APIKey.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = APIKey.xcconfig; sourceTree = "<group>"; };
-		84E8A8142CEE01B000589171 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		84E8A8142CEE01B000589171 /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		84E8A8172CEF0D8100589171 /* ChannelChattingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChattingFeature.swift; sourceTree = "<group>"; };
 		84E8A81A2CEF171C00589171 /* DMChattingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChattingFeature.swift; sourceTree = "<group>"; };
 		84E8A81C2CEF1B1300589171 /* DMChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChattingView.swift; sourceTree = "<group>"; };
@@ -577,7 +579,7 @@
 				249FB0F22CECB12000CA418B /* DM */,
 				249FB0F32CECB12400CA418B /* Profile */,
 				249FB0F82CECB5E700CA418B /* Chatting */,
-				84E8A8132CEE019600589171 /* Setting */,
+				84E8A8132CEE019600589171 /* Explore */,
 			);
 			path = Screen;
 			sourceTree = "<group>";
@@ -906,12 +908,13 @@
 			path = InviteMember;
 			sourceTree = "<group>";
 		};
-		84E8A8132CEE019600589171 /* Setting */ = {
+		84E8A8132CEE019600589171 /* Explore */ = {
 			isa = PBXGroup;
 			children = (
-				84E8A8142CEE01B000589171 /* SettingView.swift */,
+				84E8A8142CEE01B000589171 /* ExploreView.swift */,
+				2459BDB02D0AF8B20040BC6E /* ExploreFeature.swift */,
 			);
-			path = Setting;
+			path = Explore;
 			sourceTree = "<group>";
 		};
 		84E8A8162CEF0C3600589171 /* ChannelChatting */ = {
@@ -1056,7 +1059,7 @@
 				24ABE95C2CDB8701000E7EC5 /* Design.swift in Sources */,
 				249FB0FE2CEDA92000CA418B /* ImageCache.swift in Sources */,
 				249FB0C92CEC711800CA418B /* MemberDBModel.swift in Sources */,
-				84E8A8152CEE01B000589171 /* SettingView.swift in Sources */,
+				84E8A8152CEE01B000589171 /* ExploreView.swift in Sources */,
 				2447AB562CE1D0EC00399C4D /* StoreClient.swift in Sources */,
 				2447AB6A2CE32B6800399C4D /* ToastModifier.swift in Sources */,
 				24ABE9702CDCEDB2000E7EC5 /* UserDefaultsManager.swift in Sources */,
@@ -1152,6 +1155,7 @@
 				24F7BFE52D0062FE00040C09 /* SocketClient.swift in Sources */,
 				84E8A8232CEF241C00589171 /* ChannelSettingFeature.swift in Sources */,
 				24ABE98E2CDF02E1000E7EC5 /* ChattingRequest.swift in Sources */,
+				2459BDB12D0AF8B20040BC6E /* ExploreFeature.swift in Sources */,
 				24ABE98C2CDF005F000E7EC5 /* MemberResponse.swift in Sources */,
 				84B8AD312CE6797C00011D73 /* InviteMemberFeature.swift in Sources */,
 				847A3F9D2CDB0E6B004A9361 /* CreateChannelView.swift in Sources */,

@@ -16,10 +16,12 @@ struct RootFeature {
         var selectedTab: TabInfo = .home
         var home: HomeFeature.State
         var dm: DMFeature.State
+        var explore: ExploreFeature.State
         
         init() {
             self.home = HomeFeature.State()
             self.dm = DMFeature.State()
+            self.explore = ExploreFeature.State()
         }
     }
     
@@ -27,6 +29,7 @@ struct RootFeature {
         case setTab(TabInfo)
         case home(HomeFeature.Action)
         case dm(DMFeature.Action)
+        case explore(ExploreFeature.Action)
     }
     
     var body: some ReducerOf<Self> {
@@ -35,6 +38,9 @@ struct RootFeature {
         }
         Scope(state: \.dm, action: \.dm) {
             DMFeature()
+        }
+        Scope(state: \.explore, action: \.explore) {
+            ExploreFeature()
         }
         
         Reduce { state, action in
@@ -49,7 +55,7 @@ struct RootFeature {
             case .home(.floatingButtonTap):
                 state.selectedTab = .dm
                 return .none
-            case .home, .dm:
+            case .home, .dm, .explore:
                 return .none
             }
         }

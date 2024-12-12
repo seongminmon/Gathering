@@ -13,7 +13,7 @@ enum TabInfo : String, CaseIterable {
     case home = "홈"
     case dm = "DM"
     case search = "검색"
-    case setting = "설정"
+    case explore = "둘러보기"
 }
 
 struct RootView: View {
@@ -49,16 +49,15 @@ struct RootView: View {
                 }
                 .tag(TabInfo.search)
                 
-                // MARK: - 설정
+                // MARK: - 둘러보기
                 NavigationStack {
-                    EmptyView()
+                    ExploreView(store: store.scope(state: \.explore, action: \.explore))
                 }
                 .tabItem {
-                    Image(store.selectedTab == .setting ? .settingActive : .settingInactive)
-                    Text(TabInfo.setting.rawValue)
+                    Image(store.selectedTab == .explore ? .settingActive : .settingInactive)
+                    Text(TabInfo.explore.rawValue)
                 }
-                .tag(TabInfo.setting)
-                
+                .tag(TabInfo.explore)
             }
         }
     }
