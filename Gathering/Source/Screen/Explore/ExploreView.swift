@@ -23,6 +23,11 @@ struct ExploreView: View {
                         }
                     }
                 }
+                .asGatheringNavigationModifier(
+                    gatheringImage: store.currentWorkspace?.coverImage ?? "",
+                    title: "모임 둘러보기",
+                    myProfile: store.myProfile
+                )
             } destination: { store in
                 switch store.case {
                 case .channelChatting(let store):
@@ -33,6 +38,24 @@ struct ExploreView: View {
                     ProfileView(store: store)
                 }
             }
+            .onAppear { store.send(.onAppear) }
+//            .customAlert(
+//                isPresented: $store.showAlert,
+//                title: "채널 참여",
+//                message: "[\(store.selectedChannel?.name ?? "")] 채널에 참여 하시겠습니까?",
+//                primaryButton: .init(
+//                    title: "확인",
+//                    action: {
+//                        store.send(.confirmJoinChannel(store.selectedChannel))
+//                    }
+//                ),
+//                secondaryButton: .init(
+//                    title: "취소",
+//                    action: {
+//                        store.send(.cancelJoinChannel)
+//                    }
+//                )
+//            )
         }
     }
     
