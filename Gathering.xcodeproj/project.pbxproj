@@ -32,6 +32,7 @@
 		2447AB8B2CE9E58700399C4D /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2447AB8A2CE9E58700399C4D /* AppFeature.swift */; };
 		2459BDAF2D083A470040BC6E /* ImageDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2459BDAE2D083A470040BC6E /* ImageDetailView.swift */; };
 		2459BDB12D0AF8B20040BC6E /* ExploreFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2459BDB02D0AF8B20040BC6E /* ExploreFeature.swift */; };
+		2459BDB32D0B039A0040BC6E /* Image+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2459BDB22D0B039A0040BC6E /* Image+.swift */; };
 		249FB0C02CEC643800CA418B /* ImageFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0BF2CEC643800CA418B /* ImageFileManager.swift */; };
 		249FB0C52CEC70EA00CA418B /* DMChattingDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0C42CEC70EA00CA418B /* DMChattingDBModel.swift */; };
 		249FB0C72CEC70F700CA418B /* ChannelChattingDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FB0C62CEC70F700CA418B /* ChannelChattingDBModel.swift */; };
@@ -195,6 +196,7 @@
 		2447AB8A2CE9E58700399C4D /* AppFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
 		2459BDAE2D083A470040BC6E /* ImageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailView.swift; sourceTree = "<group>"; };
 		2459BDB02D0AF8B20040BC6E /* ExploreFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreFeature.swift; sourceTree = "<group>"; };
+		2459BDB22D0B039A0040BC6E /* Image+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+.swift"; sourceTree = "<group>"; };
 		249FB0BF2CEC643800CA418B /* ImageFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFileManager.swift; sourceTree = "<group>"; };
 		249FB0C42CEC70EA00CA418B /* DMChattingDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChattingDBModel.swift; sourceTree = "<group>"; };
 		249FB0C62CEC70F700CA418B /* ChannelChattingDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChattingDBModel.swift; sourceTree = "<group>"; };
@@ -779,6 +781,7 @@
 				24ABE95B2CDB8701000E7EC5 /* Design.swift */,
 				24ABE9532CD8B711000E7EC5 /* Font+.swift */,
 				24ABE9592CDB86F3000E7EC5 /* Color+.swift */,
+				2459BDB22D0B039A0040BC6E /* Image+.swift */,
 			);
 			path = Design;
 			sourceTree = "<group>";
@@ -1071,6 +1074,7 @@
 				2447AB6F2CE3326D00399C4D /* OnboardingView.swift in Sources */,
 				A0E444EF2CE2CA8C0024AE71 /* DMsRoomResponse.swift in Sources */,
 				843E7FDF2CE337420057A426 /* EmailLoginRequest.swift in Sources */,
+				2459BDB32D0B039A0040BC6E /* Image+.swift in Sources */,
 				A0E444DB2CE2AC130024AE71 /* WorkspaceEditRequest.swift in Sources */,
 				24ABE96C2CDB9AF9000E7EC5 /* AppleLoginButton.swift in Sources */,
 				2447AB712CE3789600399C4D /* LoginPopUpView.swift in Sources */,
