@@ -63,16 +63,16 @@ struct ExploreView: View {
         Button {
             print("채널 셀 탭")
         } label: {
-            HStack(alignment: .top, spacing: 8) {
+            HStack(spacing: 8) {
                 LoadedImageView(urlString: channel.coverImage ?? "", size: 80)
                     .padding(8)
+                
                 VStack(alignment: .leading, spacing: 4) {
                     Text(channel.name)
                         .font(Design.bodyBold)
                     Text(channel.description ?? "")
                         .font(Design.body)
                     Spacer()
-                    
                     HStack(spacing: 4) {
                         // TODO: - 채널 주인 프로필 사진 + 닉네임으로 변경
                         LoadedImageView(urlString: "", size: 32)
@@ -89,6 +89,17 @@ struct ExploreView: View {
                 .foregroundStyle(Design.black)
                 .lineLimit(1)
                 .padding(.vertical, 4)
+                
+                Spacer()
+                let flag = channel.channelMembers?.contains {
+                    $0.user_id == UserDefaultsManager.userID
+                } ?? false
+                Text(flag ? "참여 중" : "참여하기")
+                    .font(Design.bodyBold)
+                    .foregroundStyle(Design.white)
+                    .padding(8)
+                    .background(flag ? Design.gray : Design.mainSkyblue)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
             }
             Spacer()
         }
