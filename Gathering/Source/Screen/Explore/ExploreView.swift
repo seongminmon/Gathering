@@ -18,7 +18,7 @@ struct ExploreView: View {
             NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
                 ScrollView {
                     LazyVStack(spacing: 8) {
-                        ForEach(store.channelList, id: \.channel_id) { channel in
+                        ForEach(store.allChannels, id: \.id) { channel in
                             channelCell(channel)
                         }
                     }
@@ -59,20 +59,20 @@ struct ExploreView: View {
         }
     }
     
-    private func channelCell(_ channel: ChannelResponse) -> some View {
+    private func channelCell(_ channel: Channel) -> some View {
         Button {
-            print("채널 셀 탭")
+            store.send(.channelCellTap(channel))
         } label: {
-            HStack(alignment: .top, spacing: 8) {
+            HStack(spacing: 8) {
                 LoadedImageView(urlString: channel.coverImage ?? "", size: 80)
                     .padding(8)
+                
                 VStack(alignment: .leading, spacing: 4) {
                     Text(channel.name)
                         .font(Design.bodyBold)
                     Text(channel.description ?? "")
                         .font(Design.body)
                     Spacer()
-                    
                     HStack(spacing: 4) {
                         // TODO: - 채널 주인 프로필 사진 + 닉네임으로 변경
                         LoadedImageView(urlString: "", size: 32)
@@ -89,6 +89,15 @@ struct ExploreView: View {
                 .foregroundStyle(Design.black)
                 .lineLimit(1)
                 .padding(.vertical, 4)
+                
+                Spacer()
+                let flag = store.myChannels.contains(channel)
+                Text(flag ? "참여 중" : "참여하기")
+                    .font(Design.bodyBold)
+                    .foregroundStyle(Design.white)
+                    .padding(8)
+                    .background(flag ? Design.gray : Design.mainSkyblue)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
             }
             Spacer()
         }

@@ -14,6 +14,7 @@ struct ExploreFeature {
     
     @Dependency(\.workspaceClient) var workspaceClient
     @Dependency(\.userClient) var userClient
+    @Dependency(\.channelClient) var channelClient
     
     @Reducer
     enum Path {
@@ -26,52 +27,35 @@ struct ExploreFeature {
     struct State {
         var path = StackState<Path.State>()
         
-        // 더미 데이터
-        var channelList = [
-            ChannelResponse(
-                channel_id: "482b48d9-816b-40cb-9f92-6dbd38573474",
-                name: "일본",
-                description: "다녀오겠습니다",
-                coverImage: "/static/channelCoverImages/1732725591572.jpg",
-                owner_id: "58fa7648-747b-461f-951a-23171abf3619",
-                createdAt: "2024-11-27T16:39:51.581Z",
-                channelMembers: [
-                    MemberResponse(
-                        user_id: "973d62ec-1776-446f-90ea-f35d189bb7b3",
-                        email: "ksm1@ksm.com",
-                        nickname: "ksm1",
-                        profileImage: "/static/profiles/1732090604584.jpg"
-                    )
-                ]
-            ),
-            ChannelResponse(
-                channel_id: "f73a009e-59f5-4e9b-9543-b7a9107a9e07",
-                name: "생겨랏",
-                description: "ㅁㅁ",
-                coverImage: "/static/channelCoverImages/1732724681664.jpg",
-                owner_id: "58fa7648-747b-461f-951a-23171abf3619",
-                createdAt: "2024-11-27T16:24:41.667Z",
-                channelMembers: []
-            )
-        ]
-        
         var currentWorkspace: WorkspaceResponse?
         var myProfile: MyProfileResponse?
+        
+        var allChannels: [Channel] = []
+        var myChannels: [Channel] = []
+        var selectedChannel: Channel?
+        var showAlert = false
     }
     
-    enum Action {
+    enum Action: BindableAction {
         case path(StackAction<Path.State, Path.Action>)
+        case binding(BindingAction<State>)
+        
         case onAppear
+        case channelCellTap(Channel)
         
         case myWorkspaceResponse(WorkspaceResponse?)
         case myProfileResponse(MyProfileResponse)
+        case channelResponse([Channel], [Channel])
     }
     
     var body: some ReducerOf<Self> {
-        Reduce {
-            state,
-            action in
+        BindingReducer()
+        
+        Reduce { state, action in
             switch action {
+            case .binding:
+                return .none
+                
             case .path:
                 return .none
                 
@@ -97,17 +81,25 @@ struct ExploreFeature {
                             await send(.myWorkspaceResponse(workspaceResult.first))
                         }
                         
-//                        let (channelResult, dmRoomResult) = try await fetchWorkspaceDetails(
-//                            workspaceID: UserDefaultsManager.workspaceID
-//                        )
-//                        await send(.channelListResponse(channelResult))
-//                        await send(.dmRoomListResponse(dmRoomResult))
-                        
+                        let (allChannels, myChannels) = try await fetchChannelData()
+                        await send(.channelResponse(allChannels, myChannels))
                     } catch {
                         print(error)
                         print("error🔥")
                     }
                 }
+                
+            case .channelCellTap(let channel):
+                print("채널 셀 탭")
+                state.selectedChannel = channel
+                // MARK: - 참여 중이면 채팅방으로, 참여 중이 아니면 얼럿
+                if state.myChannels.contains(channel) {
+                    // TODO: - 채팅방 이동
+                    print("채팅방 이동")
+                } else {
+                    state.showAlert = true
+                }
+                return .none
                 
             case .myWorkspaceResponse(let workspace):
                 state.currentWorkspace = workspace
@@ -115,6 +107,11 @@ struct ExploreFeature {
                 
             case .myProfileResponse(let myProfile):
                 state.myProfile = myProfile
+                return .none
+                
+            case let .channelResponse(allChannels, myChannels):
+                state.allChannels = allChannels
+                state.myChannels = myChannels
                 return .none
             }
         }
@@ -132,5 +129,15 @@ extension ExploreFeature {
         // 내 프로필 조회
         async let profile = userClient.fetchMyProfile()
         return try await (workspaces, profile)
+    }
+    
+    private func fetchChannelData() async throws -> ([Channel], [Channel]) {
+        let workspaceID = UserDefaultsManager.workspaceID
+        async let allChannels = channelClient.fetchChannelList(workspaceID)
+        async let myChannels = channelClient.fetchMyChannelList(workspaceID)
+        return try await (
+            allChannels.map { $0.toPresentModel() },
+            myChannels.map { $0.toPresentModel() }
+        )
     }
 }

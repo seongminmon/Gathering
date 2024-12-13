@@ -28,9 +28,15 @@ extension ChannelResponse {
     }
     
     func toPresentModel() -> Channel {
+        let members = self.channelMembers?.map { $0.toPresentModel() } ?? []
         return Channel(
             id: self.channel_id,
-            name: self.name
+            name: self.name,
+            description: self.description,
+            coverImage: self.coverImage,
+            owner_id: self.owner_id,
+            createdAt: self.createdAt,
+            channelMembers: members
         )
     }
 }

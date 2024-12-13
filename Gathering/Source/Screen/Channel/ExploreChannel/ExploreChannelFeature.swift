@@ -58,7 +58,6 @@ struct ExploreChannelFeature {
                 return .none
                 
             case let .confirmJoinChannel(channel):
-                // TODO: - 채널 채팅 내역 리스트 조회를 통해 채널 참여
                 guard let channel else { return .none }
                 
                 state.showAlert = false
