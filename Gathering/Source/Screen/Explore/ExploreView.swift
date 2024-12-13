@@ -18,7 +18,7 @@ struct ExploreView: View {
             NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
                 ScrollView {
                     LazyVStack(spacing: 8) {
-                        ForEach(store.channelList, id: \.channel_id) { channel in
+                        ForEach(store.allChannels, id: \.id) { channel in
                             channelCell(channel)
                         }
                     }
@@ -59,9 +59,9 @@ struct ExploreView: View {
         }
     }
     
-    private func channelCell(_ channel: ChannelResponse) -> some View {
+    private func channelCell(_ channel: Channel) -> some View {
         Button {
-            print("채널 셀 탭")
+            store.send(.channelCellTap(channel))
         } label: {
             HStack(spacing: 8) {
                 LoadedImageView(urlString: channel.coverImage ?? "", size: 80)
@@ -91,9 +91,7 @@ struct ExploreView: View {
                 .padding(.vertical, 4)
                 
                 Spacer()
-                let flag = channel.channelMembers?.contains {
-                    $0.user_id == UserDefaultsManager.userID
-                } ?? false
+                let flag = store.myChannels.contains(channel)
                 Text(flag ? "참여 중" : "참여하기")
                     .font(Design.bodyBold)
                     .foregroundStyle(Design.white)
