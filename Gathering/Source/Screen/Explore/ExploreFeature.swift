@@ -42,6 +42,9 @@ struct ExploreFeature {
         
         case onAppear
         case channelCellTap(Channel)
+        case confirmJoinChannel(Channel?)
+        case cancelJoinChannel
+        case moveToChannelChattingView(Channel)
         
         case myWorkspaceResponse(WorkspaceResponse?)
         case myProfileResponse(MyProfileResponse)
@@ -91,16 +94,44 @@ struct ExploreFeature {
                 
             case .channelCellTap(let channel):
                 print("채널 셀 탭")
-                state.selectedChannel = channel
-                // MARK: - 참여 중이면 채팅방으로, 참여 중이 아니면 얼럿
                 if state.myChannels.contains(channel) {
-                    // TODO: - 채팅방 이동
-                    print("채팅방 이동")
+                    return .send(.moveToChannelChattingView(channel))
                 } else {
+                    state.selectedChannel = channel
                     state.showAlert = true
+                    return .none
                 }
+                
+            case let .confirmJoinChannel(channel):
+                guard let channel else { return .none }
+                
+                state.showAlert = false
+                return .run { send in
+                    do {
+                        _ = try await channelClient.fetchChattingList(
+                            channel.id,
+                            UserDefaultsManager.workspaceID,
+                            ""
+                        )
+                        await send(.moveToChannelChattingView(channel))
+                    } catch {
+                        print("채널 참여 실패")
+                    }
+                }
+                
+            case .cancelJoinChannel:
+                state.showAlert = false
+                state.selectedChannel = nil
                 return .none
                 
+            case let .moveToChannelChattingView(channel):
+                // 채널 채팅방으로 이동
+                state.path.append(.channelChatting(ChannelChattingFeature.State(
+                    channelID: channel.id
+                )))
+                return .none
+                
+                // MARK: - 네트워킹
             case .myWorkspaceResponse(let workspace):
                 state.currentWorkspace = workspace
                 return .none

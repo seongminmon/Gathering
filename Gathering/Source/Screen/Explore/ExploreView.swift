@@ -39,23 +39,23 @@ struct ExploreView: View {
                 }
             }
             .onAppear { store.send(.onAppear) }
-//            .customAlert(
-//                isPresented: $store.showAlert,
-//                title: "채널 참여",
-//                message: "[\(store.selectedChannel?.name ?? "")] 채널에 참여 하시겠습니까?",
-//                primaryButton: .init(
-//                    title: "확인",
-//                    action: {
-//                        store.send(.confirmJoinChannel(store.selectedChannel))
-//                    }
-//                ),
-//                secondaryButton: .init(
-//                    title: "취소",
-//                    action: {
-//                        store.send(.cancelJoinChannel)
-//                    }
-//                )
-//            )
+            .customAlert(
+                isPresented: $store.showAlert,
+                title: "채널 참여",
+                message: "[\(store.selectedChannel?.name ?? "")] 채널에 참여 하시겠습니까?",
+                primaryButton: .init(
+                    title: "확인",
+                    action: {
+                        store.send(.confirmJoinChannel(store.selectedChannel))
+                    }
+                ),
+                secondaryButton: .init(
+                    title: "취소",
+                    action: {
+                        store.send(.cancelJoinChannel)
+                    }
+                )
+            )
         }
     }
     
