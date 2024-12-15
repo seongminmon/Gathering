@@ -1,40 +1,37 @@
 //
-//  ChattingPhotoPicker.swift
+//  SinglePhotoPicker.swift
 //  Gathering
 //
-//  Created by 여성은 on 11/8/24.
+//  Created by 여성은 on 12/13/24.
 //
 
 import PhotosUI
 import SwiftUI
 
-public struct CustomPhotoPicker<Content: View>: View {
+public struct SinglePhotoPicker<Content: View>: View {
     @State private var selectedPhotos: [PhotosPickerItem]
     @Binding private var selectedImages: [UIImage]?
     @Binding private var isPresentedError: Bool
     
     private let maxSelectedCount: Int
-//    private var disabled: Bool {
-//        return selectedPhotos.count >= maxSelectedCount
-//    }
     private var disabled: Bool {
-        return selectedImages?.count ?? 0 >= maxSelectedCount
+        return selectedPhotos.count >= maxSelectedCount
     }
     private var availableSelectedCount: Int {
-        return maxSelectedCount - (selectedImages?.count ?? 0 )
+        return maxSelectedCount - selectedPhotos.count
     }
     private let matching: PHPickerFilter
     private let photoLibrary: PHPhotoLibrary
-    private let content: () -> Content
+//    private let content: () -> Content
     
     public init(
         selectedPhotos: [PhotosPickerItem] = [],
         selectedImages: Binding<[UIImage]?>,
         isPresentedError: Binding<Bool> = .constant(false),
-        maxSelectedCount: Int = 5,
+        maxSelectedCount: Int = 1,
         matching: PHPickerFilter = .images,
-        photoLibrary: PHPhotoLibrary = .shared(),
-        content: @escaping () -> Content
+        photoLibrary: PHPhotoLibrary = .shared()
+//        content: @escaping () -> Content
     ) {
         self.selectedPhotos = selectedPhotos
         self._selectedImages = selectedImages
@@ -42,35 +39,47 @@ public struct CustomPhotoPicker<Content: View>: View {
         self.maxSelectedCount = maxSelectedCount
         self.matching = matching
         self.photoLibrary = photoLibrary
-        self.content = content
+//        self.content = content
     }
     
     public var body: some View {
         if #available(iOS 17.0, *) {
-            PhotosPicker(
-                selection: $selectedPhotos,
-                maxSelectionCount: availableSelectedCount,
-                matching: matching,
-                photoLibrary: photoLibrary
-            ) {
-                content()
+            PhotosPicker("포토피커",
+                         selection: $selectedPhotos,
+                         maxSelectionCount: availableSelectedCount,
+                         matching: matching,
+                         photoLibrary: photoLibrary
+            )
+//            PhotosPicker(
+//                selection: $selectedPhotos,
+//                maxSelectionCount: availableSelectedCount,
+//                matching: matching,
+//                photoLibrary: photoLibrary
+//            ) {
+//                content()
 //                    .disabled(disabled)
-            }
+//            }
 //            .disabled(disabled)
             .onChange(of: selectedPhotos) {
                 handleSelectedPhotos(selectedPhotos)
             }
         } else {
-            PhotosPicker(
-                selection: $selectedPhotos,
-                maxSelectionCount: availableSelectedCount,
-                matching: matching,
-                photoLibrary: photoLibrary
-            ) {
-                content()
-                    .disabled(disabled)
-            }
-            .disabled(disabled)
+//            PhotosPicker(
+//                selection: $selectedPhotos,
+//                maxSelectionCount: availableSelectedCount,
+//                matching: matching,
+//                photoLibrary: photoLibrary
+//            ) {
+//                content()
+//                    .disabled(disabled)
+//            }
+//            .disabled(disabled)
+            PhotosPicker("포토피커",
+                         selection: $selectedPhotos,
+                         maxSelectionCount: availableSelectedCount,
+                         matching: matching,
+                         photoLibrary: photoLibrary
+            )
             .onChange(of: selectedPhotos) { newValue in
                 handleSelectedPhotos(newValue)
             }
@@ -97,6 +106,6 @@ public struct CustomPhotoPicker<Content: View>: View {
             }
         }
         
-//        selectedPhotos.removeAll()
+        selectedPhotos.removeAll()
     }
 }

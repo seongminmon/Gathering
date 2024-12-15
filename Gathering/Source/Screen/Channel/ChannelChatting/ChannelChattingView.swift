@@ -10,6 +10,8 @@ import SwiftUI
 import Combine
 import ComposableArchitecture
 
+import PhotosUI
+
 struct ChannelChattingView: View {
     
     // TODO: - 키보드 올라올 때 채팅창 스크롤 내리기
@@ -126,6 +128,7 @@ extension ChannelChattingView {
                             ChattingImageView(imageNames: message.imageNames)
                         }
                     }
+                                        
                 }
             }
         }
@@ -186,7 +189,10 @@ extension ChannelChattingView {
     private var messageInputView: some View {
         HStack {
             HStack(alignment: .bottom) {
-                ChattingPhotoPicker(selectedImages: $store.selectedImages) {
+                CustomPhotoPicker(
+                    selectedImages: $store.selectedImages,
+                    maxSelectedCount: 5
+                ) {
                     Image(systemName: "plus")
                         .resizable()
                         .frame(width: 22, height: 20)

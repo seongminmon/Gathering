@@ -8,6 +8,7 @@
 import SwiftUI
 
 import ComposableArchitecture
+import _PhotosUI_SwiftUI
 
 @Reducer
 struct CreateChannelFeature {
@@ -19,17 +20,24 @@ struct CreateChannelFeature {
     
     @ObservableState
     struct State {
+        
+        var selectedImage: [UIImage]? = []
+        var testImage:[UIImage]? = []
         var channelName: String = ""
         var channelDescription: String = ""
         var isValid: Bool {
             !channelName.isEmpty
         }
+        
+        var selectedPhoto: [PhotosPickerItem] = []
     }
     
     enum Action: BindableAction {
         case binding(BindingAction<State>)
+        
         case saveButtonTapped
         case channelCreated
+        
     }
 
     var body: some ReducerOf<Self> {
@@ -73,6 +81,8 @@ struct CreateChannelFeature {
                 }
             case .channelCreated:
                 return .none
+          
+                
             }
         }
     }

@@ -15,10 +15,36 @@ struct CreateChannelView: View {
     var body: some View {
         WithPerceptionTracking {
             VStack {
-                SheetHeaderView(title: "채널 편집")
+                SheetHeaderView(title: "채널 생성")
                     .background(Design.white)
                 ScrollView {
                     VStack(spacing: 24) {
+                        CustomPhotoPicker(
+                            selectedImages: $store.selectedImage,
+                            maxSelectedCount: 1
+                        ) {
+                            if let images = store.selectedImage, let image = images.last {
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 200, height: 200)
+                                    .cornerRadius(10)
+                            } else {
+                                Image(systemName: "camera")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 200, height: 200)
+                                    .cornerRadius(10)
+                                
+                            }
+                        }
+                        if let images = store.testImage, let image = images.last {
+                            Image(uiImage: image)
+                                .resizable()
+                                .frame(width: 100, height: 100)
+                                .cornerRadius(10)
+                        }
+                        
                         TextFieldWithTitle(
                             title: "채널 이름",
                             placeholder: "채널 이름을 입력해주세요",
