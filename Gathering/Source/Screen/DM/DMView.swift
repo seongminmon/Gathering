@@ -51,6 +51,7 @@ struct DMView: View {
                         Spacer()
                     }
                 }
+//                .background(Design.background)
                 .asGatheringNavigationModifier(
                     gatheringImage: store.currentWorkspace?.coverImage ?? "",
                     title: "Direct Message",
@@ -167,7 +168,7 @@ struct DMView: View {
             inviteButton()
                 .padding([.horizontal, .bottom])
         }
-        .background(Design.background)
+//        .background(Design.background)
     }
     
     private func inviteButton() -> some View {

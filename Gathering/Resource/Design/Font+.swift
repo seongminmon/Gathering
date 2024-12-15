@@ -14,4 +14,7 @@ extension Design {
     static let body = Font.system(size: 13, weight: .regular)
     static let caption = Font.system(size: 12, weight: .regular)
     static let caption2 = Font.system(size: 11, weight: .regular)
+    
+    static let logoTitle = Font.custom("Partial-Sans-KR", size: 26)
+    static let logoTitle2 = Font.custom("MungyeongGamhongApple", size: 15)
 }

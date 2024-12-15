@@ -12,27 +12,22 @@ import ComposableArchitecture
 @Reducer
 struct ProfileFeature {
     
+    @Dependency(\.dbClient) var dbClient
+    
     enum ProfileType {
         case me
         case otherUser
     }
     
-    @Reducer
-    enum Path {
-//        case editContact
-//        case editNickname
-    }
-    
-    @Dependency(\.dbClient) var dbClient
-    
     @ObservableState
     struct State {
-//        var path = StackState<Path.State>()
         var showAlert = false
         let profileType: ProfileFeature.ProfileType
         var nickname: String
         var email: String
         var profileImage: String
+        // 새로 추가할 상태들
+        var sesacCoin: Int = 130  // 임시값
         
         init(profileType: ProfileFeature.ProfileType,
              nickname: String = "",
@@ -46,24 +41,27 @@ struct ProfileFeature {
     }
     
     enum Action: BindableAction {
-//        case path(StackAction<Path.State, Path.Action>)
-//        case contactTap
-//        case nicknameTap
         case binding(BindingAction<State>)
         case logoutButtonTap
         case logoutConfirm
         case logoutCancel
-//        case dismiss
+        // 새로 추가할 액션들
+        case chargeSesacCoinTap
+        case phoneNumberTap
     }
     
     var body: some ReducerOf<Self> {
+        BindingReducer()
+        
         Reduce { state, action in
             switch action {
             case .binding:
                 return .none
+                
             case .logoutButtonTap:
                 state.showAlert = true
                 return .none
+                
             case .logoutConfirm:
                 state.showAlert = false
                 Notification.changeRoot(.fail)
@@ -73,15 +71,19 @@ struct ProfileFeature {
                 } catch {}
                 ImageFileManager.shared.deleteAllImages()
                 return .none
+                
             case .logoutCancel:
                 state.showAlert = false
                 return .none
-//            case .dismiss:
-//                return .run { _ in
-//                    await dismiss()
-//                }
+                
+            case .chargeSesacCoinTap:
+                // 충전 로직 구현
+                return .none
+                
+            case .phoneNumberTap:
+                // 전화번호 수정 로직 구현
+                return .none
             }
         }
-//        .forEach(\.path, action: \.path)
     }
 }

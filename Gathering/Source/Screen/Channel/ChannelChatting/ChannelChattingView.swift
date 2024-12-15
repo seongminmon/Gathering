@@ -15,7 +15,14 @@ struct ChannelChattingView: View {
     // TODO: - 키보드 올라올 때 채팅창 스크롤 내리기
     
     @Perception.Bindable var store: StoreOf<ChannelChattingFeature>
+    @FocusState private var isFocused: Bool
     var keyboardSubscriber: AnyCancellable?
+    
+    private var navigationTitle: String {
+        let channelName = store.currentChannel?.name ?? ""
+        let memberCount = store.currentChannel?.channelMembers?.count ?? 0
+        return "\(channelName)  \(memberCount)"
+    }
     
     var body: some View {
         WithPerceptionTracking {
@@ -24,6 +31,7 @@ struct ChannelChattingView: View {
     }
     
     private var mainContent: some View {
+        
         VStack {
             // 채팅 메시지 리스트
             chatListView
@@ -43,7 +51,7 @@ struct ChannelChattingView: View {
 //            store.send(.onDisappear)
         }
         .customToolbar(
-            title: store.currentChannel?.name ?? "",
+            title: navigationTitle,
             leftItem: .init(icon: .chevronLeft) {
                 store.send(.backButtonTap)
             },
@@ -199,14 +207,18 @@ extension ChannelChattingView {
                         selectePhotoView(images: images)
                     }
                 }
-                
+//                .onAppear {
+//                    // 뷰가 나타날 때 자동으로 TextField에 포커스
+//                    isFocused = true
+//                }
+//                
                 Button {
                     store.send(.sendButtonTap)
                 } label: {
                     Image(systemName: "paperplane.fill")
                         .font(.system(size: 20))
                         .foregroundColor(store.messageButtonValid
-                                       ? Design.mainSkyblue : Design.darkGray)
+                                         ? Design.mainSkyblue : Design.darkGray)
                 }
                 .disabled(!store.messageButtonValid)
             }
@@ -222,12 +234,22 @@ extension ChannelChattingView {
     }
     
     private func dynamicHeigtTextField() -> some View {
-        TextField("메세지를 입력하세요", text: $store.messageText, axis: .vertical)
-            .lineLimit(1...5)
-            .background(Color.clear)
-            .font(Design.body)
+        TextField("메시지를 입력하세요", text: $store.messageText, axis: .vertical)
+            .focused($isFocused)  // TextField에 focus 바인딩
+            .onChange(of: isFocused) { newValue in
+                store.isTextFieldFocused = newValue
+            }
+            .onChange(of: store.isTextFieldFocused) { newValue in
+                isFocused = newValue
+            }
     }
     
+    //    TextField("메세지를 입력하세요", text: $store.messageText, axis: .vertical)
+    //        .lineLimit(1...5)
+    //            .background(Color.clear)
+    //            .font(Design.body)
+
+
     private func selectePhotoView(images: [UIImage]) -> some View {
         LazyHGrid(rows: [GridItem(.fixed(50))], spacing: 12) {
             ForEach(images, id: \.self) { image in
