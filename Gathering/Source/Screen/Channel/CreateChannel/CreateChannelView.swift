@@ -8,6 +8,7 @@
 import SwiftUI
 
 import ComposableArchitecture
+import PhotosUI
 
 struct CreateChannelView: View {
     @Perception.Bindable var store: StoreOf<CreateChannelFeature>
@@ -19,32 +20,42 @@ struct CreateChannelView: View {
                     .background(Design.white)
                 ScrollView {
                     VStack(spacing: 24) {
-                        CustomPhotoPicker(
-                            selectedImages: $store.selectedImage,
-                            maxSelectedCount: 1
-                        ) {
-                            if let images = store.selectedImage, let image = images.last {
-                                Image(uiImage: image)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 200, height: 200)
-                                    .cornerRadius(10)
-                            } else {
-                                Image(systemName: "camera")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 200, height: 200)
-                                    .cornerRadius(10)
-                                
+                        VStack {
+                            CustomPhotoPicker(
+                                selectedImages: $store.selectedImage,
+                                maxSelectedCount: 1
+                            ) {
+                                if let images = store.selectedImage, let image = images.last {
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 200, height: 200)
+                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                                        .foregroundColor(Design.darkGray)
+                                } else {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .foregroundStyle(Design.gray)
+                                            .frame(width: 200, height: 200)
+                                        
+                                        Image(systemName: "camera")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 50, height: 50)
+                                            .foregroundColor(Design.white)
+                                    }
+                                    
+                                }
                             }
+                            Button(action: {
+                                store.send(.deleteImageButtonTapped)
+                            }, label: {
+                                Text("이미지 초기화")
+                                    .font(Design.caption)
+                                    .foregroundStyle(Design.darkGray)
+                            })
+                            .padding(5)
                         }
-                        if let images = store.testImage, let image = images.last {
-                            Image(uiImage: image)
-                                .resizable()
-                                .frame(width: 100, height: 100)
-                                .cornerRadius(10)
-                        }
-                        
                         TextFieldWithTitle(
                             title: "채널 이름",
                             placeholder: "채널 이름을 입력해주세요",

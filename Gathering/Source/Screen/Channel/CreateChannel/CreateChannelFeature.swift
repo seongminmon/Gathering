@@ -20,9 +20,7 @@ struct CreateChannelFeature {
     
     @ObservableState
     struct State {
-        
-        var selectedImage: [UIImage]? = []
-        var testImage:[UIImage]? = []
+
         var channelName: String = ""
         var channelDescription: String = ""
         var isValid: Bool {
@@ -30,6 +28,7 @@ struct CreateChannelFeature {
         }
         
         var selectedPhoto: [PhotosPickerItem] = []
+        var selectedImage: [UIImage]? = []
     }
     
     enum Action: BindableAction {
@@ -38,8 +37,10 @@ struct CreateChannelFeature {
         case saveButtonTapped
         case channelCreated
         
+        case deleteImageButtonTapped
+        
     }
-
+    
     var body: some ReducerOf<Self> {
         BindingReducer()
         Reduce { state, action in
@@ -81,8 +82,9 @@ struct CreateChannelFeature {
                 }
             case .channelCreated:
                 return .none
-          
-                
+            case .deleteImageButtonTapped:
+                state.selectedImage = []
+                return .none
             }
         }
     }

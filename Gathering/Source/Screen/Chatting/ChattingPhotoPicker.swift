@@ -31,10 +31,10 @@ public struct CustomPhotoPicker<Content: View>: View {
         selectedPhotos: [PhotosPickerItem] = [],
         selectedImages: Binding<[UIImage]?>,
         isPresentedError: Binding<Bool> = .constant(false),
-        maxSelectedCount: Int = 5,
+        maxSelectedCount: Int,
         matching: PHPickerFilter = .images,
         photoLibrary: PHPhotoLibrary = .shared(),
-        content: @escaping () -> Content
+        @ViewBuilder content: @escaping () -> Content
     ) {
         self.selectedPhotos = selectedPhotos
         self._selectedImages = selectedImages
@@ -54,9 +54,9 @@ public struct CustomPhotoPicker<Content: View>: View {
                 photoLibrary: photoLibrary
             ) {
                 content()
-//                    .disabled(disabled)
+                    .disabled(disabled)
             }
-//            .disabled(disabled)
+            .disabled(disabled)
             .onChange(of: selectedPhotos) {
                 handleSelectedPhotos(selectedPhotos)
             }
@@ -97,6 +97,6 @@ public struct CustomPhotoPicker<Content: View>: View {
             }
         }
         
-//        selectedPhotos.removeAll()
+        selectedPhotos.removeAll()
     }
 }

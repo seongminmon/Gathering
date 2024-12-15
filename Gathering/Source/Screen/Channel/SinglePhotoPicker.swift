@@ -14,15 +14,18 @@ public struct SinglePhotoPicker<Content: View>: View {
     @Binding private var isPresentedError: Bool
     
     private let maxSelectedCount: Int
+//    private var disabled: Bool {
+//        return selectedPhotos.count >= maxSelectedCount
+//    }
     private var disabled: Bool {
-        return selectedPhotos.count >= maxSelectedCount
+        return selectedImages?.count ?? 0 >= maxSelectedCount
     }
     private var availableSelectedCount: Int {
-        return maxSelectedCount - selectedPhotos.count
+        return maxSelectedCount - (selectedImages?.count ?? 0 )
     }
     private let matching: PHPickerFilter
     private let photoLibrary: PHPhotoLibrary
-//    private let content: () -> Content
+    private let content: () -> Content
     
     public init(
         selectedPhotos: [PhotosPickerItem] = [],
@@ -30,8 +33,8 @@ public struct SinglePhotoPicker<Content: View>: View {
         isPresentedError: Binding<Bool> = .constant(false),
         maxSelectedCount: Int = 1,
         matching: PHPickerFilter = .images,
-        photoLibrary: PHPhotoLibrary = .shared()
-//        content: @escaping () -> Content
+        photoLibrary: PHPhotoLibrary = .shared(),
+        content: @escaping () -> Content
     ) {
         self.selectedPhotos = selectedPhotos
         self._selectedImages = selectedImages
@@ -39,47 +42,35 @@ public struct SinglePhotoPicker<Content: View>: View {
         self.maxSelectedCount = maxSelectedCount
         self.matching = matching
         self.photoLibrary = photoLibrary
-//        self.content = content
+        self.content = content
     }
     
     public var body: some View {
         if #available(iOS 17.0, *) {
-            PhotosPicker("포토피커",
-                         selection: $selectedPhotos,
-                         maxSelectionCount: availableSelectedCount,
-                         matching: matching,
-                         photoLibrary: photoLibrary
-            )
-//            PhotosPicker(
-//                selection: $selectedPhotos,
-//                maxSelectionCount: availableSelectedCount,
-//                matching: matching,
-//                photoLibrary: photoLibrary
-//            ) {
-//                content()
+            PhotosPicker(
+                selection: $selectedPhotos,
+                maxSelectionCount: availableSelectedCount,
+                matching: matching,
+                photoLibrary: photoLibrary
+            ) {
+                content()
 //                    .disabled(disabled)
-//            }
+            }
 //            .disabled(disabled)
             .onChange(of: selectedPhotos) {
                 handleSelectedPhotos(selectedPhotos)
             }
         } else {
-//            PhotosPicker(
-//                selection: $selectedPhotos,
-//                maxSelectionCount: availableSelectedCount,
-//                matching: matching,
-//                photoLibrary: photoLibrary
-//            ) {
-//                content()
-//                    .disabled(disabled)
-//            }
-//            .disabled(disabled)
-            PhotosPicker("포토피커",
-                         selection: $selectedPhotos,
-                         maxSelectionCount: availableSelectedCount,
-                         matching: matching,
-                         photoLibrary: photoLibrary
-            )
+            PhotosPicker(
+                selection: $selectedPhotos,
+                maxSelectionCount: availableSelectedCount,
+                matching: matching,
+                photoLibrary: photoLibrary
+            ) {
+                content()
+                    .disabled(disabled)
+            }
+            .disabled(disabled)
             .onChange(of: selectedPhotos) { newValue in
                 handleSelectedPhotos(newValue)
             }
@@ -106,6 +97,6 @@ public struct SinglePhotoPicker<Content: View>: View {
             }
         }
         
-        selectedPhotos.removeAll()
+//        selectedPhotos.removeAll()
     }
 }
