@@ -1,14 +1,14 @@
 //
-//  ChattingPhotoPicker.swift
+//  SinglePhotoPicker.swift
 //  Gathering
 //
-//  Created by 여성은 on 11/8/24.
+//  Created by 여성은 on 12/13/24.
 //
 
 import PhotosUI
 import SwiftUI
 
-public struct CustomPhotoPicker<Content: View>: View {
+public struct SinglePhotoPicker<Content: View>: View {
     @State private var selectedPhotos: [PhotosPickerItem]
     @Binding private var selectedImages: [UIImage]?
     @Binding private var isPresentedError: Bool
@@ -31,10 +31,10 @@ public struct CustomPhotoPicker<Content: View>: View {
         selectedPhotos: [PhotosPickerItem] = [],
         selectedImages: Binding<[UIImage]?>,
         isPresentedError: Binding<Bool> = .constant(false),
-        maxSelectedCount: Int,
+        maxSelectedCount: Int = 1,
         matching: PHPickerFilter = .images,
         photoLibrary: PHPhotoLibrary = .shared(),
-        @ViewBuilder content: @escaping () -> Content
+        content: @escaping () -> Content
     ) {
         self.selectedPhotos = selectedPhotos
         self._selectedImages = selectedImages
@@ -54,9 +54,9 @@ public struct CustomPhotoPicker<Content: View>: View {
                 photoLibrary: photoLibrary
             ) {
                 content()
-                    .disabled(disabled)
+//                    .disabled(disabled)
             }
-            .disabled(disabled)
+//            .disabled(disabled)
             .onChange(of: selectedPhotos) {
                 handleSelectedPhotos(selectedPhotos)
             }
@@ -97,6 +97,6 @@ public struct CustomPhotoPicker<Content: View>: View {
             }
         }
         
-        selectedPhotos.removeAll()
+//        selectedPhotos.removeAll()
     }
 }

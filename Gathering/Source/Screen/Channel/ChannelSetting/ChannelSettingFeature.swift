@@ -14,7 +14,7 @@ struct ChannelSettingFeature {
     
     @Dependency(\.channelClient) var channelClient
     @Dependency(\.dbClient) var dbClient
-
+    
     @ObservableState
     struct State {
         // 이전 화면에서 전달 (멤버 정보들까지 포함)
@@ -46,16 +46,19 @@ struct ChannelSettingFeature {
         var title = ""
         var description = ""
         var buttonValid = false
+        var selectedImage: [UIImage]? = []
     }
     
     enum Action: BindableAction {
         case binding(BindingAction<State>)
+        case task
         
         case memberCellTap(Member)
         
         // 채널 편집
         case editChannelButtonTap
         case editConfirmButtonTap
+        case deleteImageButtonTapped
         
         // 채널 나가기 (관리자)
         case adminGetOutChannelButtonTap
@@ -84,6 +87,8 @@ struct ChannelSettingFeature {
         case changeAdminResponse(ChannelResponse)
         case deleteChannelResponse
         case updateChannelResponse(ChannelResponse)
+        case fetchChannelImage(UIImage)
+        case fetchChannelInfo
     }
     
     var body: some ReducerOf<Self> {
@@ -114,13 +119,15 @@ struct ChannelSettingFeature {
             case .editConfirmButtonTap:
                 return .run { [state = state] send in
                     do {
+                        let data =  state.selectedImage?.last?.jpegData(compressionQuality: 0.5)
+                        
                         let result = try await channelClient.editChannel(
                             state.currentChannel?.channel_id ?? "",
                             UserDefaultsManager.workspaceID,
                             ChannelRequest(
                                 name: state.title,
                                 description: state.description,
-                                image: nil
+                                image: data
                             )
                         )
                         await send(.editChannelResponse(result))
@@ -264,7 +271,32 @@ struct ChannelSettingFeature {
             case .updateChannelResponse(let result):
                 state.currentChannel = result
                 return .none
+            case .deleteImageButtonTapped:
+                state.selectedImage = []
+                return .none
+                
+            case .task:
+                return .run { [state = state] send in
+                    do {
+                        guard let urlString = state.currentChannel?.coverImage else { return }
+                        let result = try await NetworkManager.shared.requestImage(
+                            ImageRouter.fetchImage(path: urlString)
+                        )
+                        await send(.fetchChannelInfo)
+                        return await send(.fetchChannelImage(result))
+                    } catch {}
+                    
+                }
+                
+            case .fetchChannelImage(let image):
+                state.selectedImage = [image]
+                return .none
+            case .fetchChannelInfo:
+                state.title = state.currentChannel?.name ?? ""
+                state.description = state.currentChannel?.description ?? ""
+                return .none
             }
+            
         }
     }
     
