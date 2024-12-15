@@ -34,6 +34,19 @@ struct ExploreFeature {
         var myChannels: [Channel] = []
         var selectedChannel: Channel?
         var showAlert = false
+        
+        // 검색 관련 상태 추가
+        var searchText = "" // 검색어를 저장할 상태
+        var filteredChannels: [Channel] { // 검색어에 따라 필터링된 채널 목록
+            if searchText.isEmpty {
+                return allChannels
+            } else {
+                return allChannels.filter {
+                    $0.name.localizedCaseInsensitiveContains(searchText) ||
+                    ($0.description ?? "").localizedCaseInsensitiveContains(searchText)
+                }
+            }
+        }
     }
     
     enum Action: BindableAction {
