@@ -10,17 +10,35 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ProfileView: View {
-    
     @Perception.Bindable var store: StoreOf<ProfileFeature>
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
         WithPerceptionTracking {
             List {
+                // 프로필 이미지 섹션
                 LoadedImageView(urlString: store.profileImage, size: 250)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .listRowBackground(Color.clear)
                 
+                // me 타입일 때만 보여줄 세싹 코인 섹션
+                if store.profileType == .me {
+                    Section {
+                        HStack {
+                            Text("내 새싹 코인")
+                                .font(Design.bodyBold)
+                            Text("\(store.sesacCoin)")
+                                .foregroundColor(Design.black)
+                            Spacer()
+                            Button("충전하기") {
+                                store.send(.chargeSesacCoinTap)
+                            }
+                            .foregroundColor(Design.black)
+                        }
+                    }
+                }
+                
+                // 기본 정보 섹션
                 Section {
                     HStack {
                         Text("닉네임")
@@ -29,6 +47,24 @@ struct ProfileView: View {
                         Text(store.nickname)
                             .foregroundColor(Design.textGray)
                             .font(Design.body)
+                    }
+                    
+                    if store.profileType == .me {
+                        Button {
+                            store.send(.phoneNumberTap)
+                        } label: {
+                            HStack {
+                                Text("연락처")
+                                    .font(Design.bodyBold)
+                                Spacer()
+                                Text("응급한 고래밥")
+                                    .foregroundColor(Design.textGray)
+                                Image(.chevronRight)
+                                    .resizable()
+                                    .frame(width: 15, height: 15)
+                            }
+                        }
+                        .foregroundColor(.black)
                     }
                     
                     HStack {
@@ -41,7 +77,8 @@ struct ProfileView: View {
                     }
                 }
                 
-                if store.state.profileType == .me {
+                // me 타입일 때만 보여줄 로그아웃 섹션
+                if store.profileType == .me {
                     Section {
                         Button("로그아웃", role: .destructive) {
                             store.send(.logoutButtonTap)
@@ -52,7 +89,7 @@ struct ProfileView: View {
             .listStyle(.insetGrouped)
             .navigationBarBackButtonHidden()
             .customToolbar(
-                title: store.state.profileType == .me ? "내 정보 수정" : "프로필",
+                title: store.profileType == .me ? "내 정보 수정" : "프로필",
                 leftItem: .init(icon: .chevronLeft) {
                     dismiss()
                 }
