@@ -10,7 +10,6 @@ import SwiftUI
 import ComposableArchitecture
 
 struct HomeView: View {
-    
     @Perception.Bindable var store: StoreOf<HomeFeature>
     
     var body: some View {
@@ -18,9 +17,6 @@ struct HomeView: View {
             NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
                 ZStack(alignment: .bottomTrailing) {
                     coverLayer
-                    makeFloatingButton {
-                        store.send(.floatingButtonTap)
-                    }
                 }
                 .asGatheringNavigationModifier(
                     gatheringImage: store.currentWorkspace?.coverImage ?? "",
@@ -42,8 +38,6 @@ struct HomeView: View {
                     ChannelChattingView(store: store)
                 case .channelSetting(let store):
                     ChannelSettingView(store: store)
-                case .dmChatting(let store):
-                    DMChattingView(store: store)
                 }
             }
         }
@@ -51,7 +45,6 @@ struct HomeView: View {
 }
 
 extension HomeView {
-    
     private func scrollView() -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
@@ -59,19 +52,10 @@ extension HomeView {
                     label: "채널",
                     isExpanded: $store.isChannelExpanded
                 ) {
-                    channelListView()
+                    channelGridView()
                     makeAddButton(text: "채널 추가") {
                         store.send(.addChannelButtonTap)
                     }
-                }
-                .padding()
-                Divider()
-                
-                CustomDisclosureGroup(
-                    label: "다이렉트 메시지",
-                    isExpanded: $store.isDMExpanded
-                ) {
-                    dmListView()
                 }
                 .padding()
             }
@@ -82,78 +66,78 @@ extension HomeView {
             }
             .padding(EdgeInsets(top: 5, leading: 15, bottom: 0, trailing: 0))
         }
-        
     }
     
-    private func channelListView() -> some View {
-        VStack(alignment: .leading, spacing: 12) {
+    private func channelGridView() -> some View {
+        LazyVGrid(
+            columns: [
+                GridItem(.flexible(), spacing: 16),
+                GridItem(.flexible(), spacing: 16)
+            ],
+            spacing: 16
+        ) {
             ForEach(store.channelList, id: \.id) { channel in
-                HStack {
-                    let unreadResponse = store.channelUnreads[channel]
-                    
-                    Image(unreadResponse == nil ? .thin : .hashTagthick)
-                        .resizable()
-                        .frame(width: 15, height: 15)
-                    
-                    Button {
+                ChannelGridCell(
+                    channel: channel,
+                    unreadCount: store.channelUnreads[channel],
+                    onTap: {
                         store.send(.channelTap(channel))
-                    } label: {
-                        Text(channel.name)
-                            .foregroundColor(
-                                unreadResponse == 0 || unreadResponse == nil ?
-                                Design.darkGray : Design.black
-                            )
-                            .font(unreadResponse == 0 || unreadResponse == nil ?
-                                  Design.body : Design.bodyBold)
-                        Spacer()
-                        if let count = unreadResponse {
-                            Text("\(count)")
-                                .badge()
-                                .opacity(count ?? 0 <= 0 ? 0 : 1)
-                        }
                     }
+                )
+            }
+        }
+        .padding(.horizontal, 8)
+    }
+    
+    private struct ChannelGridCell: View {
+        let channel: Channel
+        let unreadCount: Int?
+        let onTap: () -> Void
+        
+        var body: some View {
+            Button(action: onTap) {
+                GeometryReader { geometry in
+                    VStack(spacing: 0) {
+                        LoadedImageView(urlString: channel.coverImage ?? "placeholder",
+                                        size: .infinity,
+                                        isCoverImage: true)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: geometry.size.height * 0.65)
+                            .clipped()
+                        
+                        HStack {
+                            Text(channel.name)
+                                .foregroundColor(
+                                    unreadCount == 0 || unreadCount == nil ?
+                                    Design.darkGray : Design.black
+                                )
+                                .font(unreadCount == 0 || unreadCount == nil ?
+                                      Design.body : Design.bodyBold)
+                                .lineLimit(1)
+                                .multilineTextAlignment(.leading)
+
+                                .background(Design.background)
+                                .padding(.horizontal, 8)
+                            Spacer()
+                            
+                            if let count = unreadCount {
+                                Text("\(count)")
+                                    .badge()
+                                    .opacity(count <= 0 ? 0 : 1)
+                            }
+                        }
+                        .padding(6)
+                    }
+                    .background(Design.background)
+                    .cornerRadius(8)
+                    .shadow(color: .black.opacity(0.1), radius: 2)
                 }
+                .aspectRatio(1, contentMode: .fit)
             }
         }
     }
     
-    private func dmListView() -> some View {
-        LazyVStack(alignment: .leading, spacing: 12) {
-            ForEach(store.dmRoomList, id: \.id) { dmRoom in
-                let unreadResponse = store.dmUnreads[dmRoom]
-                HStack {
-                    LoadedImageView(urlString: dmRoom.user.profileImage ?? "", size: 30)
-                    
-                    Button {
-                        store.send(.dmTap(dmRoom))
-                    } label: {
-                        Text(dmRoom.user.nickname)
-                            .foregroundStyle(
-                                unreadResponse == 0 || unreadResponse == nil ?
-                                Design.darkGray : Design.black
-                            )
-                            .font(
-                                unreadResponse == 0 || unreadResponse == nil ?
-                                Design.body : Design.bodyBold
-                            )
-                        Spacer()
-                        if let count = unreadResponse {
-                            Text("\(count)")
-                                .badge()
-                                .opacity(count ?? 0 <= 0 ? 0 : 1)
-                        }
-                    }
-                }
-            }
-            
-            makeAddButton(text: "새 메시지 시작") {
-                store.send(.startNewMessageTap)
-            }
-        }
-    }
-    
-    private func makeAddButton(text: String,
-                               action: @escaping () -> Void) -> some View {
+    private func makeAddButton(text: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             HStack {
                 Image(.plus)
@@ -170,18 +154,16 @@ extension HomeView {
     
     private func makeFloatingButton(action: @escaping () -> Void) -> some View {
         Button(action: action) {
-            Button(action: action) {
-                Image(systemName: "square.and.pencil")
-                    .foregroundColor(Design.white)
-                    .font(.system(size: 25))
-                    .frame(width: 60, height: 60)
-                    .background(Design.mainSkyblue)
-                    .clipShape(Circle())
-                    .shadow(radius: 4)
-            }
-            .padding(.trailing, 16)
-            .padding(.bottom, 16)
+            Image(systemName: "square.and.pencil")
+                .foregroundColor(Design.white)
+                .font(.system(size: 25))
+                .frame(width: 60, height: 60)
+                .background(Design.mainSkyblue)
+                .clipShape(Circle())
+                .shadow(radius: 4)
         }
+        .padding(.trailing, 16)
+        .padding(.bottom, 16)
     }
 }
 
@@ -220,5 +202,4 @@ extension HomeView {
             ) { store in
                 ExploreChannelView(store: store)
             }
-    }
-}
+    }}

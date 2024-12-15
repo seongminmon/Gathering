@@ -104,6 +104,8 @@
 		843E7FE92CE337F80057A426 /* EditMyProfileImageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E7FE82CE337F80057A426 /* EditMyProfileImageRequest.swift */; };
 		843E7FEB2CE3382F0057A426 /* MyProfileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E7FEA2CE3382F0057A426 /* MyProfileResponse.swift */; };
 		843E7FED2CE338420057A426 /* EditMyProfileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E7FEC2CE338420057A426 /* EditMyProfileResponse.swift */; };
+		8479D6312D0B03F900601196 /* Mungyeong-Gamhong-Apple.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8479D6302D0B03F900601196 /* Mungyeong-Gamhong-Apple.otf */; };
+		8479D6332D0B040300601196 /* PartialSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8479D6322D0B040300601196 /* PartialSansKR-Regular.otf */; };
 		847A3F842CD9000F004A9361 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F832CD9000F004A9361 /* HomeView.swift */; };
 		847A3F882CD9C032004A9361 /* LoadedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F872CD9C032004A9361 /* LoadedImageView.swift */; };
 		847A3F8B2CD9EA54004A9361 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F8A2CD9EA54004A9361 /* Channel.swift */; };
@@ -265,6 +267,8 @@
 		843E7FE82CE337F80057A426 /* EditMyProfileImageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMyProfileImageRequest.swift; sourceTree = "<group>"; };
 		843E7FEA2CE3382F0057A426 /* MyProfileResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileResponse.swift; sourceTree = "<group>"; };
 		843E7FEC2CE338420057A426 /* EditMyProfileResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMyProfileResponse.swift; sourceTree = "<group>"; };
+		8479D6302D0B03F900601196 /* Mungyeong-Gamhong-Apple.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mungyeong-Gamhong-Apple.otf"; sourceTree = "<group>"; };
+		8479D6322D0B040300601196 /* PartialSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PartialSansKR-Regular.otf"; sourceTree = "<group>"; };
 		847A3F832CD9000F004A9361 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		847A3F872CD9C032004A9361 /* LoadedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedImageView.swift; sourceTree = "<group>"; };
 		847A3F8A2CD9EA54004A9361 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
@@ -417,6 +421,7 @@
 		249FB0D02CECA81400CA418B /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				8479D62F2D0B03D200601196 /* Font */,
 				24ABE93E2CD4B5B9000E7EC5 /* Info.plist */,
 				84E8A8122CEDA53600589171 /* APIKey.xcconfig */,
 				2447AB522CE1C4C100399C4D /* LaunchScreen.storyboard */,
@@ -870,6 +875,15 @@
 			path = Socket;
 			sourceTree = "<group>";
 		};
+		8479D62F2D0B03D200601196 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				8479D6322D0B040300601196 /* PartialSansKR-Regular.otf */,
+				8479D6302D0B03F900601196 /* Mungyeong-Gamhong-Apple.otf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
 		847A3F952CDAFAFF004A9361 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -1028,7 +1042,9 @@
 				24ABE94B2CD4B8A9000E7EC5 /* .swiftlint.yml in Resources */,
 				24ABE9242CD4AEDD000E7EC5 /* Preview Assets.xcassets in Resources */,
 				2447AB532CE1C4C100399C4D /* LaunchScreen.storyboard in Resources */,
+				8479D6332D0B040300601196 /* PartialSansKR-Regular.otf in Resources */,
 				24ABE93C2CD4B4D9000E7EC5 /* .gitignore in Resources */,
+				8479D6312D0B03F900601196 /* Mungyeong-Gamhong-Apple.otf in Resources */,
 				24ABE9212CD4AEDD000E7EC5 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

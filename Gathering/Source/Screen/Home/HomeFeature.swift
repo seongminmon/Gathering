@@ -25,7 +25,6 @@ struct HomeFeature {
         case profile(ProfileFeature)
         case channelChatting(ChannelChattingFeature)
         case channelSetting(ChannelSettingFeature)
-        case dmChatting(DMChattingFeature)
     }
     
     @Reducer
@@ -43,7 +42,7 @@ struct HomeFeature {
         @Presents var confirmationDialog: ConfirmationDialogState<Action.ConfirmationDialog>?
         
         var isChannelExpanded = true
-        var isDMExpanded = true
+        //        var isDMExpanded = true
         
         // 워크스페이스 + 프로필 데이터
         //        var myWorkspaceList: [WorkspaceResponse] = []
@@ -51,18 +50,13 @@ struct HomeFeature {
         var myProfile: MyProfileResponse?
         
         var channelListResponse = [ChannelResponse]()
-        var dmRoomListResponse = [DMsRoomResponse]()
         var channelList: [Channel] {
             return channelListResponse.map { $0.toPresentModel() }
         }
-        var dmRoomList: [DMsRoom] {
-            return dmRoomListResponse.map { $0.toPresentModel() }
-        }
         
         var channelUnreads = [Channel: Int]()
-        var dmUnreads = [DMsRoom: Int]()
     }
-
+    
     // MARK: Action -
     enum Action: BindableAction {
         case binding(BindingAction<State>)
@@ -82,18 +76,14 @@ struct HomeFeature {
         case startNewMessageTap
         
         case channelTap(Channel)
-        case dmTap(DMsRoom)
         
         case task
         
         case myWorkspaceResponse(WorkspaceResponse?)
         case myProfileResponse(MyProfileResponse)
         case channelListResponse([ChannelResponse])
-        case dmRoomListResponse([DMsRoomResponse])
-        //        case myWorkspaceListResponse([WorkspaceResponse])
         
         case unreadChannelCountResponse(Channel, Int?)
-        case unreadDMCountResponse(DMsRoom, Int?)
     }
     
     var body: some ReducerOf<Self> {
@@ -117,13 +107,13 @@ struct HomeFeature {
                         email: user.email,
                         profileImage: user.profileImage ?? "bird"
                     )))
-//                case .onDisappear:
-//                    print("채널 채팅 뷰 - onDisappear (부모 리듀서)")
+                    //                case .onDisappear:
+                    //                    print("채널 채팅 뷰 - onDisappear (부모 리듀서)")
                 default:
                     break
                 }
                 return .none
-            
+                
                 // 채널 세팅 뷰 액션
             case .path(.element(id: _, action: .channelSetting(let action))):
                 switch action {
@@ -141,15 +131,6 @@ struct HomeFeature {
                 default:
                     break
                 }
-                return .none
-                
-            case .path(.element(id: _, action: .dmChatting(.profileButtonTap(let user)))):
-                state.path.append(.profile(ProfileFeature.State(
-                    profileType: .otherUser,
-                    nickname: user.nickname,
-                    email: user.email,
-                    profileImage: user.profileImage ?? "bird"
-                )))
                 return .none
                 
             case .path:
@@ -186,11 +167,6 @@ struct HomeFeature {
                 )))
                 print("홈뷰 채널 탭", channel.id)
                 return .none
-            case .dmTap(let dmRoom):
-                state.path.append(.dmChatting(DMChattingFeature.State(
-                    dmsRoomResponse: dmRoom
-                )))
-                return .none
             case .startNewMessageTap:
                 // RootFeature에서 탭바 전환
                 return .none
@@ -216,7 +192,7 @@ struct HomeFeature {
                 
                 // MARK: networking -
             case .task:
-//                state.isLoading = true
+                //                state.isLoading = true
                 return .run { send in
                     do {
                         // 워크스페이스 리스트, 유저 정보 가져오기
@@ -239,11 +215,10 @@ struct HomeFeature {
                             await send(.myWorkspaceResponse(workspaceResult.first))
                         }
                         
-                        let (channelResult, dmRoomResult) = try await fetchWorkspaceDetails(
+                        let channelResult = try await fetchWorkspaceDetails(
                             workspaceID: UserDefaultsManager.workspaceID
                         )
                         await send(.channelListResponse(channelResult))
-                        await send(.dmRoomListResponse(dmRoomResult))
                         
                     } catch {
                         print(error)
@@ -262,7 +237,7 @@ struct HomeFeature {
                 return .merge(result.map { channel in
                     return .run { send in
                         do {
-//                             ChannelDBResponse DB에 채널정보 있니?
+                            //                             ChannelDBResponse DB에 채널정보 있니?
                             let channelDB = try dbClient.fetchChannel(channel.channel_id)
                             // String 가져온 채널 DB에 마지막 채팅 날짜 저장되어있니?
                             let sortedChattings = channelDB?.chattings.sorted { $0.createdAt < $1.createdAt }
@@ -287,43 +262,12 @@ struct HomeFeature {
                         
                     }
                 })
-            case .dmRoomListResponse(let result):
-                state.dmRoomListResponse = result
-                return .merge(result.map { dmRoom in
-                    return .run { send in
-                        do {
-                            let dmRoomDB = try dbClient.fetchDMRoom(dmRoom.room_id)
-                            let sortedChattings = dmRoomDB?.chattings.sorted { $0.createdAt < $1.createdAt }
-                            let readDate = sortedChattings?.last?.createdAt ?? Date.firstDate
-                            do {
-                                let unreads = try await dmsClient.fetchUnreadDMCount(
-                                    UserDefaultsManager.workspaceID,
-                                    dmRoom.room_id,
-                                    readDate
-                                )
-                                
-                                await send(.unreadDMCountResponse(dmRoom.toPresentModel(), unreads.count))
-                            } catch {
-                                print("🔥 으아ㅏ아ㅏㅏㅏㅏㅏ")
-                            }
-                            
-                        } catch {
-                            print("🔥 dmRoomDB 없음")
-                            await send(.unreadDMCountResponse(dmRoom.toPresentModel(), nil))
-                        }
-                        
-                    }
-                })
                 
             case .unreadChannelCountResponse(let channel, let unreadCount):
                 state.channelUnreads[channel] = unreadCount
                 print("✅ unreadChannelCountResponse?")
                 return .none
                 
-            case .unreadDMCountResponse(let dmRoom, let unreadCount):
-                state.dmUnreads[dmRoom] = unreadCount
-                print("✅ unreadDMCountResponse?")
-                return .none
             case .binding:
                 return .none
             }
@@ -347,11 +291,9 @@ struct HomeFeature {
     
     private func fetchWorkspaceDetails(
         workspaceID: String
-    ) async throws -> (channels: [ChannelResponse], dmRooms: [DMsRoomResponse]) {
+    ) async throws -> [ChannelResponse] {
         // 채널 리스트 조회
         async let channels = channelClient.fetchMyChannelList(workspaceID)
-        // DM 방 리스트 조회
-        async let dmRooms = dmsClient.fetchDMSList(workspaceID)
-        return try await (channels, dmRooms)
+        return try await channels
     }
 }

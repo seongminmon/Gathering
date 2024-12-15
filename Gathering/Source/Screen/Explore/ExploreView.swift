@@ -10,16 +10,21 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ExploreView: View {
-    
     @Perception.Bindable var store: StoreOf<ExploreFeature>
     
     var body: some View {
         WithPerceptionTracking {
             NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
-                ScrollView {
-                    LazyVStack(spacing: 8) {
-                        ForEach(store.allChannels, id: \.id) { channel in
-                            channelCell(channel)
+                VStack(spacing: 0) {
+                    // 검색창 추가
+                    searchBar
+                    
+                    ScrollView {
+                        LazyVStack(spacing: 8) {
+                            // filteredChannels로 변경
+                            ForEach(store.filteredChannels, id: \.id) { channel in
+                                channelCell(channel)
+                            }
                         }
                     }
                 }
@@ -39,6 +44,7 @@ struct ExploreView: View {
                 }
             }
             .onAppear { store.send(.onAppear) }
+            
 //            .customAlert(
 //                isPresented: $store.showAlert,
 //                title: "채널 참여",
@@ -58,6 +64,29 @@ struct ExploreView: View {
 //            )
         }
     }
+    private var searchBar: some View {
+            HStack {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(Design.textGray)
+                
+                TextField("채널 검색", text: $store.searchText)
+                    .textFieldStyle(.plain)
+                
+                if !store.searchText.isEmpty {
+                    Button {
+                        store.searchText = ""
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(Design.textGray)
+                    }
+                }
+            }
+            .padding(8)
+            .background(Design.background)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
+        }
     
     private func channelCell(_ channel: Channel) -> some View {
         Button {
