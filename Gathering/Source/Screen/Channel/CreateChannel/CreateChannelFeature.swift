@@ -8,7 +8,6 @@
 import SwiftUI
 
 import ComposableArchitecture
-import _PhotosUI_SwiftUI
 
 @Reducer
 struct CreateChannelFeature {
@@ -27,7 +26,6 @@ struct CreateChannelFeature {
             !channelName.isEmpty
         }
         
-        var selectedPhoto: [PhotosPickerItem] = []
         var selectedImage: [UIImage]? = []
     }
     
@@ -52,11 +50,15 @@ struct CreateChannelFeature {
                 guard state.isValid else { return .none }
                 return .run { [state = state] send in
                     do {
+                        let data =  state.selectedImage?.last?.jpegData(compressionQuality: 0.5)
+                        
                         let result = try await channelClient.createChannel(
                             UserDefaultsManager.workspaceID,
-                            ChannelRequest(name: state.channelName,
-                                           description: state.channelDescription,
-                                           image: nil))
+                            ChannelRequest(
+                                name: state.channelName,
+                                description: state.channelDescription,
+                                image: data
+                            ))
                         
                         // 나를 포함해서 채널 생성
                         let myData = try await userClient.fetchUserProfile(UserDefaultsManager.userID)
