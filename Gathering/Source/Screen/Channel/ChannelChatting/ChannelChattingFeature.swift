@@ -36,7 +36,7 @@ struct ChannelChattingFeature {
         var keyboardHeight: CGFloat = 0
         
         var messageButtonValid = false
-        // var isTextFieldFocused = false 
+         var isTextFieldFocused = false 
     }
     
     enum Action: BindableAction {

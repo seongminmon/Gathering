@@ -141,23 +141,26 @@ struct HomeFeature {
                 state.destination = .channelAdd(CreateChannelFeature.State())
                 return .none
             case .confirmationDialog(.presented(.exploreChannelButtonTap)):
-                state.destination = .channelExplore(ExploreChannelFeature.State())
+//                state.destination = .channelExplore(ExploreChannelFeature.State())
                 return .none
             case .addChannelButtonTap:
-                state.confirmationDialog = ConfirmationDialogState {
-                    TextState("")
-                } actions: {
-                    ButtonState(action: .createChannelButtonTap) {
-                        TextState("채널 생성")
-                    }
-                    ButtonState(action: .exploreChannelButtonTap) {
-                        TextState("채널 탐색")
-                    }
-                    ButtonState(role: .cancel) {
-                        TextState("취소")
-                    }
-                }
+                state.destination = .channelAdd(CreateChannelFeature.State())
+//                state.confirmationDialog = ConfirmationDialogState {
+//                    TextState("")
+//                } actions: {
+//                    ButtonState(action: .createChannelButtonTap) {
+//                        TextState("채널 생성")
+//                    }
+//                    ButtonState(action: .exploreChannelButtonTap) {
+//                        TextState("채널 탐색")
+//                    }
+//                    ButtonState(role: .cancel) {
+//                        TextState("취소")
+//                    }
+//                }
                 return .none
+                
+                
             case .inviteMemberButtonTap:
                 state.destination = .inviteMember(InviteMemberFeature.State())
                 return .none
