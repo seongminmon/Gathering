@@ -29,7 +29,7 @@ public struct CustomPhotoPicker<Content: View>: View {
     
     public init(
         selectedPhotos: [PhotosPickerItem] = [],
-        selectedImages: Binding<[UIImage]?>,
+        selectedImages: Binding<[UIImage]?> ,
         isPresentedError: Binding<Bool> = .constant(false),
         maxSelectedCount: Int,
         matching: PHPickerFilter = .images,
@@ -59,6 +59,8 @@ public struct CustomPhotoPicker<Content: View>: View {
             .disabled(disabled)
             .onChange(of: selectedPhotos) {
                 handleSelectedPhotos(selectedPhotos)
+                print("💖selectedImages_ onchanged", selectedImages?.count)
+                print("💖selectedPhotos_ onchanged", selectedPhotos.count)
             }
         } else {
             PhotosPicker(
@@ -88,7 +90,10 @@ public struct CustomPhotoPicker<Content: View>: View {
                         ) {
                             DispatchQueue.main.async {
                                 selectedImages?.append(newImage)
+                                print("🤍selectedImages_ handleSelectedPhotos", selectedImages?.count)
+                                print("🤍selectedPhotos_ handleSelectedPhotos", selectedPhotos.count)
                             }
+                            
                         }
                     }
                 case .failure:
@@ -96,7 +101,7 @@ public struct CustomPhotoPicker<Content: View>: View {
                 }
             }
         }
-        
+
         selectedPhotos.removeAll()
     }
 }
