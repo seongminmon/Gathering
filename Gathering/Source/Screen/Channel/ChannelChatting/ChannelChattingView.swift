@@ -255,7 +255,6 @@ extension ChannelChattingView {
     //            .background(Color.clear)
     //            .font(Design.body)
 
-
     private func selectePhotoView(images: [UIImage]) -> some View {
         LazyHGrid(rows: [GridItem(.fixed(50))], spacing: 12) {
             ForEach(images, id: \.self) { image in

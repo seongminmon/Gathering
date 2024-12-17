@@ -61,7 +61,9 @@ struct CreateChannelFeature {
                             ))
                         
                         // 나를 포함해서 채널 생성
-                        let myData = try await userClient.fetchUserProfile(UserDefaultsManager.userID)
+                        let myData = try await userClient.fetchUserProfile(
+                            UserDefaultsManager.userID
+                        )
                         let dbChannels = result.toDBModel([myData.toDBModel()])
                         try dbClient.update(dbChannels)
                         

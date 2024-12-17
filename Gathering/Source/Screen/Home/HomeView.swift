@@ -202,4 +202,5 @@ extension HomeView {
             ) { store in
                 ExploreChannelView(store: store)
             }
-    }}
+    }
+}
