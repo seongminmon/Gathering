@@ -14,5 +14,5 @@ struct Channel: Identifiable, Hashable {
     let coverImage: String?
     let owner_id: String
     let createdAt: String
-    let channelMembers: [Member]?
+    var channelMembers: [Member]?
 }

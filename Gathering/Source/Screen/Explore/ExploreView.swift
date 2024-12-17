@@ -44,26 +44,26 @@ struct ExploreView: View {
                 }
             }
             .onAppear { store.send(.onAppear) }
-            
-//            .customAlert(
-//                isPresented: $store.showAlert,
-//                title: "채널 참여",
-//                message: "[\(store.selectedChannel?.name ?? "")] 채널에 참여 하시겠습니까?",
-//                primaryButton: .init(
-//                    title: "확인",
-//                    action: {
-//                        store.send(.confirmJoinChannel(store.selectedChannel))
-//                    }
-//                ),
-//                secondaryButton: .init(
-//                    title: "취소",
-//                    action: {
-//                        store.send(.cancelJoinChannel)
-//                    }
-//                )
-//            )
+            .customAlert(
+                isPresented: $store.showAlert,
+                title: "채널 참여",
+                message: "[\(store.selectedChannel?.name ?? "")] 채널에 참여 하시겠습니까?",
+                primaryButton: .init(
+                    title: "확인",
+                    action: {
+                        store.send(.confirmJoinChannel(store.selectedChannel))
+                    }
+                ),
+                secondaryButton: .init(
+                    title: "취소",
+                    action: {
+                        store.send(.cancelJoinChannel)
+                    }
+                )
+            )
         }
     }
+    
     private var searchBar: some View {
             HStack {
                 Image(systemName: "magnifyingglass")
@@ -102,12 +102,13 @@ struct ExploreView: View {
                     Text(channel.description ?? "")
                         .font(Design.body)
                     Spacer()
+                    
                     HStack(spacing: 4) {
-                        // TODO: - 채널 주인 프로필 사진 + 닉네임으로 변경
-                        LoadedImageView(urlString: "", size: 32)
+                        let owner = store.channelOwners[channel.id]
+                        LoadedImageView(urlString: owner?.profileImage ?? "", size: 32)
                             .clipShape(Circle())
                             .overlay(Circle().stroke(Design.mainSkyblue, lineWidth: 2))
-                        Text("야호")
+                        Text(owner?.nickname ?? "")
                         Image(systemName: Design.person2)
                         Text("\(channel.channelMembers?.count ?? 0)명 참여")
                             .font(Design.body)
@@ -120,7 +121,7 @@ struct ExploreView: View {
                 .padding(.vertical, 4)
                 
                 Spacer()
-                let flag = store.myChannels.contains(channel)
+                let flag = store.myChannels.contains { $0.id == channel.id }
                 Text(flag ? "참여 중" : "참여하기")
                     .font(Design.bodyBold)
                     .foregroundStyle(Design.white)
