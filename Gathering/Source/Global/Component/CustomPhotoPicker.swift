@@ -1,5 +1,5 @@
 //
-//  ChattingPhotoPicker.swift
+//  CustomPhotoPicker.swift
 //  Gathering
 //
 //  Created by 여성은 on 11/8/24.
@@ -93,7 +93,6 @@ public struct CustomPhotoPicker<Content: View>: View {
                                 print("🤍selectedImages_ handleSelectedPhotos", selectedImages?.count)
                                 print("🤍selectedPhotos_ handleSelectedPhotos", selectedPhotos.count)
                             }
-                            
                         }
                     }
                 case .failure:

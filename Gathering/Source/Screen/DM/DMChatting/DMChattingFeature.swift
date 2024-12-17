@@ -55,7 +55,7 @@ struct DMChattingFeature {
         BindingReducer()
         Reduce { state, action in
             switch action {
-            case .profileButtonTap(let user):
+            case .profileButtonTap:
                 // homeview와 dmView에서 path로 처리
                 return .none
                 
@@ -126,8 +126,8 @@ struct DMChattingFeature {
                 guard let index = state.selectedImages?.firstIndex(of: image) else {
                     return .none
                 }
-                let newImages = state.selectedImages?.remove(at: index)
-                print(state.selectedImages)
+                _ = state.selectedImages?.remove(at: index)
+                print(state.selectedImages ?? [])
                 return .none
                 
             case .sendDmMessage:
@@ -181,10 +181,10 @@ struct DMChattingFeature {
                 state.socketManager = socketManager
                 return .none
                 
-            case .binding(_):
+            case .binding:
                 return .none
                 
-            case .fetchDBChatting(_):
+            case .fetchDBChatting:
                 return .none
             }
         }
@@ -200,7 +200,7 @@ extension DMChattingFeature {
             let opponentInfo = try await userClient.fetchUserProfile(
                 dmsRoomInfo.user.id
             ).toDBModel()
-            print("opponentInfo 프로필..\(opponentInfo.profileImage)")
+            print("opponentInfo 프로필..\(opponentInfo.profileImage ?? "")")
             let myInfo = try await userClient.fetchMyProfile().toDBModel()
             let members: [MemberDBModel] = [opponentInfo, myInfo]
             return members

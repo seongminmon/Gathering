@@ -107,8 +107,8 @@ struct HomeFeature {
                         email: user.email,
                         profileImage: user.profileImage ?? "bird"
                     )))
-                    //                case .onDisappear:
-                    //                    print("채널 채팅 뷰 - onDisappear (부모 리듀서)")
+//                case .onDisappear:
+//                    print("채널 채팅 뷰 - onDisappear (부모 리듀서)")
                 default:
                     break
                 }
@@ -159,8 +159,7 @@ struct HomeFeature {
 //                    }
 //                }
                 return .none
-                
-                
+               
             case .inviteMemberButtonTap:
                 state.destination = .inviteMember(InviteMemberFeature.State())
                 return .none
@@ -240,18 +239,24 @@ struct HomeFeature {
                 return .merge(result.map { channel in
                     return .run { send in
                         do {
-                            //                             ChannelDBResponse DB에 채널정보 있니?
+                            // ChannelDBResponse DB에 채널정보 있니?
                             let channelDB = try dbClient.fetchChannel(channel.channel_id)
                             // String 가져온 채널 DB에 마지막 채팅 날짜 저장되어있니?
-                            let sortedChattings = channelDB?.chattings.sorted { $0.createdAt < $1.createdAt }
-                            let readDate = sortedChattings?.last?.createdAt ?? Date.firstDate
+                            let sortedChattings = channelDB?.chattings.sorted {
+                                $0.createdAt < $1.createdAt
+                            }
+                            let readDate = sortedChattings?.last?.createdAt ??
+                            Date.firstDate
                             do {
                                 let unreads = try await channelClient.fetchUnreadChannel(
                                     channel.channel_id,
                                     UserDefaultsManager.workspaceID,
                                     readDate
                                 )
-                                await send(.unreadChannelCountResponse(channel.toPresentModel(), unreads.count))
+                                await send(.unreadChannelCountResponse(
+                                    channel.toPresentModel(),
+                                    unreads.count)
+                                )
                                 
                             } catch {
                                 print("🔥 으아ㅏ아ㅏㅏㅏㅏㅏ")

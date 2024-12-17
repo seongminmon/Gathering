@@ -63,7 +63,7 @@ struct ExploreChannelFeature {
                 state.showAlert = false
                 return .run { send in
                     do {
-                        let result = try await channelClient.fetchChattingList(
+                        _ = try await channelClient.fetchChattingList(
                             channel.id,
                             UserDefaultsManager.workspaceID,
                             ""

@@ -116,7 +116,7 @@ extension HomeView {
                                 .lineLimit(1)
                                 .multilineTextAlignment(.leading)
 
-                                .background(Design.background)
+                                .background(Design.chatBackground)
                                 .padding(.horizontal, 8)
                             Spacer()
                             
@@ -128,7 +128,7 @@ extension HomeView {
                         }
                         .padding(6)
                     }
-                    .background(Design.background)
+                    .background(Design.chatBackground)
                     .cornerRadius(8)
                     .shadow(color: .black.opacity(0.1), radius: 2)
                 }
@@ -202,4 +202,5 @@ extension HomeView {
             ) { store in
                 ExploreChannelView(store: store)
             }
-    }}
+    }
+}
