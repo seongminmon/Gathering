@@ -62,6 +62,44 @@ struct ExploreFeature {
             case .binding:
                 return .none
                 
+                // 채널 채팅 뷰 액션
+            case .path(.element(id: _, action: .channelChatting(let action))):
+                switch action {
+                case .settingButtonTap(let channel):
+                    state.path.append(.channelSetting(ChannelSettingFeature.State(
+                        currentChannel: channel
+                    )))
+                case .profileButtonTap(let user):
+                    state.path.append(.profile(ProfileFeature.State(
+                        profileType: .otherUser,
+                        nickname: user.nickname,
+                        email: user.email,
+                        profileImage: user.profileImage ?? "bird"
+                    )))
+                default:
+                    break
+                }
+                return .none
+                
+                // 채널 세팅 뷰 액션
+            case .path(.element(id: _, action: .channelSetting(let action))):
+                switch action {
+                case .memberCellTap(let user):
+                    state.path.append(.profile(ProfileFeature.State(
+                        profileType: .otherUser,
+                        nickname: user.nickname,
+                        email: user.email,
+                        profileImage: user.profileImage ?? "bird"
+                    )))
+                case .exitChannelResponse:
+                    state.path.removeAll()
+                case .deleteChannelResponse:
+                    state.path.removeAll()
+                default:
+                    break
+                }
+                return .none
+                
             case .path:
                 return .none
                 
