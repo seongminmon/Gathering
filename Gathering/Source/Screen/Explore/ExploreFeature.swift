@@ -32,6 +32,8 @@ struct ExploreFeature {
         
         var allChannels: [Channel] = []
         var myChannels: [Channel] = []
+        var channelOwners = [String: Member]()
+        
         var selectedChannel: Channel?
         var showAlert = false
         
@@ -55,10 +57,14 @@ struct ExploreFeature {
         
         case onAppear
         case channelCellTap(Channel)
+        case confirmJoinChannel(Channel?)
+        case cancelJoinChannel
+        case moveToChannelChattingView(Channel)
         
         case myWorkspaceResponse(WorkspaceResponse?)
         case myProfileResponse(MyProfileResponse)
         case channelResponse([Channel], [Channel])
+        case channelDetailResponse(Channel, [Member], Member)
     }
     
     var body: some ReducerOf<Self> {
@@ -69,9 +75,48 @@ struct ExploreFeature {
             case .binding:
                 return .none
                 
+                // 채널 채팅 뷰 액션
+            case .path(.element(id: _, action: .channelChatting(let action))):
+                switch action {
+                case .settingButtonTap(let channel):
+                    state.path.append(.channelSetting(ChannelSettingFeature.State(
+                        currentChannel: channel
+                    )))
+                case .profileButtonTap(let user):
+                    state.path.append(.profile(ProfileFeature.State(
+                        profileType: .otherUser,
+                        nickname: user.nickname,
+                        email: user.email,
+                        profileImage: user.profileImage ?? "bird"
+                    )))
+                default:
+                    break
+                }
+                return .none
+                
+                // 채널 세팅 뷰 액션
+            case .path(.element(id: _, action: .channelSetting(let action))):
+                switch action {
+                case .memberCellTap(let user):
+                    state.path.append(.profile(ProfileFeature.State(
+                        profileType: .otherUser,
+                        nickname: user.nickname,
+                        email: user.email,
+                        profileImage: user.profileImage ?? "bird"
+                    )))
+                case .exitChannelResponse:
+                    state.path.removeAll()
+                case .deleteChannelResponse:
+                    state.path.removeAll()
+                default:
+                    break
+                }
+                return .none
+                
             case .path:
                 return .none
                 
+                // MARK: - 유저 액션
             case .onAppear:
                 return .run { send in
                     do {
@@ -96,6 +141,26 @@ struct ExploreFeature {
                         
                         let (allChannels, myChannels) = try await fetchChannelData()
                         await send(.channelResponse(allChannels, myChannels))
+                        
+                        // 병렬 채널 상세 정보 페치
+                        await withTaskGroup(of: Void.self) { group in
+                            for channel in allChannels {
+                                group.addTask {
+                                    do {
+                                        let (channelMembers, owner) = try await fetchChannelDetail(channel)
+                                        await send(.channelDetailResponse(channel, channelMembers, owner))
+                                    } catch {
+                                        print("채널 디테일 통신 실패")
+                                    }
+                                }
+                            }
+                        }
+                        
+//                        for channel in allChannels {
+//                            let (channelMembers, owner) = try await fetchChannelDetail(channel)
+//                            await send(.channelDetailResponse(channel, channelMembers, owner))
+//                        }
+                        
                     } catch {
                         print(error)
                         print("error🔥")
@@ -103,17 +168,45 @@ struct ExploreFeature {
                 }
                 
             case .channelCellTap(let channel):
-                print("채널 셀 탭")
-                state.selectedChannel = channel
-                // MARK: - 참여 중이면 채팅방으로, 참여 중이 아니면 얼럿
-                if state.myChannels.contains(channel) {
-                    // TODO: - 채팅방 이동
-                    print("채팅방 이동")
+                // 참여 중이면 채팅방 아니면 얼럿
+                if state.myChannels.contains(where: { $0.id == channel.id }) {
+                    return .send(.moveToChannelChattingView(channel))
                 } else {
+                    state.selectedChannel = channel
                     state.showAlert = true
+                    return .none
                 }
+                
+            case let .confirmJoinChannel(channel):
+                guard let channel else { return .none }
+                
+                state.showAlert = false
+                return .run { send in
+                    do {
+                        _ = try await channelClient.fetchChattingList(
+                            channel.id,
+                            UserDefaultsManager.workspaceID,
+                            ""
+                        )
+                        await send(.moveToChannelChattingView(channel))
+                    } catch {
+                        print("채널 참여 실패")
+                    }
+                }
+                
+            case .cancelJoinChannel:
+                state.showAlert = false
+                state.selectedChannel = nil
                 return .none
                 
+            case let .moveToChannelChattingView(channel):
+                // 채널 채팅방 이동
+                state.path.append(.channelChatting(ChannelChattingFeature.State(
+                    channelID: channel.id
+                )))
+                return .none
+                
+                // MARK: - 네트워킹
             case .myWorkspaceResponse(let workspace):
                 state.currentWorkspace = workspace
                 return .none
@@ -126,6 +219,13 @@ struct ExploreFeature {
                 state.allChannels = allChannels
                 state.myChannels = myChannels
                 return .none
+                
+            case let .channelDetailResponse(channel, members, owner):
+                if let index = state.allChannels.firstIndex(of: channel) {
+                    state.allChannels[index].channelMembers = members
+                }
+                state.channelOwners[channel.id] = owner
+                return .none
             }
         }
         .forEach(\.path, action: \.path)
@@ -133,17 +233,18 @@ struct ExploreFeature {
 }
 
 extension ExploreFeature {
+    
+    /// 내가 속한 워크스페이스 리스트 / 내 프로필 조회
     private func fetchInitialData() async throws -> (
         workspaceList: [WorkspaceResponse],
         profile: MyProfileResponse
     ) {
-        // 내가 속한 워크스페이스 리스트 조회
         async let workspaces = workspaceClient.fetchMyWorkspaceList()
-        // 내 프로필 조회
         async let profile = userClient.fetchMyProfile()
         return try await (workspaces, profile)
     }
     
+    /// 전체 채널 리스트 / 내가 속한 채널 리스트 조회
     private func fetchChannelData() async throws -> ([Channel], [Channel]) {
         let workspaceID = UserDefaultsManager.workspaceID
         async let allChannels = channelClient.fetchChannelList(workspaceID)
@@ -151,6 +252,17 @@ extension ExploreFeature {
         return try await (
             allChannels.map { $0.toPresentModel() },
             myChannels.map { $0.toPresentModel() }
+        )
+    }
+    
+    /// 채널 상세 정보 / 채널 주인 프로필 조회
+    private func fetchChannelDetail(_ channel: Channel) async throws -> ([Member], Member) {
+        let workspaceID = UserDefaultsManager.workspaceID
+        async let channelDetail = channelClient.fetchChannel(channel.id, workspaceID)
+        async let ownerDetail = userClient.fetchUserProfile(channel.owner_id)
+        return try await (
+            channelDetail.channelMembers?.map { $0.toPresentModel() } ?? [],
+            ownerDetail.toPresentModel()
         )
     }
 }
