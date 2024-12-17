@@ -18,4 +18,5 @@ extension Design {
     static let skyblue = Color(.appSkyblue)
     static let mainSkyblue = Color(.appMainSkyblue)
     static let background = Color(.background)
+    static let chatBackground = Color(.chatBackground)
 }

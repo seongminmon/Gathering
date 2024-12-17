@@ -161,7 +161,7 @@ extension ChannelChattingView {
                                 .padding(9)
                                 .background(
                                     RoundedRectangle(cornerRadius: 8)
-                                        .fill(Design.background)
+                                        .fill(Design.chatBackground)
                                 )
 //                                .overlay(
 //                                    RoundedRectangle(cornerRadius: 12)
