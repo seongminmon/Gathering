@@ -143,7 +143,7 @@ extension DMChattingView {
                                 .padding(9)
                                 .background(
                                     RoundedRectangle(cornerRadius: 8) // 둥근 모서리
-                                        .fill(Design.background) // 배경색 설정
+                                        .fill(Design.chatBackground) // 배경색 설정
                                 )
                         }
                         if !message.imageNames.isEmpty {

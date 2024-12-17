@@ -161,7 +161,7 @@ extension ChannelChattingView {
                                 .padding(9)
                                 .background(
                                     RoundedRectangle(cornerRadius: 8)
-                                        .fill(Design.background)
+                                        .fill(Design.chatBackground)
                                 )
 //                                .overlay(
 //                                    RoundedRectangle(cornerRadius: 12)
@@ -254,7 +254,6 @@ extension ChannelChattingView {
     //        .lineLimit(1...5)
     //            .background(Color.clear)
     //            .font(Design.body)
-
 
     private func selectePhotoView(images: [UIImage]) -> some View {
         LazyHGrid(rows: [GridItem(.fixed(50))], spacing: 12) {

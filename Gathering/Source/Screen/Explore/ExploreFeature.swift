@@ -147,8 +147,12 @@ struct ExploreFeature {
                             for channel in allChannels {
                                 group.addTask {
                                     do {
-                                        let (channelMembers, owner) = try await fetchChannelDetail(channel)
-                                        await send(.channelDetailResponse(channel, channelMembers, owner))
+                                        let (channelMembers, owner) = try await fetchChannelDetail(
+                                            channel
+                                        )
+                                        await send(.channelDetailResponse(
+                                            channel, channelMembers, owner
+                                        ))
                                     } catch {
                                         print("채널 디테일 통신 실패")
                                     }
