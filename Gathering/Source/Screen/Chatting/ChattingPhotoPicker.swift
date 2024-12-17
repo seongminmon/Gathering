@@ -70,9 +70,9 @@ public struct CustomPhotoPicker<Content: View>: View {
                 photoLibrary: photoLibrary
             ) {
                 content()
-                    .disabled(disabled)
+//                    .disabled(disabled)
             }
-            .disabled(disabled)
+//            .disabled(disabled)
             .onChange(of: selectedPhotos) { newValue in
                 handleSelectedPhotos(newValue)
             }
