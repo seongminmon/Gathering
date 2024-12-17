@@ -8,6 +8,7 @@
 import SwiftUI
 
 import ComposableArchitecture
+import _PhotosUI_SwiftUI
 
 @Reducer
 struct ChannelChattingFeature {
@@ -35,6 +36,7 @@ struct ChannelChattingFeature {
         var keyboardHeight: CGFloat = 0
         
         var messageButtonValid = false
+         var isTextFieldFocused = false 
     }
     
     enum Action: BindableAction {

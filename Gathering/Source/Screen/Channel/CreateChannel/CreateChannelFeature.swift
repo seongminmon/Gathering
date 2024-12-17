@@ -19,19 +19,26 @@ struct CreateChannelFeature {
     
     @ObservableState
     struct State {
+
         var channelName: String = ""
         var channelDescription: String = ""
         var isValid: Bool {
             !channelName.isEmpty
         }
+        
+        var selectedImage: [UIImage]? = []
     }
     
     enum Action: BindableAction {
         case binding(BindingAction<State>)
+        
         case saveButtonTapped
         case channelCreated
+        
+        case deleteImageButtonTapped
+        
     }
-
+    
     var body: some ReducerOf<Self> {
         BindingReducer()
         Reduce { state, action in
@@ -43,11 +50,15 @@ struct CreateChannelFeature {
                 guard state.isValid else { return .none }
                 return .run { [state = state] send in
                     do {
+                        let data =  state.selectedImage?.last?.jpegData(compressionQuality: 0.5)
+                        
                         let result = try await channelClient.createChannel(
                             UserDefaultsManager.workspaceID,
-                            ChannelRequest(name: state.channelName,
-                                           description: state.channelDescription,
-                                           image: nil))
+                            ChannelRequest(
+                                name: state.channelName,
+                                description: state.channelDescription,
+                                image: data
+                            ))
                         
                         // 나를 포함해서 채널 생성
                         let myData = try await userClient.fetchUserProfile(UserDefaultsManager.userID)
@@ -72,6 +83,9 @@ struct CreateChannelFeature {
                     }
                 }
             case .channelCreated:
+                return .none
+            case .deleteImageButtonTapped:
+                state.selectedImage = []
                 return .none
             }
         }

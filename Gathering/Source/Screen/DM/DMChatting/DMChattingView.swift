@@ -184,12 +184,17 @@ extension DMChattingView {
             // 입력 뷰
             HStack(alignment: .bottom) {
                 // 이미지 선택 버튼
-                ChattingPhotoPicker(selectedImages: $store.selectedImages) {
+                CustomPhotoPicker(
+                    selectedImages: $store.selectedImages,
+                    maxSelectedCount: 5
+                ) {
                     Image(systemName: "plus")
                         .resizable()
                         .frame(width: 22, height: 20)
                         .foregroundColor(Design.darkGray)
                 }
+                .disabled(store.selectedImages?.count == 5)
+                
                 VStack(alignment: .leading) {
                     // 메시지 입력 필드
                     dynamicHeigtTextField()
@@ -206,7 +211,7 @@ extension DMChattingView {
                     Image(systemName: "paperplane.fill")
                         .font(.system(size: 20))
                         .foregroundColor(store.messageButtonValid
-                                         ? Design.skyblue : Design.darkGray)
+                                         ? Design.mainSkyblue : Design.darkGray)
                 }
                 .disabled(!store.messageButtonValid)
             }
