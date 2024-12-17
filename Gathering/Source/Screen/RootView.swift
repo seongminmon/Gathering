@@ -10,9 +10,8 @@ import SwiftUI
 import ComposableArchitecture
 
 enum TabInfo : String, CaseIterable {
-    case home = "홈"
-    case dm = "DM"
-    case search = "검색"
+    case home = "내 모임"
+    case dm = "메시지"
     case explore = "둘러보기"
 }
 
@@ -38,16 +37,6 @@ struct RootView: View {
                         Text(TabInfo.dm.rawValue)
                     }
                     .tag(TabInfo.dm)
-                
-                // MARK: - 검색
-                NavigationStack {
-                    EmptyView()
-                }
-                .tabItem {
-                    Image(store.selectedTab == .search ? .profileActive : .profileInactive)
-                    Text(TabInfo.search.rawValue)
-                }
-                .tag(TabInfo.search)
                 
                 // MARK: - 둘러보기
                 NavigationStack {
