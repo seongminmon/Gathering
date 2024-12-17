@@ -32,6 +32,8 @@ struct ExploreFeature {
         
         var allChannels: [Channel] = []
         var myChannels: [Channel] = []
+        var channelOwners = [String: Member]()
+        
         var selectedChannel: Channel?
         var showAlert = false
     }
@@ -49,6 +51,7 @@ struct ExploreFeature {
         case myWorkspaceResponse(WorkspaceResponse?)
         case myProfileResponse(MyProfileResponse)
         case channelResponse([Channel], [Channel])
+        case channelDetailResponse(Channel, [Member], Member)
     }
     
     var body: some ReducerOf<Self> {
@@ -62,6 +65,7 @@ struct ExploreFeature {
             case .path:
                 return .none
                 
+                // MARK: - 유저 액션
             case .onAppear:
                 return .run { send in
                     do {
@@ -86,6 +90,26 @@ struct ExploreFeature {
                         
                         let (allChannels, myChannels) = try await fetchChannelData()
                         await send(.channelResponse(allChannels, myChannels))
+                        
+                        // 병렬 채널 상세 정보 페치
+                        await withTaskGroup(of: Void.self) { group in
+                            for channel in allChannels {
+                                group.addTask {
+                                    do {
+                                        let (channelMembers, owner) = try await fetchChannelDetail(channel)
+                                        await send(.channelDetailResponse(channel, channelMembers, owner))
+                                    } catch {
+                                        print("채널 디테일 통신 실패")
+                                    }
+                                }
+                            }
+                        }
+                        
+//                        for channel in allChannels {
+//                            let (channelMembers, owner) = try await fetchChannelDetail(channel)
+//                            await send(.channelDetailResponse(channel, channelMembers, owner))
+//                        }
+                        
                     } catch {
                         print(error)
                         print("error🔥")
@@ -93,8 +117,8 @@ struct ExploreFeature {
                 }
                 
             case .channelCellTap(let channel):
-                print("채널 셀 탭")
-                if state.myChannels.contains(channel) {
+                // 참여 중이면 채팅방 아니면 얼럿
+                if state.myChannels.contains(where: { $0.id == channel.id }) {
                     return .send(.moveToChannelChattingView(channel))
                 } else {
                     state.selectedChannel = channel
@@ -125,7 +149,7 @@ struct ExploreFeature {
                 return .none
                 
             case let .moveToChannelChattingView(channel):
-                // 채널 채팅방으로 이동
+                // 채널 채팅방 이동
                 state.path.append(.channelChatting(ChannelChattingFeature.State(
                     channelID: channel.id
                 )))
@@ -144,6 +168,13 @@ struct ExploreFeature {
                 state.allChannels = allChannels
                 state.myChannels = myChannels
                 return .none
+                
+            case let .channelDetailResponse(channel, members, owner):
+                if let index = state.allChannels.firstIndex(of: channel) {
+                    state.allChannels[index].channelMembers = members
+                }
+                state.channelOwners[channel.id] = owner
+                return .none
             }
         }
         .forEach(\.path, action: \.path)
@@ -151,17 +182,18 @@ struct ExploreFeature {
 }
 
 extension ExploreFeature {
+    
+    /// 내가 속한 워크스페이스 리스트 / 내 프로필 조회
     private func fetchInitialData() async throws -> (
         workspaceList: [WorkspaceResponse],
         profile: MyProfileResponse
     ) {
-        // 내가 속한 워크스페이스 리스트 조회
         async let workspaces = workspaceClient.fetchMyWorkspaceList()
-        // 내 프로필 조회
         async let profile = userClient.fetchMyProfile()
         return try await (workspaces, profile)
     }
     
+    /// 전체 채널 리스트 / 내가 속한 채널 리스트 조회
     private func fetchChannelData() async throws -> ([Channel], [Channel]) {
         let workspaceID = UserDefaultsManager.workspaceID
         async let allChannels = channelClient.fetchChannelList(workspaceID)
@@ -169,6 +201,17 @@ extension ExploreFeature {
         return try await (
             allChannels.map { $0.toPresentModel() },
             myChannels.map { $0.toPresentModel() }
+        )
+    }
+    
+    /// 채널 상세 정보 / 채널 주인 프로필 조회
+    private func fetchChannelDetail(_ channel: Channel) async throws -> ([Member], Member) {
+        let workspaceID = UserDefaultsManager.workspaceID
+        async let channelDetail = channelClient.fetchChannel(channel.id, workspaceID)
+        async let ownerDetail = userClient.fetchUserProfile(channel.owner_id)
+        return try await (
+            channelDetail.channelMembers?.map { $0.toPresentModel() } ?? [],
+            ownerDetail.toPresentModel()
         )
     }
 }
