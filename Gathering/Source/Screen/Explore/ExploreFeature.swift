@@ -39,7 +39,7 @@ struct ExploreFeature {
         
         // 검색 관련 상태 추가
         var searchText = "" // 검색어를 저장할 상태
-        var filteredChannels: [Channel] { // 검색어에 따라 필터링된 채널 목록
+        var filteredChannels: [Channel] { // 검색어에 따라 필터링된 모임 목록
             if searchText.isEmpty {
                 return allChannels
             } else {
@@ -75,7 +75,7 @@ struct ExploreFeature {
             case .binding:
                 return .none
                 
-                // 채널 채팅 뷰 액션
+                // 모임 채팅 뷰 액션
             case .path(.element(id: _, action: .channelChatting(let action))):
                 switch action {
                 case .settingButtonTap(let channel):
@@ -94,7 +94,7 @@ struct ExploreFeature {
                 }
                 return .none
                 
-                // 채널 세팅 뷰 액션
+                // 모임 세팅 뷰 액션
             case .path(.element(id: _, action: .channelSetting(let action))):
                 switch action {
                 case .memberCellTap(let user):
@@ -142,7 +142,7 @@ struct ExploreFeature {
                         let (allChannels, myChannels) = try await fetchChannelData()
                         await send(.channelResponse(allChannels, myChannels))
                         
-                        // 병렬 채널 상세 정보 페치
+                        // 병렬 모임 상세 정보 페치
                         await withTaskGroup(of: Void.self) { group in
                             for channel in allChannels {
                                 group.addTask {
@@ -154,7 +154,7 @@ struct ExploreFeature {
                                             channel, channelMembers, owner
                                         ))
                                     } catch {
-                                        print("채널 디테일 통신 실패")
+                                        print("모임 디테일 통신 실패")
                                     }
                                 }
                             }
@@ -194,7 +194,7 @@ struct ExploreFeature {
                         )
                         await send(.moveToChannelChattingView(channel))
                     } catch {
-                        print("채널 참여 실패")
+                        print("모임 참여 실패")
                     }
                 }
                 
@@ -204,7 +204,7 @@ struct ExploreFeature {
                 return .none
                 
             case let .moveToChannelChattingView(channel):
-                // 채널 채팅방 이동
+                // 모임 채팅방 이동
                 state.path.append(.channelChatting(ChannelChattingFeature.State(
                     channelID: channel.id
                 )))
@@ -248,7 +248,7 @@ extension ExploreFeature {
         return try await (workspaces, profile)
     }
     
-    /// 전체 채널 리스트 / 내가 속한 채널 리스트 조회
+    /// 전체 모임 리스트 / 내가 속한 모임 리스트 조회
     private func fetchChannelData() async throws -> ([Channel], [Channel]) {
         let workspaceID = UserDefaultsManager.workspaceID
         async let allChannels = channelClient.fetchChannelList(workspaceID)
@@ -259,7 +259,7 @@ extension ExploreFeature {
         )
     }
     
-    /// 채널 상세 정보 / 채널 주인 프로필 조회
+    /// 모임 상세 정보 / 모임 주인 프로필 조회
     private func fetchChannelDetail(_ channel: Channel) async throws -> ([Member], Member) {
         let workspaceID = UserDefaultsManager.workspaceID
         async let channelDetail = channelClient.fetchChannel(channel.id, workspaceID)

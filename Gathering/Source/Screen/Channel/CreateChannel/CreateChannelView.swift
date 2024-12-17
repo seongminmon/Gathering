@@ -16,7 +16,7 @@ struct CreateChannelView: View {
     var body: some View {
         WithPerceptionTracking {
             VStack {
-                SheetHeaderView(title: "채널 생성")
+                SheetHeaderView(title: "모임 생성")
                     .background(Design.white)
                 ScrollView {
                     VStack(spacing: 24) {
@@ -57,13 +57,13 @@ struct CreateChannelView: View {
                             .padding(5)
                         }
                         TextFieldWithTitle(
-                            title: "채널 이름",
-                            placeholder: "채널 이름을 입력해주세요",
+                            title: "모임 이름",
+                            placeholder: "모임 이름을 입력해주세요",
                             text: $store.channelName
                         )
                         TextFieldWithTitle(
-                            title: "채널 설명",
-                            placeholder: "채널 설명을 입력해주세요",
+                            title: "모임 설명",
+                            placeholder: "모임 설명을 입력해주세요",
                             text: $store.channelDescription
                         )
                     }

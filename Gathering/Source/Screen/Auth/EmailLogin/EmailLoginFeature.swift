@@ -109,7 +109,7 @@ struct EmailLoginFeature {
     }
     
     private func emailValidation(_ str: String) -> Bool {
-        return str.contains("@") && str.contains(".com")
+        return str.contains("@") && str.contains(".")
     }
     
     private func passwordValidation(_ str: String) -> Bool {

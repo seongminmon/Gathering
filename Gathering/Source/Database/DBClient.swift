@@ -9,7 +9,7 @@
 
 // 내 프로필 이미지
 // 다른 유저 프로필 이미지
-// 채널 채팅 이미지
+// 모임 채팅 이미지
 // DM 채팅 이미지
 
 import Foundation
@@ -79,7 +79,7 @@ extension DBClient: DependencyKey {
                 ofType: ChannelDBModel.self,
                 forPrimaryKey: channelID
             ) else {
-                print("채널을 찾을 수 없습니다.")
+                print("모임을 찾을 수 없습니다.")
                 return
             }
             // `object.user`가 중복되는지 확인하고 처리
@@ -154,7 +154,7 @@ extension DBClient: DependencyKey {
                         realm.add(newMember)
                     }
                     
-                    // 중복 방지 후 채널 멤버 리스트에 추가
+                    // 중복 방지 후 모임 멤버 리스트에 추가
                     if !channel.members.contains(where: { $0.userID == newMember.userID }) {
                         channel.members.append(newMember)
                     }
@@ -186,7 +186,7 @@ extension DBClient: DependencyKey {
                         realm.add(newMember)
                     }
                     
-                    // 중복 방지 후 채널 멤버 리스트에 추가
+                    // 중복 방지 후 모임 멤버 리스트에 추가
                     if !dmRoom.members.contains(where: { $0.userID == newMember.userID }) {
                         dmRoom.members.append(newMember)
                     }

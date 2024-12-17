@@ -26,23 +26,23 @@ struct ChannelSettingFeature {
         
         var isMemeberExpand = true
         
-        // 채널 편집 화면
+        // 모임 편집 화면
         var isEditChannelViewPresented = false
-        // 관리자 채널 나가기
+        // 관리자 모임 나가기
         var isAdminGetOutChannelAlertPresented = false
-        // 채널 관리자 변경 화면
+        // 모임 관리자 변경 화면
         var isChangeAdminViewPresented = false
         var isChannelEmptyAlertPresented = false
         var isChangeAdminAlertPresented = false
         var changeAdminTarget: Member?
         
-        // 채널 삭제 화면
+        // 모임 삭제 화면
         var isDeleteChannelAlertPresented = false
         
-        // 채널 나가기
+        // 모임 나가기
         var isGetOutChannelAlertPresented = false
         
-        // 채널 편집 화면
+        // 모임 편집 화면
         var title = ""
         var description = ""
         var buttonValid = false
@@ -55,15 +55,15 @@ struct ChannelSettingFeature {
         
         case memberCellTap(Member)
         
-        // 채널 편집
+        // 모임 편집
         case editChannelButtonTap
         case editConfirmButtonTap
         case deleteImageButtonTapped
         
-        // 채널 나가기 (관리자)
+        // 모임 나가기 (관리자)
         case adminGetOutChannelButtonTap
         
-        // 채널 관리자 변경
+        // 모임 관리자 변경
         case changeAdminButtonTap
         case channelEmpty
         case channelEmptyConfirmAction
@@ -71,7 +71,7 @@ struct ChannelSettingFeature {
         case changeAdminAction(Member?)
         case changeAdminCancel
         
-        // 채널 삭제 버튼
+        // 모임 삭제 버튼
         case deleteChannelButtonTap
         case deleteChannelAction
         case deleteChannelCancel
@@ -135,9 +135,9 @@ struct ChannelSettingFeature {
                         if let error = error as? ErrorResponse {
                             switch error.errorCode {
                             case "E12":
-                                Notification.postToast(title: "이미 있는 채널 이름입니다.\n다른 이름을 입력해주세요.")
+                                Notification.postToast(title: "이미 있는 모임 이름입니다.\n다른 이름을 입력해주세요.")
                             default:
-                                Notification.postToast(title: "채널 편집 실패")
+                                Notification.postToast(title: "모임 편집 실패")
                             }
                         }
                     }
@@ -165,7 +165,7 @@ struct ChannelSettingFeature {
                         )
                         await send(.changeAdminResponse(result))
                     } catch {
-                        Notification.postToast(title: "채널 관리자 변경 실패")
+                        Notification.postToast(title: "모임 관리자 변경 실패")
                     }
                 }
             case .changeAdminCancel:
@@ -194,9 +194,9 @@ struct ChannelSettingFeature {
                         if let error = error as? ErrorResponse {
                             switch error.errorCode {
                             case "E11":
-                                Notification.postToast(title: "기본 채널은 삭제가 불가능합니다")
+                                Notification.postToast(title: "기본 모임은 삭제가 불가능합니다")
                             default:
-                                Notification.postToast(title: "채널 삭제 실패")
+                                Notification.postToast(title: "모임 삭제 실패")
                             }
                         }
                     }
@@ -221,9 +221,9 @@ struct ChannelSettingFeature {
                         if let error = error as? ErrorResponse {
                             switch error.errorCode {
                             case "E11":
-                                Notification.postToast(title: "기본 채널은 퇴장이 불가능합니다")
+                                Notification.postToast(title: "기본 모임은 퇴장이 불가능합니다")
                             default:
-                                Notification.postToast(title: "채널 나가기 실패")
+                                Notification.postToast(title: "모임 나가기 실패")
                             }
                         }
                     }
@@ -235,8 +235,8 @@ struct ChannelSettingFeature {
                 // MARK: - 네트워킹
             case .editChannelResponse(let result):
                 state.isEditChannelViewPresented = false
-                Notification.postToast(title: "채널이 편집되었습니다")
-                // 채널 정보 갱신
+                Notification.postToast(title: "모임이 편집되었습니다")
+                // 모임 정보 갱신
                 return .run { send in
                     do {
                         let result = try await channelClient.fetchChannel(
@@ -248,8 +248,8 @@ struct ChannelSettingFeature {
                 }
             case .changeAdminResponse(let result):
                 state.isChangeAdminViewPresented = false
-                Notification.postToast(title: "채널 관리자가 변경되었습니다")
-                // 채널 정보 갱신
+                Notification.postToast(title: "모임 관리자가 변경되었습니다")
+                // 모임 정보 갱신
                 return .run { send in
                     do {
                         let result = try await channelClient.fetchChannel(
@@ -302,7 +302,7 @@ struct ChannelSettingFeature {
     
     private func removeDBChannel(_ channelID: String?) {
         guard let channelID else {
-            print("DB 삭제할 채널 ID 없음")
+            print("DB 삭제할 모임 ID 없음")
             return
         }
         do {
@@ -314,7 +314,7 @@ struct ChannelSettingFeature {
                     }
                 }
                 try dbClient.delete(dbChannel)
-                print("DB 채널 삭제 완료!")
+                print("DB 모임 삭제 완료!")
             }
         } catch {}
     }

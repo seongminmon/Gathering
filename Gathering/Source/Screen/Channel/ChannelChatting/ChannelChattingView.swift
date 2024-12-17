@@ -49,7 +49,7 @@ struct ChannelChattingView: View {
         .onDisappear {
             // 뷰가 사라질 때 키보드 노티피케이션 구독 해제
             keyboardSubscriber?.cancel()
-//            print("채널 채팅 뷰 - onDisappear")
+//            print("모임 채팅 뷰 - onDisappear")
 //            store.send(.onDisappear)
         }
         .customToolbar(
