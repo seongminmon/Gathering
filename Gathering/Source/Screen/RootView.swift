@@ -10,11 +10,13 @@ import SwiftUI
 import ComposableArchitecture
 
 struct RootView: View {
+    
     @Perception.Bindable var store: StoreOf<RootFeature>
     
     var body: some View {
         WithPerceptionTracking {
             TabView(selection: $store.selectedTab) {
+                // MARK: - 내 모임
                 HomeView(store: store.scope(state: \.home, action: \.home))
                     .tabItem {
                         Image(store.selectedTab == .home ? .homeActive : .homeInactive)
@@ -22,6 +24,7 @@ struct RootView: View {
                     }
                     .tag(TabInfo.home)
                 
+                // MARK: - 메시지
                 DMView(store: store.scope(state: \.dm, action: \.dm))
                     .tabItem {
                         Image(store.selectedTab == .dm ? .messageActive : .messageInactive)
@@ -30,14 +33,12 @@ struct RootView: View {
                     .tag(TabInfo.dm)
                 
                 // MARK: - 둘러보기
-                NavigationStack {
-                    ExploreView(store: store.scope(state: \.explore, action: \.explore))
-                }
-                .tabItem {
-                    Image(store.selectedTab == .explore ? .settingActive : .settingInactive)
-                    Text(TabInfo.explore.rawValue)
-                }
-                .tag(TabInfo.explore)
+                ExploreView(store: store.scope(state: \.explore, action: \.explore))
+                    .tabItem {
+                        Image(store.selectedTab == .explore ? .settingActive : .settingInactive)
+                        Text(TabInfo.explore.rawValue)
+                    }
+                    .tag(TabInfo.explore)
             }
         }
     }
