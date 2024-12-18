@@ -109,7 +109,6 @@
 		847A3F882CD9C032004A9361 /* LoadedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F872CD9C032004A9361 /* LoadedImageView.swift */; };
 		847A3F8B2CD9EA54004A9361 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F8A2CD9EA54004A9361 /* Channel.swift */; };
 		847A3F902CDA440F004A9361 /* CustomDisclosureGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F8F2CDA440F004A9361 /* CustomDisclosureGroup.swift */; };
-		847A3F922CDA9FC0004A9361 /* GatheringNavigationStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F912CDA9FC0004A9361 /* GatheringNavigationStack.swift */; };
 		847A3F972CDAFB19004A9361 /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F962CDAFB19004A9361 /* TargetType.swift */; };
 		847A3F9B2CDAFF04004A9361 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F9A2CDAFF04004A9361 /* Header.swift */; };
 		847A3F9D2CDB0E6B004A9361 /* CreateChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A3F9C2CDB0E6B004A9361 /* CreateChannelView.swift */; };
@@ -271,7 +270,6 @@
 		847A3F872CD9C032004A9361 /* LoadedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedImageView.swift; sourceTree = "<group>"; };
 		847A3F8A2CD9EA54004A9361 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		847A3F8F2CDA440F004A9361 /* CustomDisclosureGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDisclosureGroup.swift; sourceTree = "<group>"; };
-		847A3F912CDA9FC0004A9361 /* GatheringNavigationStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatheringNavigationStack.swift; sourceTree = "<group>"; };
 		847A3F962CDAFB19004A9361 /* TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
 		847A3F9A2CDAFF04004A9361 /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		847A3F9C2CDB0E6B004A9361 /* CreateChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChannelView.swift; sourceTree = "<group>"; };
@@ -786,7 +784,6 @@
 				24ABE9602CDB99A8000E7EC5 /* Button */,
 				249FB0F62CECB44C00CA418B /* ImageView */,
 				249FB0F72CECB45A00CA418B /* TextField */,
-				847A3F912CDA9FC0004A9361 /* GatheringNavigationStack.swift */,
 				847A3FA02CDCB96E004A9361 /* SheetHeaderView.swift */,
 				84B8AD222CE46A8E00011D73 /* CustomAlert.swift */,
 				847A3F8F2CDA440F004A9361 /* CustomDisclosureGroup.swift */,
@@ -1126,7 +1123,6 @@
 				2447AB7F2CE878AA00399C4D /* LoginPopUpFeature.swift in Sources */,
 				249FB0CC2CEC9F4400CA418B /* ImageRouter.swift in Sources */,
 				24F7BFDF2D00552200040C09 /* SocketIOManager.swift in Sources */,
-				847A3F922CDA9FC0004A9361 /* GatheringNavigationStack.swift in Sources */,
 				A0E444D92CE2A90C0024AE71 /* WorkspaceCreateRequest.swift in Sources */,
 				847A3F902CDA440F004A9361 /* CustomDisclosureGroup.swift in Sources */,
 				24ABE9542CD8B711000E7EC5 /* Font+.swift in Sources */,
