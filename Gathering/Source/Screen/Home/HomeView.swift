@@ -49,11 +49,11 @@ extension HomeView {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 CustomDisclosureGroup(
-                    label: "채널",
+                    label: "모임",
                     isExpanded: $store.isChannelExpanded
                 ) {
                     channelGridView()
-                    makeAddButton(text: "채널 추가") {
+                    makeAddButton(text: "모임 추가") {
                         store.send(.addChannelButtonTap)
                     }
                 }

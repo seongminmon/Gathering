@@ -17,7 +17,7 @@ struct ChannelSettingView: View {
     var body: some View {
         WithPerceptionTracking {
             mainView()
-            // 채널 편집 화면
+            // 모임 편집 화면
                 .sheet(isPresented: $store.isEditChannelViewPresented) {
                     editChannelView()
                 }
@@ -27,11 +27,11 @@ struct ChannelSettingView: View {
                         store.channelMembers.filter { $0.id != UserDefaultsManager.userID }
                     )
                 }
-            // 채널 삭제
+            // 모임 삭제
                 .customAlert(
                     isPresented: $store.isDeleteChannelAlertPresented,
-                    title: "채널 삭제",
-                    message: "정말 이 채널을 삭제하시겠습니까? 삭제 시 멤버/채팅 등 채널 내의 모든 정보가 삭제되며 복구할 수 없습니다.",
+                    title: "모임 삭제",
+                    message: "정말 이 모임을 삭제하시겠습니까? 삭제 시 멤버/채팅 등 모임 내의 모든 정보가 삭제되며 복구할 수 없습니다.",
                     primaryButton: CustomAlert.AlertButton(title: "삭제") {
                         store.send(.deleteChannelAction)
                     },
@@ -39,17 +39,17 @@ struct ChannelSettingView: View {
                         store.send(.deleteChannelCancel)
                     }
                 )
-            // 채널 나가기 (관리자)
+            // 모임 나가기 (관리자)
                 .customAlert(
                     isPresented: $store.isAdminGetOutChannelAlertPresented,
-                    title: "채널에서 나가기",
-                    message: "회원님은 채널 관리자입니다. 채널 관리자를 다른 멤버로 변경한 후 나갈 수 있습니다."
+                    title: "모임에서 나가기",
+                    message: "회원님은 모임 관리자입니다. 모임 관리자를 다른 멤버로 변경한 후 나갈 수 있습니다."
                 )
-            // 채널 나가기 (관리자 X)
+            // 모임 나가기 (관리자 X)
                 .customAlert(
                     isPresented: $store.isGetOutChannelAlertPresented,
-                    title: "채널에서 나가기",
-                    message: "나가기를 하면 채널 목록에서 삭제됩니다.",
+                    title: "모임에서 나가기",
+                    message: "나가기를 하면 모임 목록에서 삭제됩니다.",
                     primaryButton: CustomAlert.AlertButton(title: "나가기") {
                         store.send(.getOutChannelAction)
                     },
@@ -63,11 +63,11 @@ struct ChannelSettingView: View {
     private func mainView() -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                Text("#\(store.currentChannel?.name ?? "채널명 없음")")
+                Text("#\(store.currentChannel?.name ?? "모임명 없음")")
                     .font(Design.title2)
                     .padding(.vertical, 16)
                 
-                Text(store.currentChannel?.description ?? "채널 설명 없음")
+                Text(store.currentChannel?.description ?? "모임 설명 없음")
                     .font(Design.body)
                 
                 CustomDisclosureGroup(
@@ -85,7 +85,7 @@ struct ChannelSettingView: View {
         .navigationBarBackButtonHidden()
         .frame(maxWidth: .infinity)
         .customToolbar(
-            title: "채널 설정",
+            title: "모임 설정",
             leftItem: .init(icon: .chevronLeft) {
                 dismiss()
             }
@@ -125,7 +125,7 @@ struct ChannelSettingView: View {
                     store.send(.editChannelButtonTap)
                 } label: {
                     RoundedBorderButton(
-                        text: "채널 편집",
+                        text: "모임 편집",
                         textColor: Design.black,
                         borderColor: Design.black
                     )
@@ -134,7 +134,7 @@ struct ChannelSettingView: View {
                     store.send(.adminGetOutChannelButtonTap)
                 } label: {
                     RoundedBorderButton(
-                        text: "채널에서 나가기",
+                        text: "모임에서 나가기",
                         textColor: Design.black,
                         borderColor: Design.black
                     )
@@ -143,7 +143,7 @@ struct ChannelSettingView: View {
                     store.send(.changeAdminButtonTap)
                 } label: {
                     RoundedBorderButton(
-                        text: "채널 관리자 변경",
+                        text: "모임 관리자 변경",
                         textColor: Design.black,
                         borderColor: Design.black
                     )
@@ -152,7 +152,7 @@ struct ChannelSettingView: View {
                     store.send(.deleteChannelButtonTap)
                 } label: {
                     RoundedBorderButton(
-                        text: "채널 삭제",
+                        text: "모임 삭제",
                         textColor: Design.red,
                         borderColor: Design.red
                     )
@@ -162,7 +162,7 @@ struct ChannelSettingView: View {
                     store.send(.getOutChannelButtonTap)
                 } label: {
                     RoundedBorderButton(
-                        text: "채널에서 나가기",
+                        text: "모임에서 나가기",
                         textColor: Design.black,
                         borderColor: Design.black
                     )
@@ -173,7 +173,7 @@ struct ChannelSettingView: View {
     
     private func editChannelView() -> some View {
         VStack {
-            SheetHeaderView(title: "채널 편집")
+            SheetHeaderView(title: "모임 편집")
                 .background(Design.white)
             ScrollView {
                 VStack(spacing: 24) {
@@ -215,13 +215,13 @@ struct ChannelSettingView: View {
                     }
 
                     TextFieldWithTitle(
-                        title: "채널 이름",
-                        placeholder: "채널 이름을 입력해주세요",
+                        title: "모임 이름",
+                        placeholder: "모임 이름을 입력해주세요",
                         text: $store.title
                     )
                     TextFieldWithTitle(
-                        title: "채널 설명",
-                        placeholder: "채널 설명을 입력해주세요",
+                        title: "모임 설명",
+                        placeholder: "모임 설명을 입력해주세요",
                         text: $store.description
                     )
                 }
@@ -279,15 +279,15 @@ struct ChannelSettingView: View {
         .onAppear {
             if members.isEmpty { store.send(.channelEmpty) }
         }
-        // 채널 관리자 변경
+        // 모임 관리자 변경
         .customAlert(
             isPresented: $store.isChangeAdminAlertPresented,
             title: "\(store.changeAdminTarget?.nickname ?? "선택한 유저 없음") 님을 관리자로 지정하시겠습니까?",
             message: """
-            채널 관리자는 다음과 같은 권한이 있습니다.
+            모임 관리자는 다음과 같은 권한이 있습니다.
             
-            - 채널 이름 또는 설명 변경
-            - 채널 삭제
+            - 모임 이름 또는 설명 변경
+            - 모임 삭제
             """,
             primaryButton: CustomAlert.AlertButton(title: "확인") {
                 store.send(.changeAdminAction(store.changeAdminTarget))
@@ -296,11 +296,11 @@ struct ChannelSettingView: View {
                 store.send(.changeAdminCancel)
             }
         )
-        // 채널 관리자 변경 불가
+        // 모임 관리자 변경 불가
         .customAlert(
             isPresented: $store.isChannelEmptyAlertPresented,
-            title: "채널 관리자 변경 불가",
-            message: "채널 멤버가 없어 관리자 변경을 할 수 없습니다.",
+            title: "모임 관리자 변경 불가",
+            message: "모임 멤버가 없어 관리자 변경을 할 수 없습니다.",
             primaryButton: CustomAlert.AlertButton(title: "확인") {
                 store.send(.channelEmptyConfirmAction)
             }

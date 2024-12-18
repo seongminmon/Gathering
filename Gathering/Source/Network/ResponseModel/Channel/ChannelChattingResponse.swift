@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - 채널 채팅 소켓 모델도 공유
+// MARK: - 모임 채팅 소켓 모델도 공유
 struct ChannelChattingResponse: Decodable {
     let channel_id: String
     let channelName: String

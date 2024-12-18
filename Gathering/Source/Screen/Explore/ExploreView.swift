@@ -46,8 +46,8 @@ struct ExploreView: View {
             .onAppear { store.send(.onAppear) }
             .customAlert(
                 isPresented: $store.showAlert,
-                title: "채널 참여",
-                message: "[\(store.selectedChannel?.name ?? "")] 채널에 참여 하시겠습니까?",
+                title: "모임 참여",
+                message: "[\(store.selectedChannel?.name ?? "")] 모임에 참여 하시겠습니까?",
                 primaryButton: .init(
                     title: "확인",
                     action: {
@@ -69,7 +69,7 @@ struct ExploreView: View {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(Design.textGray)
                 
-                TextField("채널 검색", text: $store.searchText)
+                TextField("모임 검색", text: $store.searchText)
                     .textFieldStyle(.plain)
                 
                 if !store.searchText.isEmpty {

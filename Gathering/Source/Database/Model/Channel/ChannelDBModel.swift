@@ -9,7 +9,7 @@ import Foundation
 
 import RealmSwift
 
-// 채널 채팅방 진입 시
+// 모임 채팅방 진입 시
 class ChannelDBModel: Object {
     @Persisted(primaryKey: true) var channelID: String
     @Persisted var channelName: String

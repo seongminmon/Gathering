@@ -10,29 +10,29 @@ import Foundation
 import Alamofire
 
 enum ChannelRouter {
-    // 내가 속한 채널 리스트 조회
+    // 내가 속한 모임 리스트 조회
     case fetchMyChannelList(workspaceID: String)
-    // 채널 리스트 조회
+    // 모임 리스트 조회
     case fetchChannelList(workspaceID: String)
-    // 채널 생성
+    // 모임 생성
     case createChannel(workspaceID: String, body: ChannelRequest)
-    // 특정 채널 정보 조회
+    // 특정 모임 정보 조회
     case fetchChannel(channelID: String, workspaceID: String)
-    // 채널 편집
+    // 모임 편집
     case editChannel(channelID: String, workspaceID: String, body: ChannelRequest)
-    // 채널 삭제
+    // 모임 삭제
     case deleteChannel(channelID: String, workspaceID: String)
-    // 채널 채팅 내역 리스트 조회
+    // 모임 채팅 내역 리스트 조회
     case fetchChattingList(channelID: String, workspaceID: String, cursorDate: String = "")
-    // 채널 채팅 보내기
+    // 모임 채팅 보내기
     case sendChatting(channelID: String, workspaceID: String, body: ChattingRequest)
-    // 읽지 않은 채널 채팅 개수
+    // 읽지 않은 모임 채팅 개수
     case fetchUnreadCount(channelID: String, workspaceID: String, after: String = "")
-    // 채널 멤버 조회
+    // 모임 멤버 조회
     case fetchMembers(channelID: String, workspaceID: String)
-    // 채널 관리자 변경
+    // 모임 관리자 변경
     case changeOwner(channelID: String, workspaceID: String, body: OwnerRequest)
-    // 채널 나가기
+    // 모임 나가기
     case exitChannel(channelID: String, workspaceID: String)
 }
 

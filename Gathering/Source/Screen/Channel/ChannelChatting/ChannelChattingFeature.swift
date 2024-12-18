@@ -25,7 +25,7 @@ struct ChannelChattingFeature {
         
         var socketManager: SocketIOManager<ChannelChattingResponse>?
         
-        // 특정 채널 조회 결과값 (멤버 포함)
+        // 특정 모임 조회 결과값 (멤버 포함)
         var currentChannel: ChannelResponse?
         
         var message: [ChattingPresentModel] = []
@@ -86,7 +86,7 @@ struct ChannelChattingFeature {
                         await send(.connectSocket)
                     }
                     
-                    // 내가 속한 특정 채널 정보 조회
+                    // 내가 속한 특정 모임 정보 조회
                     do {
                         let channel = try await channelClient.fetchChannel(
                             state.channelID,
@@ -145,7 +145,7 @@ struct ChannelChattingFeature {
                 
 //            case .onDisappear:
 //                // TODO: - onDisappear 시점에 소켓 Deinit 하도록 만들기
-//                print("채널 채팅 리듀서 - onDisappear")
+//                print("모임 채팅 리듀서 - onDisappear")
 //                state.socketManager = nil
 //                return .none
                 
@@ -157,7 +157,7 @@ struct ChannelChattingFeature {
             case .fetchDBChatting(let channel):
                 return .run { send in
                     guard let channel else { return }
-                    // 채널 저장 또는 업데이트
+                    // 모임 저장 또는 업데이트
                     await saveOrUpdateChannel(channel: channel)
                     // 새 채팅 불러오기 및 저장
                     do {
@@ -217,7 +217,7 @@ struct ChannelChattingFeature {
 
 extension ChannelChattingFeature {
     
-    /// DB에서 채널 채팅 가져와서 정렬 하는 메서드
+    /// DB에서 모임 채팅 가져와서 정렬 하는 메서드
     private func fetchChannelChats(channelID: String) -> [ChannelChattingDBModel] {
         do {
             let updatedDBChats = try dbClient.fetchChannel(channelID)
@@ -239,9 +239,9 @@ extension ChannelChattingFeature {
                 channelID,
                 chattingResponse.toDBModel(chattingResponse.user.toDBModel())
             )
-            print("채널 채팅 DB에 추가 성공")
+            print("모임 채팅 DB에 추가 성공")
         } catch {
-            print("채널 채팅 DB에 추가 실패")
+            print("모임 채팅 DB에 추가 실패")
         }
         // 파일 저장
         for file in chattingResponse.files {
@@ -291,17 +291,17 @@ extension ChannelChattingFeature {
         
         do {
             if let existingDBChannel = try dbClient.fetchChannel(channel.channel_id) {
-                // 기존 채널 업데이트
+                // 기존 모임 업데이트
                 try dbClient.updateChannel(existingDBChannel, channel.name, members)
-                print("DB 채널 업데이트 성공")
+                print("DB 모임 업데이트 성공")
             } else {
-                // 새 채널 저장
+                // 새 모임 저장
                 let dbChannel = channel.toDBModel(members)
                 try dbClient.update(dbChannel)
-                print("DB 채널 저장 성공")
+                print("DB 모임 저장 성공")
             }
         } catch {
-            print("DB채널 저장/업데이트 실패: \(error)")
+            print("DB모임 저장/업데이트 실패: \(error)")
         }
     }
     

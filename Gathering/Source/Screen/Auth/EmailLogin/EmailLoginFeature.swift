@@ -91,13 +91,15 @@ struct EmailLoginFeature {
                 return .none
                 
             case .test1ButtonTap:
-                state.emailText = "yes@yes.com"
+                // 햄최오십 (워크스페이스 주인)
+                state.emailText = "ddd@qqq.com"
                 state.passwordText = "Ssesac1234@@"
                 return .none
                 
             case .test2ButtonTap:
-                state.emailText = "ksm1@ksm.com"
-                state.passwordText = "1q2w3e4R!"
+                // 별사탕
+                state.emailText = "cccc@randomemail.org"
+                state.passwordText = "!Qwer1234"
                 return .none
                 
             case .test3ButtonTap:
@@ -109,7 +111,7 @@ struct EmailLoginFeature {
     }
     
     private func emailValidation(_ str: String) -> Bool {
-        return str.contains("@") && str.contains(".com")
+        return str.contains("@") && str.contains(".")
     }
     
     private func passwordValidation(_ str: String) -> Bool {

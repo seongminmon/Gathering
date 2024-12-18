@@ -275,7 +275,7 @@ extension DMChattingFeature {
     //DB에서 DmsRoom 가져와서 채팅 가져오는 메서드
     private func fetchDMsChats(dmsRoom: DMsRoom) -> [DMChattingDBModel] {
         do {
-            // 채널 불러오기
+            // 모임 불러오기
             guard let dbDMsRoom = try dbClient.fetchDMRoom(
                 dmsRoom.id
             ) else { return []}
