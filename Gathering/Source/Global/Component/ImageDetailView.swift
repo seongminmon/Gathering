@@ -71,7 +71,7 @@ struct ImageDetailView: View {
                 Button {
                     dismiss()
                 } label: {
-                    Image(systemName: "xmark")
+                    Image(systemName: Design.xmark)
                         .foregroundColor(.white)
                         .padding()
                         .background(

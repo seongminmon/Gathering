@@ -195,7 +195,7 @@ struct ChannelSettingView: View {
                                         .foregroundStyle(Design.gray)
                                         .frame(width: 200, height: 200)
                                     
-                                    Image(systemName: "camera")
+                                    Image(systemName: Design.camera)
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 50, height: 50)

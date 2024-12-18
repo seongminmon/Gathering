@@ -188,7 +188,7 @@ extension DMChattingView {
                     selectedImages: $store.selectedImages,
                     maxSelectedCount: 5
                 ) {
-                    Image(systemName: "plus")
+                    Image(systemName: Design.plus)
                         .resizable()
                         .frame(width: 22, height: 20)
                         .foregroundColor(Design.darkGray)
@@ -208,7 +208,7 @@ extension DMChattingView {
                     store.send(.sendButtonTap)
                     
                 } label: {
-                    Image(systemName: "paperplane.fill")
+                    Image(systemName: Design.paperplane)
                         .font(.system(size: 20))
                         .foregroundColor(store.messageButtonValid
                                          ? Design.mainSkyblue : Design.darkGray)
@@ -241,7 +241,7 @@ extension DMChattingView {
                         Button(action: {
                             store.send(.imageDeleteButtonTap(image))
                         }, label: {
-                            Image(systemName: "xmark.circle")
+                            Image(systemName: Design.xmarkCircle)
                                 .resizable()
                                 .frame(width: 20, height: 20)
                                 .foregroundColor(Design.black)
