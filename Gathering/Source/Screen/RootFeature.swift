@@ -9,8 +9,15 @@ import SwiftUI
 
 import ComposableArchitecture
 
+enum TabInfo: String {
+    case home = "내 모임"
+    case dm = "메시지"
+    case explore = "둘러보기"
+}
+
 @Reducer
 struct RootFeature {
+    
     @ObservableState
     struct State {
         var selectedTab: TabInfo = .home
@@ -25,14 +32,16 @@ struct RootFeature {
         }
     }
     
-    enum Action {
-        case setTab(TabInfo)
+    enum Action: BindableAction {
+        case binding(BindingAction<State>)
         case home(HomeFeature.Action)
         case dm(DMFeature.Action)
         case explore(ExploreFeature.Action)
     }
     
     var body: some ReducerOf<Self> {
+        BindingReducer()
+        
         Scope(state: \.home, action: \.home) {
             HomeFeature()
         }
@@ -45,8 +54,7 @@ struct RootFeature {
         
         Reduce { state, action in
             switch action {
-            case .setTab(let tab):
-                state.selectedTab = tab
+            case .binding:
                 return .none
             case .home, .dm, .explore:
                 return .none

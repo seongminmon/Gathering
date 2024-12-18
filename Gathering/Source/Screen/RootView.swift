@@ -9,21 +9,12 @@ import SwiftUI
 
 import ComposableArchitecture
 
-enum TabInfo : String, CaseIterable {
-    case home = "내 모임"
-    case dm = "메시지"
-    case explore = "둘러보기"
-}
-
 struct RootView: View {
     @Perception.Bindable var store: StoreOf<RootFeature>
     
     var body: some View {
         WithPerceptionTracking {
-            TabView(selection: .init(
-                get: { store.selectedTab },
-                set: { store.send(.setTab($0)) }
-            )) {
+            TabView(selection: $store.selectedTab) {
                 HomeView(store: store.scope(state: \.home, action: \.home))
                     .tabItem {
                         Image(store.selectedTab == .home ? .homeActive : .homeInactive)
