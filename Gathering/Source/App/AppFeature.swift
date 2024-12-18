@@ -30,8 +30,6 @@ struct AppFeature {
     
     enum Action {
         case onAppear
-        case showToast(Toast?)
-        case task
         case loginSuccess(Token)
         case loginFail
         case updateLoginState(LoginState)
@@ -50,7 +48,23 @@ struct AppFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
+                // realm 경로 출력
+                dbClient.printRealm()
+                
                 return .run { send in
+                    // 자동 로그인
+                    do {
+                        let result: Token = try await NetworkManager.shared.request(
+                            api: AuthRouter.refreshToken(
+                                refreshToken: UserDefaultsManager.refreshToken
+                            )
+                        )
+                        await send(.loginSuccess(result), animation: .easeIn)
+                    } catch {
+                        await send(.loginFail, animation: .easeIn)
+                    }
+                    
+                    // 토스트 Notification 구독
                     let notifications = NotificationCenter.default
                         .notifications(named: .showToast)
                         .map { notification -> Toast? in
@@ -59,7 +73,6 @@ struct AppFeature {
                     
                     for await toast in notifications {
                         if let toast {
-                            await send(.showToast(toast))
                             await MainActor.run {
                                 ToastWindowManager.shared.showToast(toast: toast)
                             }
@@ -67,29 +80,8 @@ struct AppFeature {
                     }
                 }
                 
-            case .showToast(let toast):
-                state.toast = toast
-                return .none
-                
-            case .task:
-                // 자동 로그인
-                return .run { send in
-                    do {
-                        let result: Token = try await NetworkManager.shared.request(
-                            api: AuthRouter.refreshToken(
-                                refreshToken: UserDefaultsManager.refreshToken
-                            )
-                        )
-                        await send(.loginSuccess(result), animation: .easeIn)
-                        
-                    } catch {
-                        await send(.loginFail, animation: .easeIn)
-                    }
-                }
-                
             case .loginSuccess(let value):
                 print("자동 로그인 성공")
-                // 엑세스 토큰 저장
                 UserDefaultsManager.refresh(value.accessToken)
                 state.loginState = .success
                 return .none
