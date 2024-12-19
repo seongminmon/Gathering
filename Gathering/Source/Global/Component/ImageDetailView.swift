@@ -72,7 +72,7 @@ struct ImageDetailView: View {
                     dismiss()
                 } label: {
                     Image(systemName: "xmark")
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                         .padding()
                         .background(
                             Circle()

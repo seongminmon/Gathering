@@ -42,7 +42,7 @@ struct ToolbarModifier: ViewModifier {
         ToolbarItem(placement: .principal) {
             Text(config.title)
                 .font(Design.title2)
-                .foregroundColor(Design.black)
+                .foregroundStyle(Design.black)
         }
         
         // 오른쪽 아이템
@@ -55,7 +55,7 @@ struct ToolbarModifier: ViewModifier {
     private func makeBarButton(from item: ToolbarConfig.BarButton) -> some View {
         Button(action: item.action) {
             Image(item.icon)
-                .foregroundColor(Design.black)
+                .foregroundStyle(Design.black)
         }
     }
 }

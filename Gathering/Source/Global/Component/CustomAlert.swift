@@ -57,7 +57,7 @@ struct CustomAlert: View {
                 // 메시지
                 Text(message)
                     .font(Design.body)
-                    .foregroundColor(Design.textGray)
+                    .foregroundStyle(Design.textGray)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 16)
                     .padding(.bottom, 24)

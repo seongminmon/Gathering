@@ -31,7 +31,7 @@ struct CreateChannelView: View {
                                         .scaledToFill()
                                         .frame(width: 200, height: 200)
                                         .clipShape(RoundedRectangle(cornerRadius: 8))
-                                        .foregroundColor(Design.darkGray)
+                                        .foregroundStyle(Design.darkGray)
                                 } else {
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 8)
@@ -42,7 +42,7 @@ struct CreateChannelView: View {
                                             .resizable()
                                             .scaledToFit()
                                             .frame(width: 50, height: 50)
-                                            .foregroundColor(Design.white)
+                                            .foregroundStyle(Design.white)
                                     }
                                     
                                 }

@@ -31,7 +31,7 @@ struct OnboardingView: View {
                     store.send(.startButtonTap)
                 } label: {
                     RoundedButton(text: "시작하기", 
-                                  foregroundColor: Design.white,
+                                  foregroundStyle: Design.white,
                                   backgroundColor: Design.mainSkyblue)
                 }
             }

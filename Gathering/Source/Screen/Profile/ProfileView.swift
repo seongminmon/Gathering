@@ -28,12 +28,12 @@ struct ProfileView: View {
                             Text("내 새싹 코인")
                                 .font(Design.bodyBold)
                             Text("\(store.sesacCoin)")
-                                .foregroundColor(Design.black)
+                                .foregroundStyle(Design.black)
                             Spacer()
                             Button("충전하기") {
                                 store.send(.chargeSesacCoinTap)
                             }
-                            .foregroundColor(Design.black)
+                            .foregroundStyle(Design.black)
                         }
                     }
                 }
@@ -45,7 +45,7 @@ struct ProfileView: View {
                             .font(Design.bodyBold)
                         Spacer()
                         Text(store.nickname)
-                            .foregroundColor(Design.textGray)
+                            .foregroundStyle(Design.textGray)
                             .font(Design.body)
                     }
                     
@@ -58,13 +58,13 @@ struct ProfileView: View {
                                     .font(Design.bodyBold)
                                 Spacer()
                                 Text("응급한 고래밥")
-                                    .foregroundColor(Design.textGray)
+                                    .foregroundStyle(Design.textGray)
                                 Image(.chevronRight)
                                     .resizable()
                                     .frame(width: 15, height: 15)
                             }
                         }
-                        .foregroundColor(.black)
+                        .foregroundStyle(.black)
                     }
                     
                     HStack {
@@ -72,7 +72,7 @@ struct ProfileView: View {
                             .font(Design.bodyBold)
                         Spacer()
                         Text(store.email)
-                            .foregroundColor(Design.textGray)
+                            .foregroundStyle(Design.textGray)
                             .font(Design.body)
                     }
                 }
