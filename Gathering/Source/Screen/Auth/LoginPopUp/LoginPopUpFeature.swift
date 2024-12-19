@@ -12,51 +12,44 @@ import ComposableArchitecture
 @Reducer
 struct LoginPopUpFeature {
     
+    @Reducer
+    enum Destination {
+        case emailLogin(EmailLoginFeature)
+        case signUp(SignUpFeature)
+    }
+    
     @ObservableState
     struct State {
-        var isEmailLoginViewPresented = false
-        var isSignUpViewPresented = false
-        
-        var emailLogin = EmailLoginFeature.State()
-        var signUp = SignUpFeature.State()
+        @Presents var destination: Destination.State?
     }
     
     enum Action: BindableAction {
         case binding(BindingAction<State>)
+        case destination(PresentationAction<Destination.Action>)
+        
         case emailLoginButtonTap
         case signUpButtonTap
-        
-        case emailLogin(EmailLoginFeature.Action)
-        case signUp(SignUpFeature.Action)
     }
     
     var body: some ReducerOf<Self> {
-        Scope(state: \.emailLogin, action: \.emailLogin) {
-            EmailLoginFeature()
-        }
-        Scope(state: \.signUp, action: \.signUp) {
-            SignUpFeature()
-        }
         BindingReducer()
         Reduce { state, action in
             switch action {
             case .binding:
                 return .none
                 
+            case .destination:
+                return .none
+                
             case .emailLoginButtonTap:
-                state.isEmailLoginViewPresented = true
+                state.destination = .emailLogin(EmailLoginFeature.State())
                 return .none
                 
             case .signUpButtonTap:
-                state.isSignUpViewPresented = true
-                return .none
-                
-            case .emailLogin:
-                return .none
-                
-            case .signUp:
+                state.destination = .signUp(SignUpFeature.State())
                 return .none
             }
         }
+        .ifLet(\.$destination, action: \.destination)
     }
 }

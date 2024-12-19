@@ -45,18 +45,22 @@ struct LoginPopUpView: View {
             }
             .padding(20)
             // 이메일 로그인 뷰
-            .sheet(isPresented: $store.isEmailLoginViewPresented) {
-                EmailLoginView(
-                    store: store.scope(state: \.emailLogin, action: \.emailLogin)
+            .sheet(
+                item: $store.scope(
+                    state: \.destination?.emailLogin,
+                    action: \.destination.emailLogin
                 )
-                .presentationDragIndicator(.visible)
+            ) { store in
+                EmailLoginView(store: store)
             }
             // 회원 가입 뷰
-            .sheet(isPresented: $store.isSignUpViewPresented) {
-                SignUpView(
-                    store: store.scope(state: \.signUp, action: \.signUp)
+            .sheet(
+                item: $store.scope(
+                    state: \.destination?.signUp,
+                    action: \.destination.signUp
                 )
-                .presentationDragIndicator(.visible)
+            ) { store in
+                SignUpView(store: store)
             }
         }
     }

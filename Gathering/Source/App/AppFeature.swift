@@ -97,11 +97,11 @@ struct AppFeature {
                 ImageFileManager.shared.deleteAllImages()
                 return .none
                 
-            case .onboarding(.loginPopUp(.emailLogin(.logInResponse))):
+            case .onboarding(.loginPopUp(.destination(.presented(.emailLogin(.logInResponse))))):
                 state.loginState = .success
                 return .none
                 
-            case .onboarding(.loginPopUp(.signUp(.signUpResponse))):
+            case .onboarding(.loginPopUp(.destination(.presented(.signUp(.signUpResponse))))):
                 state.loginState = .success
                 return .none
                 

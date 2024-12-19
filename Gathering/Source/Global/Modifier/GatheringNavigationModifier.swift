@@ -42,6 +42,7 @@ struct GatheringNavigationModifier: ViewModifier {
                     }
                 }
             }
+        // TODO: - WithPerceptionTracking 오류 발생 후보
             .navigationDestination(isPresented: $showProfile) {
                 if let profile = myProfile {
                     ProfileView(
