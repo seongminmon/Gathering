@@ -60,14 +60,14 @@ struct CreateChannelFeature {
                                 image: data
                             ))
                         
-                        // 나를 포함해서 채널 생성
+                        // 나를 포함해서 모임 생성
                         let myData = try await userClient.fetchUserProfile(
                             UserDefaultsManager.userID
                         )
                         let dbChannels = result.toDBModel([myData.toDBModel()])
                         try dbClient.update(dbChannels)
                         
-                        Notification.postToast(title: "채널이 생성되었습니다")
+                        Notification.postToast(title: "모임이 생성되었습니다")
                         
                         // 뷰 갱신을 위한 액션
                         await send(.channelCreated)
@@ -77,9 +77,9 @@ struct CreateChannelFeature {
                         if let errorCode = (error as? ErrorResponse)?.errorCode {
                             switch errorCode {
                             case "E12":
-                                Notification.postToast(title: "이미 존재하는 채널 이름 입니다")
+                                Notification.postToast(title: "이미 존재하는 모임 이름 입니다")
                             default:
-                                Notification.postToast(title: "채널 생성 실패")
+                                Notification.postToast(title: "모임 생성 실패")
                             }
                         }
                     }

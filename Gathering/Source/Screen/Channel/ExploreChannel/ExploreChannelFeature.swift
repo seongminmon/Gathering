@@ -71,7 +71,7 @@ struct ExploreChannelFeature {
                         await send(.moveToChannelChattingView(channel))
                         
                     } catch {
-                        print("채널 참여 실패")
+                        print("모임 참여 실패")
                     }
                 }
                 

@@ -10,7 +10,7 @@ import SwiftUI
 import ComposableArchitecture
 
 // TODO: -
-// ✅ 채널 채팅 로직
+// ✅ 모임 채팅 로직
 // DM 채팅 로직
 
 // ✅ 소켓 통신 매니저
@@ -21,9 +21,9 @@ import ComposableArchitecture
 // DM 뷰 DB 관련 로직
 
 // 채팅 이미지 뷰 1~5개 표시
-// ✅ 채널 채팅, DM 채팅 뷰 로직 (포토 x자 누르면 삭제하기)
+// ✅ 모임 채팅, DM 채팅 뷰 로직 (포토 x자 누르면 삭제하기)
 
-// ✅ 채널 삭제, 채널 나가기 시 DB 삭제 >> 채널 세팅
+// ✅ 모임 삭제, 모임 나가기 시 DB 삭제 >> 모임 세팅
 // ✅ 로그아웃, 자동 로그인 실패, 토큰 갱신 실패 시 UserDefaults, DB, 파일매니저 지우기
 
 @main

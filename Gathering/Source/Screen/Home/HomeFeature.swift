@@ -93,7 +93,7 @@ struct HomeFeature {
             switch action {
                 // MARK: - 네비게이션 path
                 
-                // 채널 채팅 뷰 액션
+                // 모임 채팅 뷰 액션
             case .path(.element(id: _, action: .channelChatting(let action))):
                 switch action {
                 case .settingButtonTap(let channel):
@@ -108,13 +108,13 @@ struct HomeFeature {
                         profileImage: user.profileImage ?? "bird"
                     )))
 //                case .onDisappear:
-//                    print("채널 채팅 뷰 - onDisappear (부모 리듀서)")
+//                    print("모임 채팅 뷰 - onDisappear (부모 리듀서)")
                 default:
                     break
                 }
                 return .none
                 
-                // 채널 세팅 뷰 액션
+                // 모임 세팅 뷰 액션
             case .path(.element(id: _, action: .channelSetting(let action))):
                 switch action {
                 case .memberCellTap(let user):
@@ -149,10 +149,10 @@ struct HomeFeature {
 //                    TextState("")
 //                } actions: {
 //                    ButtonState(action: .createChannelButtonTap) {
-//                        TextState("채널 생성")
+//                        TextState("모임 생성")
 //                    }
 //                    ButtonState(action: .exploreChannelButtonTap) {
-//                        TextState("채널 탐색")
+//                        TextState("모임 탐색")
 //                    }
 //                    ButtonState(role: .cancel) {
 //                        TextState("취소")
@@ -167,7 +167,7 @@ struct HomeFeature {
                 state.path.append(.channelChatting(ChannelChattingFeature.State(
                     channelID: channel.id
                 )))
-                print("홈뷰 채널 탭", channel.id)
+                print("홈뷰 모임 탭", channel.id)
                 return .none
             case .startNewMessageTap:
                 // RootFeature에서 탭바 전환
@@ -239,9 +239,9 @@ struct HomeFeature {
                 return .merge(result.map { channel in
                     return .run { send in
                         do {
-                            // ChannelDBResponse DB에 채널정보 있니?
+                            // ChannelDBResponse DB에 모임정보 있니?
                             let channelDB = try dbClient.fetchChannel(channel.channel_id)
-                            // String 가져온 채널 DB에 마지막 채팅 날짜 저장되어있니?
+                            // String 가져온 모임 DB에 마지막 채팅 날짜 저장되어있니?
                             let sortedChattings = channelDB?.chattings.sorted {
                                 $0.createdAt < $1.createdAt
                             }
@@ -263,7 +263,7 @@ struct HomeFeature {
                             }
                             
                         } catch {
-                            // DB에 채널 정보 없음
+                            // DB에 모임 정보 없음
                             print("🔥 channelDB 없음")
                             await send(.unreadChannelCountResponse(channel.toPresentModel(), nil))
                         }
@@ -300,7 +300,7 @@ struct HomeFeature {
     private func fetchWorkspaceDetails(
         workspaceID: String
     ) async throws -> [ChannelResponse] {
-        // 채널 리스트 조회
+        // 모임 리스트 조회
         async let channels = channelClient.fetchMyChannelList(workspaceID)
         return try await channels
     }
