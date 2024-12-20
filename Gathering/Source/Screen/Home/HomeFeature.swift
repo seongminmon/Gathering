@@ -105,7 +105,7 @@ struct HomeFeature {
                         profileType: .otherUser,
                         nickname: user.nickname,
                         email: user.email,
-                        profileImage: user.profileImage ?? "bird"
+                        profileImage: user.profileImage ?? "defaultProfile"
                     )))
 //                case .onDisappear:
 //                    print("모임 채팅 뷰 - onDisappear (부모 리듀서)")
@@ -122,7 +122,7 @@ struct HomeFeature {
                         profileType: .otherUser,
                         nickname: user.nickname,
                         email: user.email,
-                        profileImage: user.profileImage ?? "bird"
+                        profileImage: user.profileImage ?? "defaultProfile"
                     )))
                 case .exitChannelResponse:
                     state.path.removeAll()

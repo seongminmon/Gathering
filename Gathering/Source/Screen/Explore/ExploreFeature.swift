@@ -87,7 +87,7 @@ struct ExploreFeature {
                         profileType: .otherUser,
                         nickname: user.nickname,
                         email: user.email,
-                        profileImage: user.profileImage ?? "bird"
+                        profileImage: user.profileImage ?? "defaultProfile"
                     )))
                 default:
                     break
@@ -102,7 +102,7 @@ struct ExploreFeature {
                         profileType: .otherUser,
                         nickname: user.nickname,
                         email: user.email,
-                        profileImage: user.profileImage ?? "bird"
+                        profileImage: user.profileImage ?? "defaultProfile"
                     )))
                 case .exitChannelResponse:
                     state.path.removeAll()

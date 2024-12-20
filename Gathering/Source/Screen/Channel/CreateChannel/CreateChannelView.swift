@@ -53,7 +53,6 @@ struct CreateChannelView: View {
                                             )
                                             .foregroundStyle(Design.white)
                                     }
-                                    
                                 }
                             }
                             Button(action: {

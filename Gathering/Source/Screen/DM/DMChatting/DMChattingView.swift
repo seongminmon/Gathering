@@ -29,14 +29,15 @@ extension DMChattingView {
             chattingListView()
             // 채팅보내는 부분
             messageInputView()
+                .onTapGesture {
+                    // 화면을 탭할 때 키보드 내리기
+                    hideKeyboard()
+                }
         }
         .navigationBarBackButtonHidden()
         .toolbar(.hidden, for: .tabBar)
         .task { store.send(.task) }
-        .onTapGesture {
-            // 화면을 탭할 때 키보드 내리기
-            hideKeyboard()
-        }
+        
         .onDisappear {
 //            print("DM 채팅 뷰 - onDisappear")
 //            store.send(.onDisappear)
@@ -128,7 +129,7 @@ extension DMChattingView {
     
     private func othersMessageView(message: ChattingPresentModel) -> some View {
         HStack(alignment: .top) {
-            LoadedImageView(urlString: message.profile ?? "bird",
+            LoadedImageView(urlString: message.profile ?? "defaultProfile",
                              size: 34).wrapToButton {
                 store.send(.profileButtonTap(message.user))
             }
