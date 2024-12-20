@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension View {
-    func asRoundButton(foregroundStyle: Color,
+    func asRoundButton(foregroundColor: Color,
                        backgroundColor: Color
     ) -> some View {
         self

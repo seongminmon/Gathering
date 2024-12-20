@@ -14,4 +14,10 @@ extension View {
                                         from: nil,
                                         for: nil)
     }
+    
+    // 화면 너비 가져옴
+    func getScreenWidth() -> CGFloat {
+        return UIScreen.main.bounds.width
+    }
+    
 }

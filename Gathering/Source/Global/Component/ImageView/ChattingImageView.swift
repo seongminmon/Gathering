@@ -19,7 +19,10 @@ struct ChattingImageView: View {
                     threeImages(imageNames)
                 }
             }
-            .frame(width: 243, height: 80)
+            .frame(
+                width: getScreenWidth()*0.6,
+                height: getScreenWidth()*0.2
+            )
             .background(Design.white)
             .clipShape(RoundedRectangle(cornerRadius: 12))
         } else {
@@ -32,7 +35,10 @@ struct ChattingImageView: View {
                     fiveImages(imageNames)
                 }
             }
-            .frame(width: 243, height: 161)
+            .frame(
+                width: getScreenWidth()*0.6,
+                height: getScreenWidth()*0.4
+            )
             .background(Design.white)
             .clipShape(RoundedRectangle(cornerRadius: 12))
         }
@@ -41,8 +47,8 @@ struct ChattingImageView: View {
     private func oneImage(_ imageStr: [String]) -> some View {
         CustomizableImageView(
             urlString: imageStr[0],
-            width: 244,
-            height: 162,
+            width: getScreenWidth()*0.6,
+            height: getScreenWidth()*0.4,
             cornerRadius: 12
         )
     }
@@ -50,14 +56,14 @@ struct ChattingImageView: View {
         HStack(spacing: 1) {
             CustomizableImageView(
                 urlString: imageStr[0],
-                width: 121,
-                height: 80,
+                width: getScreenWidth()*0.3,
+                height: getScreenWidth()*0.2,
                 cornerRadius: 4
             )
             CustomizableImageView(
                 urlString: imageStr[1],
-                width: 121,
-                height: 80,
+                width: getScreenWidth()*0.3,
+                height: getScreenWidth()*0.2,
                 cornerRadius: 4
             )
         }
@@ -67,20 +73,20 @@ struct ChattingImageView: View {
         HStack(spacing: 1) {
             CustomizableImageView(
                 urlString: imageStr[0],
-                width: 80,
-                height: 80,
+                width: getScreenWidth()*0.2,
+                height: getScreenWidth()*0.2,
                 cornerRadius: 4
             )
             CustomizableImageView(
                 urlString: imageStr[1],
-                width: 80,
-                height: 80,
+                width: getScreenWidth()*0.2,
+                height: getScreenWidth()*0.2,
                 cornerRadius: 4
             )
             CustomizableImageView(
                 urlString: imageStr[2],
-                width: 80,
-                height: 80,
+                width: getScreenWidth()*0.2,
+                height: getScreenWidth()*0.2,
                 cornerRadius: 4
             )
         }

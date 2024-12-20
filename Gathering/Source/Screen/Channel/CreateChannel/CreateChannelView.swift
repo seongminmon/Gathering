@@ -29,19 +29,28 @@ struct CreateChannelView: View {
                                     Image(uiImage: image)
                                         .resizable()
                                         .scaledToFill()
-                                        .frame(width: 200, height: 200)
+                                        .frame(
+                                            width: getScreenWidth()*0.5,
+                                            height: getScreenWidth()*0.5
+                                        )
                                         .clipShape(RoundedRectangle(cornerRadius: 8))
                                         .foregroundStyle(Design.darkGray)
                                 } else {
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 8)
                                             .foregroundStyle(Design.gray)
-                                            .frame(width: 200, height: 200)
+                                            .frame(
+                                                width: getScreenWidth()*0.5,
+                                                height: getScreenWidth()*0.5
+                                            )
                                         
                                         Image(systemName: "camera")
                                             .resizable()
                                             .scaledToFit()
-                                            .frame(width: 50, height: 50)
+                                            .frame(
+                                                width: getScreenWidth()*0.1,
+                                                height: getScreenWidth()*0.1
+                                            )
                                             .foregroundStyle(Design.white)
                                     }
                                     
