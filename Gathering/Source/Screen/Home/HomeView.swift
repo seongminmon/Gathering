@@ -107,7 +107,7 @@ extension HomeView {
                         
                         HStack {
                             Text(channel.name)
-                                .foregroundColor(
+                                .foregroundStyle(
                                     unreadCount == 0 || unreadCount == nil ?
                                     Design.darkGray : Design.black
                                 )
@@ -148,14 +148,14 @@ extension HomeView {
                 Spacer()
             }
             .padding(.top)
-            .foregroundColor(Design.darkGray)
+            .foregroundStyle(Design.darkGray)
         }
     }
     
     private func makeFloatingButton(action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Image(systemName: "square.and.pencil")
-                .foregroundColor(Design.white)
+                .foregroundStyle(Design.white)
                 .font(.system(size: 25))
                 .frame(width: 60, height: 60)
                 .background(Design.mainSkyblue)

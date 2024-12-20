@@ -191,7 +191,7 @@ extension DMChattingView {
                     Image(systemName: "plus")
                         .resizable()
                         .frame(width: 22, height: 20)
-                        .foregroundColor(Design.darkGray)
+                        .foregroundStyle(Design.darkGray)
                 }
                 .disabled(store.selectedImages?.count == 5)
                 
@@ -210,7 +210,7 @@ extension DMChattingView {
                 } label: {
                     Image(systemName: "paperplane.fill")
                         .font(.system(size: 20))
-                        .foregroundColor(store.messageButtonValid
+                        .foregroundStyle(store.messageButtonValid
                                          ? Design.mainSkyblue : Design.darkGray)
                 }
                 .disabled(!store.messageButtonValid)
@@ -219,7 +219,7 @@ extension DMChattingView {
             .padding(.horizontal, 12)
             .background(
                 RoundedRectangle(cornerRadius: 8)
-                    .foregroundColor(Design.background)
+                    .foregroundStyle(Design.background)
             )
         }
         .padding(.vertical, 14)
@@ -244,10 +244,10 @@ extension DMChattingView {
                             Image(systemName: "xmark.circle")
                                 .resizable()
                                 .frame(width: 20, height: 20)
-                                .foregroundColor(Design.black)
+                                .foregroundStyle(Design.black)
                                 .background(
                                     Circle().size(width: 20, height: 20)
-                                        .foregroundColor(Design.white)
+                                        .foregroundStyle(Design.white)
                                 )
                                 .offset(x: 20, y: -20)
                         })
