@@ -36,15 +36,16 @@ struct ChannelChattingView: View {
         VStack {
             // 채팅 메시지 리스트
             chatListView
+                .onTapGesture {
+                    hideKeyboard()
+                }
             // 채팅보내는 부분
             messageInputView
         }
         .navigationBarBackButtonHidden()
         .toolbar(.hidden, for: .tabBar)
         .task { store.send(.task) }
-        .onTapGesture {
-            hideKeyboard()
-        }
+        
         .onDisappear {
             // 뷰가 사라질 때 키보드 노티피케이션 구독 해제
             keyboardSubscriber?.cancel()
@@ -145,7 +146,7 @@ extension ChannelChattingView {
     
     private func othersMessageView(message: ChattingPresentModel) -> some View {
         HStack(alignment: .top) {
-            LoadedImageView(urlString: message.profile ?? "bird", size: 34)
+            LoadedImageView(urlString: message.profile ?? "defaultProfile", size: 34)
                 .wrapToButton {
                     store.send(.profileButtonTap(message.user))
                 }

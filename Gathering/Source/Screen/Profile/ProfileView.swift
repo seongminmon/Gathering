@@ -16,29 +16,45 @@ struct ProfileView: View {
     var body: some View {
         WithPerceptionTracking {
             List {
-                // 프로필 이미지 섹션
-                LoadedImageView(urlString: store.profileImage, size: 250)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .listRowBackground(Color.clear)
-                
-                // me 타입일 때만 보여줄 세싹 코인 섹션
-                if store.profileType == .me {
-                    Section {
-                        HStack {
-                            Text("내 새싹 코인")
-                                .font(Design.bodyBold)
-                            Text("\(store.sesacCoin)")
-                                .foregroundStyle(Design.black)
-                            Spacer()
-                            Button("충전하기") {
-                                store.send(.chargeSesacCoinTap)
-                            }
-                            .foregroundStyle(Design.black)
-                        }
+                CustomPhotoPicker(
+                    selectedImages: $store.selectedImage,
+                    maxSelectedCount: 1
+                ) {
+                    if let images = store.selectedImage, let image = images.last {
+                        Image(uiImage: image)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 250, height: 250, alignment: .center)
+                            .clipShape(RoundedRectangle(cornerRadius: 250 * 0.2))
+                            .shadow(color: Design.black.opacity(0.1), radius: 2, x: 0, y: 1)
+                    } else {
+                        LoadedImageView(urlString: store.profileImage, size: 250)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .listRowBackground(Color.clear)
                     }
                 }
+                .listRowBackground(Color.clear)
                 
-                // 기본 정보 섹션
+                if store.profileType == .me {
+                    
+                    Button(action: {
+                        store.send(.deleteProfileImage)
+                    }, label: {
+                        Text("프로필사진 초기화")
+                            .font(Design.caption)
+                            .foregroundStyle(Design.darkGray)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 15)
+                                    .stroke(Design.darkGray, lineWidth: 1)
+                            )
+                    })
+                    .frame(width: .infinity, alignment: .center)
+                    .padding(.vertical, 8)
+                    .listRowBackground(Color.clear)
+                }
+                
                 Section {
                     HStack {
                         Text("닉네임")
@@ -57,8 +73,8 @@ struct ProfileView: View {
                                 Text("연락처")
                                     .font(Design.bodyBold)
                                 Spacer()
-                                Text("응급한 고래밥")
-                                    .foregroundStyle(Design.textGray)
+                                Text("010-0000-0000")
+                                    .foregroundColor(Design.textGray)
                                 Image(.chevronRight)
                                     .resizable()
                                     .frame(width: 15, height: 15)
@@ -77,7 +93,6 @@ struct ProfileView: View {
                     }
                 }
                 
-                // me 타입일 때만 보여줄 로그아웃 섹션
                 if store.profileType == .me {
                     Section {
                         Button("로그아웃", role: .destructive) {
@@ -91,8 +106,13 @@ struct ProfileView: View {
             .customToolbar(
                 title: store.profileType == .me ? "내 정보 수정" : "프로필",
                 leftItem: .init(icon: .chevronLeft) {
+                    store.send(.saveButtonTap)
                     dismiss()
-                }
+                },
+                rightItem: store.profileType == .me ?
+                    .init(text: "저장", isAbled: !store.isProfileChanged) {
+                        store.send(.saveButtonTap)
+                    } : nil
             )
         }
         .customAlert(

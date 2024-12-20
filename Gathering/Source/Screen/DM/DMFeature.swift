@@ -241,7 +241,7 @@ struct DMFeature {
                     profileType: .otherUser,
                     nickname: user.nickname,
                     email: user.email,
-                    profileImage: user.profileImage ?? "bird"
+                    profileImage: user.profileImage ?? "defaultProfile"
                 )))
                 return .none
             case .path:

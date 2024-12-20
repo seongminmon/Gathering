@@ -8,10 +8,12 @@
 import SwiftUI
 
 import ComposableArchitecture
+import PhotosUI
 
 @Reducer
 struct ProfileFeature {
     
+    @Dependency(\.userClient) var userClient
     @Dependency(\.dbClient) var dbClient
     
     enum ProfileType {
@@ -26,8 +28,12 @@ struct ProfileFeature {
         var nickname: String
         var email: String
         var profileImage: String
-        // 새로 추가할 상태들
-        var sesacCoin: Int = 130  // 임시값
+
+        var isProfileChanged: Bool {
+            return selectedImage != nil || profileImage.isEmpty
+        }
+        //        var selectedPhotos: [PhotosPickerItem] = []  // <-- 여기에 추가
+        var selectedImage: [UIImage]? = []
         
         init(profileType: ProfileFeature.ProfileType,
              nickname: String = "",
@@ -48,11 +54,14 @@ struct ProfileFeature {
         // 새로 추가할 액션들
         case chargeSesacCoinTap
         case phoneNumberTap
+        
+        case saveButtonTap
+        case imageChanged
+        case deleteProfileImage
     }
     
     var body: some ReducerOf<Self> {
         BindingReducer()
-        
         Reduce { state, action in
             switch action {
             case .binding:
@@ -82,6 +91,31 @@ struct ProfileFeature {
                 
             case .phoneNumberTap:
                 // 전화번호 수정 로직 구현
+                return .none
+                
+            case .saveButtonTap:
+                return .run { [state = state] send in
+                    do {
+                        print("changeProfileImage 됨")
+                        guard let data = state.selectedImage?.last?.jpegData(compressionQuality: 0.5)
+                        else {
+                            print("이미지 데이터가 엄서요")
+                            return
+                        }
+                        let result = try await userClient.editMyProfileImage(
+                            EditMyProfileImageRequest(
+                                image: data
+                        ))
+                        Notification.postToast(title: "프로필 사진이 변경되었습니다.")
+                        await send(.imageChanged)
+                    } catch {
+                        print("Error!!!")
+                    }
+                }
+            case .imageChanged:
+                return .none
+            case .deleteProfileImage:
+                state.selectedImage?.removeAll()
                 return .none
             }
         }

@@ -48,7 +48,7 @@ struct LoadedImageView: View {
                 .clipShape(RoundedRectangle(cornerRadius: isCoverImage ? 0 : size * 0.2))
                 .shadow(color: Design.black.opacity(0.1), radius: 2, x: 0, y: 1)
         } else {
-            Image(isCoverImage ? "placeholder" : "bird")
+            Image(isCoverImage ? "placeholder" : "deafaultProfile")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: size, height: size)
