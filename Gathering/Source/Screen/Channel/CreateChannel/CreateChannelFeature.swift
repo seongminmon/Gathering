@@ -34,7 +34,6 @@ struct CreateChannelFeature {
         
         case saveButtonTapped
         case channelCreated
-        
         case deleteImageButtonTapped
         
     }
@@ -50,7 +49,7 @@ struct CreateChannelFeature {
                 guard state.isValid else { return .none }
                 return .run { [state = state] send in
                     do {
-                        let data =  state.selectedImage?.last?.jpegData(compressionQuality: 0.5)
+                        let data = state.selectedImage?.last?.jpegData(compressionQuality: 0.5)
                         
                         let result = try await channelClient.createChannel(
                             UserDefaultsManager.workspaceID,

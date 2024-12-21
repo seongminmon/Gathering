@@ -16,7 +16,7 @@ extension View {
             .padding(.horizontal, 8)
             .padding(.vertical, 2)
             .background(backgroundColor)
-            .foregroundColor(textColor)
+            .foregroundStyle(textColor)
             .clipShape(Capsule())
     }
 }

@@ -13,8 +13,24 @@ struct ToolbarConfig {
     let rightItem: BarButton?
     
     struct BarButton {
-        let icon: ImageResource
+        let text: String?
+        let icon: ImageResource?
         let action: () -> Void
+        var isAbled: Bool
+        
+        init(icon: ImageResource?, isAbled: Bool = false, action: @escaping () -> Void) {
+            self.text = nil
+            self.icon = icon
+            self.action = action
+            self.isAbled = isAbled
+        }
+        
+        init(text: String?, isAbled: Bool = false, action: @escaping () -> Void) {
+            self.text = text
+            self.icon = nil
+            self.action = action
+            self.isAbled = isAbled
+        }
     }
 }
 // MARK: - ToolbarModifier
@@ -42,7 +58,7 @@ struct ToolbarModifier: ViewModifier {
         ToolbarItem(placement: .principal) {
             Text(config.title)
                 .font(Design.title2)
-                .foregroundColor(Design.black)
+                .foregroundStyle(Design.black)
         }
         
         // 오른쪽 아이템
@@ -50,12 +66,15 @@ struct ToolbarModifier: ViewModifier {
             ToolbarItem(placement: .navigationBarTrailing) {
                 makeBarButton(from: rightItem)
             }
+            
         }
     }
     private func makeBarButton(from item: ToolbarConfig.BarButton) -> some View {
         Button(action: item.action) {
-            Image(item.icon)
-                .foregroundColor(Design.black)
+            if let icon = item.icon {
+                Image(icon)
+                    .foregroundStyle(Design.black)
+            }
         }
     }
 }

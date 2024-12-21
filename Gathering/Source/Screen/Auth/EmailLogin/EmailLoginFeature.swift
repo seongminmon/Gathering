@@ -21,7 +21,7 @@ struct EmailLoginFeature {
 //        var isButtonValid = false
         
         // MARK: - 테스트를 위해 이메일 로그인 기본값 적용
-        var emailText = "yes@yes.com"
+        var emailText = "qqq@qqq.com"
         var passwordText = "Ssesac1234@@"
         var isButtonValid = true
     }
@@ -91,7 +91,7 @@ struct EmailLoginFeature {
                 return .none
                 
             case .test1ButtonTap:
-                // 햄최오십 (워크스페이스 주인)
+             // 햄최오십 (워크스페이스 주인)
                 state.emailText = "ddd@qqq.com"
                 state.passwordText = "Ssesac1234@@"
                 return .none

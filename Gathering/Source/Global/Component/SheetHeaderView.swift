@@ -22,7 +22,7 @@ struct SheetHeaderView: View {
                     dismiss()
                 }) {
                     Image(.close)
-                        .foregroundColor(.black)
+                        .foregroundStyle(.black)
                         .font(.title2)
                 }
                 

@@ -48,7 +48,7 @@ struct CustomizableImageView: View {
                 .frame(width: width, height: height)
                 .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
         } else {
-            Image("bird")
+            Image("placeholder")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: width, height: height)

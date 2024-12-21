@@ -36,20 +36,21 @@ struct ChannelChattingView: View {
         VStack {
             // 채팅 메시지 리스트
             chatListView
+                .onTapGesture {
+                    hideKeyboard()
+                }
             // 채팅보내는 부분
             messageInputView
         }
         .navigationBarBackButtonHidden()
         .toolbar(.hidden, for: .tabBar)
         .task { store.send(.task) }
-        .onTapGesture {
-            hideKeyboard()
-        }
+        
         .onDisappear {
             // 뷰가 사라질 때 키보드 노티피케이션 구독 해제
             keyboardSubscriber?.cancel()
-//            print("모임 채팅 뷰 - onDisappear")
-//            store.send(.onDisappear)
+            //            print("모임 채팅 뷰 - onDisappear")
+            //            store.send(.onDisappear)
         }
         .customToolbar(
             title: navigationTitle,
@@ -61,7 +62,7 @@ struct ChannelChattingView: View {
             }
         )
     }
-
+    
     private func scrollToBottom(proxy: ScrollViewProxy) {
         withAnimation {
             proxy.scrollTo(store.scrollViewID, anchor: .bottom)
@@ -89,14 +90,14 @@ extension ChannelChattingView {
             .onAppear {
                 proxy
                     .scrollTo(store.scrollViewID, anchor: .bottom)
-//                scrollToBottom(proxy: proxy)
+                //                scrollToBottom(proxy: proxy)
             }
             // 메시지 추가 시 자동 스크롤
             .onChange(of: store.message.count) { _ in
                 withAnimation {
                     proxy.scrollTo(store.scrollViewID, anchor: .bottom)
                 }
-//                scrollToBottom(proxy: proxy)
+                //                scrollToBottom(proxy: proxy)
             }
         }
     }
@@ -106,7 +107,7 @@ extension ChannelChattingView {
                 Spacer()
                 
                 let date = message.date.createdAtToDate() ?? Date()
-                let dateString = date.isToday ? 
+                let dateString = date.isToday ?
                 date.toString(.todayChat) :
                 date.toString(.pastChat)
                 
@@ -123,10 +124,10 @@ extension ChannelChattingView {
                                 RoundedRectangle(cornerRadius: 8)
                                     .fill(Design.skyblue)
                             )
-//                            .overlay(
-//                                RoundedRectangle(cornerRadius: 12)
-//                                    .stroke(.clear, lineWidth: 1)
-//                            )
+                        //                            .overlay(
+                        //                                RoundedRectangle(cornerRadius: 12)
+                        //                                    .stroke(.clear, lineWidth: 1)
+                        //                            )
                     }
                     if !message.imageNames.isEmpty {
                         NavigationLink {
@@ -135,7 +136,7 @@ extension ChannelChattingView {
                             ChattingImageView(imageNames: message.imageNames)
                         }
                     }
-                                        
+                    
                 }
             }
         }
@@ -145,7 +146,7 @@ extension ChannelChattingView {
     
     private func othersMessageView(message: ChattingPresentModel) -> some View {
         HStack(alignment: .top) {
-            LoadedImageView(urlString: message.profile ?? "bird", size: 34)
+            LoadedImageView(urlString: message.profile ?? "defaultProfile", size: 34)
                 .wrapToButton {
                     store.send(.profileButtonTap(message.user))
                 }
@@ -162,10 +163,10 @@ extension ChannelChattingView {
                                     RoundedRectangle(cornerRadius: 8)
                                         .fill(Design.chatBackground)
                                 )
-//                                .overlay(
-//                                    RoundedRectangle(cornerRadius: 12)
-//                                        .stroke(.clear, lineWidth: 1)
-//                                )
+                            //                                .overlay(
+                            //                                    RoundedRectangle(cornerRadius: 12)
+                            //                                        .stroke(.clear, lineWidth: 1)
+                            //                                )
                         }
                         if !message.imageNames.isEmpty {
                             NavigationLink {
@@ -177,7 +178,7 @@ extension ChannelChattingView {
                     }
                     
                     let date = message.date.createdAtToDate() ?? Date()
-                    let dateString = date.isToday 
+                    let dateString = date.isToday
                     ? date.toString(.todayChat)
                     : date.toString(.pastChat)
                     Text(dateString)
@@ -203,7 +204,7 @@ extension ChannelChattingView {
                     Image(systemName: Design.plus)
                         .resizable()
                         .frame(width: 22, height: 20)
-                        .foregroundColor(Design.darkGray)
+                        .foregroundStyle(Design.darkGray)
                 }
                 
                 VStack(alignment: .leading) {
@@ -212,17 +213,17 @@ extension ChannelChattingView {
                         selectePhotoView(images: images)
                     }
                 }
-//                .onAppear {
-//                    // 뷰가 나타날 때 자동으로 TextField에 포커스
-//                    isFocused = true
-//                }
-//                
+                //                .onAppear {
+                //                    // 뷰가 나타날 때 자동으로 TextField에 포커스
+                //                    isFocused = true
+                //                }
+                //
                 Button {
                     store.send(.sendButtonTap)
                 } label: {
                     Image(systemName: Design.paperplane)
                         .font(.system(size: 20))
-                        .foregroundColor(store.messageButtonValid
+                        .foregroundStyle(store.messageButtonValid
                                          ? Design.mainSkyblue : Design.darkGray)
                 }
                 .disabled(!store.messageButtonValid)
@@ -231,7 +232,7 @@ extension ChannelChattingView {
             .padding(.horizontal, 12)
             .background(
                 RoundedRectangle(cornerRadius: 8)
-                    .foregroundColor(Design.background)
+                    .foregroundStyle(Design.background)
             )
         }
         .padding(.vertical, 14)
@@ -247,13 +248,11 @@ extension ChannelChattingView {
             .onChange(of: store.isTextFieldFocused) { newValue in
                 isFocused = newValue
             }
+            .lineLimit(1...5)
+            .background(Color.clear)
+            .font(Design.body)
     }
     
-    //    TextField("메세지를 입력하세요", text: $store.messageText, axis: .vertical)
-    //        .lineLimit(1...5)
-    //            .background(Color.clear)
-    //            .font(Design.body)
-
     private func selectePhotoView(images: [UIImage]) -> some View {
         LazyHGrid(rows: [GridItem(.fixed(50))], spacing: 12) {
             ForEach(images, id: \.self) { image in
@@ -272,16 +271,16 @@ extension ChannelChattingView {
                     .resizable()
                     .frame(width: 44, height: 44)
                     .aspectRatio(contentMode: .fill)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .clipShape(.rect(cornerRadius: 8))
                 
                 Image(systemName: Design.xmarkCircle)
                     .resizable()
                     .frame(width: 20, height: 20)
-                    .foregroundColor(Design.black)
+                    .foregroundStyle(Design.black)
                     .background(
                         Circle()
                             .size(width: 20, height: 20)
-                            .foregroundColor(Design.white)
+                            .foregroundStyle(Design.white)
                     )
                     .offset(x: 20, y: -20)
             }

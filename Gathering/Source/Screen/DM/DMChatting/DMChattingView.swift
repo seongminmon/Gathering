@@ -29,14 +29,15 @@ extension DMChattingView {
             chattingListView()
             // 채팅보내는 부분
             messageInputView()
+                .onTapGesture {
+                    // 화면을 탭할 때 키보드 내리기
+                    hideKeyboard()
+                }
         }
         .navigationBarBackButtonHidden()
         .toolbar(.hidden, for: .tabBar)
         .task { store.send(.task) }
-        .onTapGesture {
-            // 화면을 탭할 때 키보드 내리기
-            hideKeyboard()
-        }
+        
         .onDisappear {
 //            print("DM 채팅 뷰 - onDisappear")
 //            store.send(.onDisappear)
@@ -128,7 +129,7 @@ extension DMChattingView {
     
     private func othersMessageView(message: ChattingPresentModel) -> some View {
         HStack(alignment: .top) {
-            LoadedImageView(urlString: message.profile ?? "bird",
+            LoadedImageView(urlString: message.profile ?? "defaultProfile",
                              size: 34).wrapToButton {
                 store.send(.profileButtonTap(message.user))
             }
@@ -191,7 +192,7 @@ extension DMChattingView {
                     Image(systemName: Design.plus)
                         .resizable()
                         .frame(width: 22, height: 20)
-                        .foregroundColor(Design.darkGray)
+                        .foregroundStyle(Design.darkGray)
                 }
                 .disabled(store.selectedImages?.count == 5)
                 
@@ -210,7 +211,7 @@ extension DMChattingView {
                 } label: {
                     Image(systemName: Design.paperplane)
                         .font(.system(size: 20))
-                        .foregroundColor(store.messageButtonValid
+                        .foregroundStyle(store.messageButtonValid
                                          ? Design.mainSkyblue : Design.darkGray)
                 }
                 .disabled(!store.messageButtonValid)
@@ -219,7 +220,7 @@ extension DMChattingView {
             .padding(.horizontal, 12)
             .background(
                 RoundedRectangle(cornerRadius: 8)
-                    .foregroundColor(Design.background)
+                    .foregroundStyle(Design.background)
             )
         }
         .padding(.vertical, 14)
@@ -244,10 +245,10 @@ extension DMChattingView {
                             Image(systemName: Design.xmarkCircle)
                                 .resizable()
                                 .frame(width: 20, height: 20)
-                                .foregroundColor(Design.black)
+                                .foregroundStyle(Design.black)
                                 .background(
                                     Circle().size(width: 20, height: 20)
-                                        .foregroundColor(Design.white)
+                                        .foregroundStyle(Design.white)
                                 )
                                 .offset(x: 20, y: -20)
                         })

@@ -16,12 +16,9 @@ struct ExploreView: View {
         WithPerceptionTracking {
             NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
                 VStack(spacing: 0) {
-                    // 검색창 추가
                     searchBar
-                    
                     ScrollView {
                         LazyVStack(spacing: 8) {
-                            // filteredChannels로 변경
                             ForEach(store.filteredChannels, id: \.id) { channel in
                                 channelCell(channel)
                             }

@@ -107,7 +107,7 @@ extension HomeView {
                         
                         HStack {
                             Text(channel.name)
-                                .foregroundColor(
+                                .foregroundStyle(
                                     unreadCount == 0 || unreadCount == nil ?
                                     Design.darkGray : Design.black
                                 )
@@ -148,7 +148,7 @@ extension HomeView {
                 Spacer()
             }
             .padding(.top)
-            .foregroundColor(Design.darkGray)
+            .foregroundStyle(Design.darkGray)
         }
     }
     
