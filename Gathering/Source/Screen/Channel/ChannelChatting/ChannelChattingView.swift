@@ -201,7 +201,7 @@ extension ChannelChattingView {
                     selectedImages: $store.selectedImages,
                     maxSelectedCount: 5
                 ) {
-                    Image(systemName: "plus")
+                    Image(systemName: Design.plus)
                         .resizable()
                         .frame(width: 22, height: 20)
                         .foregroundStyle(Design.darkGray)
@@ -221,7 +221,7 @@ extension ChannelChattingView {
                 Button {
                     store.send(.sendButtonTap)
                 } label: {
-                    Image(systemName: "paperplane.fill")
+                    Image(systemName: Design.paperplane)
                         .font(.system(size: 20))
                         .foregroundStyle(store.messageButtonValid
                                          ? Design.mainSkyblue : Design.darkGray)
@@ -273,7 +273,7 @@ extension ChannelChattingView {
                     .aspectRatio(contentMode: .fill)
                     .clipShape(.rect(cornerRadius: 8))
                 
-                Image(systemName: "xmark.circle")
+                Image(systemName: Design.xmarkCircle)
                     .resizable()
                     .frame(width: 20, height: 20)
                     .foregroundStyle(Design.black)

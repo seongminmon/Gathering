@@ -44,7 +44,7 @@ struct CreateChannelView: View {
                                                 height: getScreenWidth()*0.5
                                             )
                                         
-                                        Image(systemName: "camera")
+                                        Image(systemName: Design.camera)
                                             .resizable()
                                             .scaledToFit()
                                             .frame(

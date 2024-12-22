@@ -204,7 +204,8 @@ extension DBClient: DependencyKey {
         fetchMember: { userID in
             let realm = try Realm()
             return realm.object(ofType: MemberDBModel.self, forPrimaryKey: userID)
-        }, removeAll: {
+        },
+        removeAll: {
             print("DB 전체 삭제")
             let realm = try Realm()
             try realm.write {

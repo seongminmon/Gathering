@@ -154,8 +154,8 @@ extension HomeView {
     
     private func makeFloatingButton(action: @escaping () -> Void) -> some View {
         Button(action: action) {
-            Image(systemName: "square.and.pencil")
-                .foregroundStyle(Design.white)
+            Image(systemName: Design.pencil)
+                .foregroundColor(Design.white)
                 .font(.system(size: 25))
                 .frame(width: 60, height: 60)
                 .background(Design.mainSkyblue)

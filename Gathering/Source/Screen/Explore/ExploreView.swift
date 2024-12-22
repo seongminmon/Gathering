@@ -63,8 +63,8 @@ struct ExploreView: View {
     
     private var searchBar: some View {
             HStack {
-                Image(systemName: "magnifyingglass")
-                    .foregroundStyle(Design.textGray)
+                Image(systemName: Design.search)
+                    .foregroundColor(Design.textGray)
                 
                 TextField("모임 검색", text: $store.searchText)
                     .textFieldStyle(.plain)
@@ -73,8 +73,8 @@ struct ExploreView: View {
                     Button {
                         store.searchText = ""
                     } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(Design.textGray)
+                        Image(systemName: Design.xmarkCircleFill)
+                            .foregroundColor(Design.textGray)
                     }
                 }
             }
