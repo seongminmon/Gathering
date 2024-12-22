@@ -71,13 +71,8 @@ struct ImageDetailView: View {
                 Button {
                     dismiss()
                 } label: {
-<<<<<<< HEAD
                     Image(systemName: Design.xmark)
                         .foregroundColor(.white)
-=======
-                    Image(systemName: "xmark")
-                        .foregroundStyle(.white)
->>>>>>> 17a7e58a5f08d89fdc1cad20b0fe93ed2130d127
                         .padding()
                         .background(
                             Circle()
