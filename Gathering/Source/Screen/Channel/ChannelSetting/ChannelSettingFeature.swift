@@ -301,10 +301,8 @@ struct ChannelSettingFeature {
     }
     
     private func removeDBChannel(_ channelID: String?) {
-        guard let channelID else {
-            print("DB 삭제할 모임 ID 없음")
-            return
-        }
+        guard let channelID else { return }
+        
         do {
             if let dbChannel = try dbClient.fetchChannel(channelID) {
                 // 파일 매니저 삭제
@@ -314,7 +312,6 @@ struct ChannelSettingFeature {
                     }
                 }
                 try dbClient.delete(dbChannel)
-                print("DB 모임 삭제 완료!")
             }
         } catch {}
     }

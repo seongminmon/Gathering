@@ -16,8 +16,6 @@ struct HomeFeature {
     @Dependency(\.userClient) var userClient
     @Dependency(\.channelClient) var channelClient
     @Dependency(\.dmsClient) var dmsClient
-    
-    // Unread할 때 DB 정보 불러오기 필요
     @Dependency(\.dbClient) var dbClient
     
     @Reducer
@@ -42,10 +40,8 @@ struct HomeFeature {
         @Presents var confirmationDialog: ConfirmationDialogState<Action.ConfirmationDialog>?
         
         var isChannelExpanded = true
-        //        var isDMExpanded = true
         
         // 워크스페이스 + 프로필 데이터
-        //        var myWorkspaceList: [WorkspaceResponse] = []
         var currentWorkspace: WorkspaceResponse?
         var myProfile: MyProfileResponse?
         
@@ -167,7 +163,6 @@ struct HomeFeature {
                 state.path.append(.channelChatting(ChannelChattingFeature.State(
                     channelID: channel.id
                 )))
-                print("홈뷰 모임 탭", channel.id)
                 return .none
             case .startNewMessageTap:
                 // RootFeature에서 탭바 전환
@@ -194,7 +189,6 @@ struct HomeFeature {
                 
                 // MARK: networking -
             case .task:
-                //                state.isLoading = true
                 return .run { send in
                     do {
                         // 워크스페이스 리스트, 유저 정보 가져오기
@@ -223,8 +217,7 @@ struct HomeFeature {
                         await send(.channelListResponse(channelResult))
                         
                     } catch {
-                        print(error)
-                        print("error🔥")
+                        Notification.postToast(title: "정보 가져오기 실패")
                     }
                 }
             case .myWorkspaceResponse(let workspace):
@@ -273,7 +266,6 @@ struct HomeFeature {
                 
             case .unreadChannelCountResponse(let channel, let unreadCount):
                 state.channelUnreads[channel] = unreadCount
-                print("✅ unreadChannelCountResponse?")
                 return .none
                 
             case .binding:

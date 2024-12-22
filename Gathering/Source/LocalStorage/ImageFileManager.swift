@@ -104,7 +104,6 @@ final class ImageFileManager {
     
     /// 파일 이름으로 저장 (내부에서 통신)
     func saveImageFile(filename: String) async {
-        print(#function)
         guard !filename.isEmpty else { return }
         guard let documentDirectory else {
             print("이미지 폴더 없음")

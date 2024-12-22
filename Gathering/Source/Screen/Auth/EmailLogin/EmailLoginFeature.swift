@@ -91,7 +91,7 @@ struct EmailLoginFeature {
                 return .none
                 
             case .test1ButtonTap:
-             // 햄최오십 (워크스페이스 주인)
+                // 햄최오십 (워크스페이스 주인)
                 state.emailText = "ddd@qqq.com"
                 state.passwordText = "Ssesac1234@@"
                 return .none

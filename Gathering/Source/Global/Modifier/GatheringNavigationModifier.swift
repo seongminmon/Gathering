@@ -20,12 +20,9 @@ struct GatheringNavigationModifier: ViewModifier {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-//                    HStack {
-//                        LoadedImageView(urlString: gatheringImage, size: 32)
-                        Text("Gathering")
-                            .font(Design.logoTitle)
-                            .foregroundStyle(Design.mainSkyblue)
-//                    }
+                    Text("Gathering")
+                        .font(Design.logoTitle)
+                        .foregroundStyle(Design.mainSkyblue)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     if let profile = myProfile {

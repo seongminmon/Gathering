@@ -13,6 +13,8 @@ import RealmSwift
 @Reducer
 struct DMChattingFeature {
     
+    // TODO: - onDisappear 시점에 소켓 Deinit 하도록 만들기
+    
     @Dependency(\.dmsClient) var dmsClient
     @Dependency(\.dbClient) var dbClient
     @Dependency(\.userClient) var userClient
@@ -97,15 +99,12 @@ struct DMChattingFeature {
                     await dismiss()
                 }
                 
-                // TODO: - onDisappear 시점에 소켓 Deinit 하도록 만들기
-
             case .sendButtonTap:
                 return .run { [state = state] send in
                     do {
                         let dataList = state.selectedImages?.compactMap {
                             $0.jpegData(compressionQuality: 0.5)
                         }
-                       
                         let result = try await dmsClient.sendDMMessage(
                             UserDefaultsManager.workspaceID,
                             state.dmsRoomResponse.id,
@@ -114,10 +113,8 @@ struct DMChattingFeature {
                                 files: dataList ?? []
                             )
                         )
-                        print(result)
                         await send(.sendDmMessage)
                     } catch {
-                        print("멀티파트 실패 ㅠㅠ ")
                         Notification.postToast(title: "메세지 전송을 실패했습니다.")
                     }
                 }

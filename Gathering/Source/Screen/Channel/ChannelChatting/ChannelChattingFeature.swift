@@ -8,10 +8,11 @@
 import SwiftUI
 
 import ComposableArchitecture
-import _PhotosUI_SwiftUI
 
 @Reducer
 struct ChannelChattingFeature {
+    
+    // TODO: - onDisappear 시점에 소켓 Deinit 하도록 만들기
     
     @Dependency(\.channelClient) var channelClient
     @Dependency(\.dbClient) var dbClient
@@ -94,7 +95,6 @@ struct ChannelChattingFeature {
                         )
                         await send(.currentChannelResponse(channel))
                         await send(.fetchDBChatting(channel))
-                        print("채팅패치 성공")
                     } catch {
                         print("채팅 패치 실패")
                     }
@@ -113,7 +113,6 @@ struct ChannelChattingFeature {
                     return .none
                 }
                 state.selectedImages?.remove(at: index)
-                print(state.selectedImages ?? [])
                 return .none
                 
             case .sendButtonTap:
@@ -132,7 +131,6 @@ struct ChannelChattingFeature {
                         // 메시지 전송 후 초기화
                         await send(.sendChannelChattingMessage)
                     } catch {
-                        print("메세지 전송 실패")
                         Notification.postToast(title: "메세지 전송을 실패했습니다.")
                     }
                 }
@@ -142,12 +140,6 @@ struct ChannelChattingFeature {
                     await send(.updateSocketManager(nil))
                     await dismiss()
                 }
-                
-//            case .onDisappear:
-//                // TODO: - onDisappear 시점에 소켓 Deinit 하도록 만들기
-//                print("모임 채팅 리듀서 - onDisappear")
-//                state.socketManager = nil
-//                return .none
                 
                 // MARK: - 내부 액션
             case .currentChannelResponse(let channel):

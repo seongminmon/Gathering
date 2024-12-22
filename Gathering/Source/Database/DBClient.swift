@@ -5,32 +5,19 @@
 //  Created by 김성민 on 11/19/24.
 //
 
-// TODO: - 파일 매니저 이용하기
-
-// 내 프로필 이미지
-// 다른 유저 프로필 이미지
-// 모임 채팅 이미지
-// DM 채팅 이미지
-
 import Foundation
 
-import Dependencies
+import ComposableArchitecture
 import RealmSwift
 
 struct DBClient {
     var printRealm: () -> Void
     
-    // TODO: - 쓰레드 문제 생기면 @Sendable 붙이기
-    // var create: @Sendable (Object) throws -> Void
-    
-    //    var create: (Object) throws -> Void
     var update: @Sendable (Object) throws -> Void
     var delete: (Object) throws -> Void
     
     var createChannelChatting: @Sendable (String, ChannelChattingDBModel) throws -> Void
-    //    var addChannelMember: (String, MemberDBModel) throws -> Void
     var createDMChatting: @Sendable (String, DMChattingDBModel) throws -> Void
-    //    var addDMMember: (String, MemberDBModel) throws -> Void
     
     // Channel 관련
     var updateChannel: @Sendable (ChannelDBModel, String, [MemberDBModel]) throws -> Void
@@ -54,13 +41,6 @@ extension DBClient: DependencyKey {
         printRealm: {
             print(Realm.Configuration.defaultConfiguration.fileURL ?? "realm 경로 없음")
         },
-        //        create: { object in
-        //            let realm = try Realm()
-        //            try realm.write {
-        //                realm.add(object)
-        //            }
-        //        },
-        // MARK: - 일단 전부 update로 해보기
         update: { object in
             let realm = try Realm()
             try realm.write {
@@ -206,7 +186,6 @@ extension DBClient: DependencyKey {
             return realm.object(ofType: MemberDBModel.self, forPrimaryKey: userID)
         },
         removeAll: {
-            print("DB 전체 삭제")
             let realm = try Realm()
             try realm.write {
                 realm.deleteAll()
