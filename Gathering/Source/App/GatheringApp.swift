@@ -13,8 +13,7 @@ import ComposableArchitecture
 // [] 테스트 코드 작성
 
 // - 이미지 캐싱
-// [] 메모리 캐시 정책 살펴보기
-// [] 디스크 캐싱 500MB 제한, LRU 사용
+// [✅] 디스크 캐싱 500MB 제한, LRU 사용
 
 // - 소켓
 // [] 모임 채팅뷰, DM 채팅뷰 onDisappear 시점에 소켓 Deinit 하도록 만들기
