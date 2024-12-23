@@ -54,20 +54,17 @@ final class NetworkManager {
         
         // 2. 디스크 캐시 확인
         if let cachedImage = ImageFileManager.shared.loadImageFile(filename: api.path) {
+            ImageCache.shared.setObject(cachedImage, forKey: url as NSURL)
             return cachedImage
         }
         
         // 3. 네트워크 통신
-        guard let data = try await performRequest(api: api) else {
+        guard let data = try await performRequest(api: api),
+              let uiImage = UIImage(data: data) else {
             throw APIError.etc
         }
-        
-        if let uiImage = UIImage(data: data) {
-            ImageCache.shared.setObject(uiImage, forKey: url as NSURL)
-            return uiImage
-        } else {
-            throw APIError.etc
-        }
+        ImageCache.shared.setObject(uiImage, forKey: url as NSURL)
+        return uiImage
     }
     
     private func handleResponse<T: Decodable>(
