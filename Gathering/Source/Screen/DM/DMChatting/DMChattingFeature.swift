@@ -315,7 +315,6 @@ extension DMChattingFeature {
         dmsRoomInfo: DMsRoom
     ) async throws -> [ChattingPresentModel] {
         let dbDMsChats = fetchDMsChats(dmsRoom: dmsRoomInfo)
-        print("기존채팅")
         
         // 마지막 날짜 이후 채팅 불러오기
         let newDMsChats = try await dmsClient.fetchDMChatHistory(
@@ -323,11 +322,14 @@ extension DMChattingFeature {
             dmsRoomInfo.id,
             dbDMsChats.last?.createdAt ?? ""
         )
-        print("신규채팅", newDMsChats)
         
-        // 불러온 채팅 디비에 저장하기
-        for chat in newDMsChats {
-            await saveMessageToDB(chat: chat, dmsRoomInfo: dmsRoomInfo)
+        // 불러온 채팅 비동기로 DB에 저장
+        await withTaskGroup(of: Void.self) { group in
+            for chat in newDMsChats {
+                group.addTask {
+                    await saveMessageToDB(chat: chat, dmsRoomInfo: dmsRoomInfo)
+                }
+            }
         }
         
         return fetchDMsChats(dmsRoom: dmsRoomInfo).map { $0.toPresentModel() }
