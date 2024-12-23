@@ -13,6 +13,8 @@ import RealmSwift
 @Reducer
 struct DMChattingFeature {
     
+    // TODO: - onDisappear 시점에 소켓 Deinit 하도록 만들기
+    
     @Dependency(\.dmsClient) var dmsClient
     @Dependency(\.dbClient) var dbClient
     @Dependency(\.userClient) var userClient
@@ -97,15 +99,12 @@ struct DMChattingFeature {
                     await dismiss()
                 }
                 
-                // TODO: - onDisappear 시점에 소켓 Deinit 하도록 만들기
-
             case .sendButtonTap:
                 return .run { [state = state] send in
                     do {
                         let dataList = state.selectedImages?.compactMap {
                             $0.jpegData(compressionQuality: 0.5)
                         }
-                       
                         let result = try await dmsClient.sendDMMessage(
                             UserDefaultsManager.workspaceID,
                             state.dmsRoomResponse.id,
@@ -114,10 +113,8 @@ struct DMChattingFeature {
                                 files: dataList ?? []
                             )
                         )
-                        print(result)
                         await send(.sendDmMessage)
                     } catch {
-                        print("멀티파트 실패 ㅠㅠ ")
                         Notification.postToast(title: "메세지 전송을 실패했습니다.")
                     }
                 }
@@ -318,7 +315,6 @@ extension DMChattingFeature {
         dmsRoomInfo: DMsRoom
     ) async throws -> [ChattingPresentModel] {
         let dbDMsChats = fetchDMsChats(dmsRoom: dmsRoomInfo)
-        print("기존채팅")
         
         // 마지막 날짜 이후 채팅 불러오기
         let newDMsChats = try await dmsClient.fetchDMChatHistory(
@@ -326,11 +322,14 @@ extension DMChattingFeature {
             dmsRoomInfo.id,
             dbDMsChats.last?.createdAt ?? ""
         )
-        print("신규채팅", newDMsChats)
         
-        // 불러온 채팅 디비에 저장하기
-        for chat in newDMsChats {
-            await saveMessageToDB(chat: chat, dmsRoomInfo: dmsRoomInfo)
+        // 불러온 채팅 비동기로 DB에 저장
+        await withTaskGroup(of: Void.self) { group in
+            for chat in newDMsChats {
+                group.addTask {
+                    await saveMessageToDB(chat: chat, dmsRoomInfo: dmsRoomInfo)
+                }
+            }
         }
         
         return fetchDMsChats(dmsRoom: dmsRoomInfo).map { $0.toPresentModel() }

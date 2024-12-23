@@ -8,10 +8,11 @@
 import SwiftUI
 
 import ComposableArchitecture
-import _PhotosUI_SwiftUI
 
 @Reducer
 struct ChannelChattingFeature {
+    
+    // TODO: - onDisappear 시점에 소켓 Deinit 하도록 만들기
     
     @Dependency(\.channelClient) var channelClient
     @Dependency(\.dbClient) var dbClient
@@ -94,7 +95,6 @@ struct ChannelChattingFeature {
                         )
                         await send(.currentChannelResponse(channel))
                         await send(.fetchDBChatting(channel))
-                        print("채팅패치 성공")
                     } catch {
                         print("채팅 패치 실패")
                     }
@@ -113,7 +113,6 @@ struct ChannelChattingFeature {
                     return .none
                 }
                 state.selectedImages?.remove(at: index)
-                print(state.selectedImages ?? [])
                 return .none
                 
             case .sendButtonTap:
@@ -132,7 +131,6 @@ struct ChannelChattingFeature {
                         // 메시지 전송 후 초기화
                         await send(.sendChannelChattingMessage)
                     } catch {
-                        print("메세지 전송 실패")
                         Notification.postToast(title: "메세지 전송을 실패했습니다.")
                     }
                 }
@@ -142,12 +140,6 @@ struct ChannelChattingFeature {
                     await send(.updateSocketManager(nil))
                     await dismiss()
                 }
-                
-//            case .onDisappear:
-//                // TODO: - onDisappear 시점에 소켓 Deinit 하도록 만들기
-//                print("모임 채팅 리듀서 - onDisappear")
-//                state.socketManager = nil
-//                return .none
                 
                 // MARK: - 내부 액션
             case .currentChannelResponse(let channel):
@@ -310,7 +302,6 @@ extension ChannelChattingFeature {
     ) async throws -> [ChattingPresentModel] {
         // 기존 채팅 불러오기 (날짜 순 정렬)
         let dbChannelChats = fetchChannelChats(channelID: channel.channel_id)
-        print("기존채팅", dbChannelChats)
         
         // 마지막 날짜 이후 채팅 API를 통해 불러오기
         let newChannelChats = try await channelClient.fetchChattingList(
@@ -318,20 +309,15 @@ extension ChannelChattingFeature {
             UserDefaultsManager.workspaceID,
             dbChannelChats.last?.createdAt ?? ""
         )
-        print("신규채팅", newChannelChats)
         
-        // TODO: - 비교 필요
-        // (1) 불러온 채팅 DB에 저장
-        for chat in newChannelChats {
-            await saveMessageToDB(channelID: chat.channel_id, chattingResponse: chat)
+        // 불러온 채팅 비동기로 DB에 저장
+        await withTaskGroup(of: Void.self) { group in
+            for chat in newChannelChats {
+                group.addTask {
+                    await saveMessageToDB(channelID: chat.channel_id, chattingResponse: chat)
+                }
+            }
         }
-        
-        // (2) 불러온 채팅 비동기로 DB에 저장
-//        await withTaskGroup(of: Void.self) { group in
-//            for chat in newChannelChats {
-//                await saveMessageToDB(channelID: chat.channel_id, chattingResponse: chat)
-//            }
-//        }
         
         // 업데이트된 채팅 다시 불러오기
         return fetchChannelChats(channelID: channel.channel_id).map { $0.toPresentModel() }

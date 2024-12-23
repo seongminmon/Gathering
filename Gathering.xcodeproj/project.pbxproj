@@ -145,7 +145,6 @@
 		A0E444DB2CE2AC130024AE71 /* WorkspaceEditRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444DA2CE2AC130024AE71 /* WorkspaceEditRequest.swift */; };
 		A0E444DD2CE2AD690024AE71 /* InviteMemberRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444DC2CE2AD690024AE71 /* InviteMemberRequest.swift */; };
 		A0E444DF2CE2B1ED0024AE71 /* WorkspaceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444DE2CE2B1ED0024AE71 /* WorkspaceResponse.swift */; };
-		A0E444E12CE2B37D0024AE71 /* WorkspaceInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444E02CE2B37D0024AE71 /* WorkspaceInfoResponse.swift */; };
 		A0E444E32CE2C0F20024AE71 /* DmsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444E22CE2C0F20024AE71 /* DmsRouter.swift */; };
 		A0E444E72CE2C3800024AE71 /* DMRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444E62CE2C3800024AE71 /* DMRequest.swift */; };
 		A0E444E92CE2C3D80024AE71 /* DMOpponentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E444E82CE2C3D80024AE71 /* DMOpponentRequest.swift */; };
@@ -307,7 +306,6 @@
 		A0E444DA2CE2AC130024AE71 /* WorkspaceEditRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceEditRequest.swift; sourceTree = "<group>"; };
 		A0E444DC2CE2AD690024AE71 /* InviteMemberRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteMemberRequest.swift; sourceTree = "<group>"; };
 		A0E444DE2CE2B1ED0024AE71 /* WorkspaceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceResponse.swift; sourceTree = "<group>"; };
-		A0E444E02CE2B37D0024AE71 /* WorkspaceInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInfoResponse.swift; sourceTree = "<group>"; };
 		A0E444E22CE2C0F20024AE71 /* DmsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmsRouter.swift; sourceTree = "<group>"; };
 		A0E444E62CE2C3800024AE71 /* DMRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMRequest.swift; sourceTree = "<group>"; };
 		A0E444E82CE2C3D80024AE71 /* DMOpponentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMOpponentRequest.swift; sourceTree = "<group>"; };
@@ -499,7 +497,6 @@
 			isa = PBXGroup;
 			children = (
 				A0E444DE2CE2B1ED0024AE71 /* WorkspaceResponse.swift */,
-				A0E444E02CE2B37D0024AE71 /* WorkspaceInfoResponse.swift */,
 			);
 			path = Workspace;
 			sourceTree = "<group>";
@@ -1070,7 +1067,6 @@
 				A0E444EB2CE2C7E20024AE71 /* DMsResponse.swift in Sources */,
 				249FB0C72CEC70F700CA418B /* ChannelChattingDBModel.swift in Sources */,
 				84E8A81D2CEF1B1300589171 /* DMChattingView.swift in Sources */,
-				A0E444E12CE2B37D0024AE71 /* WorkspaceInfoResponse.swift in Sources */,
 				2447AB892CE8C46B00399C4D /* DMFeature.swift in Sources */,
 				2447AB6F2CE3326D00399C4D /* OnboardingView.swift in Sources */,
 				A0E444EF2CE2CA8C0024AE71 /* DMsRoomResponse.swift in Sources */,

@@ -33,6 +33,7 @@ struct ToolbarConfig {
         }
     }
 }
+
 // MARK: - ToolbarModifier
 struct ToolbarModifier: ViewModifier {
     let config: ToolbarConfig

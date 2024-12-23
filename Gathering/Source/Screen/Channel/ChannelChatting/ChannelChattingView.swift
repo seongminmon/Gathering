@@ -49,8 +49,8 @@ struct ChannelChattingView: View {
         .onDisappear {
             // 뷰가 사라질 때 키보드 노티피케이션 구독 해제
             keyboardSubscriber?.cancel()
-            //            print("모임 채팅 뷰 - onDisappear")
-            //            store.send(.onDisappear)
+//            print("모임 채팅 뷰 - onDisappear")
+//            store.send(.onDisappear)
         }
         .customToolbar(
             title: navigationTitle,
@@ -90,14 +90,12 @@ extension ChannelChattingView {
             .onAppear {
                 proxy
                     .scrollTo(store.scrollViewID, anchor: .bottom)
-                //                scrollToBottom(proxy: proxy)
             }
             // 메시지 추가 시 자동 스크롤
             .onChange(of: store.message.count) { _ in
                 withAnimation {
                     proxy.scrollTo(store.scrollViewID, anchor: .bottom)
                 }
-                //                scrollToBottom(proxy: proxy)
             }
         }
     }
@@ -124,10 +122,6 @@ extension ChannelChattingView {
                                 RoundedRectangle(cornerRadius: 8)
                                     .fill(Design.skyblue)
                             )
-                        //                            .overlay(
-                        //                                RoundedRectangle(cornerRadius: 12)
-                        //                                    .stroke(.clear, lineWidth: 1)
-                        //                            )
                     }
                     if !message.imageNames.isEmpty {
                         NavigationLink {
@@ -163,10 +157,6 @@ extension ChannelChattingView {
                                     RoundedRectangle(cornerRadius: 8)
                                         .fill(Design.chatBackground)
                                 )
-                            //                                .overlay(
-                            //                                    RoundedRectangle(cornerRadius: 12)
-                            //                                        .stroke(.clear, lineWidth: 1)
-                            //                                )
                         }
                         if !message.imageNames.isEmpty {
                             NavigationLink {
@@ -213,11 +203,11 @@ extension ChannelChattingView {
                         selectePhotoView(images: images)
                     }
                 }
-                //                .onAppear {
-                //                    // 뷰가 나타날 때 자동으로 TextField에 포커스
-                //                    isFocused = true
-                //                }
-                //
+//                .onAppear {
+//                    // 뷰가 나타날 때 자동으로 TextField에 포커스
+//                    isFocused = true
+//                }
+//
                 Button {
                     store.send(.sendButtonTap)
                 } label: {
