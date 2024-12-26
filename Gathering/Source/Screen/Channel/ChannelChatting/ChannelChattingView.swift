@@ -18,6 +18,7 @@ struct ChannelChattingView: View {
     @Perception.Bindable var store: StoreOf<ChannelChattingFeature>
     @FocusState private var isFocused: Bool
     var keyboardSubscriber: AnyCancellable?
+    @Environment(\.scenePhase) var scenePhase
     
     private var navigationTitle: String {
         let channelName = store.currentChannel?.name ?? ""
@@ -32,7 +33,6 @@ struct ChannelChattingView: View {
     }
     
     private var mainContent: some View {
-        
         VStack {
             // 채팅 메시지 리스트
             chatListView
@@ -51,6 +51,18 @@ struct ChannelChattingView: View {
             keyboardSubscriber?.cancel()
 //            print("모임 채팅 뷰 - onDisappear")
 //            store.send(.onDisappear)
+        }
+        .onChange(of: scenePhase) { newValue in
+            switch newValue {
+            case .active:
+                print("active")
+                store.send(.active)
+            case .background, .inactive:
+                print("background")
+                store.send(.inactiveOrBackground)
+            @unknown default:
+                break
+            }
         }
         .customToolbar(
             title: navigationTitle,

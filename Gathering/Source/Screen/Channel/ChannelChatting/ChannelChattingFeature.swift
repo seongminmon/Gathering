@@ -46,6 +46,8 @@ struct ChannelChattingFeature {
         // MARK: - 유저 액션
         case task
 //        case onDisappear
+        case active
+        case inactiveOrBackground
         case sendButtonTap
         case imageDeleteButtonTap(UIImage)
         case settingButtonTap(ChannelResponse?)
@@ -99,6 +101,19 @@ struct ChannelChattingFeature {
                         print("채팅 패치 실패")
                     }
                 }
+                
+            case .active:
+                // 소켓 재연결
+                return .run { [state = state] send in
+                    if state.socketManager == nil {
+                        await send(.connectSocket)
+                    }
+                }
+                
+            case .inactiveOrBackground:
+                // 소켓 해제
+                state.socketManager = nil
+                return .none
                 
             case .settingButtonTap:
                 // 홈뷰에서 path 처리

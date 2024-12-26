@@ -39,8 +39,10 @@ struct DMChattingFeature {
         case binding(BindingAction<State>)
         
         case task
+//        case onDisappear
+        case active
+        case inactiveOrBackground
         case backButtonTap
-
         case sendButtonTap
         case imageDeleteButtonTap(UIImage)
         case profileButtonTap(Member)
@@ -92,6 +94,19 @@ struct DMChattingFeature {
                         print("채팅 불러오기, 저장 실패: \(error)")
                     }
                 }
+                
+            case .active:
+                // 소켓 재연결
+                return .run { [state = state] send in
+                    if state.socketManager == nil {
+                        await send(.connectSocket)
+                    }
+                }
+                
+            case .inactiveOrBackground:
+                // 소켓 해제
+                state.socketManager = nil
+                return .none
                 
             case .backButtonTap:
                 return .run { send in
