@@ -13,8 +13,8 @@ import Combine
 struct DMChattingView: View {
     
     @Perception.Bindable var store: StoreOf<DMChattingFeature>
-    
     var keyboardSubscriber: AnyCancellable?
+    @Environment(\.scenePhase) var scenePhase
     
     var body: some View {
         WithPerceptionTracking {
@@ -22,10 +22,11 @@ struct DMChattingView: View {
         }
     }
 }
+
 extension DMChattingView {
     private var mainContent: some View {
         VStack {
-            // 채팅 리스트 부부
+            // 채팅 리스트 부분
             chattingListView()
             // 채팅보내는 부분
             messageInputView()
@@ -43,6 +44,18 @@ extension DMChattingView {
 //            store.send(.onDisappear)
             // 뷰가 사라질 때 키보드 노티피케이션 구독 해제
             keyboardSubscriber?.cancel()
+        }
+        .onChange(of: scenePhase) { newValue in
+            switch newValue {
+            case .active:
+                print("active")
+                store.send(.active)
+            case .background, .inactive:
+                print("background")
+                store.send(.inactiveOrBackground)
+            @unknown default:
+                break
+            }
         }
         .customToolbar(
             title: store.dmsRoomResponse.user.nickname,
