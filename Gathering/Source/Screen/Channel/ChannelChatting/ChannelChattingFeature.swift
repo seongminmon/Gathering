@@ -47,7 +47,7 @@ struct ChannelChattingFeature {
         case task
 //        case onDisappear
         case active
-        case inactiveOrBackground
+        case background
         case sendButtonTap
         case imageDeleteButtonTap(UIImage)
         case settingButtonTap(ChannelResponse?)
@@ -110,7 +110,7 @@ struct ChannelChattingFeature {
                     }
                 }
                 
-            case .inactiveOrBackground:
+            case .background:
                 // 소켓 해제
                 state.socketManager = nil
                 return .none

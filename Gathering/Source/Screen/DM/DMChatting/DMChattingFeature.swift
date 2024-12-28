@@ -41,7 +41,7 @@ struct DMChattingFeature {
         case task
 //        case onDisappear
         case active
-        case inactiveOrBackground
+        case background
         case backButtonTap
         case sendButtonTap
         case imageDeleteButtonTap(UIImage)
@@ -103,7 +103,7 @@ struct DMChattingFeature {
                     }
                 }
                 
-            case .inactiveOrBackground:
+            case .background:
                 // 소켓 해제
                 state.socketManager = nil
                 return .none

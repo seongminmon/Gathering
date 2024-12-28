@@ -48,11 +48,11 @@ extension DMChattingView {
         .onChange(of: scenePhase) { newValue in
             switch newValue {
             case .active:
-                print("active")
                 store.send(.active)
-            case .background, .inactive:
-                print("background")
-                store.send(.inactiveOrBackground)
+            case .background:
+                store.send(.background)
+            case .inactive:
+                break
             @unknown default:
                 break
             }
