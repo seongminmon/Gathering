@@ -12,4 +12,5 @@ enum APIAuth {
         forInfoDictionaryKey: "BaseURL"
     ) as? String ?? "baseURL 없음"
     static let key = Bundle.main.object(forInfoDictionaryKey: "APIKey") as? String ?? "APIKey 없음"
+    static let kakaoAppkey = Bundle.main.object(forInfoDictionaryKey: "KakaoAppKey") as? String ?? "APIKey 없음"
 }
