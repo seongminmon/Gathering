@@ -97,15 +97,15 @@ struct ProfileFeature {
                 return .run { [state = state] send in
                     do {
                         print("changeProfileImage 됨")
-                        guard let data = state.selectedImage?.last?.jpegData(compressionQuality: 0.5)
-                        else {
+                        guard let data = state.selectedImage?.last?.jpegData(
+                            compressionQuality: 0.5
+                        ) else {
                             print("이미지 데이터가 엄서요")
                             return
                         }
-                        let result = try await userClient.editMyProfileImage(
-                            EditMyProfileImageRequest(
-                                image: data
-                        ))
+                        _ = try await userClient.editMyProfileImage(
+                            EditMyProfileImageRequest(image: data)
+                        )
                         Notification.postToast(title: "프로필 사진이 변경되었습니다.")
                         await send(.imageChanged)
                     } catch {

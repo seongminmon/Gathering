@@ -120,7 +120,7 @@ struct DMChattingFeature {
                         let dataList = state.selectedImages?.compactMap {
                             $0.jpegData(compressionQuality: 0.5)
                         }
-                        let result = try await dmsClient.sendDMMessage(
+                        _ = try await dmsClient.sendDMMessage(
                             UserDefaultsManager.workspaceID,
                             state.dmsRoomResponse.id,
                             DMRequest(
@@ -303,10 +303,7 @@ extension DMChattingFeature {
     }
 
     // 채팅을 DB + 파일매니저에 추가하는 메서드
-    private func saveMessageToDB(
-        chat: DMsResponse,
-        dmsRoomInfo: DMsRoom
-    ) async {
+    private func saveMessageToDB(chat: DMsResponse, dmsRoomInfo: DMsRoom) async {
         do {
             try dbClient.createDMChatting(
                 dmsRoomInfo.id,
@@ -346,7 +343,6 @@ extension DMChattingFeature {
                 }
             }
         }
-        
         return fetchDMsChats(dmsRoom: dmsRoomInfo).map { $0.toPresentModel() }
     }
 }

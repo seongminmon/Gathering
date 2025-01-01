@@ -25,20 +25,8 @@ struct EmailLoginView: View {
                                            text: $store.emailText)
                         
                         SecureTextFieldWithTitle(title: "비밀번호",
-                                           placeholder: "비밀번호를 입력하세요",
-                                           text: $store.passwordText)
-                        
-                        HStack(spacing: 20) {
-                            Button("성은") {
-                                store.send(.test1ButtonTap)
-                            }
-                            Button("성민") {
-                                store.send(.test2ButtonTap)
-                            }
-                            Button("승현") {
-                                store.send(.test3ButtonTap)
-                            }
-                        }
+                                                 placeholder: "비밀번호를 입력하세요",
+                                                 text: $store.passwordText)
                     }
                     .padding()
                 }

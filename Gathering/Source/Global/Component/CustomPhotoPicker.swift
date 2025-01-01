@@ -59,8 +59,8 @@ public struct CustomPhotoPicker<Content: View>: View {
             .disabled(disabled)
             .onChange(of: selectedPhotos) {
                 handleSelectedPhotos(selectedPhotos)
-                print("💖selectedImages_ onchanged", selectedImages?.count)
-                print("💖selectedPhotos_ onchanged", selectedPhotos.count)
+//                print("💖selectedImages_ onchanged", selectedImages?.count)
+//                print("💖selectedPhotos_ onchanged", selectedPhotos.count)
             }
         } else {
             PhotosPicker(
@@ -88,8 +88,6 @@ public struct CustomPhotoPicker<Content: View>: View {
                         ) {
                             DispatchQueue.main.async {
                                 selectedImages?.append(newImage)
-                                print("🤍selectedImages_ handleSelectedPhotos", selectedImages?.count)
-                                print("🤍selectedPhotos_ handleSelectedPhotos", selectedPhotos.count)
                             }
                         }
                     }
