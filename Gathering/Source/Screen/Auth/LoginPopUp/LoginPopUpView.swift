@@ -23,6 +23,7 @@ struct LoginPopUpView: View {
                 }
                 Button {
                     print("카카오 로그인 버튼 탭")
+                    store.send(.kakaoLoginButtonTap)
                 } label: {
                     KakaoLoginButton()
                 }

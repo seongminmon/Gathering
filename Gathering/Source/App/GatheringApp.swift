@@ -8,6 +8,8 @@
 import SwiftUI
 
 import ComposableArchitecture
+import KakaoSDKCommon
+import KakaoSDKAuth
 
 // TODO: -
 // [] 테스트 코드 작성
@@ -35,6 +37,7 @@ struct GatheringApp: App {
     
     init() {
         ImageFileManager.shared.createImageDirectory()
+        KakaoSDK.initSDK(appKey: APIAuth.kakaoAppkey)
     }
     
     var body: some Scene {
@@ -42,6 +45,11 @@ struct GatheringApp: App {
             WithPerceptionTracking {
                 rootView()
                     .onAppear { store.send(.onAppear) }
+                    .onOpenURL { url in
+                        if (AuthApi.isKakaoTalkLoginUrl(url)) {
+                            _ = AuthController.handleOpenUrl(url: url)
+                        }
+                    }
             }
         }
     }

@@ -8,6 +8,9 @@
 import Foundation
 
 import ComposableArchitecture
+import KakaoSDKCommon
+import KakaoSDKAuth
+import KakaoSDKUser
 
 @Reducer
 struct LoginPopUpFeature {
@@ -28,6 +31,7 @@ struct LoginPopUpFeature {
         case destination(PresentationAction<Destination.Action>)
         
         case emailLoginButtonTap
+        case kakaoLoginButtonTap
         case signUpButtonTap
     }
     
@@ -43,6 +47,20 @@ struct LoginPopUpFeature {
                 
             case .emailLoginButtonTap:
                 state.destination = .emailLogin(EmailLoginFeature.State())
+                return .none
+                
+            case .kakaoLoginButtonTap:
+                if (UserApi.isKakaoTalkLoginAvailable()) {
+                    UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
+                        print(oauthToken)
+                        print(error)
+                    }
+                } else {
+                    UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
+                        print(oauthToken)
+                        print(error)
+                    }
+                }
                 return .none
                 
             case .signUpButtonTap:
