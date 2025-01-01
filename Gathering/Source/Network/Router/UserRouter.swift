@@ -134,7 +134,7 @@ extension UserRouter: TargetType {
         case .editMyProfileImage(let body):
             return [
                 MultipartData(
-                    data: body.image ?? Data(),
+                    data: body.image,
                     name: "image",
                     fileName: "image.jpg"
                 )
