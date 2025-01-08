@@ -20,7 +20,7 @@ struct GatheringNavigationModifier: ViewModifier {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Text("Gathering")
+                    Text(title)
                         .font(Design.logoTitle)
                         .foregroundStyle(Design.mainSkyblue)
                 }

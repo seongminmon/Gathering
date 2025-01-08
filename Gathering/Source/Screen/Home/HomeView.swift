@@ -20,7 +20,7 @@ struct HomeView: View {
                 }
                 .asGatheringNavigationModifier(
                     gatheringImage: store.currentWorkspace?.coverImage ?? "",
-                    title: store.currentWorkspace?.name ?? "",
+                    title: "Gathering",
                     myProfile: store.myProfile
                 )
                 .confirmationDialog(

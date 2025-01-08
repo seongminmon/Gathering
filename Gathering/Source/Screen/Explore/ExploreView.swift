@@ -27,7 +27,7 @@ struct ExploreView: View {
                 }
                 .asGatheringNavigationModifier(
                     gatheringImage: store.currentWorkspace?.coverImage ?? "",
-                    title: "모임 둘러보기",
+                    title: "둘러보기",
                     myProfile: store.myProfile
                 )
             } destination: { store in
