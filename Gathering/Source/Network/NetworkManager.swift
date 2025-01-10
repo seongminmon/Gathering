@@ -48,13 +48,13 @@ final class NetworkManager {
         }
         
         // 1. 메모리 캐시 확인
-        if let cachedImage = ImageCache.shared.object(forKey: url as NSURL) {
+        if let cachedImage = ImageCache.shared.object(forKey: url.absoluteString as NSString) {
             return cachedImage
         }
         
         // 2. 디스크 캐시 확인
         if let cachedImage = ImageFileManager.shared.loadImageFile(filename: api.path) {
-            ImageCache.shared.setObject(cachedImage, forKey: url as NSURL)
+            ImageCache.shared.setObject(cachedImage, forKey: url.absoluteString as NSString)
             return cachedImage
         }
         
@@ -63,7 +63,7 @@ final class NetworkManager {
               let uiImage = UIImage(data: data) else {
             throw APIError.etc
         }
-        ImageCache.shared.setObject(uiImage, forKey: url as NSURL)
+        ImageCache.shared.setObject(uiImage, forKey: url.absoluteString as NSString)
         return uiImage
     }
     
