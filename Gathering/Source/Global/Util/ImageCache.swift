@@ -10,7 +10,8 @@ import UIKit
 class ImageCache {
     static let shared: NSCache<NSString, UIImage> = {
         let cache = NSCache<NSString, UIImage>()
-        cache.totalCostLimit = 50 * 1024 * 1024 // 50MB 제한
+        let totalMemory = ProcessInfo.processInfo.physicalMemory
+        cache.totalCostLimit = 100 * 1024 * 1024 // 100MB 제한
         return cache
     }()
 }
