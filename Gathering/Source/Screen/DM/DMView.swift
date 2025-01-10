@@ -54,7 +54,7 @@ struct DMView: View {
 //                .background(Design.background)
                 .asGatheringNavigationModifier(
                     gatheringImage: store.currentWorkspace?.coverImage ?? "",
-                    title: "Direct Message",
+                    title: "메시지",
                     myProfile: store.myProfile
                 )
                 .task { store.send(.task) }

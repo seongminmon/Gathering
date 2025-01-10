@@ -57,18 +57,21 @@ struct GatheringApp: App {
     @ViewBuilder
     private func rootView() -> some View {
         Group {
-            switch store.loginState {
-            case .success:
-                RootView(
-                    store: store.scope(state: \.root, action: \.root)
-                )
-            case .fail:
-                OnboardingView(
-                    store: store.scope(state: \.onboarding, action: \.onboarding)
-                )
-            case .loading:
-                ProgressView()
-            }
+            RootView(
+                store: store.scope(state: \.root, action: \.root)
+            )
+//            switch store.loginState {
+//            case .success:
+//                RootView(
+//                    store: store.scope(state: \.root, action: \.root)
+//                )
+//            case .fail:
+//                OnboardingView(
+//                    store: store.scope(state: \.onboarding, action: \.onboarding)
+//                )
+//            case .loading:
+//                ProgressView()
+//            }
         }
         .onReceive(
             NotificationCenter.default.publisher(for: .changeRoot)
