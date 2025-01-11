@@ -16,41 +16,49 @@ struct DMView: View {
     var body: some View {
         WithPerceptionTracking {
             NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
-                VStack {
-                    if store.isLoading {
-                        ProgressView()
-                    } else if store.workspaceMembers.isEmpty {
-                        emptyMemberView()
-                    } else {
-                        // 워크 스페이스 멤버 리스트
-                        ScrollView(.horizontal) {
-                            LazyHStack(spacing: 10) {
-                                ForEach(store.workspaceMembers, id: \.id) { item in
-                                    userCell(user: item)
+                ZStack {
+                    VStack {
+                        if store.isLoading {
+                            ProgressView()
+                        } else if store.workspaceMembers.isEmpty {
+                            emptyMemberView()
+                        } else {
+                            // 워크 스페이스 멤버 리스트
+                            ScrollView(.horizontal) {
+                                LazyHStack(spacing: 10) {
+                                    ForEach(store.workspaceMembers, id: \.id) { item in
+                                        userCell(user: item)
+                                    }
+                                }
+                                .frame(height: 100)
+                                .padding(.horizontal, 16)
+                            }
+                            
+                            // DM 채팅방
+                            ScrollView {
+                                LazyVStack(spacing: 20) {
+                                    ForEach(store.dmRoomList, id: \.id) { dmRoom in
+                                        let lastChatting = store.dmLastChattings[dmRoom]
+                                        let unreadResponse = store.dmUnreads[dmRoom]
+                                        dmCell(
+                                            dm: dmRoom,
+                                            lastChatting: lastChatting,
+                                            unreadCount: unreadResponse
+                                        )
+                                    }
                                 }
                             }
-                            .frame(height: 100)
-                            .padding(.horizontal, 16)
+                            
+                            Spacer()
                         }
-                        
-                        // DM 채팅방
-                        ScrollView {
-                            LazyVStack(spacing: 20) {
-                                ForEach(store.dmRoomList, id: \.id) { dmRoom in
-                                    let lastChatting = store.dmLastChattings[dmRoom]
-                                    let unreadResponse = store.dmUnreads[dmRoom]
-                                    dmCell(
-                                        dm: dmRoom,
-                                        lastChatting: lastChatting,
-                                        unreadCount: unreadResponse
-                                    )
-                                }
-                            }
-                        }
-                        
-                        Spacer()
                     }
+                    floatingButton {
+                        print("플로팅 버튼 탭")
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+                    .padding(8)
                 }
+
 //                .background(Design.background)
                 .asGatheringNavigationModifier(
                     gatheringImage: store.currentWorkspace?.coverImage ?? "",
@@ -182,5 +190,19 @@ struct DMView: View {
             )
         }
         .disabled(!store.inviteButtonValid)
+    }
+    
+    private func floatingButton(action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: Design.pencil)
+                .foregroundColor(Design.white)
+                .font(.system(size: 25))
+                .frame(width: 60, height: 60)
+                .background(Design.mainSkyblue)
+                .clipShape(Circle())
+                .shadow(radius: 4)
+        }
+        .padding(.trailing, 16)
+        .padding(.bottom, 16)
     }
 }
