@@ -12,6 +12,7 @@ final class ImageFileManager {
     private init() {}
     
     private let maxCacheSize = 500 * 1024 * 1024 // 500MB 제한
+    private lazy var currentDirectorySize = calculateDirectorySize() // 한번만 계산
     
     // 도큐먼트 폴더 위치
     private let documentDirectory = FileManager.default.urls(
@@ -92,6 +93,7 @@ final class ImageFileManager {
         do {
             try data.write(to: fileURL)
             updateAccessDate(for: fileURL)
+            currentDirectorySize += data.count
             print("이미지 파일 저장 성공")
         } catch {
             print("이미지 파일 저장 실패", error)
@@ -112,6 +114,7 @@ final class ImageFileManager {
             do {
                 try data.write(to: fileURL)
                 updateAccessDate(for: fileURL)
+                currentDirectorySize += data.count
                 print("이미지 파일 저장 성공")
             } catch {
                 print("이미지 파일 저장 실패", error)
@@ -141,6 +144,7 @@ final class ImageFileManager {
         if FileManager.default.fileExists(atPath: fileURL.path) {
             do {
                 try FileManager.default.removeItem(atPath: fileURL.path)
+                currentDirectorySize -= fileURL.fileSize()
                 print("이미지 파일 삭제 성공")
             } catch {
                 print("이미지 파일 삭제 실패", error)
@@ -168,26 +172,14 @@ final class ImageFileManager {
                 print("이미지 폴더 내부 파일 삭제 실패:", error)
             }
         }
+        currentDirectorySize = calculateDirectorySize()
     }
 }
 
 extension ImageFileManager {
     
-    /// 파일 접근 시간 정보 갱신
-    private func updateAccessDate(for fileURL: URL) {
-        do {
-            try FileManager.default.setAttributes(
-                [.modificationDate: Date()],
-                ofItemAtPath: fileURL.path
-            )
-        } catch {
-            print("파일 접근 시간 갱신 실패:", error)
-        }
-    }
-    
     private func calculateDirectorySize() -> Int {
         guard let staticDirectory else { return 0 }
-        
         do {
             let fileURLs = try FileManager.default.contentsOfDirectory(
                 at: staticDirectory,
@@ -203,11 +195,22 @@ extension ImageFileManager {
         }
     }
     
+    /// 파일 접근 시간 정보 갱신
+    private func updateAccessDate(for fileURL: URL) {
+        do {
+            try FileManager.default.setAttributes(
+                [.modificationDate: Date()],
+                ofItemAtPath: fileURL.path
+            )
+        } catch {
+            print("파일 접근 시간 갱신 실패:", error)
+        }
+    }
+    
     /// 용량이 차면 LRU 방식으로 파일 삭제
     private func handleCacheLimit() {
         guard let staticDirectory else { return }
-        var directorySize = calculateDirectorySize()
-        guard directorySize > maxCacheSize else { return }
+        guard currentDirectorySize > maxCacheSize else { return }
         
         do {
             let fileURLs = try FileManager.default.contentsOfDirectory(
@@ -219,13 +222,13 @@ extension ImageFileManager {
             // 파일 접근 시간 오래된 순으로 정렬
             let sortedFiles = fileURLs.sorted { $0.accessDate() < $1.accessDate() }
             
-            // 용량 제한에 맞을 때까지 오래된 파일 삭제
+            // 용량 제한에 맞을 때까지 파일 삭제
             for fileURL in sortedFiles {
-                if directorySize <= maxCacheSize { break }
+                if currentDirectorySize <= maxCacheSize { break }
                 
                 let fileSize = fileURL.fileSize()
                 try FileManager.default.removeItem(at: fileURL)
-                directorySize -= fileSize
+                currentDirectorySize -= fileSize
             }
         } catch {
             print("LRU 캐시 관리 실패:", error)
